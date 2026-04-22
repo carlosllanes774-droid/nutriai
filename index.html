@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>NutriAI</title>
+<title>Arc</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{
@@ -373,7 +373,7 @@ body{
     </svg>
     <div class="sp-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#5ecb96" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div>
   </div>
-  <div class="sp-name">NutriAI</div>
+  <div class="sp-name">Arc</div>
   <div class="sp-tag">Your AI nutrition companion</div>
   <span class="sp-skip">Tap to continue</span>
 </div>
@@ -399,7 +399,7 @@ body{
 <!-- ONBOARDING -->
 <div class="screen" id="ob">
   <div class="ob-top">
-    <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ecb96" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">NutriAI</span></div>
+    <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5ecb96" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
     <div class="ob-dots"><div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div></div>
     <div class="ob-heading" id="ob-h">About you</div>
     <div class="ob-sub" id="ob-s">Let's get the basics down</div>
@@ -607,7 +607,7 @@ body{
   <div class="loc-card">
     <div style="font-size:40px;margin-bottom:14px">📍</div>
     <div style="font-size:19px;font-weight:700;color:#111;margin-bottom:10px;font-family:Georgia,serif">Allow location access?</div>
-    <div style="font-size:14px;color:#6b7280;line-height:1.6;margin-bottom:22px">NutriAI uses your approximate location <strong>only</strong> to show accurate local grocery prices. Your location is never stored or shared.</div>
+    <div style="font-size:14px;color:#6b7280;line-height:1.6;margin-bottom:22px">Arc uses your approximate location <strong>only</strong> to show accurate local grocery prices. Your location is never stored or shared.</div>
     <button class="btn-green" id="loc-allow" style="margin-bottom:10px">Allow location access</button>
     <button class="btn-outline" id="loc-deny">No thanks, I'll choose manually</button>
     <div style="font-size:12px;color:#9ca3af;margin-top:12px;font-style:italic">You can always change this during setup.</div>
@@ -768,7 +768,7 @@ function parseJSON(raw) {
 }
 
 // ============================================================
-//  NutriAI v9 — Fully Fixed & Improved
+//  Arc v9 — Fully Fixed & Improved
 //  Mifflin-St Jeor TDEE · Retry logic · Better AI prompts
 // ============================================================
 
@@ -950,7 +950,7 @@ function hideAI() { el('ai-overlay').style.display = 'none'; }
 function callAI(system, userMsg, maxTok, callback) {
   maxTok = maxTok || 1200;
 
-  fetch('https://nutriai-qevt.onrender.com/api/ai', {
+  fetch('https://Arc-qevt.onrender.com/api/ai', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -2166,9 +2166,9 @@ function renderLog() {
     if (msg.type === 'user') {
       html += '<div class="cu"><span>' + msg.text + '</span></div>';
     } else if (msg.type === 'thinking') {
-      html += '<div><div class="cai-lbl">NutriAI</div><div class="cai-b" style="color:#9ca3af">Analyzing...</div></div>';
+      html += '<div><div class="cai-lbl">Arc</div><div class="cai-b" style="color:#9ca3af">Analyzing...</div></div>';
     } else {
-      html += '<div><div class="cai-lbl">NutriAI</div><div class="cai-b">' + msg.text + '</div></div>';
+      html += '<div><div class="cai-lbl">Arc</div><div class="cai-b">' + msg.text + '</div></div>';
     }
   }
   el('chat-body').innerHTML = html;
@@ -2188,7 +2188,7 @@ function sendLog() {
   var calTarget  = getCalTarget();
   var macros     = UP.macros || getMacroTargets(calTarget);
 
-  var sysMsg  = 'You are NutriAI, a warm and knowledgeable nutrition assistant. ' +
+  var sysMsg  = 'You are Arc, a warm and knowledgeable nutrition assistant. ' +
                 'When the user tells you what they ate, acknowledge it, give a rough calorie and macro estimate, ' +
                 'and offer a brief encouraging comment related to their goal. ' +
                 'Be friendly, concise (2-4 sentences), and non-judgmental.';
