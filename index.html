@@ -2495,51 +2495,20 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
+
+// 🔥 USER DATA
+const userData = {
+  goal: null,
+  diet: [],
+  region: [],
+  meals: null
+};
+
 window.addEventListener("load", function() {
-  
-// 🔥 CHIP SELECTION (for all chip groups)
-document.querySelectorAll(".chips").forEach(group => {
-  group.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("chip")) return;
 
-    // remove previous selection
-    group.querySelectorAll(".chip").forEach(c => c.classList.remove("sel"));
-
-    // select new
-    e.target.classList.add("sel");
-  });
-});
-
-document.querySelectorAll(".nchips").forEach(group => {
-  group.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("nchip")) return;
-
-    group.querySelectorAll(".nchip").forEach(c => c.classList.remove("sel"));
-    e.target.classList.add("sel");
-  });
-});
-
-let currentStep = 1;
-
-document.getElementById("ob-next").addEventListener("click", () => {
-  document.getElementById("st" + currentStep).classList.remove("active");
-
-  currentStep++;
-
-  if (currentStep > 3) {
-    // go to generating screen
-    document.getElementById("ob").classList.remove("active");
-    document.getElementById("s-gen").classList.add("active");
-    return;
-  }
-
-  document.getElementById("st" + currentStep).classList.add("active");
-});
-  
-  // Splash animation
+  // SPLASH
   setTimeout(() => {
     const splash = document.getElementById("splash-screen");
-
     splash.style.opacity = "0";
     splash.style.transform = "scale(1.05)";
 
@@ -2548,16 +2517,122 @@ document.getElementById("ob-next").addEventListener("click", () => {
       document.getElementById("s-welcome").classList.add("active");
       document.getElementById("app").classList.add("show");
     }, 600);
+  }, 1400);
 
-  }, 2000);
-
-  // ✅ FIXED: button event inside load
-  document.getElementById("get-started-btn").addEventListener("click", function() {
+  // GET STARTED
+  document.getElementById("get-started-btn").addEventListener("click", () => {
     document.getElementById("s-welcome").classList.remove("active");
     document.getElementById("ob").classList.add("active");
   });
 
+  // 🔥 CHIP LOGIC
+  document.querySelectorAll(".chips").forEach(group => {
+    group.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("chip")) return;
+
+      const value = e.target.dataset.v;
+
+      // MULTI SELECT
+      if (group.id === "chip-diet" || group.id === "chip-cuisine") {
+        e.target.classList.toggle("sel");
+
+        if (group.id === "chip-diet") {
+          userData.diet = Array.from(group.querySelectorAll(".chip.sel")).map(c => c.dataset.v);
+        }
+
+      } else {
+        // SINGLE SELECT
+        group.querySelectorAll(".chip").forEach(c => c.classList.remove("sel"));
+        e.target.classList.add("sel");
+
+        if (group.id === "chip-goal") userData.goal = value;
+        if (group.id === "chip-region") userData.region = [value];
+      }
+    });
+  });
+
+  // MEALS
+  document.querySelectorAll(".nchip").forEach(n => {
+    n.addEventListener("click", () => {
+      document.querySelectorAll(".nchip").forEach(x => x.classList.remove("sel"));
+      n.classList.add("sel");
+      userData.meals = n.dataset.v;
+    });
+  });
+
+  // 🔥 FLOW
+  let step = 1;
+
+  document.getElementById("ob-next").addEventListener("click", () => {
+
+    if (step === 2 && !userData.goal) {
+      alert("Select a goal");
+      return;
+    }
+
+    document.getElementById("st" + step).classList.remove("active");
+    step++;
+
+    if (step > 3) {
+      startGenerating();
+      return;
+    }
+
+    document.getElementById("st" + step).classList.add("active");
+  });
+
+  document.getElementById("ob-back").addEventListener("click", () => {
+    if (step === 1) return;
+
+    document.getElementById("st" + step).classList.remove("active");
+    step--;
+    document.getElementById("st" + step).classList.add("active");
+  });
+
 });
+
+// 🔥 GENERATING
+function startGenerating() {
+
+  // AI CONNECTION
+  if (window.UP) {
+    UP.goal = userData.goal || "Balanced";
+    UP.restrictions = userData.diet || [];
+    UP.cuisines = userData.region || [];
+  }
+
+  document.getElementById("ob").classList.remove("active");
+  document.getElementById("s-gen").classList.add("active");
+
+  const steps = document.querySelectorAll(".gen-step");
+  let i = 0;
+
+  function next() {
+    if (i > 0) {
+      steps[i - 1].classList.remove("active");
+      steps[i - 1].classList.add("done");
+    }
+
+    if (i < steps.length) {
+      steps[i].classList.add("active");
+      i++;
+      setTimeout(next, 900);
+    } else {
+      setTimeout(() => {
+        document.getElementById("s-gen").classList.remove("active");
+        document.getElementById("s-recipes").classList.add("active");
+
+        if (typeof generateRecipes === "function") {
+          generateRecipes();
+        }
+
+      }, 600);
+    }
+  }
+
+  next();
+}
+
 </script>
 </body>
 </html>
