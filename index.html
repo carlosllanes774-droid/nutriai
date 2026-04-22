@@ -358,20 +358,6 @@ body{background:#f0ede8;display:flex;align-items:flex-start;justify-content:cent
 
 <div class="app" id="app">
 
-<!-- SPLASH -->
-<div class="screen splash" id="s-splash" style="display:none;">
-  <div class="sp-ring-wrap">
-    <svg class="sp-ring" viewBox="0 0 110 110">
-      <circle cx="55" cy="55" r="50" fill="none" stroke="rgba(94,203,150,.15)" stroke-width="2.5"/>
-      <circle cx="55" cy="55" r="50" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-dasharray="314" stroke-dashoffset="314" stroke-linecap="round" style="transform-origin:50% 50%;transform:rotate(-90deg);animation:ringDraw 1.4s ease-in-out forwards .5s"/>
-    </svg>
-    <div class="sp-icon"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div>
-  </div>
-  <div class="sp-name">Arc</div>
-  <div class="sp-tag">Your AI nutrition companion</div>
-  <span class="sp-skip">Tap to continue</span>
-</div>
-
 <!-- WELCOME -->
 <div class="screen" id="s-welcome">
   <div class="welcome-top">
@@ -944,7 +930,7 @@ function hideAI() { el('ai-overlay').style.display = 'none'; }
 function callAI(system, userMsg, maxTok, callback) {
   maxTok = maxTok || 1200;
 
-  fetch('https://Arc-qevt.onrender.com/api/ai', {
+  fetch('https://arc-qevt.onrender.com/api/ai', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -2374,16 +2360,6 @@ document.addEventListener('DOMContentLoaded', function() {
     generateRecipes();
   });
 
-  // Splash
-  function advSplash() {
-    var s = el('s-splash');
-    s.style.transition = 'opacity .4s';
-    s.style.opacity    = '0';
-    setTimeout(function() { s.classList.remove('active'); el('s-welcome').classList.add('active'); }, 400);
-  }
-  setTimeout(advSplash, 2500);
-  el('s-splash').addEventListener('click', advSplash);
-
   // Welcome → Onboarding
   el('get-started-btn').addEventListener('click', function() {
     el('s-welcome').classList.remove('active');
@@ -2481,163 +2457,26 @@ document.addEventListener('DOMContentLoaded', function() {
   renderNutrition();
   renderShopping();
 });
-</script>
 
 <script>
-window.addEventListener("load", function() {
-  setTimeout(() => {
-    const splash = document.getElementById("splash-screen");
+window.addEventListener("load", function () {
 
-    // fade out arc splash
+  const splash = document.getElementById("splash-screen");
+
+  if (!splash) return;
+
+  setTimeout(() => {
     splash.style.opacity = "0";
 
     setTimeout(() => {
-      splash.style.display = "none";
+      splash.remove(); // 🔥 completely removes it
 
-      // 👉 show welcome screen
       document.getElementById("s-welcome").classList.add("active");
 
-    }, 600);
-  }, 1800);
-  
-});
-
-<script>
-
-// 🔥 SPLASH → APP
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    const splash = document.getElementById("splash-screen");
-
-    splash.style.opacity = "0";
-
-    setTimeout(() => {
-      splash.style.display = "none";
-      document.getElementById("s-welcome").classList.add("active");
-      document.getElementById("app").classList.add("show");
-    }, 600);
-
-  }, 1600);
-});
-
-// 🔥 START BUTTON
-document.getElementById("get-started-btn").onclick = () => {
-  document.getElementById("s-welcome").classList.remove("active");
-  document.getElementById("ob").classList.add("active");
-};
-
-// 🔥 CHIP SELECT (MULTI SELECT FIXED)
-document.querySelectorAll(".chip").forEach(chip => {
-  chip.onclick = () => {
-    chip.classList.toggle("sel");
-  };
-});
-
-// 🔥 NUMBER SELECT (MEALS)
-document.querySelectorAll(".nchip").forEach(n => {
-  n.onclick = () => {
-    document.querySelectorAll(".nchip").forEach(x => x.classList.remove("sel"));
-    n.classList.add("sel");
-  };
-});
-
-// 🔥 HEIGHT AUTO FORMAT
-const heightInput = document.getElementById("in-ht");
-if (heightInput) {
-  heightInput.addEventListener("input", (e) => {
-    let val = e.target.value.replace(/[^0-9]/g, "");
-
-    if (val.length >= 3) {
-      val = val.slice(0,1) + "'" + val.slice(1,3);
-    }
-
-    e.target.value = val;
-  });
-}
-
-// 🔥 ONBOARDING FLOW
-let step = 1;
-
-document.getElementById("ob-next").onclick = () => {
-
-  document.getElementById("st" + step).classList.remove("active");
-  step++;
-
-  document.getElementById("od" + step)?.classList.add("active");
-
-  if (step > 3) {
-    startGenerating();
-    return;
-  }
-
-  document.getElementById("st" + step).classList.add("active");
-  document.getElementById("ob-back").style.display = step > 1 ? "block" : "none";
-};
-
-document.getElementById("ob-back").onclick = () => {
-  if (step === 1) return;
-
-  document.getElementById("st" + step).classList.remove("active");
-  document.getElementById("od" + step)?.classList.remove("active");
-
-  step--;
-
-  document.getElementById("st" + step).classList.add("active");
-};
-
-// 🔥 GENERATING SCREEN (SMOOTH + NOT BUGGY)
-function startGenerating() {
-
-  document.getElementById("ob").classList.remove("active");
-  document.getElementById("s-gen").classList.add("active");
-
-  const steps = [
-    "Analysing your profile & goals",
-    "Generating personalised recipes",
-    "Calculating nutrition & pricing",
-    "Preparing your app"
-  ];
-
-  let i = 0;
-
-  function run() {
-    if (i < steps.length) {
-      document.getElementById("gs" + (i+1)).classList.add("active");
-      document.getElementById("gt" + (i+1)).classList.add("active");
-      i++;
-      setTimeout(run, 1100);
-    } else {
-      setTimeout(() => {
-        document.getElementById("s-gen").classList.remove("active");
-        document.getElementById("s-recipes").classList.add("active");
-
-        // 🔥 IMPORTANT: keeps your real AI working
-        if (typeof generateRecipes === "function") {
-          generateRecipes();
-        }
-
-      }, 900);
-    }
-  }
-
-  run();
-}
-
-</script>
-
-<script>
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    const splash = document.getElementById("splash-screen");
-
-    splash.style.opacity = "0";
-
-    setTimeout(() => {
-      splash.style.display = "none";
-      document.getElementById("s-welcome").classList.add("active");
     }, 600);
 
   }, 1800);
+
 });
 </script>
 </script>
