@@ -2459,6 +2459,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 <script>
+
+// 🔥 SPLASH FIX (THIS WAS MISSING)
 window.addEventListener("load", function () {
 
   const splash = document.getElementById("splash-screen");
@@ -2469,7 +2471,7 @@ window.addEventListener("load", function () {
     splash.style.opacity = "0";
 
     setTimeout(() => {
-      splash.remove(); // 🔥 completely removes it
+      splash.remove();
 
       document.getElementById("s-welcome").classList.add("active");
 
@@ -2478,6 +2480,20 @@ window.addEventListener("load", function () {
   }, 1800);
 
 });
+
+// 🔥 BASIC NAV (so app actually works)
+document.addEventListener("DOMContentLoaded", function () {
+
+  const el = (id) => document.getElementById(id);
+
+  // START BUTTON
+  el("get-started-btn")?.addEventListener("click", () => {
+    el("s-welcome").classList.remove("active");
+    el("ob").classList.add("active");
+  });
+
+});
+
 </script>
 </script>
 </body>
