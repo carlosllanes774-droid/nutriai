@@ -2460,38 +2460,163 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 
-// confirm JS is running
-console.log("JS RUNNING");
+// 🚀 CONFIRM JS
+console.log("APP STARTED");
 
-// SPLASH FIX
+// ─────────────────────────────
+// 🔥 SPLASH → WELCOME
+// ─────────────────────────────
 window.addEventListener("load", () => {
   const splash = document.getElementById("splash-screen");
 
-  if (!splash) return;
-
   setTimeout(() => {
-    splash.style.opacity = "0";
+    if (splash) {
+      splash.style.opacity = "0";
 
-    setTimeout(() => {
-      splash.remove();
-      document.getElementById("s-welcome")?.classList.add("active");
-      console.log("SPLASH REMOVED");
-    }, 600);
-
+      setTimeout(() => {
+        splash.remove();
+        document.getElementById("s-welcome")?.classList.add("active");
+      }, 600);
+    }
   }, 1500);
 });
 
-// START BUTTON (backup)
+// ─────────────────────────────
+// 🔥 BASIC NAV + FLOW
+// ─────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("get-started-btn");
 
-  if (btn) {
-    btn.addEventListener("click", () => {
-      document.getElementById("s-welcome")?.classList.remove("active");
-      document.getElementById("ob")?.classList.add("active");
-    });
-  }
+  const el = (id) => document.getElementById(id);
+
+  let step = 1;
+
+  // START BUTTON
+  el("get-started-btn")?.addEventListener("click", () => {
+    el("s-welcome").classList.remove("active");
+    el("ob").classList.add("active");
+  });
+
+  // NEXT BUTTON
+  el("ob-next")?.addEventListener("click", () => {
+
+    // basic validation
+    if (step === 1) {
+      const h = el("in-ht").value.trim();
+      const w = el("in-wt").value.trim();
+
+      if (!h || !w) {
+        alert("Enter height & weight");
+        return;
+      }
+    }
+
+    el("st" + step).classList.remove("active");
+    step++;
+
+    if (step > 3) {
+      startGenerating();
+      return;
+    }
+
+    el("st" + step).classList.add("active");
+  });
+
+  // BACK BUTTON
+  el("ob-back")?.addEventListener("click", () => {
+    if (step === 1) return;
+
+    el("st" + step).classList.remove("active");
+    step--;
+    el("st" + step).classList.add("active");
+  });
+
+  // CHIP SELECT
+  document.querySelectorAll(".chip").forEach(c => {
+    c.onclick = () => c.classList.toggle("sel");
+  });
+
+  // NUMBER SELECT
+  document.querySelectorAll(".nchip").forEach(n => {
+    n.onclick = () => {
+      document.querySelectorAll(".nchip").forEach(x => x.classList.remove("sel"));
+      n.classList.add("sel");
+    };
+  });
+
 });
+
+// ─────────────────────────────
+// 🔥 GENERATING → RECIPES
+// ─────────────────────────────
+function startGenerating() {
+
+  document.getElementById("ob").classList.remove("active");
+  document.getElementById("s-gen").classList.add("active");
+
+  let i = 0;
+
+  function run() {
+    if (i < 4) {
+      document.getElementById("gs" + (i+1))?.classList.add("active");
+      document.getElementById("gt" + (i+1))?.classList.add("active");
+      i++;
+      setTimeout(run, 1000);
+    } else {
+      setTimeout(() => {
+        document.getElementById("s-gen").classList.remove("active");
+        document.getElementById("s-recipes").classList.add("active");
+
+        loadRecipes(); // 👈 AI trigger
+
+      }, 800);
+    }
+  }
+
+  run();
+}
+
+// ─────────────────────────────
+// 🔥 AI CALL (WORKING)
+// ─────────────────────────────
+function loadRecipes() {
+
+  const list = document.getElementById("recipes-list");
+  if (!list) return;
+
+  list.innerHTML = "Loading recipes...";
+
+  fetch("https://Arc-qevt.onrender.com/api/ai", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      userMsg: "Give me 5 healthy meals with calories and price"
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    if (!data || !data.content) {
+      list.innerHTML = "Failed to load recipes";
+      return;
+    }
+
+    const text = data.content.map(x => x.text).join("");
+
+    list.innerHTML = `
+      <div class="rc">
+        <div class="rc-name">AI Generated Meals</div>
+        <div style="font-size:13px;color:#6b7280;margin-top:6px;white-space:pre-line">${text}</div>
+      </div>
+    `;
+
+  })
+  .catch(err => {
+    console.error(err);
+    list.innerHTML = "Error loading recipes";
+  });
+}
 
 </script>
 </body>
