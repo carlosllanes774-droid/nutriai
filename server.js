@@ -9,7 +9,10 @@ const app = express();
 
 // 🔥 CORS (FIXED PROPERLY)
 const corsOptions = {
-  origin: "https://carlosllanes774-droid.github.io",
+  origin: [
+    "https://carlosllanes774-droid.github.io",
+    "https://nutriai-qevt.onrender.com"
+  ],
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 };
