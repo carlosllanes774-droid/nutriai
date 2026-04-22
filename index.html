@@ -2496,7 +2496,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 window.addEventListener("load", function() {
+  
+// 🔥 CHIP SELECTION (for all chip groups)
+document.querySelectorAll(".chips").forEach(group => {
+  group.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("chip")) return;
 
+    // remove previous selection
+    group.querySelectorAll(".chip").forEach(c => c.classList.remove("sel"));
+
+    // select new
+    e.target.classList.add("sel");
+  });
+});
+
+document.querySelectorAll(".nchips").forEach(group => {
+  group.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("nchip")) return;
+
+    group.querySelectorAll(".nchip").forEach(c => c.classList.remove("sel"));
+    e.target.classList.add("sel");
+  });
+});
+
+let currentStep = 1;
+
+document.getElementById("ob-next").addEventListener("click", () => {
+  document.getElementById("st" + currentStep).classList.remove("active");
+
+  currentStep++;
+
+  if (currentStep > 3) {
+    // go to generating screen
+    document.getElementById("ob").classList.remove("active");
+    document.getElementById("s-gen").classList.add("active");
+    return;
+  }
+
+  document.getElementById("st" + currentStep).classList.add("active");
+});
+  
   // Splash animation
   setTimeout(() => {
     const splash = document.getElementById("splash-screen");
