@@ -2491,115 +2491,95 @@ document.addEventListener('DOMContentLoaded', function() {
   // Init renders (empty state)
   renderNutrition();
   renderShopping();
-});
-</script>
+});<script>
 
-<script>
+// STEP TRACKING
+let step = 1;
 
-// 🔥 USER DATA
-const userData = {
-  goal: null,
-  diet: [],
-  region: [],
-  meals: null
-};
-
-window.addEventListener("load", function() {
-
-  // SPLASH
+// SPLASH
+window.addEventListener("load", () => {
   setTimeout(() => {
     const splash = document.getElementById("splash-screen");
+
     splash.style.opacity = "0";
-    splash.style.transform = "scale(1.05)";
 
     setTimeout(() => {
       splash.style.display = "none";
       document.getElementById("s-welcome").classList.add("active");
       document.getElementById("app").classList.add("show");
-    }, 600);
+    }, 500);
+
   }, 1400);
-
-  // GET STARTED
-  document.getElementById("get-started-btn").addEventListener("click", () => {
-    document.getElementById("s-welcome").classList.remove("active");
-    document.getElementById("ob").classList.add("active");
-  });
-
-  // 🔥 CHIP LOGIC
-  document.querySelectorAll(".chips").forEach(group => {
-    group.addEventListener("click", (e) => {
-      if (!e.target.classList.contains("chip")) return;
-
-      const value = e.target.dataset.v;
-
-      // MULTI SELECT
-      if (group.id === "chip-diet" || group.id === "chip-cuisine") {
-        e.target.classList.toggle("sel");
-
-        if (group.id === "chip-diet") {
-          userData.diet = Array.from(group.querySelectorAll(".chip.sel")).map(c => c.dataset.v);
-        }
-
-      } else {
-        // SINGLE SELECT
-        group.querySelectorAll(".chip").forEach(c => c.classList.remove("sel"));
-        e.target.classList.add("sel");
-
-        if (group.id === "chip-goal") userData.goal = value;
-        if (group.id === "chip-region") userData.region = [value];
-      }
-    });
-  });
-
-  // MEALS
-  document.querySelectorAll(".nchip").forEach(n => {
-    n.addEventListener("click", () => {
-      document.querySelectorAll(".nchip").forEach(x => x.classList.remove("sel"));
-      n.classList.add("sel");
-      userData.meals = n.dataset.v;
-    });
-  });
-
-  // 🔥 FLOW
-  let step = 1;
-
-  document.getElementById("ob-next").addEventListener("click", () => {
-
-    if (step === 2 && !userData.goal) {
-      alert("Select a goal");
-      return;
-    }
-
-    document.getElementById("st" + step).classList.remove("active");
-    step++;
-
-    if (step > 3) {
-      startGenerating();
-      return;
-    }
-
-    document.getElementById("st" + step).classList.add("active");
-  });
-
-  document.getElementById("ob-back").addEventListener("click", () => {
-    if (step === 1) return;
-
-    document.getElementById("st" + step).classList.remove("active");
-    step--;
-    document.getElementById("st" + step).classList.add("active");
-  });
-
 });
 
-// 🔥 GENERATING
-function startGenerating() {
+// GET STARTED
+document.getElementById("get-started-btn").onclick = () => {
+  document.getElementById("s-welcome").classList.remove("active");
+  document.getElementById("ob").classList.add("active");
+};
 
-  // AI CONNECTION
-  if (window.UP) {
-    UP.goal = userData.goal || "Balanced";
-    UP.restrictions = userData.diet || [];
-    UP.cuisines = userData.region || [];
+// SIMPLE CHIP SELECT (WORKS RELIABLY)
+document.querySelectorAll(".chip").forEach(chip => {
+  chip.onclick = () => {
+    chip.classList.toggle("sel");
+  };
+});
+
+// MEALS SELECT (FIXED)
+document.querySelectorAll(".nchip").forEach(n => {
+  n.onclick = () => {
+    document.querySelectorAll(".nchip").forEach(x => x.classList.remove("sel"));
+    n.classList.add("sel");
+  };
+});
+
+// HEIGHT INPUT FIX (AUTO FORMAT)
+const heightInput = document.getElementById("in-ht");
+if (heightInput) {
+  heightInput.addEventListener("input", (e) => {
+    let val = e.target.value.replace(/[^0-9]/g, "");
+
+    if (val.length >= 3) {
+      val = val.slice(0,1) + "'" + val.slice(1,3);
+    }
+
+    e.target.value = val;
+  });
+}
+
+// FLOW
+document.getElementById("ob-next").onclick = () => {
+
+  document.getElementById("st" + step).classList.remove("active");
+  step++;
+
+  // update dots
+  document.getElementById("od" + step)?.classList.add("active");
+
+  if (step > 3) {
+    goToGenerating();
+    return;
   }
+
+  document.getElementById("st" + step).classList.add("active");
+
+  document.getElementById("ob-back").style.display = step > 1 ? "block" : "none";
+};
+
+// BACK
+document.getElementById("ob-back").onclick = () => {
+  if (step === 1) return;
+
+  document.getElementById("st" + step).classList.remove("active");
+  document.getElementById("od" + step)?.classList.remove("active");
+
+  step--;
+
+  document.getElementById("st" + step).classList.add("active");
+};
+
+// GENERATING (REAL FEEL AGAIN)
+function goToGenerating() {
 
   document.getElementById("ob").classList.remove("active");
   document.getElementById("s-gen").classList.add("active");
@@ -2607,31 +2587,29 @@ function startGenerating() {
   const steps = document.querySelectorAll(".gen-step");
   let i = 0;
 
-  function next() {
-    if (i > 0) {
-      steps[i - 1].classList.remove("active");
-      steps[i - 1].classList.add("done");
-    }
-
+  function run() {
     if (i < steps.length) {
       steps[i].classList.add("active");
       i++;
-      setTimeout(next, 900);
+      setTimeout(run, 1100);
     } else {
       setTimeout(() => {
         document.getElementById("s-gen").classList.remove("active");
         document.getElementById("s-recipes").classList.add("active");
 
+        // 🔥 THIS CALLS YOUR REAL AI AGAIN
         if (typeof generateRecipes === "function") {
           generateRecipes();
         }
 
-      }, 600);
+      }, 900);
     }
   }
 
-  next();
+  run();
 }
+
+</script>
 
 </script>
 </body>
