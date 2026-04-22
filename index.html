@@ -6,7 +6,15 @@
 <title>NutriAI</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#eceae5;display:flex;align-items:flex-start;justify-content:center;padding:24px 12px;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{
+  background:#eceae5;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:24px 12px;
+  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
 .app{width:100%;max-width:430px;background:#fff;border-radius:28px;overflow:hidden;min-height:780px;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.13)}
 .screen{display:none;flex-direction:column;min-height:780px}.screen.active{display:flex}
 @keyframes spIn{from{transform:scale(0) rotate(-15deg);opacity:0}to{transform:scale(1);opacity:1}}
@@ -16,14 +24,51 @@ body{background:#eceae5;display:flex;align-items:flex-start;justify-content:cent
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 
-/* SPLASH */
-.splash{background:#1c3829;align-items:center;justify-content:center;cursor:pointer}
-.sp-ring-wrap{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
-.sp-ring{position:absolute;inset:0;overflow:visible}
-.sp-icon{width:62px;height:62px;background:rgba(255,255,255,.1);border-radius:18px;display:flex;align-items:center;justify-content:center;animation:spIn .7s cubic-bezier(.34,1.56,.64,1) both .1s}
-.sp-name{font-size:30px;font-weight:700;color:#fff;font-family:Georgia,serif;letter-spacing:-.6px;animation:fadeUp .5s ease both .55s}
-.sp-tag{font-size:14px;color:rgba(255,255,255,.5);animation:fadeUp .5s ease both .85s;margin-top:8px}
-.sp-skip{font-size:12px;color:rgba(255,255,255,.3);position:absolute;bottom:32px;animation:fadeUp .4s ease both 1.6s}
+/* 🔥 ARC SPLASH */
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #FF2D00, #FF7A00);
+  z-index: 9999;
+
+  transition: opacity 0.6s ease;
+}
+
+.arc-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -2px;
+
+  opacity: 0;
+  transform: scale(0.9);
+
+  animation: arcFadeIn 0.8s ease forwards;
+  text-shadow: 0 0 20px rgba(255,255,255,0.25);
+}
+
+@keyframes arcFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 /* WELCOME */
 .welcome-top{background:#1c3829;padding:48px 28px 36px;display:flex;flex-direction:column;align-items:center;text-align:center;flex-shrink:0}
@@ -307,10 +352,15 @@ body{background:#eceae5;display:flex;align-items:flex-start;justify-content:cent
 </style>
 </head>
 <body>
+  
+  <!-- 🔥 ARC SPLASH -->
+<div id="splash-screen">
+  <h1 class="arc-logo">arc</h1>
+</div>
 <div class="app" id="app">
 
 <!-- SPLASH -->
-<div class="screen active splash" id="s-splash">
+<div class="screen splash" id="s-splash">
   <div class="sp-ring-wrap">
     <svg class="sp-ring" viewBox="0 0 110 110">
       <circle cx="55" cy="55" r="50" fill="none" stroke="rgba(94,203,150,.15)" stroke-width="2.5"/>
@@ -2431,6 +2481,25 @@ document.addEventListener('DOMContentLoaded', function() {
   // Init renders (empty state)
   renderNutrition();
   renderShopping();
+});
+</script>
+
+<script>
+window.addEventListener("load", function() {
+  setTimeout(() => {
+    const splash = document.getElementById("splash-screen");
+
+    // fade out arc splash
+    splash.style.opacity = "0";
+
+    setTimeout(() => {
+      splash.style.display = "none";
+
+      // 👉 show welcome screen
+      document.getElementById("s-welcome").classList.add("active");
+
+    }, 600);
+  }, 1400);
 });
 </script>
 </body>
