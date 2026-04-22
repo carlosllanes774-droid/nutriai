@@ -36,9 +36,9 @@ body{
   align-items: center;
   justify-content: center;
 
-  background: linear-gradient(135deg, #FF2D00, #FF7A00);
-  z-index: 9999;
+  background: #FF4A1C; /* 🔥 solid color instead */
 
+  z-index: 9999;
   transition: opacity 0.6s ease;
 }
 
@@ -351,11 +351,13 @@ body{
 .settings-open-btn:hover{background:#ede9e4}
   /* 🔥 ARC LOGO IMAGE */
 .arc-logo-img {
-  width: 140px;
+  width: 180px;
   height: auto;
 
-  opacity: 0;
-  transform: scale(0.9);
+  opacity: 1;
+
+  /* 🔥 THIS MAKES IT POP */
+  filter: drop-shadow(0 10px 25px rgba(0,0,0,0.35));
 
   animation: arcFadeIn 0.8s ease forwards;
 }
@@ -371,7 +373,7 @@ body{
 <div class="app" id="app">
 
 <!-- SPLASH -->
-<div class="screen splash" id="s-splash" style="display:none;">,
+<div class="screen splash" id="s-splash" style="display:none;">
   <div class="sp-ring-wrap">
     <svg class="sp-ring" viewBox="0 0 110 110">
       <circle cx="55" cy="55" r="50" fill="none" stroke="rgba(94,203,150,.15)" stroke-width="2.5"/>
