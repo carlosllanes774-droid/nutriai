@@ -2460,41 +2460,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 
-// 🔥 SPLASH FIX (THIS WAS MISSING)
-window.addEventListener("load", function () {
+// 🚀 CONFIRM JS RUNS
+console.log("JS RUNNING");
 
+// 🔥 SPLASH (ONLY ONE SYSTEM)
+window.addEventListener("load", () => {
   const splash = document.getElementById("splash-screen");
 
-  if (!splash) return;
+  if (!splash) {
+    console.log("NO SPLASH FOUND");
+    return;
+  }
 
   setTimeout(() => {
     splash.style.opacity = "0";
 
     setTimeout(() => {
       splash.remove();
-
-      document.getElementById("s-welcome").classList.add("active");
-
+      document.getElementById("s-welcome")?.classList.add("active");
+      console.log("SPLASH REMOVED");
     }, 600);
 
-  }, 1800);
-
+  }, 1500);
 });
 
-// 🔥 BASIC NAV (so app actually works)
-document.addEventListener("DOMContentLoaded", function () {
+// 🔥 MAIN APP
+document.addEventListener("DOMContentLoaded", () => {
 
   const el = (id) => document.getElementById(id);
 
+  console.log("DOM LOADED");
+
   // START BUTTON
   el("get-started-btn")?.addEventListener("click", () => {
-    el("s-welcome").classList.remove("active");
-    el("ob").classList.add("active");
+    el("s-welcome")?.classList.remove("active");
+    el("ob")?.classList.add("active");
   });
+
+  // KEEP YOUR ORIGINAL FUNCTIONS WORKING
+  if (typeof renderNutrition === "function") renderNutrition();
+  if (typeof renderShopping === "function") renderShopping();
 
 });
 
-</script>
 </script>
 </body>
 </html>
