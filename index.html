@@ -12,8 +12,27 @@
 }
   
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#f0ede8;display:flex;align-items:flex-start;justify-content:center;padding:24px 12px;min-height:100vh;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-.app{width:100%;max-width:430px;background:#fff;border-radius:28px;overflow:hidden;min-height:780px;position:relative;box-shadow:0 8px 40px rgba(0,0,0,.1)}
+body{background:var(--arc-bg);display:flex;align-items:flex-start;justify-content:center;padding:24px 12px;min-height:100vh;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.app {
+  width:100%;
+  max-width:430px;
+  background:#fff;
+  border-radius:28px;
+  overflow:hidden;
+  min-height:780px;
+  position:relative;
+  box-shadow:0 8px 40px rgba(0,0,0,.1);
+
+  /* 🔥 animation start state */
+  transform: scale(0.98);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.app.show {
+  transform: scale(1);
+  opacity: 1;
+}
 .screen{display:none;flex-direction:column;min-height:780px}.screen.active{display:flex}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -32,7 +51,7 @@ body{background:#f0ede8;display:flex;align-items:flex-start;justify-content:cent
   align-items: center;
   justify-content: center;
 
-  background: #FF4A1C;
+  background: rgba(255, 74, 28, 0.88);
 
   z-index: 9999;
 
@@ -42,11 +61,11 @@ body{background:#f0ede8;display:flex;align-items:flex-start;justify-content:cent
 }
 
 .arc-logo-text {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 64px;
   font-weight: 700;
   color: white;
-  letter-spacing: -2px;
+  letter-spacing: -3px;
 
   opacity: 0;
   transform: scale(0.9);
@@ -2477,6 +2496,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 window.addEventListener("load", function() {
+
+  // Splash animation
   setTimeout(() => {
     const splash = document.getElementById("splash-screen");
 
@@ -2486,9 +2507,17 @@ window.addEventListener("load", function() {
     setTimeout(() => {
       splash.style.display = "none";
       document.getElementById("s-welcome").classList.add("active");
+      document.getElementById("app").classList.add("show");
     }, 600);
 
-  }, 2000); // slightly longer
+  }, 2000);
+
+  // ✅ FIXED: button event inside load
+  document.getElementById("get-started-btn").addEventListener("click", function() {
+    document.getElementById("s-welcome").classList.remove("active");
+    document.getElementById("ob").classList.add("active");
+  });
+
 });
 </script>
 </body>
