@@ -968,7 +968,7 @@ function hideAI() { el('ai-overlay').style.display = 'none'; }
 function callAI(system, userMsg, maxTok, callback) {
   maxTok = maxTok || 1200;
 
-  fetch('https://Arc-qevt.onrender.com/api/ai', {
+  fetch('https://nutriai-backend-44mg.onrender.com', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
