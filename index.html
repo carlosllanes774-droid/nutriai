@@ -837,6 +837,7 @@ var locDetected = false;
 var useCustom   = false;
 var obStep      = 1;
 var htDigits    = '';
+var recipeGenId = 0;
 
 // ── Utility helpers ───────────────────────────────────────────
 function el(id) { return document.getElementById(id); }
@@ -928,15 +929,19 @@ function getSlots() {
 }
 
 function showScreen(id) {
+  var target = el(id);
+  if (!target) return;
   var screens = document.querySelectorAll('.screen');
   for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
-  el(id).classList.add('active');
+  target.classList.add('active');
 }
 
 function tab(t) {
   var map  = {recipes:'s-recipes',planner:'s-planner',nutrition:'s-nutrition',shopping:'s-shopping',log:'s-log'};
+  var sid  = map[t];
+  if (!sid) return;
   var keys = ['recipes','planner','nutrition','shopping','log'];
-  showScreen(map[t]);
+  showScreen(sid);
   var btns = document.querySelectorAll('.nbtn');
   for (var i = 0; i < btns.length; i++) {
     if (keys[i % keys.length] === t) btns[i].classList.add('active');
@@ -972,9 +977,31 @@ function callAI(system, userMsg, maxTok, callback) {
       messages: [{ role: "user", content: userMsg }]
     })
   })
-  .then(function(resp) { return resp.json(); })
-  .then(function(data) {
-    if (data.error) { callback(new Error(data.error.message || 'API error'), null); return; }
+  .then(function(resp) {
+    return resp.json().then(function(data) {
+      return { ok: resp.ok, status: resp.status, data: data };
+    }, function() {
+      return { ok: resp.ok, status: resp.status, data: {}, badJson: true };
+    });
+  })
+  .then(function(result) {
+    if (result.badJson) {
+      callback(new Error(result.ok ? 'Could not read server response' : 'Request failed (HTTP ' + (result.status || '?') + ')'), null);
+      return;
+    }
+    var data = result.data;
+    if (!result.ok) {
+      var e = data && data.error;
+      var msg = typeof e === 'string' ? e : (e && e.message);
+      if (!msg) msg = 'Request failed (HTTP ' + (result.status || '?') + ')';
+      callback(new Error(msg), null);
+      return;
+    }
+    if (data.error) {
+      var err = data.error;
+      callback(new Error(typeof err === 'string' ? err : (err.message || 'API error')), null);
+      return;
+    }
 
     var text = "";
 
@@ -1195,6 +1222,7 @@ var stepMeta = [
 ];
 
 function goStep(n) {
+  if (n < 1 || n > 3) return;
   el('st' + obStep).classList.remove('active');
   obStep = n;
   el('st' + n).classList.add('active');
@@ -1263,6 +1291,7 @@ function genAnim(i, state) {
 
 // ── Recipe generation ─────────────────────────────────────────
 function generateRecipes() {
+  var myGen = ++recipeGenId;
   for (var x = 0; x < 4; x++) genAnim(x, '');
   genAnim(0, 'active');
 
@@ -1311,6 +1340,7 @@ function generateRecipes() {
   userMsg += 'Output ONLY the JSON array. Begin your response with [ and nothing else.';
 
   function processRecipes(err, raw) {
+    if (myGen !== recipeGenId) return;
     genAnim(1, 'done');
     genAnim(2, 'active');
 
@@ -1338,6 +1368,7 @@ function generateRecipes() {
       });
     } else {
       // Backend returned an error — show it to the user
+      if (myGen !== recipeGenId) return;
       showScreen('s-recipes');
       el('recipes-list').innerHTML = '<div style="padding:24px;text-align:center"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:15px;font-weight:600;color:#111;margin-bottom:6px">Could not load recipes</div><div style="font-size:13px;color:#9ca3af;line-height:1.5">' + (err ? err.message : 'The server returned an unexpected response. Check that your backend is running.') + '</div></div>';
       return;
@@ -1347,8 +1378,10 @@ function generateRecipes() {
     genAnim(3, 'active');
 
     setTimeout(function() {
+      if (myGen !== recipeGenId) return;
       genAnim(3, 'done');
       setTimeout(function() {
+        if (myGen !== recipeGenId) return;
         renderRecipes();
         renderPlanner();
         renderNutrition();
@@ -2393,16 +2426,6 @@ document.addEventListener('DOMContentLoaded', function() {
     generateRecipes();
   });
 
-  // Splash
-  function advSplash() {
-    var s = el('s-splash');
-    s.style.transition = 'opacity .4s';
-    s.style.opacity    = '0';
-    setTimeout(function() { s.classList.remove('active'); el('s-welcome').classList.add('active'); }, 400);
-  }
-  setTimeout(advSplash, 2500);
-  el('s-splash').addEventListener('click', advSplash);
-
   // Welcome → Onboarding
   el('get-started-btn').addEventListener('click', function() {
     el('s-welcome').classList.remove('active');
@@ -2462,7 +2485,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (obStep < 3) { if (valStep(obStep)) goStep(obStep + 1); }
     else            { if (valStep(3))      finishOB(); }
   });
-  el('ob-back').addEventListener('click', function() { clearErr(); goStep(obStep - 1); });
+  el('ob-back').addEventListener('click', function() { if (obStep <= 1) return; clearErr(); goStep(obStep - 1); });
 
   // Category tabs
   setupCatTabs();
@@ -2501,31 +2524,23 @@ document.addEventListener('DOMContentLoaded', function() {
   renderShopping();
 });
   
-window.addEventListener("load", () => {
-  const splash = document.getElementById("splash-screen");
-
+window.addEventListener("load", function() {
+  var splash = document.getElementById("splash-screen");
   if (!splash) {
-    console.log("no splash");
+    var w = document.getElementById("s-welcome");
+    if (w) w.classList.add("active");
     return;
   }
 
-  console.log("splash running");
-
-  setTimeout(() => {
+  setTimeout(function() {
     splash.style.opacity = "0";
 
-    setTimeout(() => {
+    setTimeout(function() {
       splash.remove();
 
-      const welcome = document.getElementById("s-welcome");
-      if (welcome) {
-        welcome.classList.add("active");
-      }
-
-      console.log("done");
-
+      var welcome = document.getElementById("s-welcome");
+      if (welcome) welcome.classList.add("active");
     }, 600);
-
   }, 1500);
 });
 </script>
