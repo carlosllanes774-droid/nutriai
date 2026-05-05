@@ -1295,6 +1295,83 @@ function genAnim(i, state) {
   txt.className = 'gst' + (state === 'done' ? ' done' : state === 'active' ? ' active' : '');
 }
 
+// Builds strict, non-optional dietary language for the recipe-generation prompt.
+function buildMandatoryDietPrompt(restrictions, dislikeRaw) {
+  var sel = (restrictions || []).filter(function(r) { return r && r !== 'None'; });
+  var has = {};
+  for (var i = 0; i < sel.length; i++) has[sel[i]] = true;
+
+  var lines = [];
+
+  if (has['Vegan']) {
+    lines.push(
+      'ALL recipes MUST be 100% vegan. Do not include any meat, dairy, eggs, or animal products. ' +
+      'No poultry, fish, shellfish, honey, gelatin, animal rennet, fish sauce, anchovy, or any animal-derived additive.'
+    );
+  } else if (has['Vegetarian']) {
+    lines.push(
+      'ALL recipes MUST be vegetarian: no meat, poultry, fish, or shellfish. ' +
+      'Eggs and dairy are allowed ONLY if they do not conflict with any other mandatory restriction below.'
+    );
+  }
+
+  if (has['Gluten-free']) {
+    lines.push(
+      'ALL recipes MUST be strictly gluten-free: no wheat, barley, rye, or regular oats; no gluten-containing sauces, soy sauce (unless tamari GF), flour thickeners, malt, or beer unless explicitly gluten-free substitutes are named.'
+    );
+  }
+
+  if (has['Dairy-free'] && !has['Vegan']) {
+    lines.push(
+      'ALL recipes MUST be dairy-free: no milk, butter, cheese, cream, whey, casein, yogurt, ghee from dairy, or lactose.'
+    );
+  }
+
+  if (has['Nut allergy']) {
+    lines.push(
+      'ALL recipes MUST be completely peanut- and tree-nut-free: no peanuts, almonds, walnuts, cashews, pistachios, hazelnuts, pecans, macadamia, nut flours, nut oils, nut milks, or nut-based sauces.'
+    );
+  }
+
+  if (has['Halal']) {
+    lines.push(
+      'ALL recipes MUST be halal: no pork or pork products, no alcohol (including wine, beer, spirits, extracts based on alcohol), and no non-halal animal ingredients.'
+    );
+  }
+
+  if (has['Keto']) {
+    lines.push(
+      'ALL recipes MUST be ketogenic: very low net carbohydrates, high fat, moderate protein; no sugar, grains, or high-starch ingredients incompatible with keto unless substituted appropriately.'
+    );
+  }
+
+  if (has['Paleo']) {
+    lines.push(
+      'ALL recipes MUST be paleo-compliant: no grains, legumes, refined sugar, or dairy; use only paleo-appropriate fats and whole-food ingredients.'
+    );
+  }
+
+  var out = '\n\n=== MANDATORY DIETARY COMPLIANCE (NON-NEGOTIABLE FOR EVERY RECIPE) ===\n';
+  out += 'These rules override all other preferences. Violating any rule is unacceptable.\n';
+  if (lines.length) {
+    for (var j = 0; j < lines.length; j++) {
+      out += (j + 1) + '. ' + lines[j] + '\n';
+    }
+  } else {
+    out += '1. Follow general healthy cooking; no named diet restrictions were selected beyond dislikes below.\n';
+  }
+
+  var d = (dislikeRaw || '').trim();
+  if (d) {
+    out += '\nDISLIKES — MUST NOT appear in any recipe (names, ing lists, or steps):\n';
+    out += d + '\n';
+    out += 'Treat every listed item as a hard ban, not a suggestion.\n';
+  }
+
+  out += '\nCompliance check: before outputting JSON, verify each of the 28 recipes satisfies EVERY rule in this section.\n';
+  return out;
+}
+
 // ── Recipe generation ─────────────────────────────────────────
 function generateRecipes() {
   var myGen = ++recipeGenId;
@@ -1305,7 +1382,6 @@ function generateRecipes() {
   var macros     = UP.macros || getMacroTargets(calT);
   var restr      = (UP.restrictions || []).filter(function(r) { return r !== 'None'; }).join(', ') || 'none';
   var cuis       = (UP.cuisines     || []).join(', ') || 'varied international';
-  var dislikeStr = UP.dislikes || 'none';
   var budgetNote = {'Budget':'$3-7/serving','Moderate':'$5-12/serving','Flexible':'any price range'}[UP.budget] || 'moderate';
   var skillNote  = {'Beginner':'Use max 5 ingredients, simple techniques (no sautéing, braising, or multi-step processes)','Home cook':'Standard home cooking techniques','Confident chef':'Any technique including advanced methods'}[UP.skill] || 'standard techniques';
 
@@ -1315,7 +1391,8 @@ function generateRecipes() {
   var sysMsg = 'You are an expert nutritionist and chef. You MUST respond with ONLY a valid JSON array. ' +
                'No markdown, no code fences, no explanation before or after. ' +
                'Start your response with [ and end with ]. ' +
-               'Every recipe object MUST have all required fields including a "steps" array with 5-8 strings.';
+               'Every recipe object MUST have all required fields including a "steps" array with 5-8 strings. ' +
+               'Every recipe MUST comply 100% with the user MANDATORY DIETARY COMPLIANCE section—never relax it.';
 
   var userMsg = 'Generate exactly 28 personalised recipes for this user profile:\n';
   userMsg += 'Name: ' + UP.name + '\n';
@@ -1326,8 +1403,8 @@ function generateRecipes() {
   userMsg += 'Cooking skill: ' + UP.skill + ' — ' + skillNote + '\n';
   userMsg += 'Budget: ' + UP.budget + ' (' + budgetNote + ')\n';
   userMsg += 'Preferred cuisines: ' + cuis + '\n';
-  userMsg += 'Dietary restrictions (STRICTLY avoid): ' + restr + '\n';
-  userMsg += 'Foods to avoid: ' + dislikeStr + '\n\n';
+  userMsg += 'Selected diet tags (for reference; follow the MANDATORY block below, not this line alone): ' + restr + '\n';
+  userMsg += buildMandatoryDietPrompt(UP.restrictions, UP.dislikes);
   userMsg += 'Distribution: exactly 7 Breakfast, 7 Lunch, 7 Dinner, 7 Snack\n';
   userMsg += 'Snacks must be 80-300 calories each.\n\n';
   userMsg += 'REQUIRED JSON format — every field is mandatory:\n';
@@ -1335,13 +1412,14 @@ function generateRecipes() {
   userMsg += '"tags":["High protein","Quick"],"ing":["Chicken breast","Rice","Broccoli"],';
   userMsg += '"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},';
   userMsg += '"steps":["Step 1 specific action.","Step 2 specific action.","Step 3 specific action.","Step 4 specific action.","Step 5 specific action."]}]\n\n';
+  userMsg += 'The example "ing" line is JSON shape only—your actual ingredients MUST respect the MANDATORY DIETARY COMPLIANCE section (e.g. no animal products for vegan).\n\n';
   userMsg += 'STRICT RULES:\n';
-  userMsg += '1. Avoid ALL of these: ' + restr + (dislikeStr !== 'none' ? ', ' + dislikeStr : '') + '\n';
+  userMsg += '1. Each recipe MUST fully satisfy the MANDATORY DIETARY COMPLIANCE section and all dislikes—ingredient names, amounts, and steps must comply; if a concept would break a rule, pick a different compliant recipe.\n';
   userMsg += '2. steps array MUST have 5-8 specific actionable instructions (not vague placeholders like "cook until done")\n';
   userMsg += '3. ingQty must list EVERY item in ing with realistic amounts\n';
   userMsg += '4. cal, p, c, f must be accurate for the listed ingredients and quantities\n';
   userMsg += '5. price is USD cost per serving — match the budget: ' + budgetNote + '\n';
-  userMsg += '6. Vary proteins, cooking methods, and cuisines across all 28 recipes\n';
+  userMsg += '6. Vary proteins, cooking methods, and cuisines across all 28 recipes (only using compliant ingredients)\n';
   userMsg += '7. difficulty must be one of: Easy, Medium, Hard\n\n';
   userMsg += 'Output ONLY the JSON array. Begin your response with [ and nothing else.';
 
