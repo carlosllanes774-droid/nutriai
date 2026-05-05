@@ -1209,8 +1209,46 @@ function callAIWithRetry(system, userMsg, maxTok, callback, retries) {
 // ── Height helpers ────────────────────────────────────────────
 function fmtHt(d) {
   if (!d) return '';
-  if (d.length === 1) return d + "'";
+  if (d.length === 1) return d;
   return d[0] + "'" + d.slice(1) + '"';
+}
+
+function formatHeightFromDigits(digits) {
+  var d = String(digits || '').replace(/\D/g, '').slice(0, 3);
+  if (!d) return '';
+  if (d.length === 1) return d;
+  if (d.length === 2) return d[0] + "'" + d[1];
+  return d[0] + "'" + d.slice(1);
+}
+
+function normalizeHeightInput(rawValue, caretPos) {
+  var raw = String(rawValue || '').replace(/[^\d'"’′”″]/g, '');
+  var leftRaw = raw.slice(0, Math.max(0, caretPos || 0));
+  var digits = raw.replace(/\D/g, '');
+  var leftDigits = leftRaw.replace(/\D/g, '');
+
+  // Keep it lightweight: typed digits represent ft+in, max 3 digits.
+  digits = digits.slice(0, 3);
+  leftDigits = leftDigits.slice(0, 3);
+
+  // Enforce 4'0 to 7'11
+  while (digits.length && (digits[0] < '4' || digits[0] > '7')) {
+    digits = digits.slice(1);
+  }
+  if (digits.length >= 3) {
+    var inches = parseInt(digits.slice(1), 10);
+    if (inches > 11) digits = digits.slice(0, 2);
+  }
+
+  var formatted = formatHeightFromDigits(digits);
+  var targetDigitPos = Math.min(leftDigits.length, digits.length);
+  var caret = 0, seenDigits = 0;
+  while (caret < formatted.length && seenDigits < targetDigitPos) {
+    if (/\d/.test(formatted.charAt(caret))) seenDigits++;
+    caret++;
+  }
+
+  return { value: formatted, digits: digits, caret: caret };
 }
 
 function parseHeightInput(rawHeight) {
@@ -1221,7 +1259,7 @@ function parseHeightInput(rawHeight) {
   var fi = cleaned.match(/^(\d{1})['’′](\d{1,2})(?:["”″])?$/);
   if (fi) {
     var ft = parseInt(fi[1], 10), inch = parseInt(fi[2], 10);
-    if (ft >= 3 && ft <= 8 && inch >= 0 && inch <= 11) {
+    if (ft >= 4 && ft <= 7 && inch >= 0 && inch <= 11) {
       var total = ft * 12 + inch;
       return {ok:true, inches: total, cm: +(total * 2.54).toFixed(1), display: ft + "'" + inch + '"'};
     }
@@ -1230,10 +1268,10 @@ function parseHeightInput(rawHeight) {
   var num = cleaned.match(/^\d{2,3}$/);
   if (num) {
     var n = parseInt(cleaned, 10);
-    if (n >= 48 && n <= 96) {
+    if (n >= 48 && n <= 95) {
       return {ok:true, inches: n, cm: +(n * 2.54).toFixed(1), display: Math.floor(n / 12) + "'" + (n % 12) + '"'};
     }
-    if (n >= 122 && n <= 244) {
+    if (n >= 122 && n <= 241) {
       var inchesFromCm = +(n / 2.54).toFixed(1);
       return {ok:true, inches: inchesFromCm, cm: n, display: Math.floor(inchesFromCm / 12) + "'" + Math.round(inchesFromCm % 12) + '"'};
     }
@@ -1246,9 +1284,12 @@ function setupHeightInput() {
   if (!htI) return;
 
   htI.addEventListener('input', function() {
-    var raw = this.value.replace(/[^\d'"’′”″]/g, '');
-    if (raw !== this.value) this.value = raw;
-    htDigits = raw;
+    var norm = normalizeHeightInput(this.value, this.selectionStart || 0);
+    this.value = norm.value;
+    htDigits = norm.digits;
+    if (document.activeElement === this && typeof this.setSelectionRange === 'function') {
+      this.setSelectionRange(norm.caret, norm.caret);
+    }
     if (this.classList.contains('err')) this.classList.remove('err');
   });
 }
