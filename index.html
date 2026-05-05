@@ -752,6 +752,7 @@ body{
 
   </div><!-- /settings-body -->
   <div class="settings-footer">
+    <button type="button" class="btn-outline" id="s-reset-data" style="width:100%;margin-bottom:10px;border-radius:14px">Clear saved data &amp; restart</button>
     <button class="btn-dark btn" id="s-save" style="width:100%;border-radius:14px">✓ Save Profile</button>
   </div>
 </div><!-- /settings-sheet -->
@@ -838,6 +839,103 @@ var useCustom   = false;
 var obStep      = 1;
 var htDigits    = '';
 var recipeGenId = 0;
+var arcRestoredFromStorage = false;
+
+var LS_PROFILE = 'userProfile';
+var LS_SESSION = 'nutriai_session';
+
+function persistAppData() {
+  try {
+    UP.useCustom = useCustom;
+    UP.locDetected = locDetected;
+    var bundle = {
+      profile: UP,
+      app: {
+        recipes: recipes,
+        mealPlan: mealPlan,
+        addedRecipes: addedRecipes,
+        checked: checked,
+        activeCat: activeCat,
+        useCustom: useCustom,
+        locDetected: locDetected
+      }
+    };
+    localStorage.setItem(LS_PROFILE, JSON.stringify(bundle));
+    localStorage.removeItem(LS_SESSION);
+  } catch (e) {}
+}
+
+function saveUserProfile() {
+  persistAppData();
+}
+
+function saveSessionState() {
+  persistAppData();
+}
+
+function clearAllPersistedData() {
+  try {
+    localStorage.removeItem(LS_PROFILE);
+    localStorage.removeItem(LS_SESSION);
+  } catch (e) {}
+}
+
+function applyProfileToUIBar() {
+  var name = ((UP.name || 'Friend') + '').trim() || 'Friend';
+  var initials = name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2) || (name[0] || '?').toUpperCase();
+  el('u-av').textContent   = initials;
+  el('u-name').textContent = 'Hey ' + name.split(' ')[0] + '!';
+  el('u-goal').textContent = 'Goal: ' + (UP.goal || '') + ' · ' + (UP.activity || '');
+  var calDisplay = (UP.useCustom && UP.customCal) ? (UP.customCal + ' cal') : ((UP.tdee || 1800) + ' cal');
+  el('u-cal').textContent = calDisplay;
+  el('api-badge').style.display = 'block';
+}
+
+function restorePersistedState() {
+  try {
+    var pr = localStorage.getItem(LS_PROFILE);
+    if (!pr) return false;
+    var o = JSON.parse(pr);
+    if (!o || typeof o !== 'object') return false;
+
+    if (o.profile && o.app) {
+      for (var k in o.profile) {
+        if (Object.prototype.hasOwnProperty.call(o.profile, k)) UP[k] = o.profile[k];
+      }
+      var a = o.app;
+      if (Array.isArray(a.recipes)) recipes = a.recipes;
+      if (a.mealPlan && typeof a.mealPlan === 'object') mealPlan = a.mealPlan;
+      if (a.addedRecipes && typeof a.addedRecipes === 'object') addedRecipes = a.addedRecipes;
+      if (a.checked && typeof a.checked === 'object') checked = a.checked;
+      if (a.activeCat) activeCat = a.activeCat;
+      if (typeof a.useCustom === 'boolean') useCustom = a.useCustom;
+      if (typeof a.locDetected === 'boolean') locDetected = a.locDetected;
+    } else {
+      for (var k2 in o) {
+        if (Object.prototype.hasOwnProperty.call(o, k2)) UP[k2] = o[k2];
+      }
+      useCustom = !!UP.useCustom;
+      locDetected = !!UP.locDetected;
+      var sr = localStorage.getItem(LS_SESSION);
+      if (sr) {
+        var s = JSON.parse(sr);
+        if (Array.isArray(s.recipes)) recipes = s.recipes;
+        if (s.mealPlan && typeof s.mealPlan === 'object') mealPlan = s.mealPlan;
+        if (s.addedRecipes && typeof s.addedRecipes === 'object') addedRecipes = s.addedRecipes;
+        if (s.checked && typeof s.checked === 'object') checked = s.checked;
+        if (s.activeCat) activeCat = s.activeCat;
+        if (typeof s.useCustom === 'boolean') useCustom = s.useCustom;
+        if (typeof s.locDetected === 'boolean') locDetected = s.locDetected;
+      }
+    }
+
+    DAYS.forEach(function(d) { if (!mealPlan[d]) mealPlan[d] = {}; });
+    arcRestoredFromStorage = true;
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 // ── Utility helpers ───────────────────────────────────────────
 function el(id) { return document.getElementById(id); }
@@ -1272,15 +1370,10 @@ function finishOB() {
 
   DAYS.forEach(function(d) { mealPlan[d] = {}; });
 
-  var initials = name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2) || name[0].toUpperCase();
-  el('u-av').textContent   = initials;
-  el('u-name').textContent = 'Hey ' + name.split(' ')[0] + '!';
-  el('u-goal').textContent = 'Goal: ' + UP.goal + ' · ' + UP.activity;
+  UP.locDetected = locDetected;
+  saveUserProfile();
 
-  var calDisplay = (UP.useCustom && UP.customCal) ? (UP.customCal + ' cal') : (UP.tdee + ' cal');
-  el('u-cal').textContent = calDisplay;
-
-  el('api-badge').style.display = 'block';
+  applyProfileToUIBar();
 
   showScreen('s-gen');
   generateRecipes();
@@ -1450,6 +1543,7 @@ function generateRecipes() {
           steps:      Array.isArray(r.steps) ? r.steps : []
         };
       });
+      saveSessionState();
     } else {
       // Backend returned an error — show it to the user
       if (myGen !== recipeGenId) return;
@@ -1471,12 +1565,20 @@ function generateRecipes() {
         renderNutrition();
         renderShopping();
         showScreen('s-recipes');
+        saveSessionState();
       }, 400);
     }, 600);
   }
 
   // Try with retries
   callAIWithRetry(sysMsg, userMsg, 8000, processRecipes, 3);
+}
+
+function syncCatTabsUI() {
+  var all = document.querySelectorAll('.ct');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.toggle('active', all[i].dataset.cat === activeCat);
+  }
 }
 
 // ── Category tabs ─────────────────────────────────────────────
@@ -1542,6 +1644,7 @@ function renderRecipes() {
     cookBtns[c].addEventListener('click', function() { openRM(parseInt(this.dataset.id, 10)); });
   }
   updateNextBar();
+  saveSessionState();
 }
 
 function updateNextBar() {
@@ -1843,6 +1946,7 @@ function renderPlanner() {
     });
   }
   updatePlannerBar();
+  saveSessionState();
 }
 
 function updatePlannerBar() {
@@ -2241,6 +2345,7 @@ function renderShopping() {
     el('shop-total').style.display  = 'none';
     el('price-disc').style.display  = 'none';
     el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Add recipes to generate your list</div>';
+    saveSessionState();
     return;
   }
 
@@ -2286,6 +2391,7 @@ function renderShopping() {
       renderShopping();
     });
   }
+  saveSessionState();
 }
 
 // ── Food log ──────────────────────────────────────────────────
@@ -2474,24 +2580,32 @@ function applySettingsProfile() {
   UP.tdee   = calcTDEE();
   UP.macros = getMacroTargets(getCalTarget());
 
-  // Refresh user bar
-  var first = UP.name.split(' ')[0];
-  var initials = UP.name.split(' ').map(function(w){ return w[0]||''; }).join('').toUpperCase().slice(0,2) || UP.name[0].toUpperCase();
-  el('u-av').textContent   = initials;
-  el('u-name').textContent = 'Hey ' + first + '!';
-  el('u-goal').textContent = 'Goal: ' + UP.goal + ' · ' + UP.activity;
-  var calDisp = (UP.useCustom && UP.customCal) ? (UP.customCal + ' cal') : (UP.tdee + ' cal');
-  el('u-cal').textContent = calDisp;
+  applyProfileToUIBar();
 
   renderNutrition();
   renderSettingsTargets();
   settingsDirty = false;
   el('s-regen-card').style.display = 'none';
+  saveUserProfile();
   showToast('Profile saved ✓');
 }
 
 // ── Wire everything up on DOMContentLoaded ────────────────────
 document.addEventListener('DOMContentLoaded', function() {
+
+  restorePersistedState();
+  if (arcRestoredFromStorage) {
+    applyProfileToUIBar();
+    showScreen('s-recipes');
+    tab('recipes');
+    syncCatTabsUI();
+    renderRecipes();
+    renderPlanner();
+    renderNutrition();
+    renderShopping();
+    updateNextBar();
+    updatePlannerBar();
+  }
 
   // ── Settings events ───────────────────────────────────────
   el('settings-btn').addEventListener('click', openSettings);
@@ -2506,8 +2620,15 @@ document.addEventListener('DOMContentLoaded', function() {
     closeSettings();
     recipes = []; addedRecipes = {}; checked = {};
     DAYS.forEach(function(d) { mealPlan[d] = {}; });
+    saveUserProfile();
     showScreen('s-gen');
     generateRecipes();
+  });
+
+  el('s-reset-data').addEventListener('click', function() {
+    if (!confirm('Clear all saved data and restart the app?')) return;
+    clearAllPersistedData();
+    location.reload();
   });
 
   // Welcome → Onboarding
@@ -2603,16 +2724,18 @@ document.addEventListener('DOMContentLoaded', function() {
   el('log-send').addEventListener('click', sendLog);
   el('log-inp').addEventListener('keydown', function(e) { if (e.key === 'Enter') sendLog(); });
 
-  // Init renders (empty state)
-  renderNutrition();
-  renderShopping();
+  // Init renders (empty state if no saved session)
+  if (!arcRestoredFromStorage) {
+    renderNutrition();
+    renderShopping();
+  }
 });
   
 window.addEventListener("load", function() {
   var splash = document.getElementById("splash-screen");
   if (!splash) {
     var w = document.getElementById("s-welcome");
-    if (w) w.classList.add("active");
+    if (w && !arcRestoredFromStorage) w.classList.add("active");
     return;
   }
 
@@ -2623,7 +2746,7 @@ window.addEventListener("load", function() {
       splash.remove();
 
       var welcome = document.getElementById("s-welcome");
-      if (welcome) welcome.classList.add("active");
+      if (welcome && !arcRestoredFromStorage) welcome.classList.add("active");
     }, 600);
   }, 1500);
 });
