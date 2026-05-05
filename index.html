@@ -965,10 +965,23 @@ function showAI(title, sub) {
 function hideAI() { el('ai-overlay').style.display = 'none'; }
 
 // ── AI helpers — all requests go through the backend ──────────
+function extractAiResponseText(data) {
+  if (!data || data.content == null) return '';
+  var c = data.content;
+  if (typeof c === 'string') return c;
+  if (!Array.isArray(c) || c.length === 0) return '';
+  var out = [];
+  for (var i = 0; i < c.length; i++) {
+    var b = c[i];
+    if (b && typeof b.text === 'string' && b.text.length) out.push(b.text);
+  }
+  return out.join('');
+}
+
 function callAI(system, userMsg, maxTok, callback) {
   maxTok = maxTok || 1200;
 
-  fetch('https://nutriai-backend-44mg.onrender.com', {
+  fetch('https://nutriai-backend-44mg.onrender.com/api/ai', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -1003,17 +1016,10 @@ function callAI(system, userMsg, maxTok, callback) {
       return;
     }
 
-    var text = "";
-
-    if (data && data.content && data.content.length > 0) {
-      text = data.content
-        .filter(function(b) { return b.type === "text"; })
-        .map(function(b) { return b.text || ""; })
-        .join("");
-    }
+    var text = extractAiResponseText(data).trim();
 
     if (!text) {
-      callback(new Error("No valid response from AI"), null);
+      callback(new Error('No message text in API response (expected content[0].text or text blocks).'), null);
       return;
     }
 
