@@ -42,7 +42,26 @@ body{
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 .app{width:100%;max-width:430px;background: var(--arc-card);border-radius:28px;overflow:hidden;min-height:780px;position:relative;box-shadow:var(--shadow-md)}
-.screen{display:none;flex-direction:column;min-height:780px}.screen.active{display:flex}
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  min-height:780px;
+  opacity:0;
+  transform:translateX(18px);
+  pointer-events:none;
+  z-index:0;
+  will-change:transform,opacity;
+  transition:
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.screen.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:3}
+.screen.enter-from-right{transform:translateX(18px);opacity:0}
+.screen.enter-from-left{transform:translateX(-18px);opacity:0}
+.screen.exit-to-left{transform:translateX(-18px);opacity:0;pointer-events:none}
+.screen.exit-to-right{transform:translateX(18px);opacity:0;pointer-events:none}
 @keyframes spIn{from{transform:scale(0) rotate(-15deg);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes fadeUp{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes ringDraw{from{stroke-dashoffset:314}to{stroke-dashoffset:0}}
@@ -98,6 +117,11 @@ body{
   100% {
     transform: scale(1);
   }
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* WELCOME */
@@ -191,12 +215,12 @@ body{
 }
 
 .btn-dark:active {
-  transform: scale(.98);
+  transform: scale(.97);
 }
 .btn-ghost{background:transparent;color:var(--arc-subtext);border:1.5px solid transparent;min-width:90px}.btn-ghost:hover{background:var(--arc-surface)}
 /* kept for backward compatibility; now mapped to primary style */
 .btn-green{background:var(--arc-primary);color:#fff;width:100%;padding:12px;border-radius:12px;font-size:15px;font-weight:650;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,box-shadow .15s;box-shadow:var(--shadow-sm)}
-.btn-green:hover{background:var(--arc-primary-dark)}.btn-green:active{transform:scale(.98)}
+.btn-green:hover{background:var(--arc-primary-dark)}.btn-green:active{transform:scale(.97)}
 .btn-outline{background:transparent;color:var(--arc-subtext);border:1.5px solid var(--arc-border);width:100%;padding:12px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer}.btn-outline:hover{background:var(--arc-surface)}
 
   
@@ -383,6 +407,26 @@ body{
 .ai-spinner{width:48px;height:48px;border:3px solid var(--arc-soft-primary);border-top-color:var(--arc-primary);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:18px}
 .toast{position:absolute;top:20px;left:50%;transform:translateX(-50%);background:var(--arc-primary);color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;opacity:0;transition:opacity .3s;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1}
+button:active{transform:scale(.97)}
+
+@media (hover:hover){
+  .today-card:hover,
+  .rc:hover,
+  .day-card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-md);
+  }
+}
+
+.today-card,
+.rc,
+.day-card{
+  transition:
+    transform 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation:cardFadeIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 /* CLAUDE BADGE */
 .claude-badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--arc-soft-primary);color:var(--arc-primary-dark);letter-spacing:.04em;white-space:nowrap;border:1px solid #f1d8cf}
@@ -912,6 +956,7 @@ var useCustom   = false;
 var obStep      = 1;
 var htDigits    = '';
 var recipeGenId = 0;
+var currentTab  = 'today';
 var arcRestoredFromStorage = false;
 if (!UP.mealFeedback || typeof UP.mealFeedback !== 'object') UP.mealFeedback = {};
 
@@ -1240,12 +1285,32 @@ function formatNutritionPromptBlock(mt, calT, macros) {
   return lines.join('\n') + '\n';
 }
 
-function showScreen(id) {
+function showScreen(id, dir) {
   var target = el(id);
   if (!target) return;
-  var screens = document.querySelectorAll('.screen');
-  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  var from = document.querySelector('.screen.active');
+  var direction = dir || 'forward';
+
+  if (!from) {
+    target.classList.add('active');
+    return;
+  }
+  if (from === target) return;
+
+  from.classList.remove('enter-from-left', 'enter-from-right', 'exit-to-left', 'exit-to-right');
+  target.classList.remove('enter-from-left', 'enter-from-right', 'exit-to-left', 'exit-to-right');
+
   target.classList.add('active');
+  target.classList.add(direction === 'back' ? 'enter-from-left' : 'enter-from-right');
+  from.classList.add(direction === 'back' ? 'exit-to-right' : 'exit-to-left');
+
+  requestAnimationFrame(function() {
+    target.classList.remove('enter-from-left', 'enter-from-right');
+  });
+
+  setTimeout(function() {
+    from.classList.remove('active', 'exit-to-left', 'exit-to-right');
+  }, 320);
 }
 
 function tab(t) {
@@ -1253,7 +1318,11 @@ function tab(t) {
   var sid  = map[t];
   if (!sid) return;
   var keys = ['today','recipes','planner','nutrition','shopping','log'];
-  showScreen(sid);
+  var nextIdx = keys.indexOf(t);
+  var curIdx  = keys.indexOf(currentTab);
+  var dir = (curIdx !== -1 && nextIdx < curIdx) ? 'back' : 'forward';
+  showScreen(sid, dir);
+  currentTab = t;
   if (t === 'today') renderToday();
   var btns = document.querySelectorAll('.nbtn');
   for (var i = 0; i < btns.length; i++) {
