@@ -232,23 +232,33 @@ body{
 .nav{display:flex;border-top:1px solid var(--arc-border);background:var(--arc-card);flex-shrink:0}
 .nbtn{flex:1;padding:10px 4px 12px;font-size:10px;font-weight:600;color:#9ca3af;cursor:pointer;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;text-transform:uppercase;letter-spacing:.05em;transition:color .15s}
 .nbtn.active{color:var(--arc-primary)}.nic{font-size:20px}
-.today-main{padding:24px 20px}
-.today-main .today-kicker{margin-bottom:6px}
-.today-card{background:rgba(255,255,255,.82);border:none;border-radius:18px;padding:16px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
-.today-kicker{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.today-name{font-size:26px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.2;margin-bottom:8px}
-.today-meta{font-size:13px;color:var(--arc-subtext);display:flex;gap:10px;flex-wrap:wrap}
-.today-empty{font-size:13px;color:#9ca3af;font-style:italic}
-.today-stack{display:flex;flex-direction:column;gap:8px}
-.today-bars{display:flex;flex-direction:column;gap:8px}
-.today-row{display:flex;justify-content:space-between;font-size:11px;color:#6b7280;margin-bottom:4px}
-.today-prog{height:6px;background:#f0ede8;border-radius:4px;overflow:hidden}
-.today-fill{height:100%;background:var(--arc-primary);border-radius:4px;transition:width .3s}
-.today-mini-note{font-size:12px;color:var(--arc-subtext);margin-top:2px}
-.today-actions{display:flex;gap:8px}
-.today-btn{width:38px;height:38px;border:1.5px solid var(--arc-border);border-radius:999px;background:transparent;font-size:16px;font-weight:600;color:var(--arc-subtext);cursor:pointer;display:flex;align-items:center;justify-content:center}
-.today-btn.primary{border-color:var(--arc-primary);background:var(--arc-primary);color:#fff}
-.today-tip{font-size:13px;color:#4b5563;line-height:1.5;background:rgba(248,245,242,.9);border:none;border-radius:12px;padding:12px}
+/* Today — single flowing screen, hero + compact support */
+#s-today .content.today-flow{padding:8px 24px 32px;background:var(--arc-surface)}
+.today-hero{padding:28px 4px 36px;text-align:left}
+.today-hero .today-kicker{font-size:11px;font-weight:600;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.today-name{font-size:32px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.15;margin-bottom:14px;letter-spacing:-.02em}
+.today-meta{font-size:15px;color:var(--arc-subtext);display:flex;gap:12px;flex-wrap:wrap;font-weight:500}
+.today-empty{font-size:15px;color:var(--arc-subtext);font-style:normal;line-height:1.5}
+.today-cook-cta{margin-top:28px;width:100%;padding:17px 22px!important;border-radius:16px!important;font-size:17px!important;font-weight:600!important;min-height:56px;box-shadow:0 8px 24px rgba(227,90,54,.28)}
+.today-cook-cta:disabled{box-shadow:none;opacity:.5}
+.today-foot{margin-top:8px;padding-top:28px;display:flex;flex-direction:column;gap:0}
+.today-progress-row{display:flex;align-items:center;gap:22px;margin-bottom:28px}
+.today-ring-wrap{position:relative;width:92px;height:92px;flex-shrink:0}
+.today-ring-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.today-ring-track{fill:none;stroke:rgba(31,31,31,.08);stroke-width:7}
+.today-ring-bar{fill:none;stroke:var(--arc-primary);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset 400ms cubic-bezier(0.4,0,0.2,1)}
+.today-ring-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;padding-top:2px}
+.today-ring-cal-num{font-size:15px;font-weight:700;color:var(--arc-text);line-height:1.1;letter-spacing:-.02em}
+.today-ring-cal-unit{font-size:10px;font-weight:600;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.today-progress-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.today-remaining-line{margin:0;font-size:14px;font-weight:600;color:var(--arc-text);line-height:1.35}
+.today-protein-line{margin:0;font-size:13px;font-weight:500;color:var(--arc-subtext);line-height:1.35}
+.today-coach{margin:0 0 20px;font-size:14px;color:var(--arc-subtext);line-height:1.55;font-weight:500;max-width:34em}
+.today-actions{display:flex;align-items:center;gap:10px;padding-top:4px}
+.today-btn{width:44px;height:44px;border:none;border-radius:999px;background:rgba(255,255,255,.75);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--arc-subtext);transition:transform .15s ease,background .15s ease;box-shadow:var(--shadow-sm)}
+.today-btn:hover{background:#fff}
+.today-btn.primary{background:var(--arc-primary);color:#fff;box-shadow:0 6px 18px rgba(227,90,54,.25)}
+.today-btn.primary:hover{background:var(--arc-primary-dark)}
 .slbl{font-size:var(--fs-label);font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
 .ubar{display:flex;align-items:center;gap:12px;background:var(--arc-card);padding:14px 20px;border-bottom:1px solid var(--arc-border);flex-shrink:0}
 .avatar{width:40px;height:40px;border-radius:50%;background:var(--arc-soft-primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--arc-primary);flex-shrink:0}
@@ -415,7 +425,6 @@ body{
 button:active{transform:scale(.97)}
 
 @media (hover:hover){
-  .today-card:hover,
   .rc:hover,
   .day-card:hover{
     transform:translateY(-2px);
@@ -423,7 +432,6 @@ button:active{transform:scale(.97)}
   }
 }
 
-.today-card,
 .rc,
 .day-card{
   transition:
@@ -431,6 +439,11 @@ button:active{transform:scale(.97)}
     box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity 220ms cubic-bezier(0.4, 0, 0.2, 1);
   animation:cardFadeIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#s-today .today-flow > .today-hero,
+#s-today .today-flow > .today-foot{
+  animation:cardFadeIn 380ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* CLAUDE BADGE */
@@ -584,41 +597,37 @@ button:active{transform:scale(.97)}
   </div>
 </div>
 
-<!-- RECIPES -->
+<!-- TODAY -->
 <div class="screen" id="s-today">
   <div class="a-hdr"><h2>Today</h2><span style="font-size:13px;color:#9ca3af" id="today-date">—</span></div>
-  <div class="content">
-    <div class="today-card today-main">
-      <div class="today-kicker" id="today-slot">Current meal</div>
+  <div class="content today-flow">
+    <section class="today-hero">
+      <p class="today-kicker" id="today-slot">Current meal</p>
       <div id="today-meal-wrap"></div>
-      <button class="btn-green" id="today-cook-btn" style="margin-top:14px;padding:12px 14px;font-size:15px">Cook this meal</button>
-    </div>
-    <div class="today-stack">
-      <div class="today-card">
-        <div class="today-kicker">Progress</div>
-        <div class="today-bars">
-          <div>
-            <div class="today-row"><span>Calories</span><span id="today-cal-progress">0 / 0 kcal</span></div>
-            <div class="today-prog"><div class="today-fill" id="today-cal-fill" style="width:0%"></div></div>
+      <button class="btn-green today-cook-cta" id="today-cook-btn">Cook this meal</button>
+    </section>
+    <div class="today-foot">
+      <div class="today-progress-row">
+        <div class="today-ring-wrap">
+          <svg class="today-ring-svg" viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="today-ring-track" cx="50" cy="50" r="40"/>
+            <circle class="today-ring-bar" id="today-ring-bar" cx="50" cy="50" r="40" stroke-dasharray="251.33" stroke-dashoffset="251.33"/>
+          </svg>
+          <div class="today-ring-inner">
+            <span class="today-ring-cal-num" id="today-cal-progress">0 / 0</span>
+            <span class="today-ring-cal-unit">kcal</span>
           </div>
-          <div>
-            <div class="today-row"><span>Protein</span><span id="today-protein-progress">0 / 0 g</span></div>
-            <div class="today-prog"><div class="today-fill" id="today-protein-fill" style="width:0%"></div></div>
-          </div>
-          <div class="today-mini-note" id="today-remaining">0 kcal left</div>
+        </div>
+        <div class="today-progress-copy">
+          <p class="today-remaining-line" id="today-remaining">0 kcal left</p>
+          <p class="today-protein-line" id="today-protein-line">Protein 0 / 0 g</p>
         </div>
       </div>
-      <div class="today-card">
-        <div class="today-kicker">Coach</div>
-        <div class="today-tip" id="today-suggestion">Plan today to get clear suggestions.</div>
-      </div>
-      <div class="today-card">
-        <div class="today-kicker">Quick actions</div>
-        <div class="today-actions">
-          <button class="today-btn" id="today-log-btn" aria-label="Log food" title="Log food">✏️</button>
-          <button class="today-btn" id="today-swap-btn" aria-label="Swap meal" title="Swap meal">🔄</button>
-          <button class="today-btn primary" id="today-regen-btn" aria-label="Regenerate today" title="Regenerate today">⚡</button>
-        </div>
+      <p class="today-coach" id="today-suggestion">Plan today to get clear suggestions.</p>
+      <div class="today-actions">
+        <button type="button" class="today-btn" id="today-log-btn" aria-label="Log food" title="Log food">✏️</button>
+        <button type="button" class="today-btn" id="today-swap-btn" aria-label="Swap meal" title="Swap meal">🔄</button>
+        <button type="button" class="today-btn primary" id="today-regen-btn" aria-label="Regenerate today" title="Regenerate today">⚡</button>
       </div>
     </div>
   </div>
@@ -1430,19 +1439,22 @@ function renderToday() {
   if (meal) {
     el('today-meal-wrap').innerHTML = '<div class="today-name">' + meal.name + '</div><div class="today-meta"><span>' + meal.cal + ' kcal</span><span>P ' + meal.p + 'g</span><span>C ' + meal.c + 'g</span><span>F ' + meal.f + 'g</span></div>';
     el('today-cook-btn').disabled = false;
-    el('today-cook-btn').style.opacity = '1';
   } else {
     el('today-meal-wrap').innerHTML = '<div class="today-empty">No meal planned for this slot yet.</div>';
     el('today-cook-btn').disabled = true;
-    el('today-cook-btn').style.opacity = '.55';
   }
 
   var calPct = calTarget ? Math.min(100, Math.round((totals.cal / calTarget) * 100)) : 0;
-  var proPct = macros.protein ? Math.min(100, Math.round((totals.p / macros.protein) * 100)) : 0;
-  el('today-cal-progress').textContent = totals.cal + ' / ' + calTarget + ' kcal';
-  el('today-protein-progress').textContent = totals.p + ' / ' + macros.protein + ' g';
-  el('today-cal-fill').style.width = calPct + '%';
-  el('today-protein-fill').style.width = proPct + '%';
+  el('today-cal-progress').textContent = totals.cal + ' / ' + calTarget;
+  var pl = el('today-protein-line');
+  if (pl) pl.textContent = 'Protein ' + totals.p + ' / ' + macros.protein + ' g';
+  var ring = el('today-ring-bar');
+  if (ring) {
+    var rad = 40;
+    var circumference = 2 * Math.PI * rad;
+    ring.style.strokeDasharray = String(circumference);
+    ring.style.strokeDashoffset = String(circumference * (1 - Math.min(100, calPct) / 100));
+  }
   el('today-remaining').textContent = Math.max(0, calTarget - totals.cal) + ' kcal left';
   el('today-suggestion').textContent = smartTodaySuggestion(totals, calTarget, macros.protein);
 
