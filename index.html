@@ -829,7 +829,7 @@ var REGIONS = {
 var UP          = {region:'us-midwest'};
 var recipes     = [];
 var mealPlan    = {};
-var addedRecipes= {};
+var selectedRecipes = new Set();
 var checked     = {};
 var logs        = [];
 var activeCat   = 'All';
@@ -859,7 +859,7 @@ function persistAppData() {
       app: {
         recipes: recipes,
         mealPlan: mealPlan,
-        addedRecipes: addedRecipes,
+        selectedRecipes: Array.from(selectedRecipes),
         checked: checked,
         activeCat: activeCat,
         useCustom: useCustom,
@@ -911,7 +911,12 @@ function restorePersistedState() {
       var a = o.app;
       if (Array.isArray(a.recipes)) recipes = a.recipes;
       if (a.mealPlan && typeof a.mealPlan === 'object') mealPlan = a.mealPlan;
-      if (a.addedRecipes && typeof a.addedRecipes === 'object') addedRecipes = a.addedRecipes;
+      if (Array.isArray(a.selectedRecipes)) {
+        selectedRecipes = new Set(a.selectedRecipes.map(function(id) { return parseInt(id, 10); }).filter(Boolean));
+      } else if (a.addedRecipes && typeof a.addedRecipes === 'object') {
+        // Backward compatibility with old persisted shape
+        selectedRecipes = new Set(Object.keys(a.addedRecipes).map(function(id) { return parseInt(id, 10); }).filter(Boolean));
+      }
       if (a.checked && typeof a.checked === 'object') checked = a.checked;
       if (a.activeCat) activeCat = a.activeCat;
       if (typeof a.useCustom === 'boolean') useCustom = a.useCustom;
@@ -927,7 +932,12 @@ function restorePersistedState() {
         var s = JSON.parse(sr);
         if (Array.isArray(s.recipes)) recipes = s.recipes;
         if (s.mealPlan && typeof s.mealPlan === 'object') mealPlan = s.mealPlan;
-        if (s.addedRecipes && typeof s.addedRecipes === 'object') addedRecipes = s.addedRecipes;
+        if (Array.isArray(s.selectedRecipes)) {
+          selectedRecipes = new Set(s.selectedRecipes.map(function(id) { return parseInt(id, 10); }).filter(Boolean));
+        } else if (s.addedRecipes && typeof s.addedRecipes === 'object') {
+          // Backward compatibility with old persisted shape
+          selectedRecipes = new Set(Object.keys(s.addedRecipes).map(function(id) { return parseInt(id, 10); }).filter(Boolean));
+        }
         if (s.checked && typeof s.checked === 'object') checked = s.checked;
         if (s.activeCat) activeCat = s.activeCat;
         if (typeof s.useCustom === 'boolean') useCustom = s.useCustom;
@@ -1824,7 +1834,7 @@ function renderRecipes() {
   for (var i = 0; i < filtered.length; i++) {
     var r     = filtered[i];
     var diff  = r.difficulty || 'Easy';
-    var added = !!addedRecipes[r.id];
+    var added = selectedRecipes.has(r.id);
     html += '<div class="rc' + (added ? ' added' : '') + '">';
     html += '<div class="rc-name">' + r.name + '</div>';
     html += '<div class="rc-meta"><span class="diff diff-' + diff + '">' + diff + '</span><span>' + r.time + '</span><span>' + r.cat + '</span></div>';
@@ -1850,11 +1860,18 @@ function renderRecipes() {
   for (var a = 0; a < addBtns.length; a++) {
     addBtns[a].addEventListener('click', function() {
       var id = parseInt(this.dataset.id, 10);
-      if (addedRecipes[id]) delete addedRecipes[id];
-      else addedRecipes[id] = true;
+      if (selectedRecipes.has(id)) {
+        selectedRecipes.delete(id);
+        removeRecipeFromMealPlan(id);
+      } else {
+        selectedRecipes.add(id);
+      }
       renderRecipes();
+      renderPlanner();
+      renderNutrition();
       renderShopping();
       updateNextBar();
+      saveSessionState();
     });
   }
   for (var c = 0; c < cookBtns.length; c++) {
@@ -1877,9 +1894,21 @@ function renderRecipes() {
 }
 
 function updateNextBar() {
-  var n = Object.keys(addedRecipes).length;
+  var n = selectedRecipes.size;
   el('next-bar').style.display = n > 0 ? 'block' : 'none';
   el('nb-sub').textContent     = n + ' recipe' + (n === 1 ? '' : 's') + ' added';
+}
+
+function removeRecipeFromMealPlan(recipeId) {
+  var slots = getSlots();
+  for (var d = 0; d < DAYS.length; d++) {
+    var day = DAYS[d];
+    if (!mealPlan[day]) continue;
+    for (var s = 0; s < slots.length; s++) {
+      var slot = slots[s];
+      if (mealPlan[day][slot] === recipeId) delete mealPlan[day][slot];
+    }
+  }
 }
 
 // ── Recipe modal ──────────────────────────────────────────────
@@ -2191,7 +2220,7 @@ function updatePlannerBar() {
 }
 
 function openAssign(day, slot) {
-  var available = recipes.filter(function(r) { return !!addedRecipes[r.id]; });
+  var available = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
   if (!available.length) { showToast('Add some recipes from the Recipes tab first!'); return; }
   assignDay  = day;
   assignSlot = slot;
@@ -2228,6 +2257,7 @@ function closeAssign() { el('assign-modal').style.display = 'none'; }
 // ── AI Plan Builder ───────────────────────────────────────────
 function aiCreatePlan() {
   if (!recipes.length) { showToast('Recipes still loading...'); return; }
+  if (selectedRecipes.size === 0) { showToast('Select at least 1 recipe before generating your week.'); return; }
   var ok = validateProfileForGeneration();
   if (!ok.ok) { showToast(ok.msg); return; }
   showAI('Building your week...', 'Optimising meals for your goals');
@@ -2237,10 +2267,12 @@ function aiCreatePlan() {
   var calGoal  = ne.calT;
   var macros   = ne.macros;
 
-  // Build available recipe list with categories
+  // Build available recipe list with categories (selected recipes only)
+  var selectedPool = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
+  if (!selectedPool.length) { hideAI(); showToast('Select recipes first, then generate your week.'); return; }
   var byCategory = {};
-  for (var i = 0; i < recipes.length; i++) {
-    var r = recipes[i];
+  for (var i = 0; i < selectedPool.length; i++) {
+    var r = selectedPool[i];
     if (!byCategory[r.cat]) byCategory[r.cat] = [];
     byCategory[r.cat].push('ID:' + r.id + ' "' + r.name + '" ' + r.cal + 'cal ' + r.p + 'gP');
   }
@@ -2288,6 +2320,11 @@ function aiCreatePlan() {
   function applyPlan(err, raw) {
     hideAI();
     var planApplied = false;
+    var selectedById = {};
+    for (var sp = 0; sp < selectedPool.length; sp++) selectedById[selectedPool[sp].id] = true;
+
+    // Start fresh so stale meals from old generations don't leak through
+    for (var rd = 0; rd < DAYS.length; rd++) mealPlan[DAYS[rd]] = {};
 
     if (!err && raw) {
       var plan = parseJSON(raw);
@@ -2303,9 +2340,8 @@ function aiCreatePlan() {
               var rid  = dayPlan[slot];
               if (rid) {
                 var ridNum = parseInt(rid, 10);
-                if (ridNum && findRecipe(ridNum)) {
+                if (ridNum && selectedById[ridNum] && findRecipe(ridNum)) {
                   mealPlan[day][slot] = ridNum;
-                  addedRecipes[ridNum] = true;
                 }
               }
             }
@@ -2317,8 +2353,8 @@ function aiCreatePlan() {
     if (!planApplied) {
       // Smart fallback: assign recipes by matching category to slot
       var catMap = {};
-      for (var ri = 0; ri < recipes.length; ri++) {
-        var rec = recipes[ri];
+      for (var ri = 0; ri < selectedPool.length; ri++) {
+        var rec = selectedPool[ri];
         if (!catMap[rec.cat]) catMap[rec.cat] = [];
         catMap[rec.cat].push(rec);
       }
@@ -2334,12 +2370,12 @@ function aiCreatePlan() {
           else if (/dinner/i.test(slotName)) slotCat = 'Dinner';
           else if (/snack/i.test(slotName)) slotCat = 'Snack';
 
-          var pool = catMap[slotCat] || recipes;
+          var pool = catMap[slotCat] || selectedPool;
+          if (!pool.length) continue;
           if (!catIndexes[slotCat]) catIndexes[slotCat] = 0;
           var chosen = pool[catIndexes[slotCat] % pool.length];
           catIndexes[slotCat]++;
           mealPlan[dy][slotName] = chosen.id;
-          addedRecipes[chosen.id] = true;
         }
       }
     }
@@ -2450,9 +2486,10 @@ function openAdaptModal() {
         if (rid && findRecipe(rid)) {
           if (!mealPlan[day]) mealPlan[day] = {};
           mealPlan[day][slot] = rid;
-          addedRecipes[rid]   = true;
+          selectedRecipes.add(rid);
           this.closest('.adapt-change').style.opacity = '.4';
           showToast('Applied ✓');
+          renderRecipes();
           renderPlanner();
           renderNutrition();
           renderShopping();
@@ -2556,9 +2593,20 @@ function estPrice(qty) {
 
 function renderShopping() {
   var allIng  = {};
-  var addedIds = Object.keys(addedRecipes);
-  for (var i = 0; i < addedIds.length; i++) {
-    var r = findRecipe(parseInt(addedIds[i], 10));
+  var plannedRecipeIds = {};
+  var slots = getSlots();
+  for (var d = 0; d < DAYS.length; d++) {
+    var day = DAYS[d];
+    if (!mealPlan[day]) continue;
+    for (var s = 0; s < slots.length; s++) {
+      var rid = mealPlan[day][slots[s]];
+      if (rid) plannedRecipeIds[rid] = true;
+    }
+  }
+
+  var plannedIds = Object.keys(plannedRecipeIds);
+  for (var i = 0; i < plannedIds.length; i++) {
+    var r = findRecipe(parseInt(plannedIds[i], 10));
     if (!r) continue;
     for (var j = 0; j < r.ing.length; j++) {
       var name = r.ing[j];
@@ -2580,7 +2628,7 @@ function renderShopping() {
   if (!items.length) {
     el('shop-total').style.display  = 'none';
     el('price-disc').style.display  = 'none';
-    el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Add recipes to generate your list</div>';
+    el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Plan meals to generate your list</div>';
     saveSessionState();
     return;
   }
@@ -2588,7 +2636,7 @@ function renderShopping() {
   el('shop-total').style.display = 'flex';
   el('price-disc').style.display = 'block';
   el('shop-total-val').textContent = fmtPrice(total);
-  el('shop-rc').textContent        = addedIds.length + ' recipe' + (addedIds.length === 1 ? '' : 's');
+  el('shop-rc').textContent        = plannedIds.length + ' recipe' + (plannedIds.length === 1 ? '' : 's');
 
   var cats = {Produce:[], Protein:[], Grains:[], Dairy:[], Pantry:[]};
   for (var m = 0; m < items.length; m++) {
@@ -2854,7 +2902,7 @@ document.addEventListener('DOMContentLoaded', function() {
   el('s-regen').addEventListener('click', function() {
     applySettingsProfile();
     closeSettings();
-    recipes = []; addedRecipes = {}; checked = {};
+    recipes = []; selectedRecipes = new Set(); checked = {};
     DAYS.forEach(function(d) { mealPlan[d] = {}; });
     saveUserProfile();
     showScreen('s-gen');
