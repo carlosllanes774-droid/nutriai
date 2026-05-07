@@ -231,19 +231,23 @@ body{
 .nav{display:flex;border-top:1px solid var(--arc-border);background:var(--arc-card);flex-shrink:0}
 .nbtn{flex:1;padding:10px 4px 12px;font-size:10px;font-weight:600;color:#9ca3af;cursor:pointer;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;text-transform:uppercase;letter-spacing:.05em;transition:color .15s}
 .nbtn.active{color:var(--arc-primary)}.nic{font-size:20px}
-.today-card{background:var(--arc-card);border:1px solid var(--arc-border);border-radius:16px;padding:var(--sp-2);margin-bottom:var(--sp-2);box-shadow:var(--shadow-sm)}
-.today-kicker{font-size:var(--fs-label);font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--sp-1)}
-.today-name{font-size:var(--fs-heading);font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.3;margin-bottom:6px}
-.today-meta{font-size:var(--fs-body);color:var(--arc-subtext);display:flex;gap:10px;flex-wrap:wrap}
+.today-main{padding:20px 18px}
+.today-main .today-kicker{margin-bottom:6px}
+.today-card{background:var(--arc-card);border:1px solid var(--arc-border);border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow-sm)}
+.today-kicker{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.today-name{font-size:26px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.2;margin-bottom:8px}
+.today-meta{font-size:13px;color:var(--arc-subtext);display:flex;gap:10px;flex-wrap:wrap}
 .today-empty{font-size:13px;color:#9ca3af;font-style:italic}
-.today-bars{display:flex;flex-direction:column;gap:10px}
-.today-row{display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:5px}
-.today-prog{height:7px;background:#f0ede8;border-radius:4px;overflow:hidden}
+.today-stack{display:flex;flex-direction:column;gap:8px}
+.today-bars{display:flex;flex-direction:column;gap:8px}
+.today-row{display:flex;justify-content:space-between;font-size:11px;color:#6b7280;margin-bottom:4px}
+.today-prog{height:6px;background:#f0ede8;border-radius:4px;overflow:hidden}
 .today-fill{height:100%;background:var(--arc-primary);border-radius:4px;transition:width .3s}
-.today-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.today-btn{padding:10px 8px;border:1.5px solid var(--arc-border);border-radius:12px;background:transparent;font-size:12px;font-weight:600;color:var(--arc-subtext);cursor:pointer}
+.today-mini-note{font-size:12px;color:var(--arc-subtext);margin-top:2px}
+.today-actions{display:flex;gap:8px}
+.today-btn{width:38px;height:38px;border:1.5px solid var(--arc-border);border-radius:999px;background:transparent;font-size:16px;font-weight:600;color:var(--arc-subtext);cursor:pointer;display:flex;align-items:center;justify-content:center}
 .today-btn.primary{border-color:var(--arc-primary);background:var(--arc-primary);color:#fff}
-.today-tip{font-size:var(--fs-body);color:#374151;line-height:1.5;background:var(--arc-surface);border:1px solid var(--arc-border);border-radius:12px;padding:10px}
+.today-tip{font-size:13px;color:#4b5563;line-height:1.4;background:var(--arc-surface);border:1px solid var(--arc-border);border-radius:10px;padding:10px}
 .slbl{font-size:var(--fs-label);font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
 .ubar{display:flex;align-items:center;gap:12px;background:var(--arc-card);padding:14px 20px;border-bottom:1px solid var(--arc-border);flex-shrink:0}
 .avatar{width:40px;height:40px;border-radius:50%;background:var(--arc-soft-primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--arc-primary);flex-shrink:0}
@@ -583,35 +587,37 @@ button:active{transform:scale(.97)}
 <div class="screen" id="s-today">
   <div class="a-hdr"><h2>Today</h2><span style="font-size:13px;color:#9ca3af" id="today-date">—</span></div>
   <div class="content">
-    <div class="today-card">
+    <div class="today-card today-main">
       <div class="today-kicker" id="today-slot">Current meal</div>
       <div id="today-meal-wrap"></div>
-      <button class="btn-green" id="today-cook-btn" style="margin-top:12px;padding:11px 12px;font-size:14px">🍳 Cook this meal</button>
+      <button class="btn-green" id="today-cook-btn" style="margin-top:14px;padding:12px 14px;font-size:15px">Cook this meal</button>
     </div>
-    <div class="today-card">
-      <div class="today-kicker">Daily progress</div>
-      <div class="today-bars">
-        <div>
-          <div class="today-row"><span>Calories consumed</span><span id="today-cal-progress">0 / 0 kcal</span></div>
-          <div class="today-prog"><div class="today-fill" id="today-cal-fill" style="width:0%"></div></div>
+    <div class="today-stack">
+      <div class="today-card">
+        <div class="today-kicker">Progress</div>
+        <div class="today-bars">
+          <div>
+            <div class="today-row"><span>Calories</span><span id="today-cal-progress">0 / 0 kcal</span></div>
+            <div class="today-prog"><div class="today-fill" id="today-cal-fill" style="width:0%"></div></div>
+          </div>
+          <div>
+            <div class="today-row"><span>Protein</span><span id="today-protein-progress">0 / 0 g</span></div>
+            <div class="today-prog"><div class="today-fill" id="today-protein-fill" style="width:0%"></div></div>
+          </div>
+          <div class="today-mini-note" id="today-remaining">0 kcal left</div>
         </div>
-        <div>
-          <div class="today-row"><span>Protein</span><span id="today-protein-progress">0 / 0 g</span></div>
-          <div class="today-prog"><div class="today-fill" id="today-protein-fill" style="width:0%"></div></div>
-        </div>
-        <div class="today-row"><span>Remaining calories</span><strong id="today-remaining">0 kcal</strong></div>
       </div>
-    </div>
-    <div class="today-card">
-      <div class="today-kicker">Smart suggestions</div>
-      <div class="today-tip" id="today-suggestion">Plan today to get tailored suggestions.</div>
-    </div>
-    <div class="today-card">
-      <div class="today-kicker">Quick actions</div>
-      <div class="today-actions">
-        <button class="today-btn" id="today-log-btn">✏️ Log food</button>
-        <button class="today-btn" id="today-swap-btn">🔄 Swap meal</button>
-        <button class="today-btn primary" id="today-regen-btn">⚡ Regenerate</button>
+      <div class="today-card">
+        <div class="today-kicker">Coach</div>
+        <div class="today-tip" id="today-suggestion">Plan today to get tailored suggestions.</div>
+      </div>
+      <div class="today-card">
+        <div class="today-kicker">Quick actions</div>
+        <div class="today-actions">
+          <button class="today-btn" id="today-log-btn" aria-label="Log food" title="Log food">✏️</button>
+          <button class="today-btn" id="today-swap-btn" aria-label="Swap meal" title="Swap meal">🔄</button>
+          <button class="today-btn primary" id="today-regen-btn" aria-label="Regenerate today" title="Regenerate today">⚡</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1368,13 +1374,13 @@ function smartTodaySuggestion(totals, calTarget, proteinTarget) {
   var pool = recipes.slice().sort(function(a, b) { return (b.p - a.p); });
   if (totals.p < Math.round(proteinTarget * 0.7)) {
     var hp = pool[0] || null;
-    return hp ? ('Protein is low today. Try adding a high-protein option like "' + hp.name + '" (' + hp.p + 'g protein).') : 'Protein is low today. Add a lean protein snack.';
+    return hp ? ('Next step: add protein. Pick "' + hp.name + '" (' + hp.p + 'g protein).') : 'Next step: add a lean protein snack.';
   }
   if (totals.cal > calTarget) {
     var light = recipes.slice().sort(function(a, b) { return (a.cal - b.cal); })[0] || null;
-    return light ? ('Calories are over target. Consider a lighter meal such as "' + light.name + '" (' + light.cal + ' kcal).') : 'Calories are over target. Consider a lighter meal or smaller portion.';
+    return light ? ('You are over target. Choose a lighter meal like "' + light.name + '" (' + light.cal + ' kcal).') : 'You are over target. Choose a lighter meal next.';
   }
-  return 'You are on track today. Keep your next meal balanced with protein and vegetables.';
+  return 'You are on track. Cook your current meal now.';
 }
 
 function regenerateTodayPlan() {
@@ -1436,7 +1442,7 @@ function renderToday() {
   el('today-protein-progress').textContent = totals.p + ' / ' + macros.protein + ' g';
   el('today-cal-fill').style.width = calPct + '%';
   el('today-protein-fill').style.width = proPct + '%';
-  el('today-remaining').textContent = Math.max(0, calTarget - totals.cal) + ' kcal';
+  el('today-remaining').textContent = Math.max(0, calTarget - totals.cal) + ' kcal left';
   el('today-suggestion').textContent = smartTodaySuggestion(totals, calTarget, macros.protein);
 
   el('today-cook-btn').dataset.rid = meal ? meal.id : '';
