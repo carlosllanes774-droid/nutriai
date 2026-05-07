@@ -191,6 +191,19 @@ body{
 .nav{display:flex;border-top:1px solid var(--arc-border);background:var(--arc-card);flex-shrink:0}
 .nbtn{flex:1;padding:10px 4px 12px;font-size:10px;font-weight:600;color:#9ca3af;cursor:pointer;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;text-transform:uppercase;letter-spacing:.05em;transition:color .15s}
 .nbtn.active{color:var(--arc-primary)}.nic{font-size:20px}
+.today-card{background:#fff;border:1px solid #ede9e4;border-radius:16px;padding:14px;margin-bottom:12px}
+.today-kicker{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.today-name{font-size:18px;font-weight:700;color:#111;font-family:Georgia,serif;line-height:1.3;margin-bottom:6px}
+.today-meta{font-size:13px;color:#6b7280;display:flex;gap:10px;flex-wrap:wrap}
+.today-empty{font-size:13px;color:#9ca3af;font-style:italic}
+.today-bars{display:flex;flex-direction:column;gap:10px}
+.today-row{display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-bottom:5px}
+.today-prog{height:7px;background:#f0ede8;border-radius:4px;overflow:hidden}
+.today-fill{height:100%;background:var(--arc-primary);border-radius:4px;transition:width .3s}
+.today-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.today-btn{padding:10px 8px;border:1.5px solid var(--arc-border);border-radius:12px;background:var(--arc-card);font-size:12px;font-weight:600;color:#374151;cursor:pointer}
+.today-btn.primary{border-color:var(--arc-primary);background:var(--arc-soft-primary);color:var(--arc-primary)}
+.today-tip{font-size:13px;color:#374151;line-height:1.5;background:#f9f7f4;border:1px solid #ede9e4;border-radius:12px;padding:10px}
 .slbl{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
 .ubar{display:flex;align-items:center;gap:12px;background:#fff;padding:14px 20px;border-bottom:1px solid #f0ede8;flex-shrink:0}
 .avatar{width:40px;height:40px;border-radius:50%;background:var(--arc-soft-primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--arc-primary);flex-shrink:0}
@@ -507,6 +520,45 @@ body{
 </div>
 
 <!-- RECIPES -->
+<div class="screen" id="s-today">
+  <div class="a-hdr"><h2>Today</h2><span style="font-size:13px;color:#9ca3af" id="today-date">—</span></div>
+  <div class="content">
+    <div class="today-card">
+      <div class="today-kicker" id="today-slot">Current meal</div>
+      <div id="today-meal-wrap"></div>
+      <button class="btn-green" id="today-cook-btn" style="margin-top:12px;padding:11px 12px;font-size:14px">🍳 Cook this meal</button>
+    </div>
+    <div class="today-card">
+      <div class="today-kicker">Daily progress</div>
+      <div class="today-bars">
+        <div>
+          <div class="today-row"><span>Calories consumed</span><span id="today-cal-progress">0 / 0 kcal</span></div>
+          <div class="today-prog"><div class="today-fill" id="today-cal-fill" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div class="today-row"><span>Protein</span><span id="today-protein-progress">0 / 0 g</span></div>
+          <div class="today-prog"><div class="today-fill" id="today-protein-fill" style="width:0%"></div></div>
+        </div>
+        <div class="today-row"><span>Remaining calories</span><strong id="today-remaining">0 kcal</strong></div>
+      </div>
+    </div>
+    <div class="today-card">
+      <div class="today-kicker">Smart suggestions</div>
+      <div class="today-tip" id="today-suggestion">Plan today to get tailored suggestions.</div>
+    </div>
+    <div class="today-card">
+      <div class="today-kicker">Quick actions</div>
+      <div class="today-actions">
+        <button class="today-btn" id="today-log-btn">✏️ Log food</button>
+        <button class="today-btn" id="today-swap-btn">🔄 Swap meal</button>
+        <button class="today-btn primary" id="today-regen-btn">⚡ Regenerate</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav"><button class="nbtn active" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+</div>
+
+<!-- RECIPES -->
 <div class="screen" id="s-recipes">
   <div class="ubar">
     <div class="avatar" id="u-av">?</div>
@@ -532,7 +584,7 @@ body{
     <div id="recipes-list"></div>
   </div>
   <div class="next-bar" id="next-bar"><div class="nbi" id="goto-planner"><div><div class="nbi-label">Continue to Planner</div><div class="nbi-sub" id="nb-sub">0 recipes added</div></div><div class="nbi-arrow">→</div></div></div>
-  <div class="nav"><button class="nbtn active" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn active" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- PLANNER -->
@@ -551,14 +603,14 @@ body{
     <div id="planner-list"></div>
   </div>
   <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Continue to Shopping List</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn active" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn active" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- NUTRITION -->
 <div class="screen" id="s-nutrition">
   <div class="a-hdr"><h2>Nutrition stats</h2></div>
   <div class="content"><div id="ct-wrap"></div><div class="slbl">Weekly average</div><div class="stat-grid" id="nut-stats"></div><div class="slbl" style="margin-top:4px">Daily totals vs target</div><div id="nut-bars"></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn active" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn active" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- SHOPPING -->
@@ -569,7 +621,7 @@ body{
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:12px;line-height:1.5;display:none" id="price-disc">* Quantities and prices are estimates and vary by store, brand, and location.</p>
     <div id="shop-body"></div>
   </div>
-  <div class="nav"><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn active" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn active" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- LOG -->
@@ -577,7 +629,7 @@ body{
   <div class="a-hdr"><h2>Food log</h2></div>
   <div class="content" id="log-content"><div class="slbl" style="margin-bottom:14px">Tell the AI what you ate today</div><div class="chat-body" id="chat-body"></div></div>
   <div class="chat-bar"><input type="text" id="log-inp" placeholder="e.g. I had a burger and fries..."/><button class="chat-send" id="log-send">→</button></div>
-  <div class="nav"><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn active" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn active" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- ASSIGN MODAL -->
@@ -1181,16 +1233,130 @@ function showScreen(id) {
 }
 
 function tab(t) {
-  var map  = {recipes:'s-recipes',planner:'s-planner',nutrition:'s-nutrition',shopping:'s-shopping',log:'s-log'};
+  var map  = {today:'s-today',recipes:'s-recipes',planner:'s-planner',nutrition:'s-nutrition',shopping:'s-shopping',log:'s-log'};
   var sid  = map[t];
   if (!sid) return;
-  var keys = ['recipes','planner','nutrition','shopping','log'];
+  var keys = ['today','recipes','planner','nutrition','shopping','log'];
   showScreen(sid);
+  if (t === 'today') renderToday();
   var btns = document.querySelectorAll('.nbtn');
   for (var i = 0; i < btns.length; i++) {
     if (keys[i % keys.length] === t) btns[i].classList.add('active');
     else btns[i].classList.remove('active');
   }
+}
+
+function todayKey() {
+  return DAYS[(new Date()).getDay() === 0 ? 6 : (new Date()).getDay() - 1];
+}
+
+function slotForNow(slots) {
+  var h = new Date().getHours();
+  var preferred = [];
+  if (h >= 5 && h < 11) preferred = ['Breakfast'];
+  else if (h >= 11 && h < 16) preferred = ['Lunch'];
+  else if (h >= 16 && h < 22) preferred = ['Dinner'];
+  else preferred = ['Morning snack', 'Afternoon snack', 'Evening snack', 'Snack'];
+
+  for (var i = 0; i < preferred.length; i++) {
+    for (var s = 0; s < slots.length; s++) {
+      if (slots[s].toLowerCase() === preferred[i].toLowerCase()) return slots[s];
+    }
+  }
+  // Fallback: first configured slot for today.
+  return slots[0] || null;
+}
+
+function todaysTotals(slots, day) {
+  var t = {cal:0,p:0,c:0,f:0};
+  if (!mealPlan[day]) return t;
+  for (var s = 0; s < slots.length; s++) {
+    var rid = mealPlan[day][slots[s]];
+    var r = rid ? findRecipe(rid) : null;
+    if (!r) continue;
+    t.cal += r.cal; t.p += r.p; t.c += r.c; t.f += r.f;
+  }
+  return t;
+}
+
+function smartTodaySuggestion(totals, calTarget, proteinTarget) {
+  var pool = recipes.slice().sort(function(a, b) { return (b.p - a.p); });
+  if (totals.p < Math.round(proteinTarget * 0.7)) {
+    var hp = pool[0] || null;
+    return hp ? ('Protein is low today. Try adding a high-protein option like "' + hp.name + '" (' + hp.p + 'g protein).') : 'Protein is low today. Add a lean protein snack.';
+  }
+  if (totals.cal > calTarget) {
+    var light = recipes.slice().sort(function(a, b) { return (a.cal - b.cal); })[0] || null;
+    return light ? ('Calories are over target. Consider a lighter meal such as "' + light.name + '" (' + light.cal + ' kcal).') : 'Calories are over target. Consider a lighter meal or smaller portion.';
+  }
+  return 'You are on track today. Keep your next meal balanced with protein and vegetables.';
+}
+
+function regenerateTodayPlan() {
+  if (selectedRecipes.size === 0) { showToast('Select recipes first.'); return; }
+  var slots = getSlots();
+  var day = todayKey();
+  if (!mealPlan[day]) mealPlan[day] = {};
+  var selectedPool = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
+  var catMap = {};
+  for (var i = 0; i < selectedPool.length; i++) {
+    var r = selectedPool[i];
+    if (!catMap[r.cat]) catMap[r.cat] = [];
+    catMap[r.cat].push(r);
+  }
+  for (var s = 0; s < slots.length; s++) {
+    var slot = slots[s];
+    var slotCat = 'Lunch';
+    if (/breakfast/i.test(slot)) slotCat = 'Breakfast';
+    else if (/dinner/i.test(slot)) slotCat = 'Dinner';
+    else if (/snack/i.test(slot)) slotCat = 'Snack';
+    var pool = catMap[slotCat] || selectedPool;
+    if (!pool.length) continue;
+    mealPlan[day][slot] = pool[(new Date().getDate() + s) % pool.length].id;
+  }
+  renderPlanner();
+  renderNutrition();
+  renderShopping();
+  renderToday();
+  showToast('Today plan regenerated ✓');
+}
+
+function renderToday() {
+  if (!el('today-slot')) return;
+  var d = new Date();
+  var day = todayKey();
+  var slots = getSlots();
+  var slot = slotForNow(slots);
+  var rid = (slot && mealPlan[day]) ? mealPlan[day][slot] : null;
+  var meal = rid ? findRecipe(rid) : null;
+  var calTarget = getCalTarget();
+  var macros = UP.macros || getMacroTargets(calTarget);
+  var totals = todaysTotals(slots, day);
+
+  el('today-date').textContent = d.toLocaleDateString(undefined, { weekday:'long', month:'short', day:'numeric' });
+  el('today-slot').textContent = slot ? ('Current meal · ' + slot) : 'Current meal';
+  if (meal) {
+    el('today-meal-wrap').innerHTML = '<div class="today-name">' + meal.name + '</div><div class="today-meta"><span>' + meal.cal + ' kcal</span><span>P ' + meal.p + 'g</span><span>C ' + meal.c + 'g</span><span>F ' + meal.f + 'g</span></div>';
+    el('today-cook-btn').disabled = false;
+    el('today-cook-btn').style.opacity = '1';
+  } else {
+    el('today-meal-wrap').innerHTML = '<div class="today-empty">No meal planned for this slot yet.</div>';
+    el('today-cook-btn').disabled = true;
+    el('today-cook-btn').style.opacity = '.55';
+  }
+
+  var calPct = calTarget ? Math.min(100, Math.round((totals.cal / calTarget) * 100)) : 0;
+  var proPct = macros.protein ? Math.min(100, Math.round((totals.p / macros.protein) * 100)) : 0;
+  el('today-cal-progress').textContent = totals.cal + ' / ' + calTarget + ' kcal';
+  el('today-protein-progress').textContent = totals.p + ' / ' + macros.protein + ' g';
+  el('today-cal-fill').style.width = calPct + '%';
+  el('today-protein-fill').style.width = proPct + '%';
+  el('today-remaining').textContent = Math.max(0, calTarget - totals.cal) + ' kcal';
+  el('today-suggestion').textContent = smartTodaySuggestion(totals, calTarget, macros.protein);
+
+  el('today-cook-btn').dataset.rid = meal ? meal.id : '';
+  el('today-swap-btn').dataset.day = day;
+  el('today-swap-btn').dataset.slot = slot || '';
 }
 
 function showToast(msg) {
@@ -1788,7 +1954,7 @@ function generateRecipes() {
         renderPlanner();
         renderNutrition();
         renderShopping();
-        showScreen('s-recipes');
+        tab('today');
         saveSessionState();
       }, 400);
     }, 600);
@@ -2201,9 +2367,11 @@ function renderPlanner() {
       delete mealPlan[this.dataset.day][this.dataset.slot];
       renderPlanner();
       renderNutrition();
+      renderToday();
     });
   }
   updatePlannerBar();
+  renderToday();
   saveSessionState();
 }
 
@@ -2565,6 +2733,7 @@ function renderNutrition() {
     barsHtml += '</div>';
   }
   el('nut-bars').innerHTML = barsHtml;
+  renderToday();
 }
 
 // ── Shopping list ─────────────────────────────────────────────
@@ -2880,13 +3049,14 @@ document.addEventListener('DOMContentLoaded', function() {
   restorePersistedState();
   if (arcRestoredFromStorage) {
     applyProfileToUIBar();
-    showScreen('s-recipes');
-    tab('recipes');
+    showScreen('s-today');
+    tab('today');
     syncCatTabsUI();
     renderRecipes();
     renderPlanner();
     renderNutrition();
     renderShopping();
+    renderToday();
     updateNextBar();
     updatePlannerBar();
   }
@@ -2982,6 +3152,18 @@ document.addEventListener('DOMContentLoaded', function() {
   // Next-bar buttons
   el('goto-planner').addEventListener('click',  function() { tab('planner');  });
   el('goto-shopping').addEventListener('click', function() { tab('shopping'); });
+  el('today-cook-btn').addEventListener('click', function() {
+    var rid = parseInt(this.dataset.rid, 10);
+    if (rid) openRM(rid);
+  });
+  el('today-log-btn').addEventListener('click', function() { tab('log'); });
+  el('today-swap-btn').addEventListener('click', function() {
+    var day = this.dataset.day;
+    var slot = this.dataset.slot;
+    if (!slot) { showToast('No slot available to swap right now.'); return; }
+    openAssign(day, slot);
+  });
+  el('today-regen-btn').addEventListener('click', regenerateTodayPlan);
 
   // Recipe modal close
   el('rm-close').addEventListener('click', function() { el('rm-bg').style.display = 'none'; curRecipe = null; });
@@ -3012,6 +3194,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!arcRestoredFromStorage) {
     renderNutrition();
     renderShopping();
+    renderToday();
   }
 });
   
