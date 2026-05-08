@@ -1161,6 +1161,10 @@ function restorePersistedState() {
     arcRestoredFromStorage = true;
     return true;
   } catch (e) {
+    try {
+      localStorage.removeItem(LS_PROFILE);
+      localStorage.removeItem(LS_SESSION);
+    } catch (e2) {}
     return false;
   }
 }
@@ -1227,6 +1231,8 @@ function calcTDEE() {
 
 // Returns recommended macros in grams based on goal and calorie target
 function getMacroTargets(cals) {
+  cals = Number(cals);
+  if (!isFinite(cals) || cals <= 0) cals = getCalTarget();
   var goalRatios = {
     'Lose weight':    {p:0.35, c:0.35, f:0.30},
     'Build muscle':   {p:0.30, c:0.45, f:0.25},
@@ -1235,17 +1241,28 @@ function getMacroTargets(cals) {
     'Eat healthier':  {p:0.25, c:0.50, f:0.25}
   };
   var ratio = goalRatios[UP.goal] || goalRatios['Eat healthier'];
+  var pr = Math.round((cals * ratio.p) / 4);
+  var cr = Math.round((cals * ratio.c) / 4);
+  var fr = Math.round((cals * ratio.f) / 9);
   return {
-    protein: Math.round((cals * ratio.p) / 4),
-    carbs:   Math.round((cals * ratio.c) / 4),
-    fat:     Math.round((cals * ratio.f) / 9)
+    protein: isFinite(pr) ? Math.max(0, pr) : 0,
+    carbs:   isFinite(cr) ? Math.max(0, cr) : 0,
+    fat:     isFinite(fr) ? Math.max(0, fr) : 0
   };
 }
 
 function getCalTarget() {
-  if (useCustom && UP.customCal) return UP.customCal;
-  if (UP.tdee) return UP.tdee;
-  return 1800;
+  var c = null;
+  if (useCustom && UP.customCal != null && UP.customCal !== '') {
+    c = Number(UP.customCal);
+    if (!isFinite(c) || c <= 0) c = null;
+  }
+  if (c == null && UP.tdee != null && UP.tdee !== '') {
+    c = Number(UP.tdee);
+    if (!isFinite(c) || c <= 0) c = null;
+  }
+  if (c == null) c = 1800;
+  return Math.max(800, Math.min(8000, Math.round(c)));
 }
 
 function getSlots() {
@@ -1312,11 +1329,19 @@ function normalizeGeneratedRecipe(r, i, mt) {
 
 // Split daily calorie/macro targets across meal slots; map recipe categories (Breakfast/Lunch/Dinner/Snack).
 function computeMealNutritionTargets(calT, macros, slots) {
+  calT = Number(calT);
+  if (!isFinite(calT) || calT <= 0) calT = 1800;
+  macros = macros || { protein: 0, carbs: 0, fat: 0 };
+  var mp = Number(macros.protein), mc = Number(macros.carbs), mf = Number(macros.fat);
+  if (!isFinite(mp)) mp = 0;
+  if (!isFinite(mc)) mc = 0;
+  if (!isFinite(mf)) mf = 0;
+  if (!Array.isArray(slots) || !slots.length) slots = SLOT_SETS['3'] || ['Breakfast', 'Lunch', 'Dinner'];
   var n = Math.max(1, slots.length);
   var perCal = calT / n;
-  var perP = macros.protein / n;
-  var perC = macros.carbs / n;
-  var perF = macros.fat / n;
+  var perP = mp / n;
+  var perC = mc / n;
+  var perF = mf / n;
 
   var b = 0, l = 0, d = 0, sn = 0;
   for (var i = 0; i < slots.length; i++) {
@@ -1333,9 +1358,9 @@ function computeMealNutritionTargets(calT, macros, slots) {
     }
     return {
       cal: calT / 4,
-      p: macros.protein / 4,
-      c: macros.carbs / 4,
-      f: macros.fat / 4
+      p: mp / 4,
+      c: mc / 4,
+      f: mf / 4
     };
   }
 
@@ -2048,32 +2073,154 @@ function buildMandatoryDietPrompt(restrictions, dislikeRaw) {
   return out;
 }
 
+// ── Profile validation / safe defaults (mobile + localStorage) ─
+var VALID_ACTIVITIES = { 'Sedentary': true, 'Light': true, 'Moderate': true, 'Very active': true, 'Athlete': true };
+
+function nutriDebug() {
+  if (typeof console === 'undefined' || !console.log) return;
+  var a = ['[NutriAI]'].concat([].slice.call(arguments));
+  console.log.apply(console, a);
+}
+
+function cloneProfileForLog(p) {
+  try {
+    return JSON.parse(JSON.stringify(p || UP));
+  } catch (e) {
+    return { _note: 'clone failed', keys: p ? Object.keys(p) : [] };
+  }
+}
+
+/** Normalize partial/corrupt profile so prompts and TDEE never see undefined. Mutates `p` (default: UP). */
+function applySafeProfileDefaults(p) {
+  p = p || UP;
+  if (!p || typeof p !== 'object') return;
+
+  if (p.region == null || String(p.region).trim() === '') p.region = 'us-midwest';
+
+  if (p.name == null || String(p.name).trim() === '') p.name = 'Friend';
+
+  if (p.goal == null || String(p.goal).trim() === '') p.goal = 'Eat healthier';
+
+  if (p.activity == null || String(p.activity).trim() === '' || !VALID_ACTIVITIES[p.activity]) p.activity = 'Moderate';
+
+  var mKey = p.meals != null ? String(p.meals).trim() : '';
+  if (!mKey || !SLOT_SETS[mKey]) p.meals = '3';
+
+  if (p.skill == null || String(p.skill).trim() === '') p.skill = 'Home cook';
+  if (p.budget == null || String(p.budget).trim() === '') p.budget = 'Moderate';
+
+  if (!Array.isArray(p.cuisines)) p.cuisines = [];
+  if (!Array.isArray(p.restrictions)) {
+    if (p.restrictions != null && String(p.restrictions).trim() !== '') p.restrictions = [String(p.restrictions).trim()];
+    else p.restrictions = ['None'];
+  }
+  if (!p.restrictions.length) p.restrictions = ['None'];
+
+  if (p.dislikes == null) p.dislikes = '';
+
+  var hi = parseFloat(p.heightInches);
+  if (!(hi > 0) || !isFinite(hi)) {
+    var hp = parseHeightInput(p.height);
+    if (hp.ok) {
+      p.height = hp.display;
+      p.heightInches = hp.inches;
+      p.heightCm = hp.cm;
+    }
+  } else if (!p.heightCm || !isFinite(Number(p.heightCm))) {
+    p.heightCm = +(hi * 2.54).toFixed(1);
+  }
+
+  var cc = Number(p.customCal);
+  if (useCustom && (!isFinite(cc) || cc <= 0)) p.customCal = null;
+
+  var tdeeN = Number(p.tdee);
+  if (!isFinite(tdeeN) || tdeeN <= 0) {
+    p.tdee = calcTDEE();
+  }
+  if (!p.macros || typeof p.macros !== 'object') {
+    p.macros = getMacroTargets(getCalTarget());
+  } else {
+    var mm = p.macros;
+    var pr = Number(mm.protein), cr = Number(mm.carbs), fr = Number(mm.fat);
+    if (!isFinite(pr) || !isFinite(cr) || !isFinite(fr)) p.macros = getMacroTargets(getCalTarget());
+  }
+
+  if (!p.mealFeedback || typeof p.mealFeedback !== 'object') p.mealFeedback = {};
+}
+
+/**
+ * Required for AI + nutrition: height, weight, goal, activity, mealsPerDay (UP.meals), diet (UP.restrictions).
+ * @returns {{ ok: boolean, errors: string[] }}
+ */
+function validateUserProfile(p) {
+  p = p || UP;
+  var errors = [];
+
+  if (!p || typeof p !== 'object') {
+    errors.push('Profile data is missing. Please complete onboarding again.');
+    return { ok: false, errors: errors };
+  }
+
+  var w = parseFloat(p.weight);
+  if (!isFinite(w) || !(w > 0)) errors.push('Weight is missing or invalid. Re-enter your weight in onboarding.');
+
+  var hi = parseFloat(p.heightInches);
+  var hp = parseHeightInput(p.height);
+  if (!(hi > 0 && isFinite(hi)) && !hp.ok) {
+    errors.push('Height is missing or invalid. Re-enter your height in onboarding.');
+  }
+
+  if (p.goal == null || String(p.goal).trim() === '') errors.push('Goal is required. Select a goal in onboarding.');
+
+  if (p.activity == null || String(p.activity).trim() === '') errors.push('Activity level is required.');
+  else if (!VALID_ACTIVITIES[p.activity]) errors.push('Activity level is invalid. Select Sedentary, Light, Moderate, Very active, or Athlete.');
+
+  var mealsKey = p.meals != null ? String(p.meals).trim() : '';
+  if (!mealsKey || !SLOT_SETS[mealsKey]) errors.push('Meals per day is missing or invalid. Choose 2–6 meals per day in onboarding.');
+
+  if (!Array.isArray(p.restrictions)) errors.push('Diet preferences are missing or corrupted. Re-select diet options in onboarding.');
+  else if (!p.restrictions.length) errors.push('Diet preferences are empty. Select at least “None” or a diet tag in onboarding.');
+
+  return { ok: errors.length === 0, errors: errors };
+}
+
+function resetAppAfterInvalidStoredProfile(errors) {
+  nutriDebug('Clearing invalid stored profile', errors || []);
+  clearAllPersistedData();
+  recipes = [];
+  selectedRecipes = new Set();
+  checked = {};
+  mealPlan = {};
+  DAYS.forEach(function(d) { mealPlan[d] = {}; });
+  arcRestoredFromStorage = false;
+  useCustom = false;
+  locDetected = false;
+  recipeGenId++;
+  UP = { region: 'us-midwest', mealFeedback: {} };
+  obStep = 1;
+  var msg = (errors && errors[0]) ? errors[0] : 'Saved profile was incomplete or damaged. Please run onboarding again.';
+  showToast(msg);
+  var screens = document.querySelectorAll('.screen');
+  for (var si = 0; si < screens.length; si++) screens[si].classList.remove('active');
+  var w = el('s-welcome');
+  if (w) w.classList.add('active');
+}
+
 // ── Recipe generation ─────────────────────────────────────────
 function validateProfileForGeneration() {
-  var required = [
-    {k:'name', msg:'Please complete onboarding: name is required.'},
-    {k:'weight', msg:'Please complete onboarding: weight is required.'},
-    {k:'height', msg:'Please complete onboarding: height is required.'},
-    {k:'region', msg:'Please complete onboarding: region is required.'},
-    {k:'goal', msg:'Please complete onboarding: goal is required.'},
-    {k:'activity', msg:'Please complete onboarding: activity level is required.'},
-    {k:'meals', msg:'Please complete onboarding: meals per day is required.'},
-    {k:'skill', msg:'Please complete onboarding: cooking skill is required.'},
-    {k:'budget', msg:'Please complete onboarding: budget is required.'}
-  ];
-  for (var i = 0; i < required.length; i++) {
-    var v = UP[required[i].k];
-    if (v == null || String(v).trim() === '') return {ok:false, msg:required[i].msg};
+  applySafeProfileDefaults(UP);
+  var v = validateUserProfile(UP);
+  if (!v.ok) {
+    var msg = (v.errors && v.errors[0]) ? v.errors[0] : 'Profile incomplete. Please finish onboarding.';
+    return { ok: false, msg: msg, errors: v.errors };
   }
-  var hp = parseHeightInput(UP.height);
-  if (!hp.ok) return {ok:false, msg:'Please enter a valid height before generating recipes.'};
-  if (!(parseFloat(UP.weight) > 0)) return {ok:false, msg:'Please enter a valid weight before generating recipes.'};
-  return {ok:true};
+  return { ok: true, errors: [] };
 }
 
 function generateRecipes() {
   var ok = validateProfileForGeneration();
   if (!ok.ok) {
+    nutriDebug('Recipe generation blocked — invalid profile', ok.errors || ok.msg);
     showToast(ok.msg);
     showScreen('ob');
     return;
@@ -2135,6 +2282,10 @@ function generateRecipes() {
   userMsg += '8. Across a full day of meals (one recipe per slot), total calories and macros should approximate the TOTAL DAILY TARGETS—adjust portions so daily sums stay coherent.\n\n';
   userMsg += 'Output ONLY the JSON array. Begin your response with [ and nothing else.';
 
+  nutriDebug('userProfile (pre-generation)', cloneProfileForLog(UP));
+  nutriDebug('Final recipe AI system message', sysMsg);
+  nutriDebug('Final recipe AI user message (' + userMsg.length + ' chars)', userMsg.length > 20000 ? userMsg.slice(0, 20000) + '\n… [truncated for console]' : userMsg);
+
   function processRecipes(err, raw) {
     if (myGen !== recipeGenId) return;
     genAnim(1, 'done');
@@ -2147,10 +2298,21 @@ function generateRecipes() {
       recipes = parsed.map(function(r, i) { return normalizeGeneratedRecipe(r, i, mt); });
       saveSessionState();
     } else {
-      // Backend returned an error — show it to the user
       if (myGen !== recipeGenId) return;
+      var detail = '';
+      if (err) detail = err.message || String(err);
+      else if (!raw) detail = 'No response body from the recipe service. Check your network connection and try again.';
+      else if (!parsed) detail = 'The AI response was not valid JSON. Try generating again, or check server logs.';
+      else detail = 'The model returned only ' + (Array.isArray(parsed) ? parsed.length : 0) + ' recipes (need at least 10). Try again.';
+
+      nutriDebug('Recipe generation failed', { detail: detail, rawPreview: raw ? String(raw).slice(0, 500) : null });
+
+      function escRecGen(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
       showScreen('s-recipes');
-      el('recipes-list').innerHTML = '<div style="padding:24px;text-align:center"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:15px;font-weight:600;color:#111;margin-bottom:6px">Unable to load recipes</div><div style="font-size:13px;color:#9ca3af;line-height:1.5">' + (err ? err.message : 'The server returned an unexpected response. Check that your backend is running.') + '</div></div>';
+      el('recipes-list').innerHTML = '<div style="padding:24px;text-align:center"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:15px;font-weight:600;color:#111;margin-bottom:6px">Recipe generation failed</div><div style="font-size:13px;color:#9ca3af;line-height:1.5">' + escRecGen(detail) + '</div></div>';
       return;
     }
 
@@ -2639,7 +2801,11 @@ function aiCreatePlan() {
   if (!recipes.length) { showToast('Recipes are still loading...'); return; }
   if (selectedRecipes.size === 0) { showToast('Select at least 1 recipe before generating your week.'); return; }
   var ok = validateProfileForGeneration();
-  if (!ok.ok) { showToast(ok.msg); return; }
+  if (!ok.ok) {
+    nutriDebug('Week plan blocked — invalid profile', ok.errors || ok.msg);
+    showToast(ok.msg);
+    return;
+  }
   showAI('Building your week...', 'Optimizing meals for your goals');
 
   var ne       = buildNutritionEngine();
@@ -2696,6 +2862,9 @@ function aiCreatePlan() {
   userMsg    += '"Tue":{' + slotNames.map(function(s){ return s + ':2'; }).join(',') + '}}\n';
   userMsg    += 'Include all 7 days: Mon, Tue, Wed, Thu, Fri, Sat, Sun\n';
   userMsg    += 'Start your response with { and end with }';
+
+  nutriDebug('userProfile (pre-week-plan)', cloneProfileForLog(UP));
+  nutriDebug('Final week-plan AI user message (' + userMsg.length + ' chars)', userMsg.length > 20000 ? userMsg.slice(0, 20000) + '\n… [truncated for console]' : userMsg);
 
   function applyPlan(err, raw) {
     hideAI();
@@ -3260,17 +3429,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   restorePersistedState();
   if (arcRestoredFromStorage) {
-    applyProfileToUIBar();
-    showScreen('s-today');
-    tab('today');
-    syncCatTabsUI();
-    renderRecipes();
-    renderPlanner();
-    renderNutrition();
-    renderShopping();
-    renderToday();
-    updateNextBar();
-    updatePlannerBar();
+    applySafeProfileDefaults(UP);
+    var storedProfileCheck = validateUserProfile(UP);
+    if (!storedProfileCheck.ok) {
+      resetAppAfterInvalidStoredProfile(storedProfileCheck.errors);
+    } else {
+      applyProfileToUIBar();
+      showScreen('s-today');
+      tab('today');
+      syncCatTabsUI();
+      renderRecipes();
+      renderPlanner();
+      renderNutrition();
+      renderShopping();
+      renderToday();
+      updateNextBar();
+      updatePlannerBar();
+    }
   }
 
   // ── Settings events ───────────────────────────────────────
