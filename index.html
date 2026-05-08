@@ -286,12 +286,21 @@ body{
 .today-progress-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;justify-content:center}
 .today-remaining-line{margin:0;font-size:15px;font-weight:600;color:var(--arc-text);line-height:1.35}
 .today-protein-line{margin:0;font-size:14px;font-weight:500;color:var(--arc-subtext);line-height:1.35}
-.today-coach{margin:0 0 24px;font-size:15px;color:var(--arc-subtext);line-height:1.6;font-weight:500;max-width:34em}
-.today-actions{display:flex;align-items:center;gap:12px;padding-top:4px}
-.today-btn{width:46px;height:46px;border:none;border-radius:999px;background:var(--arc-card-soft);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--arc-subtext);transition:transform 180ms var(--ease-standard),background var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard);box-shadow:var(--shadow-sm);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.today-btn:hover{background:#fff;box-shadow:var(--shadow-md)}
-.today-btn.primary{background:var(--arc-primary);color:#fff;box-shadow:var(--shadow-primary)}
-.today-btn.primary:hover{background:var(--arc-primary-dark);box-shadow:0 14px 30px rgba(227,90,54,0.28)}
+.today-coach{margin:0 0 14px;font-size:15px;color:var(--arc-subtext);line-height:1.6;font-weight:500;max-width:34em}
+.today-actions{margin-top:10px;padding-top:2px}
+.today-action-seg{display:flex;width:100%;border-radius:14px;background:rgba(255,255,255,.55);border:1px solid rgba(31,31,31,.08);box-shadow:0 1px 3px rgba(31,31,31,.04);overflow:hidden;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.today-seg-btn{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:11px 6px;border:none;background:transparent;cursor:pointer;font:inherit;color:var(--arc-subtext);transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
+.today-seg-btn + .today-seg-btn{border-left:1px solid rgba(31,31,31,.08)}
+.today-seg-btn:hover{background:rgba(255,255,255,.85);color:var(--arc-text)}
+.today-seg-btn:active{background:rgba(31,31,31,.04)}
+.today-seg-btn:focus-visible{outline:2px solid var(--arc-primary);outline-offset:-4px;z-index:1;position:relative}
+.today-seg-btn:disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+.today-seg-ic{font-size:15px;line-height:1;opacity:.88}
+.today-seg-txt{font-size:11px;font-weight:600;letter-spacing:.02em;line-height:1.2;text-align:center;max-width:100%}
+@media (min-width:400px){
+  .today-seg-btn{flex-direction:row;gap:7px;padding:11px 10px}
+  .today-seg-txt{font-size:12px;white-space:nowrap}
+}
 .slbl{font-size:var(--fs-label);font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
 .ubar{display:flex;align-items:center;gap:14px;background:var(--arc-card);padding:16px 22px;flex-shrink:0;box-shadow:0 1px 0 var(--arc-divider)}
 .avatar{width:42px;height:42px;border-radius:50%;background:var(--arc-soft-primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--arc-primary);flex-shrink:0}
@@ -705,9 +714,20 @@ button:active{transform:scale(var(--press-scale))}
       </div>
       <p class="today-coach" id="today-suggestion">Plan today to get clear suggestions.</p>
       <div class="today-actions">
-        <button type="button" class="today-btn" id="today-log-btn" aria-label="Log food" title="Log food">✏️</button>
-        <button type="button" class="today-btn" id="today-swap-btn" aria-label="Swap meal" title="Swap meal">🔄</button>
-        <button type="button" class="today-btn primary" id="today-regen-btn" aria-label="Regenerate today" title="Regenerate today">⚡</button>
+        <div class="today-action-seg" role="toolbar" aria-label="Today shortcuts">
+          <button type="button" class="today-seg-btn" id="today-log-btn">
+            <span class="today-seg-ic" aria-hidden="true">✏️</span>
+            <span class="today-seg-txt">Log Food</span>
+          </button>
+          <button type="button" class="today-seg-btn" id="today-swap-btn">
+            <span class="today-seg-ic" aria-hidden="true">🔄</span>
+            <span class="today-seg-txt">Swap Meal</span>
+          </button>
+          <button type="button" class="today-seg-btn" id="today-regen-btn">
+            <span class="today-seg-ic" aria-hidden="true">⚡</span>
+            <span class="today-seg-txt">Regenerate</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1594,6 +1614,8 @@ function renderToday() {
   el('today-cook-btn').dataset.rid = meal ? meal.id : '';
   el('today-swap-btn').dataset.day = day;
   el('today-swap-btn').dataset.slot = slot || '';
+  el('today-swap-btn').disabled = !slot;
+  el('today-swap-btn').title = slot ? ('Pick a different recipe for ' + slot) : 'No meal slot right now — plan your day in Planner first';
 }
 
 function showToast(msg) {
