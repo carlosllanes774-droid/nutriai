@@ -271,8 +271,21 @@ body{
 .today-hero .today-kicker{font-size:11px;font-weight:600;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.14em;margin-bottom:18px}
 .today-name{font-size:34px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.12;margin-bottom:18px;letter-spacing:-.025em}
 .today-meta{font-size:15px;color:var(--arc-subtext);display:flex;gap:14px;flex-wrap:wrap;font-weight:500}
+.today-meal-status{margin-top:14px;min-height:22px}
+.today-status{display:inline-flex;align-items:center;padding:5px 11px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid rgba(31,31,31,.1);background:rgba(255,255,255,.6);color:var(--arc-subtext)}
+.today-status--planned{background:var(--arc-card-soft);color:var(--arc-subtext)}
+.today-status--logged{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.2)}
+.today-status--skipped{background:rgba(31,31,31,.06);color:var(--arc-subtext)}
+.today-status--replaced{background:rgba(59,130,246,.08);color:#1d4ed8;border-color:rgba(59,130,246,.2)}
+.today-meal-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
+.today-mac-btn{padding:9px 14px;border-radius:999px;border:1px solid rgba(31,31,31,.12);background:rgba(255,255,255,.55);font-size:12px;font-weight:600;color:var(--arc-text);cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
+.today-mac-btn:hover{background:#fff;border-color:rgba(31,31,31,.18)}
+.today-mac-btn:focus-visible{outline:2px solid var(--arc-primary);outline-offset:2px}
+.today-mac-btn.secondary{color:var(--arc-subtext);font-weight:600}
+.today-mac-btn:disabled{opacity:.45;cursor:not-allowed}
+.today-replace-note{font-size:12px;color:var(--arc-subtext);margin-top:8px;line-height:1.45;max-width:36em}
 .today-empty{font-size:16px;color:var(--arc-subtext);font-style:normal;line-height:1.55}
-.today-cook-cta{margin-top:32px;width:100%;padding:18px 22px!important;border-radius:18px!important;font-size:17px!important;font-weight:600!important;min-height:58px;box-shadow:0 12px 32px rgba(227,90,54,.26)}
+.today-cook-cta{margin-top:20px;width:100%;padding:18px 22px!important;border-radius:18px!important;font-size:17px!important;font-weight:600!important;min-height:58px;box-shadow:0 12px 32px rgba(227,90,54,.26)}
 .today-cook-cta:disabled{box-shadow:none;opacity:.5}
 .today-foot{margin-top:8px;padding-top:40px;display:flex;flex-direction:column;gap:0}
 .today-progress-row{display:flex;align-items:center;gap:clamp(20px,5vw,36px);margin-bottom:40px}
@@ -283,7 +296,9 @@ body{
 .today-progress-stats{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;justify-content:center;padding:4px 0}
 .today-kcal-line{margin:0;font-size:clamp(21px,4.8vw,28px);font-weight:600;color:var(--arc-text);line-height:1.2;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
 .today-protein-line{margin:0;font-size:15px;font-weight:500;color:var(--arc-subtext);line-height:1.45;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.today-forecast{margin:0;font-size:12px;font-weight:500;color:var(--arc-subtext);line-height:1.45;opacity:.92}
 .today-coach{margin:0 0 14px;font-size:15px;color:var(--arc-subtext);line-height:1.6;font-weight:500;max-width:34em}
+.prog-plan-sub{font-size:11px;font-weight:500;color:var(--arc-subtext);margin-left:6px;opacity:.9}
 .today-actions{margin-top:10px;padding-top:2px}
 .today-action-seg{display:flex;width:100%;border-radius:14px;background:rgba(255,255,255,.55);border:1px solid rgba(31,31,31,.08);box-shadow:0 1px 3px rgba(31,31,31,.04);overflow:hidden;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .today-seg-btn{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:11px 6px;border:none;background:transparent;cursor:pointer;font:inherit;color:var(--arc-subtext);transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
@@ -701,6 +716,8 @@ button:active{transform:scale(var(--press-scale))}
     <section class="today-hero">
       <p class="today-kicker" id="today-slot">Current meal</p>
       <div id="today-meal-wrap"></div>
+      <div id="today-meal-status" class="today-meal-status"></div>
+      <div id="today-meal-actions" class="today-meal-actions"></div>
       <button class="btn-green today-cook-cta" id="today-cook-btn">Cook this meal</button>
     </section>
     <div class="today-foot">
@@ -714,6 +731,7 @@ button:active{transform:scale(var(--press-scale))}
         <div class="today-progress-stats">
           <p class="today-kcal-line" id="today-kcal-remaining">0 kcal remaining</p>
           <p class="today-protein-line" id="today-protein-remaining">0g protein left</p>
+          <p class="today-forecast" id="today-forecast" style="display:none"></p>
         </div>
       </div>
       <p class="today-coach" id="today-suggestion">Plan today to get clear suggestions.</p>
@@ -1073,6 +1091,8 @@ var swapIng     = null;
 var swapRid     = null;
 var assignDay   = null;
 var assignSlot  = null;
+var assignIntent = 'plan';
+var mealJournal = {};
 var locDetected = false;
 var useCustom   = false;
 var obStep      = 1;
@@ -1097,6 +1117,7 @@ function persistAppData() {
       app: {
         recipes: recipes,
         mealPlan: mealPlan,
+        mealJournal: mealJournal,
         selectedRecipes: Array.from(selectedRecipes),
         checked: checked,
         shopPantry: shopPantry,
@@ -1150,6 +1171,7 @@ function restorePersistedState() {
       var a = o.app;
       if (Array.isArray(a.recipes)) recipes = a.recipes;
       if (a.mealPlan && typeof a.mealPlan === 'object') mealPlan = a.mealPlan;
+      if (a.mealJournal && typeof a.mealJournal === 'object') mealJournal = a.mealJournal;
       if (Array.isArray(a.selectedRecipes)) {
         selectedRecipes = new Set(a.selectedRecipes.map(function(id) { return parseInt(id, 10); }).filter(Boolean));
       } else if (a.addedRecipes && typeof a.addedRecipes === 'object') {
@@ -1172,6 +1194,7 @@ function restorePersistedState() {
         var s = JSON.parse(sr);
         if (Array.isArray(s.recipes)) recipes = s.recipes;
         if (s.mealPlan && typeof s.mealPlan === 'object') mealPlan = s.mealPlan;
+        if (s.mealJournal && typeof s.mealJournal === 'object') mealJournal = s.mealJournal;
         if (Array.isArray(s.selectedRecipes)) {
           selectedRecipes = new Set(s.selectedRecipes.map(function(id) { return parseInt(id, 10); }).filter(Boolean));
         } else if (s.addedRecipes && typeof s.addedRecipes === 'object') {
@@ -1530,29 +1553,117 @@ function slotForNow(slots) {
   return slots[0] || null;
 }
 
-function todaysTotals(slots, day) {
-  var t = {cal:0,p:0,c:0,f:0};
+function getSlotJournal(day, slot) {
+  if (!mealJournal[day] || !mealJournal[day][slot]) return null;
+  return mealJournal[day][slot];
+}
+
+function setSlotJournal(day, slot, entry) {
+  if (!mealJournal[day]) mealJournal[day] = {};
+  if (entry == null) delete mealJournal[day][slot];
+  else mealJournal[day][slot] = entry;
+  if (mealJournal[day] && Object.keys(mealJournal[day]).length === 0) delete mealJournal[day];
+}
+
+function isMealFinalized(day, slot) {
+  if (!slot) return false;
+  var j = getSlotJournal(day, slot);
+  if (!j) return false;
+  if (j.status === 'logged' || j.status === 'skipped') return true;
+  if (j.status === 'replaced' && j.actualRid) return true;
+  return false;
+}
+
+function getDayPlannedTotals(day, slots) {
+  var t = { cal: 0, p: 0, c: 0, f: 0 };
   if (!mealPlan[day]) return t;
   for (var s = 0; s < slots.length; s++) {
-    var rid = mealPlan[day][slots[s]];
+    var slot = slots[s];
+    var rid = mealPlan[day][slot];
     var r = rid ? findRecipe(rid) : null;
     if (!r) continue;
-    t.cal += r.cal; t.p += r.p; t.c += r.c; t.f += r.f;
+    t.cal += r.cal;
+    t.p += r.p;
+    t.c += r.c;
+    t.f += r.f;
   }
   return t;
 }
 
-function smartTodaySuggestion(totals, calTarget, proteinTarget) {
+function getDayConsumedTotals(day, slots) {
+  var t = { cal: 0, p: 0, c: 0, f: 0 };
+  if (!mealPlan[day]) return t;
+  for (var s = 0; s < slots.length; s++) {
+    var slot = slots[s];
+    var j = getSlotJournal(day, slot);
+    if (!j || j.status === 'skipped') continue;
+    var r = null;
+    if (j.status === 'logged') {
+      var rid = mealPlan[day][slot];
+      r = rid ? findRecipe(rid) : null;
+    } else if (j.status === 'replaced' && j.actualRid) {
+      r = findRecipe(j.actualRid);
+    }
+    if (r) {
+      t.cal += r.cal;
+      t.p += r.p;
+      t.c += r.c;
+      t.f += r.f;
+    }
+  }
+  return t;
+}
+
+function remainingPlannedCalOnMenu(day, slots) {
+  var sum = 0;
+  for (var s = 0; s < slots.length; s++) {
+    var slot = slots[s];
+    if (isMealFinalized(day, slot)) continue;
+    var rid = mealPlan[day] && mealPlan[day][slot];
+    var r = rid ? findRecipe(rid) : null;
+    if (r) sum += r.cal;
+  }
+  return sum;
+}
+
+function adaptiveTodayCoach(day, focusSlot, slots, consumed, planned, calTarget, proteinTarget) {
+  var h = new Date().getHours();
   var pool = recipes.slice().sort(function(a, b) { return (b.p - a.p); });
-  if (totals.p < Math.round(proteinTarget * 0.7)) {
-    var hp = pool[0] || null;
-    return hp ? ('Next step: add protein. Pick "' + hp.name + '" (' + hp.p + 'g protein).') : 'Next step: add a lean protein snack.';
+  var under = calTarget - consumed.cal;
+  var bf = null;
+  var ln = null;
+  for (var i = 0; i < slots.length; i++) {
+    if (/breakfast/i.test(slots[i])) bf = slots[i];
+    if (/lunch/i.test(slots[i])) ln = slots[i];
   }
-  if (totals.cal > calTarget) {
+
+  if (bf && getSlotJournal(day, bf) && getSlotJournal(day, bf).status === 'skipped' && ln && !isMealFinalized(day, ln) && h >= 10 && h < 15) {
+    return 'Skipped breakfast? Add lean protein at lunch today to stay balanced.';
+  }
+
+  if (under >= 700 && h >= 14) {
+    return 'Still about ' + Math.round(under) + ' kcal under your target — consider a purposeful snack or a slightly larger dinner.';
+  }
+
+  if (under >= 400 && under < 700 && h >= 12 && h < 20) {
+    return 'You are roughly ' + Math.round(under) + ' kcal below goal logged so far.';
+  }
+
+  if (consumed.cal > calTarget + 150) {
     var light = recipes.slice().sort(function(a, b) { return (a.cal - b.cal); })[0] || null;
-    return light ? ('You are over target. Choose a lighter meal like "' + light.name + '" (' + light.cal + ' kcal).') : 'You are over target. Choose a lighter meal next.';
+    return light ? ('Logged calories are above target today. Next time try something lighter like "' + light.name + '".') : 'Logged calories are above your daily target today.';
   }
-  return 'You are on track. Cook your current meal now.';
+
+  if (focusSlot && h >= 17 && consumed.p < Math.round(proteinTarget * 0.55) && !isMealFinalized(day, focusSlot)) {
+    return 'Need an easier dinner tonight? Keep prep simple and favor protein plus vegetables.';
+  }
+
+  if (consumed.p < Math.round(proteinTarget * 0.65) && pool.length) {
+    var hp = pool[0];
+    return hp ? ('Protein is low versus goal. Consider logging "' + hp.name + '" (' + hp.p + 'g) if it fits your day.') : 'Protein is still short of target — prioritize protein-rich foods you actually eat.';
+  }
+
+  return 'Log meals as you eat them so Arc stays honest — planned food is only a forecast until you confirm.';
 }
 
 function regenerateTodayPlan() {
@@ -1560,6 +1671,7 @@ function regenerateTodayPlan() {
   var slots = getSlots();
   var day = todayKey();
   if (!mealPlan[day]) mealPlan[day] = {};
+  mealJournal[day] = {};
   var selectedPool = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
   var catMap = {};
   for (var i = 0; i < selectedPool.length; i++) {
@@ -1594,26 +1706,70 @@ function renderToday() {
   var meal = rid ? findRecipe(rid) : null;
   var calTarget = getCalTarget();
   var macros = UP.macros || getMacroTargets(calTarget);
-  var totals = todaysTotals(slots, day);
+  var consumed = getDayConsumedTotals(day, slots);
+  var planned = getDayPlannedTotals(day, slots);
 
   el('today-date').textContent = d.toLocaleDateString(undefined, { weekday:'long', month:'short', day:'numeric' });
   el('today-slot').textContent = slot ? ('Current meal · ' + slot) : 'Current meal';
+
+  var stEl = el('today-meal-status');
+  var actEl = el('today-meal-actions');
+  var j = slot ? getSlotJournal(day, slot) : null;
+
   if (meal) {
-    el('today-meal-wrap').innerHTML = '<div class="today-name">' + meal.name + '</div><div class="today-meta"><span>' + meal.cal + ' kcal</span><span>P ' + meal.p + 'g</span><span>C ' + meal.c + 'g</span><span>F ' + meal.f + 'g</span></div>';
+    var wrap = '<div class="today-name">' + meal.name + '</div>';
+    wrap += '<div class="today-meta"><span>' + meal.cal + ' kcal planned</span><span>P ' + meal.p + 'g</span><span>C ' + meal.c + 'g</span><span>F ' + meal.f + 'g</span></div>';
+    wrap += '<div style="font-size:11px;color:var(--arc-subtext);margin-top:10px;font-weight:500;letter-spacing:.02em">Planned on your menu · not counted until you log it</div>';
+    el('today-meal-wrap').innerHTML = wrap;
     el('today-cook-btn').disabled = false;
+
+    if (stEl && actEl && slot) {
+      var label = 'Planned';
+      var cls = 'today-status today-status--planned';
+      if (j && j.status === 'logged') {
+        label = 'Logged';
+        cls = 'today-status today-status--logged';
+      } else if (j && j.status === 'skipped') {
+        label = 'Skipped';
+        cls = 'today-status today-status--skipped';
+      } else if (j && j.status === 'replaced') {
+        label = 'Replaced';
+        cls = 'today-status today-status--replaced';
+      }
+      var stHtml = '<span class="' + cls + '">' + label + '</span>';
+      if (j && j.status === 'replaced' && j.actualRid) {
+        var ar = findRecipe(j.actualRid);
+        if (ar) stHtml += '<div class="today-replace-note">You logged: ' + ar.name + ' · ' + ar.cal + ' kcal</div>';
+      }
+      stEl.innerHTML = stHtml;
+
+      var ds = shopDataAttr(slot);
+      var dd = shopDataAttr(day);
+      var act = '';
+      if (!j) {
+        act += '<button type="button" class="today-mac-btn" data-today-act="log" data-day="' + dd + '" data-slot="' + ds + '">Log meal</button>';
+        act += '<button type="button" class="today-mac-btn secondary" data-today-act="skip" data-day="' + dd + '" data-slot="' + ds + '">Skip</button>';
+        act += '<button type="button" class="today-mac-btn secondary" data-today-act="replace" data-day="' + dd + '" data-slot="' + ds + '">Replace</button>';
+      } else if (j.status === 'logged' || j.status === 'skipped' || j.status === 'replaced') {
+        act += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo</button>';
+      }
+      actEl.innerHTML = act;
+    }
   } else {
     el('today-meal-wrap').innerHTML = '<div class="today-empty">No meal planned for this slot yet.</div>';
     el('today-cook-btn').disabled = true;
+    if (stEl) stEl.innerHTML = '';
+    if (actEl) actEl.innerHTML = '';
   }
 
-  var calPct = calTarget ? Math.min(100, Math.round((totals.cal / calTarget) * 100)) : 0;
-  var kcalRem = Math.max(0, calTarget - totals.cal);
+  var calPct = calTarget ? Math.min(100, Math.round((consumed.cal / calTarget) * 100)) : 0;
+  var kcalRem = Math.max(0, calTarget - consumed.cal);
   var protTgt = macros.protein || 0;
-  var protRem = Math.max(0, protTgt - totals.p);
+  var protRem = Math.max(0, protTgt - consumed.p);
   var kEl = el('today-kcal-remaining');
-  if (kEl) kEl.textContent = kcalRem.toLocaleString(undefined) + ' kcal remaining';
+  if (kEl) kEl.textContent = kcalRem.toLocaleString(undefined) + ' kcal remaining (logged)';
   var pEl = el('today-protein-remaining');
-  if (pEl) pEl.textContent = Math.round(protRem).toLocaleString(undefined) + 'g protein left';
+  if (pEl) pEl.textContent = Math.round(protRem).toLocaleString(undefined) + 'g protein left (logged)';
   var ring = el('today-ring-bar');
   if (ring) {
     var rad = 41;
@@ -1621,13 +1777,55 @@ function renderToday() {
     ring.style.strokeDasharray = String(circumference);
     ring.style.strokeDashoffset = String(circumference * (1 - Math.min(100, calPct) / 100));
   }
-  el('today-suggestion').textContent = smartTodaySuggestion(totals, calTarget, macros.protein);
+
+  var fEl = el('today-forecast');
+  if (fEl) {
+    var ahead = remainingPlannedCalOnMenu(day, slots);
+    if (ahead > 0 && consumed.cal < calTarget) {
+      fEl.style.display = 'block';
+      fEl.textContent = 'Still on your menu (not logged): ~' + Math.round(ahead).toLocaleString(undefined) + ' kcal planned ahead';
+    } else {
+      fEl.style.display = 'none';
+      fEl.textContent = '';
+    }
+  }
+
+  el('today-suggestion').textContent = adaptiveTodayCoach(day, slot, slots, consumed, planned, calTarget, macros.protein);
 
   el('today-cook-btn').dataset.rid = meal ? meal.id : '';
   el('today-swap-btn').dataset.day = day;
   el('today-swap-btn').dataset.slot = slot || '';
   el('today-swap-btn').disabled = !slot;
-  el('today-swap-btn').title = slot ? ('Pick a different recipe for ' + slot) : 'No meal slot right now — plan your day in Planner first';
+  el('today-swap-btn').title = slot ? ('Change the planned recipe for ' + slot) : 'No meal slot right now — plan your day in Planner first';
+}
+
+function applyTodayMealAction(act, day, slot) {
+  if (!day || !slot) return;
+  if (act === 'log') {
+    if (!mealPlan[day] || !mealPlan[day][slot]) {
+      showToast('Nothing planned for this slot.');
+      return;
+    }
+    setSlotJournal(day, slot, { status: 'logged' });
+    saveSessionState();
+    renderNutrition();
+    renderToday();
+    showToast('Meal logged');
+  } else if (act === 'skip') {
+    setSlotJournal(day, slot, { status: 'skipped' });
+    saveSessionState();
+    renderNutrition();
+    renderToday();
+    showToast('Marked as skipped');
+  } else if (act === 'replace') {
+    openAssign(day, slot, 'replace');
+  } else if (act === 'undo') {
+    setSlotJournal(day, slot, null);
+    saveSessionState();
+    renderNutrition();
+    renderToday();
+    showToast('Meal status cleared');
+  }
 }
 
 function showToast(msg) {
@@ -2011,6 +2209,7 @@ function finishOB() {
   UP.macros = getMacroTargets(getCalTarget());
 
   DAYS.forEach(function(d) { mealPlan[d] = {}; });
+  mealJournal = {};
 
   UP.locDetected = locDetected;
   saveUserProfile();
@@ -2225,6 +2424,7 @@ function resetAppAfterInvalidStoredProfile(errors) {
   selectedRecipes = new Set();
   checked = {};
   shopPantry = {};
+  mealJournal = {};
   mealPlan = {};
   DAYS.forEach(function(d) { mealPlan[d] = {}; });
   arcRestoredFromStorage = false;
@@ -2481,7 +2681,10 @@ function removeRecipeFromMealPlan(recipeId) {
     if (!mealPlan[day]) continue;
     for (var s = 0; s < slots.length; s++) {
       var slot = slots[s];
-      if (mealPlan[day][slot] === recipeId) delete mealPlan[day][slot];
+      if (mealPlan[day][slot] === recipeId) {
+        delete mealPlan[day][slot];
+        setSlotJournal(day, slot, null);
+      }
     }
   }
 }
@@ -2769,11 +2972,14 @@ function renderPlanner() {
   var addBtns = document.querySelectorAll('.slot-add');
   var rmBtns  = document.querySelectorAll('.slot-rm');
   for (var ab = 0; ab < addBtns.length; ab++) {
-    addBtns[ab].addEventListener('click', function() { openAssign(this.dataset.day, this.dataset.slot); });
+    addBtns[ab].addEventListener('click', function() { openAssign(this.dataset.day, this.dataset.slot, 'plan'); });
   }
   for (var rb = 0; rb < rmBtns.length; rb++) {
     rmBtns[rb].addEventListener('click', function() {
-      delete mealPlan[this.dataset.day][this.dataset.slot];
+      var d0 = this.dataset.day;
+      var s0 = this.dataset.slot;
+      delete mealPlan[d0][s0];
+      setSlotJournal(d0, s0, null);
       renderPlanner();
       renderNutrition();
       renderToday();
@@ -2796,13 +3002,16 @@ function updatePlannerBar() {
   el('pnb-sub').textContent = n + ' meal' + (n === 1 ? '' : 's') + ' planned';
 }
 
-function openAssign(day, slot) {
+function openAssign(day, slot, intent) {
+  assignIntent = intent || 'plan';
   var available = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
   if (!available.length) { showToast('Add some recipes from the Recipes tab first!'); return; }
   assignDay  = day;
   assignSlot = slot;
 
-  el('assign-title').textContent = slot + ' — ' + DAY_FULL[day];
+  el('assign-title').textContent = assignIntent === 'replace'
+    ? ('What you ate · ' + slot)
+    : (slot + ' — ' + DAY_FULL[day]);
   var html = '';
   for (var i = 0; i < available.length; i++) {
     var r = available[i];
@@ -2818,18 +3027,36 @@ function openAssign(day, slot) {
   var opts = el('assign-opts').querySelectorAll('.modal-opt');
   for (var j = 0; j < opts.length; j++) {
     opts[j].addEventListener('click', function() {
-      if (!mealPlan[assignDay]) mealPlan[assignDay] = {};
-      mealPlan[assignDay][assignSlot] = parseInt(this.dataset.id, 10);
-      closeAssign();
-      renderPlanner();
-      renderNutrition();
-      renderShopping();
+      var ridNum = parseInt(this.dataset.id, 10);
+      if (assignIntent === 'replace') {
+        if (!mealJournal[assignDay]) mealJournal[assignDay] = {};
+        mealJournal[assignDay][assignSlot] = { status: 'replaced', actualRid: ridNum };
+        saveSessionState();
+        closeAssign();
+        renderPlanner();
+        renderNutrition();
+        renderShopping();
+        renderToday();
+        showToast('Replacement logged for this slot');
+      } else {
+        if (!mealPlan[assignDay]) mealPlan[assignDay] = {};
+        mealPlan[assignDay][assignSlot] = ridNum;
+        setSlotJournal(assignDay, assignSlot, null);
+        closeAssign();
+        renderPlanner();
+        renderNutrition();
+        renderShopping();
+        renderToday();
+      }
     });
   }
   openMotion('assign-modal');
 }
 
-function closeAssign() { closeMotion('assign-modal'); }
+function closeAssign() {
+  assignIntent = 'plan';
+  closeMotion('assign-modal');
+}
 
 // ── AI Plan Builder ───────────────────────────────────────────
 function aiCreatePlan() {
@@ -2909,6 +3136,7 @@ function aiCreatePlan() {
 
     // Start fresh so stale meals from old generations don't leak through
     for (var rd = 0; rd < DAYS.length; rd++) mealPlan[DAYS[rd]] = {};
+    mealJournal = {};
 
     if (!err && raw) {
       var plan = parseJSON(raw);
@@ -3070,6 +3298,7 @@ function openAdaptModal() {
         if (rid && findRecipe(rid)) {
           if (!mealPlan[day]) mealPlan[day] = {};
           mealPlan[day][slot] = rid;
+          setSlotJournal(day, slot, null);
           selectedRecipes.add(rid);
           this.closest('.adapt-change').style.opacity = '.4';
           showToast('Applied ✓');
@@ -3077,6 +3306,7 @@ function openAdaptModal() {
           renderPlanner();
           renderNutrition();
           renderShopping();
+          renderToday();
         }
       });
     }
@@ -3120,31 +3350,29 @@ function renderNutrition() {
     ctWrap.innerHTML = '';
   }
 
-  var dayTotals = DAYS.map(function(day) {
-    if (!mealPlan[day]) return {cal:0,p:0,c:0,f:0};
-    return slots.reduce(function(acc, slot) {
-      var mid = mealPlan[day][slot];
-      if (mid) { var mr = findRecipe(mid); if (mr) { acc.cal += mr.cal; acc.p += mr.p; acc.c += mr.c; acc.f += mr.f; } }
-      return acc;
-    }, {cal:0,p:0,c:0,f:0});
-  });
+  var dayConsumed = DAYS.map(function(day) { return getDayConsumedTotals(day, slots); });
+  var dayPlanned = DAYS.map(function(day) { return getDayPlannedTotals(day, slots); });
 
-  var filled = dayTotals.filter(function(d) { return d.cal > 0; });
+  var filled = dayConsumed.filter(function(d) { return d.cal > 0; });
   function avg(k) { return filled.length ? Math.round(filled.reduce(function(s,d) { return s + d[k]; }, 0) / filled.length) : 0; }
 
   el('nut-stats').innerHTML =
-    '<div class="stat-c"><div class="stat-lbl">Avg calories</div><div class="stat-val">' + avg('cal') + '<span class="stat-unit"> kcal</span></div></div>' +
-    '<div class="stat-c"><div class="stat-lbl">Avg protein</div><div class="stat-val">'  + avg('p')   + '<span class="stat-unit"> g</span></div></div>' +
-    '<div class="stat-c"><div class="stat-lbl">Avg carbs</div><div class="stat-val">'    + avg('c')   + '<span class="stat-unit"> g</span></div></div>' +
-    '<div class="stat-c"><div class="stat-lbl">Avg fat</div><div class="stat-val">'      + avg('f')   + '<span class="stat-unit"> g</span></div></div>';
+    '<div class="stat-c"><div class="stat-lbl">Avg calories (logged)</div><div class="stat-val">' + avg('cal') + '<span class="stat-unit"> kcal</span></div></div>' +
+    '<div class="stat-c"><div class="stat-lbl">Avg protein (logged)</div><div class="stat-val">'  + avg('p')   + '<span class="stat-unit"> g</span></div></div>' +
+    '<div class="stat-c"><div class="stat-lbl">Avg carbs (logged)</div><div class="stat-val">'    + avg('c')   + '<span class="stat-unit"> g</span></div></div>' +
+    '<div class="stat-c"><div class="stat-lbl">Avg fat (logged)</div><div class="stat-val">'      + avg('f')   + '<span class="stat-unit"> g</span></div></div>';
 
   var barsHtml = '';
   for (var i = 0; i < DAYS.length; i++) {
-    var tot = dayTotals[i];
+    var tot = dayConsumed[i];
+    var plan = dayPlanned[i];
     var pct = tot.cal ? Math.min(100, Math.round(tot.cal / calTarget * 100)) : 0;
     var col = pct > 110 ? '#e76f51' : (pct > 0 && pct < 70 ? '#f9c74f' : 'var(--arc-primary)');
     barsHtml += '<div class="prog-wrap">';
-    barsHtml += '<div class="prog-top"><span class="prog-day">' + DAY_FULL[DAYS[i]] + '</span><span class="prog-cal">' + (tot.cal ? tot.cal + ' / ' + calTarget + ' kcal' : '—') + '</span></div>';
+    barsHtml += '<div class="prog-top"><span class="prog-day">' + DAY_FULL[DAYS[i]] + '</span><span class="prog-cal">';
+    barsHtml += (tot.cal ? tot.cal + ' logged / ' + calTarget + ' kcal' : '0 logged / ' + calTarget + ' kcal');
+    if (plan.cal) barsHtml += '<span class="prog-plan-sub"> · ' + plan.cal + ' planned</span>';
+    barsHtml += '</span></div>';
     barsHtml += '<div class="prog-bar"><div class="prog-fill" style="width:' + pct + '%;background:' + col + '"></div></div>';
     barsHtml += '</div>';
   }
@@ -3731,6 +3959,7 @@ document.addEventListener('DOMContentLoaded', function() {
     applySettingsProfile();
     closeSettings();
     recipes = []; selectedRecipes = new Set(); checked = {}; shopPantry = {};
+    mealJournal = {};
     DAYS.forEach(function(d) { mealPlan[d] = {}; });
     saveUserProfile();
     showScreen('s-gen');
@@ -3819,7 +4048,17 @@ document.addEventListener('DOMContentLoaded', function() {
     var day = this.dataset.day;
     var slot = this.dataset.slot;
     if (!slot) { showToast('No slot available to swap right now.'); return; }
-    openAssign(day, slot);
+    openAssign(day, slot, 'plan');
+  });
+
+  el('s-today').addEventListener('click', function(e) {
+    var b = e.target.closest('[data-today-act]');
+    if (!b) return;
+    var act = b.getAttribute('data-today-act');
+    var day = b.getAttribute('data-day');
+    var slot = b.getAttribute('data-slot');
+    if (!act || !day || !slot) return;
+    applyTodayMealAction(act, day, slot);
   });
   el('today-regen-btn').addEventListener('click', regenerateTodayPlan);
 
