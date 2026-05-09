@@ -672,6 +672,33 @@ button:active{transform:scale(var(--press-scale))}
 .settings-sheet{background:var(--arc-surface);flex:1;display:flex;flex-direction:column;overflow:hidden;border-radius:28px;transform:translateY(24px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
 .settings-overlay.is-open .settings-sheet{transform:translateY(0)}
 .settings-overlay.is-closing .settings-sheet{transform:translateY(24px)}
+/* Saved recipes — compact overlay above settings when opened from Profile */
+.saved-bg{position:absolute;inset:0;background:rgba(0,0,0,.46);display:flex;align-items:flex-end;z-index:61;border-radius:28px;overflow:hidden;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity var(--motion-sheet) var(--ease-standard)}
+.saved-bg.is-open{opacity:1;pointer-events:auto}
+.saved-bg.is-closing{opacity:0;pointer-events:none}
+.saved-sheet{background:#fff;border-radius:24px 24px 0 0;width:100%;max-height:88%;display:flex;flex-direction:column;box-shadow:0 -16px 48px rgba(0,0,0,0.2);transform:translateY(28px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
+.saved-bg.is-open .saved-sheet{transform:translateY(0)}
+.saved-bg.is-closing .saved-sheet{transform:translateY(28px)}
+.saved-hdr{padding:6px 22px 12px;flex-shrink:0;border-bottom:1px solid var(--arc-divider)}
+.saved-hdr h3{font-size:17px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;margin:0 0 4px;letter-spacing:-.02em}
+.saved-hdr p{font-size:12px;color:var(--arc-subtext);margin:0;line-height:1.45}
+.saved-body{flex:1;overflow-y:auto;padding:12px 22px 20px;-webkit-overflow-scrolling:touch;min-height:0}
+.saved-sec{margin-bottom:20px}
+.saved-sec:last-child{margin-bottom:6px}
+.saved-sec-t{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.11em;margin-bottom:10px}
+.saved-row{border-radius:14px;padding:12px 14px;margin-bottom:8px;background:rgba(255,255,255,.65);border:1px solid rgba(31,23,16,.08);box-shadow:0 1px 0 rgba(31,23,16,.04)}
+.saved-row:last-child{margin-bottom:0}
+.saved-row-n{font-size:15px;font-weight:600;color:var(--arc-text);font-family:Georgia,serif;line-height:1.25;margin-bottom:4px}
+.saved-row-m{font-size:11px;font-weight:500;color:var(--arc-subtext);font-variant-numeric:tabular-nums;margin-bottom:10px}
+.saved-row-act{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.saved-act{font-size:11px;font-weight:600;padding:0;border:none;background:none;color:var(--arc-primary-dark);cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(227,90,54,.35);-webkit-tap-highlight-color:transparent}
+.saved-act:hover{color:var(--arc-primary)}
+.saved-act--muted{color:var(--arc-subtext);text-decoration:none}
+.saved-act--muted:hover{color:var(--arc-text)}
+.saved-empty{font-size:13px;color:var(--arc-subtext);line-height:1.45;padding:8px 2px}
+.saved-foot{padding:12px 22px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--arc-divider);flex-shrink:0}
+.today-saved-link{display:block;width:100%;margin-top:14px;padding:0;border:none;background:none;font-size:12px;font-weight:600;color:var(--arc-subtext);cursor:pointer;text-align:center;letter-spacing:.02em;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(31,23,16,.15);-webkit-tap-highlight-color:transparent}
+.today-saved-link:hover{color:var(--arc-primary-dark)}
 .settings-hdr{background:var(--arc-primary);padding:20px 22px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .settings-hdr h2{font-size:19px;font-weight:700;color:#fff;font-family:Georgia,serif;flex:1;letter-spacing:-.3px}
 .settings-close{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;transition:background var(--motion-fast) var(--ease-standard)}
@@ -885,6 +912,7 @@ button:active{transform:scale(var(--press-scale))}
           </button>
         </div>
       </div>
+      <button type="button" class="today-saved-link" id="today-saved-btn">Saved recipes</button>
     </div>
   </div>
   <div class="nav"><button class="nbtn active" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
@@ -1055,6 +1083,21 @@ button:active{transform:scale(var(--press-scale))}
 
 <div class="toast" id="toast"></div>
 
+<!-- SAVED RECIPES (overlay; no new nav tab) -->
+<div class="saved-bg" id="saved-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="saved-modal-title">
+  <div class="saved-sheet">
+    <div class="modal-handle" aria-hidden="true"></div>
+    <div class="saved-hdr">
+      <h3 id="saved-modal-title">Saved recipes</h3>
+      <p>Favorites, recent picks, and quiet repeats—curated, not a second library.</p>
+    </div>
+    <div class="saved-body" id="saved-body"></div>
+    <div class="saved-foot">
+      <button type="button" class="modal-cancel" id="saved-close" style="margin-top:0">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════════════════════════════════════ SETTINGS OVERLAY -->
 <div class="settings-overlay" id="settings-overlay" style="display:none">
 <div class="settings-sheet">
@@ -1108,6 +1151,10 @@ button:active{transform:scale(var(--press-scale))}
           <span class="sc" data-v="4">4</span><span class="sc" data-v="5">5</span>
           <span class="sc" data-v="6">6</span>
         </div>
+      </div>
+      <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--arc-divider)">
+        <button type="button" class="btn-outline" id="s-saved-btn" style="width:100%;border-radius:14px;padding:12px;font-size:14px;font-weight:600">Saved recipes</button>
+        <p style="font-size:12px;color:var(--arc-subtext);margin:8px 0 0;line-height:1.45">Likes, recents, and meals you keep coming back to.</p>
       </div>
     </div>
 
@@ -1302,6 +1349,52 @@ var MOTION_FAST = 200;
 var MOTION_SCREEN = 300;
 var MOTION_SHEET = 220;
 if (!UP.mealFeedback || typeof UP.mealFeedback !== 'object') UP.mealFeedback = {};
+
+/** Quiet continuity: favorites, recents, repeats — persisted on UP (profile bundle). */
+function ensureArcSavedRecipes(p) {
+  p = p || UP;
+  if (!p.arcSavedRecipes || typeof p.arcSavedRecipes !== 'object') p.arcSavedRecipes = {};
+  var s = p.arcSavedRecipes;
+  if (!Array.isArray(s.recent)) s.recent = [];
+  if (!s.useCounts || typeof s.useCounts !== 'object') s.useCounts = {};
+  if (!Array.isArray(s.starredRecipeIds)) s.starredRecipeIds = [];
+  if (!Array.isArray(s.hiddenRecipeIds)) s.hiddenRecipeIds = [];
+}
+
+function recordRecipeSavedEngagement(rid, kind, skipSave) {
+  if (!rid) return;
+  var id = parseInt(rid, 10);
+  if (!id || !findRecipe(id)) return;
+  ensureArcSavedRecipes(UP);
+  var s = UP.arcSavedRecipes;
+  var now = new Date().toISOString();
+  s.recent.push({ id: id, at: now });
+  while (s.recent.length > 48) s.recent.shift();
+  if (kind === 'plan' || kind === 'select' || kind === 'log') {
+    var k = String(id);
+    s.useCounts[k] = (s.useCounts[k] || 0) + 1;
+  }
+  if (!skipSave) saveUserProfile();
+}
+
+function buildSavedRecipePromptTail() {
+  ensureArcSavedRecipes(UP);
+  var s = UP.arcSavedRecipes;
+  var sc = s.useCounts || {};
+  var pairs = [];
+  for (var sk in sc) {
+    var n = sc[sk];
+    if (n >= 2) pairs.push({ id: parseInt(sk, 10), n: n });
+  }
+  pairs.sort(function(a, b) { return b.n - a.n; });
+  var names = [];
+  for (var i = 0; i < pairs.length && names.length < 5; i++) {
+    var rr = findRecipe(pairs[i].id);
+    if (rr && rr.name) names.push(rr.name + ' (~' + pairs[i].n + '×)');
+  }
+  if (!names.length) return '';
+  return 'Quiet repeats (user keeps returning to these when compatible): ' + names.join(', ') + '.\n';
+}
 
 var LS_PROFILE = 'userProfile';
 var LS_SESSION = 'nutriai_session';
@@ -1542,6 +1635,7 @@ function buildFeedbackPromptBlock() {
   out += likes.length ? ('LIKED meals (prefer similar style/flavor/ingredients): ' + likes.join(', ') + '\n') : 'LIKED meals: none yet\n';
   out += dislikes.length ? ('DISLIKED meals (avoid similar style/flavor/ingredients): ' + dislikes.join(', ') + '\n') : 'DISLIKED meals: none yet\n';
   out += 'Respect these preferences unless they conflict with hard dietary restrictions.\n';
+  out += buildSavedRecipePromptTail();
   return out;
 }
 
@@ -1789,6 +1883,18 @@ function mergeMetricsIntoArcAdaptive(ad, metrics) {
   for (var bi = 0; bi < byLog.length && topLiked.length < 6; bi++) {
     var r2 = findRecipe(parseInt(byLog[bi].id, 10));
     if (r2 && r2.name && topLiked.indexOf(r2.name) === -1) topLiked.push(r2.name);
+  }
+  ensureArcSavedRecipes(UP);
+  var sc = UP.arcSavedRecipes.useCounts || {};
+  var pairs = [];
+  for (var sid in sc) {
+    var nn = sc[sid];
+    if (nn >= 2) pairs.push({ id: parseInt(sid, 10), n: nn });
+  }
+  pairs.sort(function(a, b) { return b.n - a.n; });
+  for (var pi = 0; pi < pairs.length && topLiked.length < 8; pi++) {
+    var r3 = findRecipe(pairs[pi].id);
+    if (r3 && r3.name && topLiked.indexOf(r3.name) === -1) topLiked.push(r3.name);
   }
   ad.favoriteMealNames = topLiked.slice(0, 5);
 
@@ -2259,7 +2365,7 @@ function isArcFlowBlockingAutoRecap() {
   if (el('ob') && el('ob').classList.contains('active')) return true;
   if (el('s-welcome') && el('s-welcome').classList.contains('active')) return true;
   if (el('s-gen') && el('s-gen').classList.contains('active')) return true;
-  var ids = ['settings-overlay', 'assign-modal', 'tm-peek-bg', 'rm-bg', 'swap-bg', 'adapt-bg', 'ai-overlay', 'loc-modal'];
+  var ids = ['settings-overlay', 'assign-modal', 'tm-peek-bg', 'saved-modal', 'rm-bg', 'swap-bg', 'adapt-bg', 'ai-overlay', 'loc-modal'];
   for (var bi = 0; bi < ids.length; bi++) {
     var n = el(ids[bi]);
     if (n && n.classList.contains('is-open')) return true;
@@ -3198,8 +3304,11 @@ function regenerateTodayPlan() {
     else if (/snack/i.test(slot)) slotCat = 'Snack';
     var pool = catMap[slotCat] || selectedPool;
     if (!pool.length) continue;
-    mealPlan[day][slot] = pool[(new Date().getDate() + s) % pool.length].id;
+    var pickId = pool[(new Date().getDate() + s) % pool.length].id;
+    mealPlan[day][slot] = pickId;
+    recordRecipeSavedEngagement(pickId, 'plan', true);
   }
+  saveUserProfile();
   renderPlanner();
   renderNutrition();
   renderShopping();
@@ -3399,6 +3508,8 @@ function applyTodayMealAction(act, day, slot) {
       showToast('Nothing planned for this slot.');
       return;
     }
+    var ridLog = mealPlan[day][slot];
+    if (ridLog) recordRecipeSavedEngagement(parseInt(ridLog, 10), 'log');
     setSlotJournal(day, slot, { status: 'logged' });
     saveSessionState();
     renderNutrition();
@@ -4238,6 +4349,7 @@ function renderRecipes() {
         removeRecipeFromMealPlan(id);
       } else {
         selectedRecipes.add(id);
+        recordRecipeSavedEngagement(id, 'select', true);
       }
       renderRecipes();
       renderPlanner();
@@ -4258,6 +4370,7 @@ function renderRecipes() {
       var next = this.dataset.pref === 'like' ? 1 : -1;
       UP.mealFeedback[id] = (UP.mealFeedback[id] === next) ? 0 : next;
       if (UP.mealFeedback[id] === 0) delete UP.mealFeedback[id];
+      else if (UP.mealFeedback[id] === 1) recordRecipeSavedEngagement(id, 'select', true);
       saveUserProfile();
       renderRecipes();
     });
@@ -4651,6 +4764,7 @@ function openAssign(day, slot, intent) {
       var ridNum = parseInt(this.dataset.id, 10);
       if (assignIntent === 'replace') {
         setSlotJournal(assignDay, assignSlot, { status: 'replaced', actualRid: ridNum });
+        recordRecipeSavedEngagement(ridNum, 'log');
         saveSessionState();
         closeAssign();
         renderPlanner();
@@ -4662,6 +4776,7 @@ function openAssign(day, slot, intent) {
         if (!mealPlan[assignDay]) mealPlan[assignDay] = {};
         mealPlan[assignDay][assignSlot] = ridNum;
         setSlotJournal(assignDay, assignSlot, null);
+        recordRecipeSavedEngagement(ridNum, 'plan');
         closeAssign();
         renderPlanner();
         renderNutrition();
@@ -4676,6 +4791,184 @@ function openAssign(day, slot, intent) {
 function closeAssign() {
   assignIntent = 'plan';
   closeMotion('assign-modal');
+}
+
+function closeSavedRecipesModal() {
+  closeMotion('saved-modal');
+}
+
+function getSavedRecipeLists() {
+  ensureArcSavedRecipes(UP);
+  var hidden = {};
+  var hi = UP.arcSavedRecipes.hiddenRecipeIds;
+  for (var h = 0; h < hi.length; h++) hidden[hi[h]] = true;
+
+  function ok(rid) {
+    return findRecipe(rid) && !hidden[rid];
+  }
+
+  var fav = [];
+  var starred = UP.arcSavedRecipes.starredRecipeIds;
+  for (var si = 0; si < starred.length; si++) {
+    if (ok(starred[si]) && fav.indexOf(starred[si]) === -1) fav.push(starred[si]);
+  }
+  var fb = UP.mealFeedback || {};
+  for (var fk in fb) {
+    if (fb[fk] !== 1) continue;
+    var idL = parseInt(fk, 10);
+    if (ok(idL) && fav.indexOf(idL) === -1) fav.push(idL);
+  }
+
+  var recentOrdered = [];
+  var seenR = {};
+  for (var ri = UP.arcSavedRecipes.recent.length - 1; ri >= 0; ri--) {
+    var it = UP.arcSavedRecipes.recent[ri];
+    if (!it || !it.id) continue;
+    var ridR = it.id;
+    if (!ok(ridR) || seenR[ridR]) continue;
+    seenR[ridR] = true;
+    recentOrdered.push(ridR);
+    if (recentOrdered.length >= 14) break;
+  }
+
+  var favSet = {};
+  for (var fi = 0; fi < fav.length; fi++) favSet[fav[fi]] = true;
+  var recentFiltered = [];
+  for (var rq = 0; rq < recentOrdered.length; rq++) {
+    if (!favSet[recentOrdered[rq]]) recentFiltered.push(recentOrdered[rq]);
+  }
+
+  var recentSet = {};
+  for (var rs = 0; rs < recentFiltered.length; rs++) recentSet[recentFiltered[rs]] = true;
+
+  var freqIds = [];
+  var sc = UP.arcSavedRecipes.useCounts || {};
+  var freqPairs = [];
+  for (var k in sc) {
+    var cnt = sc[k];
+    if (cnt < 2) continue;
+    var idp = parseInt(k, 10);
+    if (!ok(idp)) continue;
+    freqPairs.push({ id: idp, n: cnt });
+  }
+  freqPairs.sort(function(a, b) { return b.n - a.n; });
+  for (var fq = 0; fq < freqPairs.length; fq++) {
+    var fid = freqPairs[fq].id;
+    if (favSet[fid]) continue;
+    if (recentSet[fid]) continue;
+    freqIds.push(fid);
+    if (freqIds.length >= 12) break;
+  }
+
+  return { favorites: fav, recent: recentFiltered, frequent: freqIds };
+}
+
+function buildSavedRowHtml(r, opts) {
+  opts = opts || {};
+  var id = r.id;
+  var sid = String(id);
+  var liked = UP.mealFeedback && UP.mealFeedback[sid] === 1;
+  var starred = UP.arcSavedRecipes.starredRecipeIds.indexOf(id) !== -1;
+  var pinEl = '';
+  if (!liked && !starred && opts.showPin) {
+    pinEl = '<button type="button" class="saved-act saved-act--muted" data-saved-act="pin" data-id="' + id + '">Pin</button>';
+  }
+  return (
+    '<div class="saved-row">' +
+      '<div class="saved-row-n">' + shopEsc(r.name) + '</div>' +
+      '<div class="saved-row-m">' + r.cal + ' cal · ' + shopEsc(r.cat || '—') + ' · ' + shopEsc(r.time || '—') + '</div>' +
+      '<div class="saved-row-act">' +
+        '<button type="button" class="saved-act" data-saved-act="reuse" data-id="' + id + '">Reuse this week</button>' +
+        '<button type="button" class="saved-act" data-saved-act="planner" data-id="' + id + '">Add to planner</button>' +
+        '<button type="button" class="saved-act" data-saved-act="view" data-id="' + id + '">View</button>' +
+        '<button type="button" class="saved-act saved-act--muted" data-saved-act="remove" data-id="' + id + '">Remove</button>' +
+        pinEl +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function renderSavedRecipesListsHtml() {
+  var lists = getSavedRecipeLists();
+  var html = '';
+
+  function section(title, ids, emptyMsg, showPinForRows) {
+    html += '<div class="saved-sec"><div class="saved-sec-t">' + title + '</div>';
+    if (!ids.length) {
+      html += '<div class="saved-empty">' + emptyMsg + '</div></div>';
+      return;
+    }
+    for (var i = 0; i < ids.length; i++) {
+      var rr = findRecipe(ids[i]);
+      if (!rr) continue;
+      html += buildSavedRowHtml(rr, { showPin: !!showPinForRows });
+    }
+    html += '</div>';
+  }
+
+  section('Favorites', lists.favorites, 'Recipes you like or pin will gather here.', true);
+  section('Recent', lists.recent, 'Meals appear here as you plan, select, or log them.', false);
+  section('Frequently used', lists.frequent, 'Quiet repeats—meals you come back to often.', false);
+
+  return html;
+}
+
+function openSavedRecipesModal() {
+  el('saved-body').innerHTML = renderSavedRecipesListsHtml();
+  openMotion('saved-modal');
+}
+
+function applySavedRecipeSheetAction(act, id) {
+  var idn = parseInt(id, 10);
+  if (!idn || !findRecipe(idn)) return;
+  if (act === 'reuse') {
+    if (!selectedRecipes.has(idn)) {
+      selectedRecipes.add(idn);
+      recordRecipeSavedEngagement(idn, 'select');
+      renderRecipes();
+      renderPlanner();
+      renderNutrition();
+      renderShopping();
+      updateNextBar();
+      showToast('Added to your week pool');
+    } else {
+      showToast('Already in your week pool');
+    }
+    return;
+  }
+  if (act === 'planner') {
+    closeSavedRecipesModal();
+    tab('planner');
+    return;
+  }
+  if (act === 'view') {
+    closeMotion('saved-modal', function() { openRM(idn); });
+    return;
+  }
+  if (act === 'remove') {
+    ensureArcSavedRecipes(UP);
+    var s = UP.arcSavedRecipes;
+    if (s.hiddenRecipeIds.indexOf(idn) === -1) s.hiddenRecipeIds.push(idn);
+    var ix = s.starredRecipeIds.indexOf(idn);
+    if (ix !== -1) s.starredRecipeIds.splice(ix, 1);
+    if (UP.mealFeedback && UP.mealFeedback[String(idn)] === 1) {
+      delete UP.mealFeedback[String(idn)];
+    }
+    s.recent = s.recent.filter(function(x) { return x && x.id !== idn; });
+    saveUserProfile();
+    renderRecipes();
+    el('saved-body').innerHTML = renderSavedRecipesListsHtml();
+    showToast('Removed from saved lists');
+    return;
+  }
+  if (act === 'pin') {
+    ensureArcSavedRecipes(UP);
+    if (UP.arcSavedRecipes.starredRecipeIds.indexOf(idn) === -1) {
+      UP.arcSavedRecipes.starredRecipeIds.push(idn);
+      saveUserProfile();
+    }
+    el('saved-body').innerHTML = renderSavedRecipesListsHtml();
+  }
 }
 
 // ── AI Plan Builder ───────────────────────────────────────────
@@ -4775,6 +5068,7 @@ function aiCreatePlan() {
                 var ridNum = parseInt(rid, 10);
                 if (ridNum && selectedById[ridNum] && findRecipe(ridNum)) {
                   mealPlan[day][slot] = ridNum;
+                  recordRecipeSavedEngagement(ridNum, 'plan', true);
                 }
               }
             }
@@ -4809,10 +5103,12 @@ function aiCreatePlan() {
           var chosen = pool[catIndexes[slotCat] % pool.length];
           catIndexes[slotCat]++;
           mealPlan[dy][slotName] = chosen.id;
+          recordRecipeSavedEngagement(chosen.id, 'plan', true);
         }
       }
     }
 
+    saveUserProfile();
     renderRecipes();
     renderPlanner();
     renderNutrition();
@@ -4923,6 +5219,7 @@ function openAdaptModal() {
           mealPlan[day][slot] = rid;
           setSlotJournal(day, slot, null);
           selectedRecipes.add(rid);
+          recordRecipeSavedEngagement(rid, 'plan');
           this.closest('.adapt-change').style.opacity = '.4';
           showToast('Applied ✓');
           renderRecipes();
@@ -5716,6 +6013,11 @@ document.addEventListener('DOMContentLoaded', function() {
   if (recapCta) recapCta.addEventListener('click', advanceWeeklyRecap);
   document.addEventListener('keydown', function(ev) {
     if (ev.key !== 'Escape') return;
+    var sv = el('saved-modal');
+    if (sv && sv.classList.contains('is-open')) {
+      closeSavedRecipesModal();
+      return;
+    }
     var tpk = el('tm-peek-bg');
     if (tpk && tpk.classList.contains('is-open')) {
       closeTodayMealPeek();
@@ -5784,6 +6086,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Assign modal
   el('assign-cancel').addEventListener('click', closeAssign);
   el('assign-modal').addEventListener('click', function(e) { if (e.target === this) closeAssign(); });
+
+  el('saved-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeSavedRecipesModal();
+    var b = e.target.closest('[data-saved-act]');
+    if (!b) return;
+    applySavedRecipeSheetAction(b.getAttribute('data-saved-act'), b.getAttribute('data-id'));
+  });
+  el('saved-close').addEventListener('click', function() { closeSavedRecipesModal(); });
+  el('today-saved-btn').addEventListener('click', function() { openSavedRecipesModal(); });
+  el('s-saved-btn').addEventListener('click', function() { openSavedRecipesModal(); });
 
   // Planner buttons
   el('ai-plan-btn').addEventListener('click', aiCreatePlan);
