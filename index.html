@@ -287,6 +287,26 @@ body{
 .today-empty{font-size:16px;color:var(--arc-subtext);font-style:normal;line-height:1.55}
 .today-cook-cta{margin-top:20px;width:100%;padding:18px 22px!important;border-radius:18px!important;font-size:17px!important;font-weight:600!important;min-height:58px;box-shadow:0 12px 32px rgba(227,90,54,.26)}
 .today-cook-cta:disabled{box-shadow:none;opacity:.5}
+/* Today timeline — full day, compact */
+.today-timeline{margin-top:4px;padding:0 0 8px}
+.today-tl-hdr{font-size:11px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.today-tl-list{display:flex;flex-direction:column;gap:0;border-radius:var(--r-md);overflow:hidden;background:rgba(255,255,255,.45);box-shadow:0 1px 0 var(--arc-divider),inset 0 0 0 1px rgba(31,31,31,.06)}
+.today-tl-row{display:flex;gap:10px;padding:12px 12px 12px 10px;border-bottom:1px solid var(--arc-divider);align-items:stretch}
+.today-tl-row:last-child{border-bottom:none}
+.today-tl-rail{flex-shrink:0;width:14px;display:flex;flex-direction:column;align-items:center;padding:2px 0 4px}
+.today-tl-line{width:2px;background:rgba(31,31,31,.08);border-radius:1px;flex-shrink:0}
+.today-tl-line.today-tl-line--grow{flex:1;min-height:10px}
+.today-tl-dot{width:8px;height:8px;border-radius:50%;background:rgba(31,31,31,.12);flex-shrink:0;margin:2px 0}
+.today-tl-row--current .today-tl-dot{background:var(--arc-primary);box-shadow:0 0 0 3px rgba(227,90,54,.2)}
+.today-tl-body{flex:1;min-width:0}
+.today-tl-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px}
+.today-tl-type{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;flex-shrink:0}
+.today-tl-name{font-size:14px;font-weight:600;color:var(--arc-text);font-family:Georgia,serif;line-height:1.3;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical}
+.today-tl-meta{font-size:11px;font-weight:500;color:var(--arc-subtext);margin-top:2px;font-variant-numeric:tabular-nums}
+.today-tl-statuswrap{flex-shrink:0}
+.today-tl-statuswrap .today-status{white-space:nowrap}
+.today-tl-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.today-tl-actions .today-mac-btn{padding:7px 11px;font-size:11px}
 .today-foot{margin-top:8px;padding-top:40px;display:flex;flex-direction:column;gap:0}
 .today-progress-row{display:flex;align-items:center;gap:clamp(20px,5vw,36px);margin-bottom:40px}
 .today-ring-wrap{position:relative;width:108px;height:108px;flex-shrink:0;padding:4px}
@@ -533,6 +553,7 @@ button:active{transform:scale(var(--press-scale))}
 }
 
 #s-today .today-flow > .today-hero,
+#s-today .today-flow > .today-timeline,
 #s-today .today-flow > .today-foot{
   animation:contentFadeUp var(--motion-screen) var(--ease-standard);
 }
@@ -720,6 +741,7 @@ button:active{transform:scale(var(--press-scale))}
       <div id="today-meal-actions" class="today-meal-actions"></div>
       <button class="btn-green today-cook-cta" id="today-cook-btn">Cook this meal</button>
     </section>
+    <section class="today-timeline" id="today-timeline" aria-label="All meals today"></section>
     <div class="today-foot">
       <div class="today-progress-row">
         <div class="today-ring-wrap" aria-hidden="true">
@@ -1574,6 +1596,94 @@ function isMealFinalized(day, slot) {
   return false;
 }
 
+/** UI bucket for timeline row (planner slot names vary). */
+function slotMealTypeLabel(slot) {
+  var s = String(slot || '');
+  if (/breakfast/i.test(s)) return 'Breakfast';
+  if (/lunch/i.test(s)) return 'Lunch';
+  if (/dinner/i.test(s)) return 'Dinner';
+  if (/snack/i.test(s)) return 'Snack';
+  return 'Meal';
+}
+
+function firstSlotWithPlannedRecipe(day, slots) {
+  if (!mealPlan[day] || !slots || !slots.length) return null;
+  for (var i = 0; i < slots.length; i++) {
+    if (mealPlan[day][slots[i]]) return slots[i];
+  }
+  return null;
+}
+
+function buildTodayTimelineHtml(day, slots, heroSlot) {
+  var html = '<div class="today-tl-hdr">Today · all meals</div><div class="today-tl-list">';
+  for (var i = 0; i < slots.length; i++) {
+    var slot = slots[i];
+    var isCurrent = heroSlot && slot === heroSlot;
+    var rid = (mealPlan[day] && mealPlan[day][slot]) ? mealPlan[day][slot] : null;
+    var r = rid ? findRecipe(rid) : null;
+    var j = getSlotJournal(day, slot);
+    var typeLbl = slotMealTypeLabel(slot);
+    var dd = shopDataAttr(day);
+    var ds = shopDataAttr(slot);
+
+    html += '<div class="today-tl-row' + (isCurrent ? ' today-tl-row--current' : '') + '">';
+    html += '<div class="today-tl-rail">';
+    if (i > 0) html += '<div class="today-tl-line" style="height:8px"></div>';
+    html += '<span class="today-tl-dot" aria-hidden="true"></span>';
+    if (i < slots.length - 1) html += '<div class="today-tl-line today-tl-line--grow"></div>';
+    html += '</div><div class="today-tl-body">';
+
+    html += '<div class="today-tl-top"><span class="today-tl-type">' + shopEsc(typeLbl) + '</span><div class="today-tl-statuswrap">';
+    var label = 'Planned';
+    var cls = 'today-status today-status--planned';
+    if (j && j.status === 'logged') {
+      label = 'Logged';
+      cls = 'today-status today-status--logged';
+    } else if (j && j.status === 'skipped') {
+      label = 'Skipped';
+      cls = 'today-status today-status--skipped';
+    } else if (j && j.status === 'replaced') {
+      label = 'Replaced';
+      cls = 'today-status today-status--replaced';
+    }
+    html += '<span class="' + cls + '">' + label + '</span></div></div>';
+
+    var displayName = '';
+    var metaLine = '';
+    if (j && j.status === 'replaced' && j.actualRid) {
+      var ar = findRecipe(j.actualRid);
+      displayName = ar ? ar.name : ('Recipe ' + j.actualRid);
+      if (ar) metaLine = ar.cal + ' kcal · P ' + ar.p + 'g';
+    } else if (r) {
+      displayName = r.name;
+      metaLine = r.cal + ' kcal planned · P ' + r.p + 'g';
+    } else {
+      displayName = 'Not planned';
+      metaLine = String(slot);
+    }
+    html += '<div class="today-tl-name">' + shopEsc(displayName) + '</div>';
+    if (metaLine) html += '<div class="today-tl-meta">' + shopEsc(metaLine) + '</div>';
+
+    html += '<div class="today-tl-actions">';
+    if (!j) {
+      if (r) {
+        html += '<button type="button" class="today-mac-btn" data-today-act="log" data-day="' + dd + '" data-slot="' + ds + '">Log</button>';
+        html += '<button type="button" class="today-mac-btn secondary" data-today-act="skip" data-day="' + dd + '" data-slot="' + ds + '">Skip</button>';
+        html += '<button type="button" class="today-mac-btn secondary" data-today-act="replace" data-day="' + dd + '" data-slot="' + ds + '">Replace</button>';
+      } else {
+        html += '<button type="button" class="today-mac-btn" data-today-act="assign" data-day="' + dd + '" data-slot="' + ds + '">Plan</button>';
+        html += '<button type="button" class="today-mac-btn secondary" data-today-act="skip" data-day="' + dd + '" data-slot="' + ds + '">Skip</button>';
+        html += '<button type="button" class="today-mac-btn secondary" data-today-act="replace" data-day="' + dd + '" data-slot="' + ds + '">Replace</button>';
+      }
+    } else if (j.status === 'logged' || j.status === 'skipped' || j.status === 'replaced') {
+      html += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo</button>';
+    }
+    html += '</div></div></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
 function getDayPlannedTotals(day, slots) {
   var t = { cal: 0, p: 0, c: 0, f: 0 };
   if (!mealPlan[day]) return t;
@@ -1701,8 +1811,8 @@ function renderToday() {
   var d = new Date();
   var day = todayKey();
   var slots = getSlots();
-  var slot = slotForNow(slots);
-  var rid = (slot && mealPlan[day]) ? mealPlan[day][slot] : null;
+  var heroSlot = slotForNow(slots);
+  var rid = (heroSlot && mealPlan[day]) ? mealPlan[day][heroSlot] : null;
   var meal = rid ? findRecipe(rid) : null;
   var calTarget = getCalTarget();
   var macros = UP.macros || getMacroTargets(calTarget);
@@ -1710,11 +1820,11 @@ function renderToday() {
   var planned = getDayPlannedTotals(day, slots);
 
   el('today-date').textContent = d.toLocaleDateString(undefined, { weekday:'long', month:'short', day:'numeric' });
-  el('today-slot').textContent = slot ? ('Current meal · ' + slot) : 'Current meal';
+  el('today-slot').textContent = heroSlot ? ('Current meal · ' + heroSlot) : 'Current meal';
 
   var stEl = el('today-meal-status');
   var actEl = el('today-meal-actions');
-  var j = slot ? getSlotJournal(day, slot) : null;
+  var j = heroSlot ? getSlotJournal(day, heroSlot) : null;
 
   if (meal) {
     var wrap = '<div class="today-name">' + meal.name + '</div>';
@@ -1723,7 +1833,7 @@ function renderToday() {
     el('today-meal-wrap').innerHTML = wrap;
     el('today-cook-btn').disabled = false;
 
-    if (stEl && actEl && slot) {
+    if (stEl && actEl && heroSlot) {
       var label = 'Planned';
       var cls = 'today-status today-status--planned';
       if (j && j.status === 'logged') {
@@ -1743,7 +1853,7 @@ function renderToday() {
       }
       stEl.innerHTML = stHtml;
 
-      var ds = shopDataAttr(slot);
+      var ds = shopDataAttr(heroSlot);
       var dd = shopDataAttr(day);
       var act = '';
       if (!j) {
@@ -1758,8 +1868,40 @@ function renderToday() {
   } else {
     el('today-meal-wrap').innerHTML = '<div class="today-empty">No meal planned for this slot yet.</div>';
     el('today-cook-btn').disabled = true;
-    if (stEl) stEl.innerHTML = '';
-    if (actEl) actEl.innerHTML = '';
+    if (stEl && actEl && heroSlot) {
+      var labelE = 'Planned';
+      var clsE = 'today-status today-status--planned';
+      if (j && j.status === 'logged') {
+        labelE = 'Logged';
+        clsE = 'today-status today-status--logged';
+      } else if (j && j.status === 'skipped') {
+        labelE = 'Skipped';
+        clsE = 'today-status today-status--skipped';
+      } else if (j && j.status === 'replaced') {
+        labelE = 'Replaced';
+        clsE = 'today-status today-status--replaced';
+      }
+      var stHtmlE = '<span class="' + clsE + '">' + labelE + '</span>';
+      if (j && j.status === 'replaced' && j.actualRid) {
+        var arE = findRecipe(j.actualRid);
+        if (arE) stHtmlE += '<div class="today-replace-note">You logged: ' + arE.name + ' · ' + arE.cal + ' kcal</div>';
+      }
+      stEl.innerHTML = stHtmlE;
+      var dsE = shopDataAttr(heroSlot);
+      var ddE = shopDataAttr(day);
+      var actE = '';
+      if (!j) {
+        actE += '<button type="button" class="today-mac-btn" data-today-act="assign" data-day="' + ddE + '" data-slot="' + dsE + '">Plan</button>';
+        actE += '<button type="button" class="today-mac-btn secondary" data-today-act="skip" data-day="' + ddE + '" data-slot="' + dsE + '">Skip</button>';
+        actE += '<button type="button" class="today-mac-btn secondary" data-today-act="replace" data-day="' + ddE + '" data-slot="' + dsE + '">Replace</button>';
+      } else if (j.status === 'logged' || j.status === 'skipped' || j.status === 'replaced') {
+        actE += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + ddE + '" data-slot="' + dsE + '">Undo</button>';
+      }
+      actEl.innerHTML = actE;
+    } else {
+      if (stEl) stEl.innerHTML = '';
+      if (actEl) actEl.innerHTML = '';
+    }
   }
 
   var calPct = calTarget ? Math.min(100, Math.round((consumed.cal / calTarget) * 100)) : 0;
@@ -1790,13 +1932,26 @@ function renderToday() {
     }
   }
 
-  el('today-suggestion').textContent = adaptiveTodayCoach(day, slot, slots, consumed, planned, calTarget, macros.protein);
+  el('today-suggestion').textContent = adaptiveTodayCoach(day, heroSlot, slots, consumed, planned, calTarget, macros.protein);
 
   el('today-cook-btn').dataset.rid = meal ? meal.id : '';
-  el('today-swap-btn').dataset.day = day;
-  el('today-swap-btn').dataset.slot = slot || '';
-  el('today-swap-btn').disabled = !slot;
-  el('today-swap-btn').title = slot ? ('Change the planned recipe for ' + slot) : 'No meal slot right now — plan your day in Planner first';
+  var swapBtn = el('today-swap-btn');
+  if (swapBtn) {
+    var swapSlot = heroSlot || (slots[0] || '');
+    if (!meal && firstSlotWithPlannedRecipe(day, slots)) swapSlot = firstSlotWithPlannedRecipe(day, slots);
+    swapBtn.dataset.day = day;
+    swapBtn.dataset.slot = swapSlot || '';
+    var canPickRecipe = selectedRecipes && selectedRecipes.size > 0;
+    swapBtn.disabled = !slots.length || !canPickRecipe;
+    if (!slots.length) swapBtn.title = 'Add meals per day in Settings, then plan your week.';
+    else if (!canPickRecipe) swapBtn.title = 'Select recipes first — then you can swap today’s plan.';
+    else swapBtn.title = 'Change the planned recipe for ' + (swapSlot || 'this slot');
+  }
+
+  var tl = el('today-timeline');
+  if (tl) {
+    tl.innerHTML = slots.length ? buildTodayTimelineHtml(day, slots, heroSlot) : '';
+  }
 }
 
 function applyTodayMealAction(act, day, slot) {
@@ -4058,6 +4213,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var day = b.getAttribute('data-day');
     var slot = b.getAttribute('data-slot');
     if (!act || !day || !slot) return;
+    if (act === 'assign') {
+      openAssign(day, slot, 'plan');
+      return;
+    }
     applyTodayMealAction(act, day, slot);
   });
   el('today-regen-btn').addEventListener('click', regenerateTodayPlan);
