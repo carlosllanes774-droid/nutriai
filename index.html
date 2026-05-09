@@ -370,6 +370,10 @@ body{
 .today-tl-statuswrap .today-status{white-space:nowrap}
 .today-tl-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
 .today-tl-actions .today-mac-btn{padding:7px 11px;font-size:11px}
+.today-tl-row--tap{cursor:pointer;transition:background var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent;border-radius:0}
+.today-tl-row--tap:hover{background:rgba(255,255,255,.42)}
+.today-tl-row--tap:active{background:rgba(31,31,31,.05)}
+.today-tl-row--tap:focus-visible{outline:2px solid var(--arc-primary);outline-offset:-4px;position:relative;z-index:1}
 .today-foot{margin-top:8px;padding-top:40px;display:flex;flex-direction:column;gap:0}
 .today-progress-row{display:flex;align-items:center;gap:clamp(20px,5vw,36px);margin-bottom:40px}
 .today-ring-wrap{position:relative;width:108px;height:108px;flex-shrink:0;padding:4px}
@@ -528,6 +532,37 @@ body{
 .rm-sheet{background:#fff;border-radius:24px 24px 0 0;width:100%;max-height:92%;display:flex;flex-direction:column;box-shadow:0 -12px 40px rgba(0,0,0,0.18);transform:translateY(32px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
 .rm-bg.is-open .rm-sheet{transform:translateY(0)}
 .rm-bg.is-closing .rm-sheet{transform:translateY(32px)}
+/* Today meal peek — lightweight inspect sheet (stays on Today) */
+.tm-peek-bg{position:absolute;inset:0;background:rgba(0,0,0,.48);display:flex;align-items:flex-end;z-index:25;border-radius:28px;overflow:hidden;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity var(--motion-sheet) var(--ease-standard)}
+.tm-peek-bg.is-open{opacity:1;pointer-events:auto}
+.tm-peek-bg.is-closing{opacity:0;pointer-events:none}
+.tm-peek-sheet{background:#fff;border-radius:24px 24px 0 0;width:100%;max-height:84%;display:flex;flex-direction:column;box-shadow:0 -16px 48px rgba(0,0,0,0.18);transform:translateY(32px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
+.tm-peek-bg.is-open .tm-peek-sheet{transform:translateY(0)}
+.tm-peek-bg.is-closing .tm-peek-sheet{transform:translateY(32px)}
+.tm-peek-top{position:relative;flex-shrink:0;padding:4px 22px 14px}
+.tm-peek-x{position:absolute;top:2px;right:14px;width:36px;height:36px;border:none;border-radius:999px;background:var(--arc-surface-2);color:var(--arc-subtext);font-size:16px;font-weight:600;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard)}
+.tm-peek-x:hover{background:rgba(31,23,16,.08);color:var(--arc-text)}
+.tm-peek-slot{font-size:11px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em;padding-right:44px;margin-bottom:8px}
+.tm-peek-meta-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-bottom:10px}
+.tm-peek-cook{font-size:12px;font-weight:600;color:var(--arc-subtext);font-variant-numeric:tabular-nums}
+.tm-peek-title{font-size:21px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.22;margin-bottom:10px;letter-spacing:-.02em;padding-right:40px}
+.tm-peek-scroll{flex:1;overflow-y:auto;padding:0 22px 8px;-webkit-overflow-scrolling:touch;min-height:0}
+.tm-peek-section{margin-top:4px;padding-bottom:4px}
+.tm-peek-section:first-of-type{margin-top:0}
+.tm-peek-sec-lbl{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.tm-peek-scroll .ing-row{padding:10px 0}
+.tm-peek-scroll .ing-qty{font-weight:500}
+.tm-peek-actions{flex-shrink:0;padding:14px 22px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--arc-divider);background:#fff;display:flex;flex-direction:column;gap:8px}
+.tm-peek-btn-row{display:flex;flex-wrap:wrap;gap:8px}
+.tm-peek-btn{border-radius:14px;font-size:14px;font-weight:650;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),opacity var(--motion-fast) var(--ease-standard),transform 180ms var(--ease-standard);-webkit-tap-highlight-color:transparent}
+.tm-peek-btn:active{transform:scale(var(--press-scale))}
+.tm-peek-primary{width:100%;padding:14px 18px;border:none;background:var(--arc-primary);color:#fff;box-shadow:var(--shadow-primary)}
+.tm-peek-primary:hover{background:var(--arc-primary-dark)}
+.tm-peek-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+.tm-peek-secondary{flex:1;min-width:0;padding:12px 14px;border:1px solid rgba(31,23,16,.12);background:rgba(255,255,255,.92);color:var(--arc-text);font-weight:600;font-size:13px}
+.tm-peek-secondary:hover{background:#fff;border-color:rgba(31,31,31,.18)}
+.tm-peek-secondary:disabled{opacity:.45;cursor:not-allowed}
+.tm-peek-muted{font-size:13px;color:var(--arc-subtext);line-height:1.5;margin:0 0 8px}
 .rm-hdr{background:var(--arc-primary);border-radius:24px 24px 0 0;padding:22px 22px 18px}
 .rm-close{background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer;float:right;margin-top:-2px;transition:background var(--motion-fast) var(--ease-standard)}
 .rm-close:hover{background:rgba(255,255,255,.25)}
@@ -956,6 +991,34 @@ button:active{transform:scale(var(--press-scale))}
   </div>
 </div>
 
+<!-- TODAY MEAL PEEK (timeline inspect; does not leave Today tab) -->
+<div class="tm-peek-bg" id="tm-peek-bg" style="display:none" role="dialog" aria-modal="true" aria-labelledby="tm-peek-title">
+  <div class="tm-peek-sheet">
+    <div class="modal-handle" aria-hidden="true"></div>
+    <div class="tm-peek-top">
+      <button type="button" class="tm-peek-x" id="tm-peek-close" aria-label="Close">✕</button>
+      <div class="tm-peek-slot" id="tm-peek-slotlbl">—</div>
+      <div class="tm-peek-meta-row">
+        <span id="tm-peek-status"></span>
+        <span class="tm-peek-cook" id="tm-peek-cook"></span>
+      </div>
+      <div class="tm-peek-title" id="tm-peek-title">—</div>
+      <div class="macros" id="tm-peek-macros"></div>
+    </div>
+    <div class="tm-peek-scroll">
+      <div class="tm-peek-section" id="tm-peek-ing-wrap">
+        <div class="tm-peek-sec-lbl">Ingredients</div>
+        <div id="tm-peek-ing"></div>
+      </div>
+      <div class="tm-peek-section" id="tm-peek-steps-wrap">
+        <div class="tm-peek-sec-lbl">Instructions</div>
+        <div id="tm-peek-steps"></div>
+      </div>
+    </div>
+    <div class="tm-peek-actions" id="tm-peek-actions"></div>
+  </div>
+</div>
+
 <!-- SWAP MODAL -->
 <div class="swap-bg" id="swap-bg" style="display:none">
   <div class="swap-card">
@@ -1220,6 +1283,7 @@ var shopPantry  = {};
 var logs        = [];
 var activeCat   = 'All';
 var curRecipe   = null;
+var todayPeekContext = null;
 var stepCache   = {};
 var swapIng     = null;
 var swapRid     = null;
@@ -2195,7 +2259,7 @@ function isArcFlowBlockingAutoRecap() {
   if (el('ob') && el('ob').classList.contains('active')) return true;
   if (el('s-welcome') && el('s-welcome').classList.contains('active')) return true;
   if (el('s-gen') && el('s-gen').classList.contains('active')) return true;
-  var ids = ['settings-overlay', 'assign-modal', 'rm-bg', 'swap-bg', 'adapt-bg', 'ai-overlay', 'loc-modal'];
+  var ids = ['settings-overlay', 'assign-modal', 'tm-peek-bg', 'rm-bg', 'swap-bg', 'adapt-bg', 'ai-overlay', 'loc-modal'];
   for (var bi = 0; bi < ids.length; bi++) {
     var n = el(ids[bi]);
     if (n && n.classList.contains('is-open')) return true;
@@ -2632,8 +2696,9 @@ function buildTodayTimelineHtml(day, slots, heroSlot, timelineHints) {
     var typeLbl = slotMealTypeLabel(slot);
     var dd = shopDataAttr(day);
     var ds = shopDataAttr(slot);
+    var peekAria = shopEsc('Meal details · ' + typeLbl);
 
-    html += '<div class="today-tl-row' + (isCurrent ? ' today-tl-row--current' : '') + '">';
+    html += '<div class="today-tl-row today-tl-row--tap' + (isCurrent ? ' today-tl-row--current' : '') + '" data-tl-day="' + dd + '" data-tl-slot="' + ds + '" aria-label="' + peekAria + '">';
     html += '<div class="today-tl-rail">';
     if (i > 0) html += '<div class="today-tl-line" style="height:8px"></div>';
     html += '<span class="today-tl-dot" aria-hidden="true"></span>';
@@ -2690,6 +2755,97 @@ function buildTodayTimelineHtml(day, slots, heroSlot, timelineHints) {
   }
   html += '</div>';
   return html;
+}
+
+function closeTodayMealPeek() {
+  closeMotion('tm-peek-bg', function() { todayPeekContext = null; });
+}
+
+function buildTodayPeekActions(day, slot, r) {
+  var fin = isMealFinalized(day, slot);
+  var dd = shopDataAttr(day);
+  var ds = shopDataAttr(slot);
+  var canPick = selectedRecipes && selectedRecipes.size > 0;
+  var disAttr = canPick ? '' : ' title="Select recipes in the Recipes tab first"';
+  var html = '';
+  if (fin) {
+    html += '<button type="button" class="tm-peek-btn tm-peek-secondary" data-tpeek-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo status</button>';
+    if (r) html += '<button type="button" class="tm-peek-btn tm-peek-primary" data-tpeek-act="recipe" data-rid="' + r.id + '">View full recipe</button>';
+    return html;
+  }
+  if (r) {
+    html += '<button type="button" class="tm-peek-btn tm-peek-primary" data-tpeek-act="log" data-day="' + dd + '" data-slot="' + ds + '">Log meal</button>';
+  } else {
+    html += '<button type="button" class="tm-peek-btn tm-peek-primary" data-tpeek-act="plan" data-day="' + dd + '" data-slot="' + ds + '"' + (canPick ? '' : ' disabled') + disAttr + '>Plan meal</button>';
+  }
+  html += '<div class="tm-peek-btn-row">';
+  html += '<button type="button" class="tm-peek-btn tm-peek-secondary" data-tpeek-act="swap" data-day="' + dd + '" data-slot="' + ds + '"' + (canPick ? '' : ' disabled') + disAttr + '>Swap meal</button>';
+  if (r) html += '<button type="button" class="tm-peek-btn tm-peek-secondary" data-tpeek-act="recipe" data-rid="' + r.id + '">Full recipe</button>';
+  html += '</div>';
+  return html;
+}
+
+function openTodayMealPeek(day, slot) {
+  if (!day || !slot) return;
+  var j = getSlotJournal(day, slot);
+  var plannedRid = (mealPlan[day] && mealPlan[day][slot]) ? mealPlan[day][slot] : null;
+  var displayRid = plannedRid;
+  if (j && j.status === 'replaced' && j.actualRid) displayRid = j.actualRid;
+  var r = displayRid ? findRecipe(displayRid) : null;
+
+  el('tm-peek-slotlbl').textContent = String(slot);
+
+  var label = 'Planned';
+  var cls = 'today-status today-status--planned';
+  if (j && j.status === 'logged') {
+    label = 'Logged';
+    cls = 'today-status today-status--logged';
+  } else if (j && j.status === 'skipped') {
+    label = 'Skipped';
+    cls = 'today-status today-status--skipped';
+  } else if (j && j.status === 'replaced') {
+    label = 'Replaced';
+    cls = 'today-status today-status--replaced';
+  }
+  el('tm-peek-status').innerHTML = '<span class="' + cls + '">' + label + '</span>';
+
+  el('tm-peek-cook').textContent = (r && r.time) ? ('⏱ ' + r.time) : '';
+  el('tm-peek-title').textContent = r ? r.name : 'Nothing planned';
+
+  var mac = el('tm-peek-macros');
+  if (r) {
+    mac.style.display = '';
+    mac.innerHTML = '<span class="m m-cal">' + r.cal + ' cal</span><span class="m m-p">P ' + r.p + 'g</span><span class="m m-c">C ' + r.c + 'g</span><span class="m m-f">F ' + r.f + 'g</span>';
+  } else {
+    mac.style.display = 'none';
+    mac.innerHTML = '';
+  }
+
+  var ingW = el('tm-peek-ing-wrap');
+  var stW = el('tm-peek-steps-wrap');
+  if (r) {
+    ingW.style.display = '';
+    stW.style.display = '';
+    el('tm-peek-ing').innerHTML = buildIngredientsPeek(r);
+    todayPeekContext = { rid: r.id, day: day, slot: slot };
+    if (stepCache[r.id] || (r.steps && r.steps.length > 2)) {
+      el('tm-peek-steps').innerHTML = buildStepsTab(stepCache[r.id] || r.steps);
+    } else if (r.steps && r.steps.length > 0) {
+      el('tm-peek-steps').innerHTML = buildStepsTab(r.steps);
+    } else {
+      el('tm-peek-steps').innerHTML = '<div style="text-align:center;padding:20px 0;color:var(--arc-subtext)"><div class="ai-spinner" style="margin:0 auto 12px"></div><span style="font-size:13px">Preparing steps…</span></div>';
+      fetchSteps(r.id);
+    }
+  } else {
+    todayPeekContext = { rid: null, day: day, slot: slot };
+    ingW.style.display = '';
+    stW.style.display = 'none';
+    el('tm-peek-ing').innerHTML = '<p class="tm-peek-muted">No recipe linked to this slot. Plan or swap a meal to preview ingredients and instructions here.</p>';
+    el('tm-peek-steps').innerHTML = '';
+  }
+
+  el('tm-peek-actions').innerHTML = buildTodayPeekActions(day, slot, r);
+  openMotion('tm-peek-bg');
 }
 
 function getDayPlannedTotals(day, slots) {
@@ -4132,6 +4288,21 @@ function removeRecipeFromMealPlan(recipeId) {
 }
 
 // ── Recipe modal ──────────────────────────────────────────────
+function buildIngredientsPeek(r) {
+  if (!r) return '';
+  var iq = r.ingQty || {};
+  var ings = r.ing || [];
+  if (!ings.length) {
+    return '<p class="tm-peek-muted">No ingredient list stored for this recipe.</p>';
+  }
+  var html = '';
+  for (var i = 0; i < ings.length; i++) {
+    var ing = ings[i];
+    html += '<div class="ing-row"><span class="ing-name">' + shopEsc(ing) + '</span><span class="ing-qty">' + shopEsc(iq[ing] || '—') + '</span></div>';
+  }
+  return html;
+}
+
 function buildIngredientsTab(r) {
   var iq   = r.ingQty || {};
   var html = '';
@@ -4225,6 +4396,12 @@ function openRM(id) {
   if (!stepCache[id]) fetchSteps(id);
 }
 
+function syncTodayPeekStepsIfOpen(id, steps) {
+  var pb = el('tm-peek-bg');
+  if (!pb || !pb.classList.contains('is-open') || !todayPeekContext || todayPeekContext.rid !== id) return;
+  el('tm-peek-steps').innerHTML = buildStepsTab(steps);
+}
+
 function fetchSteps(id) {
   var r = null;
   for (var i = 0; i < recipes.length; i++) { if (recipes[i].id === id) { r = recipes[i]; break; } }
@@ -4235,6 +4412,7 @@ function fetchSteps(id) {
     if (curRecipe && curRecipe.id === id && el('rm-bg').style.display === 'flex') {
       el('tab-steps').innerHTML = buildStepsTab(r.steps);
     }
+    syncTodayPeekStepsIfOpen(id, r.steps);
     return;
   }
 
@@ -4265,6 +4443,7 @@ function fetchSteps(id) {
     if (curRecipe && curRecipe.id === id && el('rm-bg').style.display === 'flex') {
       el('tab-steps').innerHTML = buildStepsTab(steps);
     }
+    syncTodayPeekStepsIfOpen(id, steps);
   }, 2);
 }
 
@@ -5499,6 +5678,11 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   el('s-today').addEventListener('click', function(e) {
+    var row = e.target.closest('.today-tl-row--tap');
+    if (row && row.dataset.tlDay && !e.target.closest('.today-tl-actions')) {
+      openTodayMealPeek(row.dataset.tlDay, row.dataset.tlSlot);
+      return;
+    }
     var b = e.target.closest('[data-today-act]');
     if (!b) return;
     var act = b.getAttribute('data-today-act');
@@ -5511,6 +5695,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     applyTodayMealAction(act, day, slot);
   });
+
   el('today-regen-btn').addEventListener('click', regenerateTodayPlan);
 
   var arcRefresh = el('s-arc-refresh-btn');
@@ -5531,9 +5716,59 @@ document.addEventListener('DOMContentLoaded', function() {
   if (recapCta) recapCta.addEventListener('click', advanceWeeklyRecap);
   document.addEventListener('keydown', function(ev) {
     if (ev.key !== 'Escape') return;
+    var tpk = el('tm-peek-bg');
+    if (tpk && tpk.classList.contains('is-open')) {
+      closeTodayMealPeek();
+      return;
+    }
     var ov = el('recap-overlay');
     if (ov && ov.classList.contains('is-open')) closeWeeklyRecap();
   });
+
+  el('tm-peek-bg').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeTodayMealPeek();
+      return;
+    }
+    var btn = e.target.closest('[data-tpeek-act]');
+    if (!btn || btn.disabled) return;
+    var act = btn.getAttribute('data-tpeek-act');
+    var day = btn.getAttribute('data-day');
+    var slot = btn.getAttribute('data-slot');
+    var rid = parseInt(btn.getAttribute('data-rid'), 10);
+    if (act === 'log') {
+      applyTodayMealAction('log', day, slot);
+      closeTodayMealPeek();
+      return;
+    }
+    if (act === 'undo') {
+      applyTodayMealAction('undo', day, slot);
+      closeTodayMealPeek();
+      return;
+    }
+    if (act === 'plan') {
+      closeMotion('tm-peek-bg', function() {
+        todayPeekContext = null;
+        openAssign(day, slot, 'plan');
+      });
+      return;
+    }
+    if (act === 'swap') {
+      closeMotion('tm-peek-bg', function() {
+        todayPeekContext = null;
+        openAssign(day, slot, 'plan');
+      });
+      return;
+    }
+    if (act === 'recipe' && rid) {
+      closeMotion('tm-peek-bg', function() {
+        todayPeekContext = null;
+        openRM(rid);
+      });
+      return;
+    }
+  });
+  el('tm-peek-close').addEventListener('click', function() { closeTodayMealPeek(); });
 
   // Recipe modal close
   el('rm-close').addEventListener('click', function() { closeMotion('rm-bg', function() { curRecipe = null; }); });
