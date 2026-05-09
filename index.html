@@ -166,19 +166,27 @@ body{
 .feat-title{font-size:16px;font-weight:600;color:var(--arc-text);margin-bottom:4px;letter-spacing:-.01em}
 .feat-sub{font-size:14px;color:var(--arc-subtext);line-height:1.5}
 
-/* GENERATING */
-.s-gen{background:var(--arc-primary);align-items:center;justify-content:center;text-align:center;padding:40px}
-.gen-orb{width:96px;height:96px;border-radius:50%;border:2px solid rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:28px}
-.gen-spin{width:78px;height:78px;border-radius:50%;border:2px solid var(--arc-primary);border-top-color:transparent;animation:spin 1.2s linear infinite;position:absolute}
-.gen-dot{width:12px;height:12px;background:var(--arc-primary);border-radius:50%}
-.gen-title{font-size:22px;font-weight:700;color:#fff;font-family:Georgia,serif;letter-spacing:-.4px;margin-bottom:8px}
-.gen-sub{font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;max-width:280px;margin:0 auto}
-.gen-steps{margin-top:32px;display:flex;flex-direction:column;gap:12px;width:100%}
-.gen-step{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.08);border-radius:var(--r-sm);padding:14px 18px;text-align:left;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.gsd{width:8px;height:8px;border-radius:50%;background:rgba(94,203,150,.25);flex-shrink:0;transition:background var(--motion-sheet) var(--ease-standard)}
-.gsd.done{background:var(--arc-primary)}.gsd.active{background:var(--arc-primary);animation:pulse 1s ease infinite}
-.gst{font-size:13px;color:rgba(255,255,255,.5);transition:color var(--motion-sheet) var(--ease-standard)}
-.gst.active{color:#fff;font-weight:500}.gst.done{color:rgba(255,255,255,.35);text-decoration:line-through}
+/* GENERATING — calm, spacious progress (no %, no frantic spinner) */
+.s-gen{background:var(--arc-primary);align-items:center;justify-content:center;text-align:center;padding:48px 28px 40px}
+.gen-ring-wrap{width:118px;height:118px;margin:0 auto 32px;position:relative;flex-shrink:0}
+.gen-ring-wrap::after{content:'';position:absolute;inset:18%;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.gen-ring-svg{position:absolute;inset:0;width:100%;height:100%;animation:genRingDrift 78s linear infinite}
+.gen-ring-track{fill:none;stroke:rgba(255,255,255,.22);stroke-width:3.25}
+.gen-ring-bar{fill:none;stroke:rgba(255,255,255,.92);stroke-width:3.25;stroke-linecap:round;opacity:.95;filter:drop-shadow(0 0 12px rgba(255,255,255,.15))}
+.gen-title{font-size:24px;font-weight:700;color:#fff;font-family:Georgia,serif;letter-spacing:-.45px;margin-bottom:6px;line-height:1.2}
+.gen-kicker{font-size:12px;font-weight:600;color:rgba(255,255,255,.42);letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px}
+.gen-stage-stack{min-height:4.75em;display:flex;align-items:center;justify-content:center;padding:0 8px;margin-bottom:20px;max-width:320px;margin-left:auto;margin-right:auto}
+.gen-stage{font-size:16px;font-weight:500;color:rgba(255,255,255,.94);letter-spacing:-.02em;line-height:1.45;text-align:center;margin:0}
+.gen-stage.gen-stage--exit{opacity:0;transform:translateY(-7px);transition:opacity 240ms var(--ease-standard),transform 240ms var(--ease-standard)}
+.gen-stage.gen-stage--enter{animation:genStageEnter 520ms var(--ease-standard) forwards}
+@keyframes genStageEnter{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@keyframes genRingDrift{from{transform:rotate(-90deg)}to{transform:rotate(270deg)}}
+.gen-insight{font-size:13px;color:rgba(255,255,255,.48);line-height:1.55;max-width:300px;margin:0 auto;font-style:italic;font-weight:400}
+@media (prefers-reduced-motion:reduce){
+  .gen-ring-svg{animation:none}
+  .gen-stage.gen-stage--enter{animation:none}
+}
+.gen-live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
 /* ONBOARDING */
 .ob-top{background:var(--arc-primary);padding:32px 24px 22px;flex-shrink:0}
@@ -844,15 +852,18 @@ button:active{transform:scale(var(--press-scale))}
 
 <!-- GENERATING -->
 <div class="screen s-gen" id="s-gen">
-  <div class="gen-orb"><div class="gen-spin"></div><div class="gen-dot"></div></div>
-  <div class="gen-title">Creating your plan</div>
-  <div class="gen-sub">AI is building a personalized recipe collection for you</div>
-  <div class="gen-steps">
-    <div class="gen-step"><div class="gsd" id="gs1"></div><span class="gst" id="gt1">Analyzing your profile &amp; goals</span></div>
-    <div class="gen-step"><div class="gsd" id="gs2"></div><span class="gst" id="gt2">Generating personalized recipes</span></div>
-    <div class="gen-step"><div class="gsd" id="gs3"></div><span class="gst" id="gt3">Calculating nutrition &amp; pricing</span></div>
-    <div class="gen-step"><div class="gsd" id="gs4"></div><span class="gst" id="gt4">Preparing your app</span></div>
+  <div class="gen-ring-wrap" aria-hidden="true">
+    <svg class="gen-ring-svg" viewBox="0 0 100 100">
+      <circle class="gen-ring-track" cx="50" cy="50" r="43"/>
+      <circle class="gen-ring-bar" id="gen-ring-bar" cx="50" cy="50" r="43" stroke-dasharray="270.177" stroke-dashoffset="270.177"/>
+    </svg>
   </div>
+  <div class="gen-title">Creating your plan</div>
+  <div class="gen-kicker">Personal intelligence</div>
+  <div class="gen-stage-stack">
+    <p class="gen-stage" id="gen-stage" aria-live="polite">Building your nutrition profile…</p>
+  </div>
+  <p class="gen-insight" id="gen-insight" aria-live="polite"></p>
 </div>
 
 <!-- TODAY -->
@@ -3924,13 +3935,122 @@ function finishOB() {
   generateRecipes();
 }
 
-// ── Generating animation ──────────────────────────────────────
-function genAnim(i, state) {
-  var dot = el('gs' + (i + 1));
-  var txt = el('gt' + (i + 1));
-  if (!dot || !txt) return;
-  dot.className = 'gsd' + (state === 'done' ? ' done' : state === 'active' ? ' active' : '');
-  txt.className = 'gst' + (state === 'done' ? ' done' : state === 'active' ? ' active' : '');
+// ── Generating screen: ambient ring + phased copy (tied to real milestones) ──
+var GEN_RING_C = 2 * Math.PI * 43;
+var genRingRaf = null;
+var genRingLerp = 0;
+var genRingTarget = 0;
+var genLoadingActive = false;
+var genPhaseTimer = null;
+var genPhaseSeq = 0;
+
+var GEN_PHASE_COPY = {
+  profile: 'Building your nutrition profile…',
+  balancing: 'Balancing macros…',
+  recipes: 'Optimizing meals for your schedule…',
+  grocery: 'Preparing grocery intelligence…',
+  finalize: 'Finalizing your week…'
+};
+
+var GEN_INSIGHTS = [
+  'Arc adapts to your habits over time.',
+  'Balanced protein intake improves meal consistency.',
+  'Small planning wins compound into better weeks.',
+  'Regional pricing keeps your budget grounded in reality.'
+];
+
+function resetGenLoadingUI() {
+  genLoadingActive = true;
+  genRingLerp = 0;
+  genRingTarget = 0.12;
+  var bar = el('gen-ring-bar');
+  if (bar) {
+    bar.setAttribute('stroke-dasharray', String(GEN_RING_C));
+    bar.setAttribute('stroke-dashoffset', String(GEN_RING_C));
+  }
+  if (genRingRaf) cancelAnimationFrame(genRingRaf);
+  genRingRaf = requestAnimationFrame(tickGenRing);
+  var st = el('gen-stage');
+  if (st) {
+    st.classList.remove('gen-stage--exit', 'gen-stage--enter');
+    st.textContent = GEN_PHASE_COPY.profile;
+  }
+  var ins = el('gen-insight');
+  if (ins) ins.textContent = GEN_INSIGHTS[0];
+}
+
+function stopGenLoadingUI() {
+  genLoadingActive = false;
+  if (genRingRaf) {
+    cancelAnimationFrame(genRingRaf);
+    genRingRaf = null;
+  }
+  if (genPhaseTimer) {
+    clearTimeout(genPhaseTimer);
+    genPhaseTimer = null;
+  }
+  genPhaseSeq++;
+}
+
+function tickGenRing() {
+  if (!genLoadingActive) return;
+  var bar = el('gen-ring-bar');
+  if (!bar) return;
+  genRingLerp += (genRingTarget - genRingLerp) * 0.042;
+  var t = Math.min(1, Math.max(0, genRingLerp));
+  var off = GEN_RING_C * (1 - t);
+  bar.setAttribute('stroke-dashoffset', String(off));
+  genRingRaf = requestAnimationFrame(tickGenRing);
+}
+
+function setGenRingAmbient(fraction) {
+  genRingTarget = Math.min(0.96, Math.max(genRingTarget, fraction));
+}
+
+function completeGenLoadingUI() {
+  genRingTarget = 1;
+  genRingLerp = 1;
+  var bar = el('gen-ring-bar');
+  if (bar) bar.setAttribute('stroke-dashoffset', '0');
+}
+
+function setGenPhase(phase, insightPick) {
+  var label = GEN_PHASE_COPY[phase] || GEN_PHASE_COPY.profile;
+  var ambient = { profile: 0.12, balancing: 0.36, recipes: 0.58, grocery: 0.8, finalize: 0.92 };
+  if (ambient[phase] != null) setGenRingAmbient(ambient[phase]);
+
+  var st = el('gen-stage');
+  var ins = el('gen-insight');
+  if (!st) return;
+
+  var insightByPhase = { profile: 0, balancing: 1, recipes: 2, grocery: 3, finalize: 1 };
+  var idx = (insightPick != null) ? insightPick : (insightByPhase[phase] != null ? insightByPhase[phase] : 0);
+  function applyInsight() {
+    if (ins) ins.textContent = GEN_INSIGHTS[idx % GEN_INSIGHTS.length];
+  }
+
+  if (st.textContent === label) {
+    applyInsight();
+    return;
+  }
+
+  genPhaseSeq++;
+  var ticket = genPhaseSeq;
+  if (genPhaseTimer) clearTimeout(genPhaseTimer);
+  st.classList.remove('gen-stage--enter');
+  st.classList.add('gen-stage--exit');
+
+  genPhaseTimer = setTimeout(function() {
+    if (ticket !== genPhaseSeq) return;
+    st.textContent = label;
+    st.classList.remove('gen-stage--exit');
+    st.classList.add('gen-stage--enter');
+    applyInsight();
+    setTimeout(function() {
+      if (ticket !== genPhaseSeq) return;
+      st.classList.remove('gen-stage--enter');
+    }, 540);
+  }, 235);
 }
 
 // Builds strict, non-optional dietary language for the recipe-generation prompt.
@@ -4169,8 +4289,7 @@ function generateRecipes() {
   }
 
   var myGen = ++recipeGenId;
-  for (var x = 0; x < 4; x++) genAnim(x, '');
-  genAnim(0, 'active');
+  resetGenLoadingUI();
 
   var ne         = buildNutritionEngine();
   var calT       = ne.calT;
@@ -4179,9 +4298,6 @@ function generateRecipes() {
   var cuis       = (UP.cuisines     || []).join(', ') || 'varied international';
   var budgetNote = {'Budget':'$3-7/serving','Moderate':'$5-12/serving','Flexible':'any price range'}[UP.budget] || 'moderate';
   var skillNote  = {'Beginner':'Use max 5 ingredients, simple techniques (no sautéing, braising, or multi-step processes)','Home cook':'Standard home cooking techniques','Confident chef':'Any technique including advanced methods'}[UP.skill] || 'standard techniques';
-
-  genAnim(0, 'done');
-  genAnim(1, 'active');
 
   var slots = ne.slots;
   var mt    = ne.mealTargets;
@@ -4229,19 +4345,21 @@ function generateRecipes() {
   nutriDebug('Final recipe AI system message', sysMsg);
   nutriDebug('Final recipe AI user message (' + userMsg.length + ' chars)', userMsg.length > 20000 ? userMsg.slice(0, 20000) + '\n… [truncated for console]' : userMsg);
 
+  setGenPhase('balancing');
+
   function processRecipes(err, raw) {
     if (myGen !== recipeGenId) return;
-    genAnim(1, 'done');
-    genAnim(2, 'active');
 
     var parsed = null;
     if (!err && raw) parsed = parseJSON(raw);
 
     if (parsed && Array.isArray(parsed) && parsed.length >= 10) {
+      setGenPhase('recipes');
       recipes = parsed.map(function(r, i) { return normalizeGeneratedRecipe(r, i, mt); });
       saveSessionState();
     } else {
       if (myGen !== recipeGenId) return;
+      stopGenLoadingUI();
       var detail = '';
       if (err) detail = err.message || String(err);
       else if (!raw) detail = 'No response body from the recipe service. Check your network connection and try again.';
@@ -4259,23 +4377,24 @@ function generateRecipes() {
       return;
     }
 
-    genAnim(2, 'done');
-    genAnim(3, 'active');
+    setGenPhase('grocery');
+    renderRecipes();
+    renderPlanner();
+    renderNutrition();
+    renderShopping();
 
     setTimeout(function() {
       if (myGen !== recipeGenId) return;
-      genAnim(3, 'done');
+      setGenPhase('finalize');
+      completeGenLoadingUI();
       setTimeout(function() {
         if (myGen !== recipeGenId) return;
-        renderRecipes();
-        renderPlanner();
-        renderNutrition();
-        renderShopping();
         tab('today');
         saveSessionState();
         scheduleWeeklyRecapAutoCheck();
-      }, 400);
-    }, 600);
+        stopGenLoadingUI();
+      }, 420);
+    }, 380);
   }
 
   // Try with retries
