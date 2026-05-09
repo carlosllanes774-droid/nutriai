@@ -279,6 +279,40 @@ body{
 .review-adapt strong{color:var(--arc-primary-dark);font-weight:600}
 .review-foot{margin-top:8px;font-size:12px;color:var(--arc-subtext);line-height:1.45}
 #review-refresh-btn{margin-top:8px;border-radius:16px!important;padding:14px 18px!important;font-size:15px!important}
+#review-recap-btn{margin-top:10px;width:100%;border-radius:16px;padding:14px 18px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid rgba(31,31,31,.12);background:rgba(255,255,255,.65);color:var(--arc-text);transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
+#review-recap-btn:hover{background:#fff;border-color:rgba(31,31,31,.18)}
+/* Weekly recap — full-screen moment inside app frame */
+.recap-overlay{position:absolute;inset:0;z-index:90;border-radius:28px;overflow:hidden;display:none;flex-direction:column;background:#1a1614;color:rgba(255,255,255,.92)}
+.recap-overlay.is-open{display:flex}
+.recap-gradient{position:absolute;inset:0;background:radial-gradient(120% 80% at 50% -10%,rgba(227,90,54,.35) 0%,transparent 55%),radial-gradient(90% 60% at 100% 100%,rgba(255,255,255,.06) 0%,transparent 45%),linear-gradient(165deg,#141210 0%,#1f1c19 48%,#171513 100%);pointer-events:none}
+.recap-frame{position:relative;flex:1;display:flex;flex-direction:column;min-height:0;padding:20px 22px 22px}
+.recap-dismiss{position:absolute;top:14px;right:16px;width:40px;height:40px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);font-size:22px;line-height:1;cursor:pointer;z-index:2;transition:background var(--motion-fast) var(--ease-standard)}
+.recap-dismiss:hover{background:rgba(255,255,255,.14);color:#fff}
+.recap-progress{height:3px;border-radius:3px;background:rgba(255,255,255,.1);margin:36px 0 8px;overflow:hidden}
+.recap-progress > span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--arc-primary),#f4a082);border-radius:3px;transition:width 520ms cubic-bezier(0.4,0,0.2,1)}
+.recap-stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:8px 4px 12px;opacity:1;transform:translateY(0);transition:opacity 320ms cubic-bezier(0.4,0,0.2,1),transform 320ms cubic-bezier(0.4,0,0.2,1)}
+.recap-stage.recap-exit{opacity:0;transform:translateY(12px)}
+.recap-slide{max-width:320px;margin:0 auto;text-align:center}
+.recap-kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px}
+.recap-h1{font-family:Georgia,serif;font-size:28px;font-weight:700;line-height:1.15;color:#fff;letter-spacing:-.03em;margin-bottom:12px}
+.recap-sub{font-size:15px;line-height:1.55;color:rgba(255,255,255,.58);font-weight:500;margin-bottom:22px}
+.recap-stat-grid{display:flex;justify-content:center;gap:clamp(16px,6vw,28px);margin-top:8px}
+.recap-stat{text-align:center}
+.recap-num{display:block;font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;color:#fff;letter-spacing:-.04em;line-height:1.1;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.recap-num-suffix{font-size:22px;font-weight:600;opacity:.9}
+.recap-stat-lbl{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:6px}
+.recap-quote{font-family:Georgia,serif;font-size:20px;line-height:1.45;color:rgba(255,255,255,.88);font-style:italic;margin:10px 0 6px}
+.recap-learn{font-size:15px;line-height:1.55;color:rgba(255,255,255,.62);margin-bottom:14px}
+.recap-next-h{font-size:17px;font-weight:600;color:#fff;margin-bottom:8px;font-family:Georgia,serif}
+.recap-next-p{font-size:14px;line-height:1.55;color:rgba(255,255,255,.55)}
+.recap-bottom{flex-shrink:0;padding-top:8px}
+.recap-dots{display:flex;justify-content:center;gap:7px;margin-bottom:14px}
+.recap-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:background 240ms var(--ease-standard),transform 240ms var(--ease-standard)}
+.recap-dot.on{background:rgba(255,255,255,.85);transform:scale(1.15)}
+.recap-cta{width:100%;padding:16px 20px;border-radius:18px;border:none;font-size:16px;font-weight:650;cursor:pointer;background:var(--arc-primary);color:#fff;box-shadow:0 12px 36px rgba(227,90,54,.35);transition:transform 180ms var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.recap-cta:hover{background:var(--arc-primary-dark)}
+.recap-cta:active{transform:scale(var(--press-scale))}
+.recap-micro{font-size:11px;color:rgba(255,255,255,.35);margin-top:14px;line-height:1.45;max-width:28em;margin-left:auto;margin-right:auto}
 /* Today — single flowing screen, hero + compact support */
 #s-today .content.today-flow{padding:12px 24px 36px;background:var(--arc-surface)}
 .today-hero{padding:32px 4px 40px;text-align:left}
@@ -861,6 +895,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="review-card" id="review-adaptations"><div style="font-size:14px;color:var(--arc-subtext)">Adjustments appear here after each update—they shape future AI recipes and week plans.</div></div>
     </div>
     <button type="button" class="btn-green" id="review-refresh-btn">Update insights</button>
+    <button type="button" class="btn-outline" id="review-recap-btn">Weekly recap</button>
     <p class="review-foot" id="review-foot-note">Based on your planner, meal journal, recipe likes, and shopping check-offs.</p>
   </div>
   <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn active" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
@@ -1068,6 +1103,21 @@ button:active{transform:scale(var(--press-scale))}
   </div>
 </div><!-- /settings-sheet -->
 </div><!-- /settings-overlay -->
+
+<!-- WEEKLY RECAP (full-screen inside app) -->
+<div id="recap-overlay" class="recap-overlay" aria-hidden="true">
+  <div class="recap-gradient" aria-hidden="true"></div>
+  <div class="recap-frame">
+    <button type="button" class="recap-dismiss" id="recap-dismiss" aria-label="Close recap">×</button>
+    <div class="recap-progress" aria-hidden="true"><span id="recap-progress-fill"></span></div>
+    <div id="recap-stage" class="recap-stage"></div>
+    <div class="recap-bottom">
+      <div class="recap-dots" id="recap-dots" role="tablist" aria-label="Recap progress"></div>
+      <button type="button" class="recap-cta" id="recap-cta">Continue</button>
+      <p class="recap-micro" id="recap-micro">Estimates are gentle guides, not judgments. Arc celebrates effort, not perfection.</p>
+    </div>
+  </div>
+</div>
 
 </div><!-- .app -->
 <script>
@@ -1723,6 +1773,247 @@ function renderWeeklyReviewScreen() {
     var dt = new Date(UP.arcAdaptive.lastReviewAt);
     foot.textContent = 'Last model refresh: ' + dt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) + ' · Feeds recipe + week-plan AI prompts.';
   }
+}
+
+// ── Weekly recap (emotional full-screen, 5 slides) ────────────
+var recapAnimTimers = [];
+var recapSession = { slides: [], idx: 0 };
+
+function clearRecapTimers() {
+  for (var i = 0; i < recapAnimTimers.length; i++) clearTimeout(recapAnimTimers[i]);
+  recapAnimTimers = [];
+}
+
+function dayHasAnyJournalEntry(day) {
+  var slots = getSlots();
+  if (!mealJournal[day]) return false;
+  for (var s = 0; s < slots.length; s++) {
+    if (mealJournal[day][slots[s]]) return true;
+  }
+  return false;
+}
+
+function weekPresenceDaysCount() {
+  var n = 0;
+  for (var i = 0; i < DAYS.length; i++) {
+    if (dayHasAnyJournalEntry(DAYS[i])) n++;
+  }
+  return n;
+}
+
+function longestLoggedDayRunThisWeek() {
+  var slots = getSlots();
+  var boo = [];
+  for (var i = 0; i < DAYS.length; i++) {
+    boo.push(getDayConsumedTotals(DAYS[i], slots).cal > 85);
+  }
+  var best = 0, cur = 0;
+  for (var j = 0; j < boo.length; j++) {
+    if (boo[j]) {
+      cur++;
+      best = Math.max(best, cur);
+    } else cur = 0;
+  }
+  return best;
+}
+
+function computeConsistencyScoreRecap(m, presenceDays) {
+  var slots = getSlots();
+  var slotEvents = m.mealsLogged + m.mealsSkipped + m.mealsReplaced;
+  var cap = Math.max(8, slots.length * 7);
+  var engagement = Math.min(1, slotEvents / cap);
+  var proteinFactor = Math.max(0, 1 - m.proteinShortDays / 7);
+  var presenceFactor = presenceDays / 7;
+  var score = Math.round(20 + engagement * 40 + proteinFactor * 22 + presenceFactor * 18);
+  return Math.max(34, Math.min(97, score));
+}
+
+function estimateGroceryRecapUsd(m) {
+  var base = m.mealsLogged * 9.25 + m.mealsReplaced * 6.5;
+  var bump = Math.min(48, m.shopCheckedCount * 2.1);
+  return Math.max(0, Math.round(base + bump));
+}
+
+function buildRecapLearnedLines(m) {
+  var lines = [];
+  if (m.prefersQuickLunchesPattern) lines.push('You gravitated toward quicker lunches when the week picked up speed.');
+  if (m.skipsBreakfastOften) lines.push('Breakfast often stayed off the menu on fuller mornings—Arc noticed without judging.');
+  if (lines.length < 2 && m.mealsReplaced >= 2) lines.push('Replacing meals honestly kept your log true to life.');
+  if (lines.length < 2 && m.shopCheckedCount >= 4) lines.push('Little checkmarks on your list added up to steadier footing.');
+  if (!lines.length) lines.push('The signals you did share still sharpen how Arc cares for you.');
+  return lines.slice(0, 2);
+}
+
+function buildRecapNextWeekLine(a) {
+  var parts = [];
+  if (a.skipsBreakfastOften) parts.push('Softer, faster breakfasts when they fit.');
+  if (a.prefersQuickMeals || a.prefersQuickLunches) parts.push('More breathing room at lunch.');
+  if (a.highProteinCompliance === 'low') parts.push('Gentle nudges toward protein that feel doable.');
+  if (a.prefersLowerComplexity) parts.push('Recipes that ask less of your evening.');
+  if (parts.length) return 'Next week: ' + parts.join(' ');
+  return 'Next week Arc keeps the same calm presence—listening, not pushing.';
+}
+
+function buildWeeklyRecapPayload() {
+  applySafeProfileDefaults(UP);
+  ensureArcAdaptive(UP);
+  var m = computeWeeklyReviewMetrics();
+  var a = UP.arcAdaptive;
+  var mon = mondayOfWeekContaining(new Date());
+  var sun = new Date(mon.getTime());
+  sun.setDate(sun.getDate() + 6);
+  var weekLabel = mon.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' – ' + sun.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  var presence = weekPresenceDaysCount();
+  var run = longestLoggedDayRunThisWeek();
+  var streakVal = run >= 2 ? run : presence;
+  var streakLabel = run >= 2 ? 'Day logging run' : 'Days you touched';
+  var totalTracked = m.mealsLogged + m.mealsSkipped + m.mealsReplaced;
+  var score = computeConsistencyScoreRecap(m, presence);
+  var protGood = Math.max(0, 7 - m.proteinShortDays);
+  var proteinLine = protGood >= 6
+    ? 'Protein stayed beautifully close to goal most days.'
+    : (protGood >= 4 ? 'Protein aligned on ' + protGood + ' of 7 days—room to grow, gently.' : 'Protein wandered a bit—Arc will keep suggestions kind and practical.');
+  var favName = (a.favoriteMealNames && a.favoriteMealNames[0]) || (m.likedRecipeNames && m.likedRecipeNames[0]) || '';
+  var favoriteLine = favName ? ('A stand-out this week: ' + favName + '.') : 'Your week had its own flavor—Arc is still learning your favorites.';
+  var favoriteSub = favName ? 'We will echo this energy in small ways ahead.' : 'Keep tapping likes when something feels right.';
+  var savings = estimateGroceryRecapUsd(m);
+  var learned = buildRecapLearnedLines(m);
+  var nextW = buildRecapNextWeekLine(a);
+  return {
+    weekLabel: weekLabel,
+    totalTrackedMeals: totalTracked,
+    consistencyScore: score,
+    dayStreakOrRun: streakVal,
+    streakLabel: streakLabel,
+    proteinLine: proteinLine,
+    favoriteLine: favoriteLine,
+    favoriteSub: favoriteSub,
+    savingsUsd: savings,
+    learned: learned,
+    nextWeek: nextW,
+    metrics: m
+  };
+}
+
+function buildWeeklyRecapSlidesFromPayload(d) {
+  var slides = [];
+  slides.push({
+    html: '<div class="recap-slide"><p class="recap-kicker">Weekly recap</p><h1 class="recap-h1">A soft landing for your week</h1><p class="recap-sub">Not a report—a little space to feel what you did with your nutrition.</p><p class="recap-sub" style="margin-bottom:0;opacity:.85">' + shopEsc(d.weekLabel) + '</p></div>'
+  });
+  slides.push({
+    html: '<div class="recap-slide"><p class="recap-kicker">Presence</p><h1 class="recap-h1">You kept a thread going</h1><div class="recap-stat-grid">' +
+      '<div class="recap-stat"><span class="recap-num"><span data-recap-count="' + d.totalTrackedMeals + '">0</span></span><span class="recap-stat-lbl">Meals tracked</span></div>' +
+      '<div class="recap-stat"><span class="recap-num"><span data-recap-count="' + d.consistencyScore + '">0</span><span class="recap-num-suffix">%</span></span><span class="recap-stat-lbl">Consistency</span></div>' +
+      '<div class="recap-stat"><span class="recap-num"><span data-recap-count="' + d.dayStreakOrRun + '">0</span></span><span class="recap-stat-lbl">' + shopEsc(d.streakLabel) + '</span></div>' +
+      '</div><p class="recap-sub" style="margin-top:22px;margin-bottom:0">Effort counts, even in small brushstrokes.</p></div>'
+  });
+  slides.push({
+    html: '<div class="recap-slide"><p class="recap-kicker">Fuel</p><h1 class="recap-h1">How you nourished</h1><p class="recap-learn">' + shopEsc(d.proteinLine) + '</p><p class="recap-quote">' + shopEsc(d.favoriteLine) + '</p><p class="recap-sub" style="margin-bottom:0">' + shopEsc(d.favoriteSub) + '</p></div>'
+  });
+  var learnHtml = '';
+  for (var i = 0; i < d.learned.length; i++) {
+    learnHtml += '<p class="recap-learn" style="margin-bottom:10px">' + shopEsc(d.learned[i]) + '</p>';
+  }
+  slides.push({
+    html: '<div class="recap-slide"><p class="recap-kicker">Arc noticed</p><h1 class="recap-h1">What we learned</h1>' + learnHtml +
+      '<p class="recap-sub" style="margin-bottom:6px">A soft read on home cooking vs. typical takeout for meals you confirmed—not tax advice, just warmth.</p>' +
+      '<p class="recap-num" style="margin-top:8px">~$<span data-recap-count="' + d.savingsUsd + '">0</span></p><p class="recap-micro" style="margin-top:8px;color:rgba(255,255,255,.42)">Illustrative estimate from your week’s rhythm.</p></div>'
+  });
+  slides.push({
+    html: '<div class="recap-slide"><p class="recap-kicker">Looking ahead</p><h1 class="recap-h1">Carried forward gently</h1><p class="recap-next-p">' + shopEsc(d.nextWeek) + '</p><p class="recap-sub" style="margin-top:20px;margin-bottom:0">You can close whenever you are ready—there is no score to defend.</p></div>'
+  });
+  return slides;
+}
+
+function runRecapCountUps(root) {
+  clearRecapTimers();
+  var nodes = root.querySelectorAll('[data-recap-count]');
+  for (var i = 0; i < nodes.length; i++) {
+    (function(node) {
+      var target = parseInt(node.getAttribute('data-recap-count'), 10) || 0;
+      var dur = 880;
+      var t0 = null;
+      function tick(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min(1, (ts - t0) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var v = Math.round(target * eased);
+        node.textContent = String(v);
+        if (p < 1) requestAnimationFrame(tick);
+        else node.textContent = String(target);
+      }
+      recapAnimTimers.push(setTimeout(function() { requestAnimationFrame(tick); }, 140 + i * 60));
+    })(nodes[i]);
+  }
+}
+
+function renderRecapDots() {
+  var wrap = el('recap-dots');
+  if (!wrap) return;
+  var html = '';
+  for (var i = 0; i < recapSession.slides.length; i++) {
+    html += '<span class="recap-dot' + (i === recapSession.idx ? ' on' : '') + '" role="presentation"></span>';
+  }
+  wrap.innerHTML = html;
+  var fill = el('recap-progress-fill');
+  if (fill && recapSession.slides.length) {
+    var pct = ((recapSession.idx + 1) / recapSession.slides.length) * 100;
+    fill.style.width = pct + '%';
+  }
+  var cta = el('recap-cta');
+  if (cta) {
+    cta.textContent = recapSession.idx >= recapSession.slides.length - 1 ? 'Close' : 'Continue';
+  }
+}
+
+function mountRecapSlide() {
+  var stage = el('recap-stage');
+  if (!stage) return;
+  stage.classList.remove('recap-exit');
+  void stage.offsetWidth;
+  var slide = recapSession.slides[recapSession.idx];
+  stage.innerHTML = slide ? slide.html : '';
+  runRecapCountUps(stage);
+  renderRecapDots();
+}
+
+function advanceWeeklyRecap() {
+  if (recapSession.idx >= recapSession.slides.length - 1) {
+    closeWeeklyRecap();
+    return;
+  }
+  var stage = el('recap-stage');
+  if (!stage) return;
+  stage.classList.add('recap-exit');
+  clearRecapTimers();
+  recapAnimTimers.push(setTimeout(function() {
+    recapSession.idx++;
+    mountRecapSlide();
+  }, 300));
+}
+
+function openWeeklyRecap() {
+  var ov = el('recap-overlay');
+  if (!ov) return;
+  clearRecapTimers();
+  var payload = buildWeeklyRecapPayload();
+  recapSession.slides = buildWeeklyRecapSlidesFromPayload(payload);
+  recapSession.idx = 0;
+  ov.classList.add('is-open');
+  ov.setAttribute('aria-hidden', 'false');
+  mountRecapSlide();
+}
+
+function closeWeeklyRecap() {
+  var ov = el('recap-overlay');
+  if (!ov) return;
+  clearRecapTimers();
+  ov.classList.remove('is-open');
+  ov.setAttribute('aria-hidden', 'true');
+  recapSession.slides = [];
+  recapSession.idx = 0;
+  var stage = el('recap-stage');
+  if (stage) stage.innerHTML = '';
 }
 
 function categoryTargetsFor(cat, mt) {
@@ -4587,6 +4878,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var reviewRefresh = el('review-refresh-btn');
   if (reviewRefresh) reviewRefresh.addEventListener('click', runWeeklyReviewAndPersist);
+  var reviewRecap = el('review-recap-btn');
+  if (reviewRecap) reviewRecap.addEventListener('click', openWeeklyRecap);
+  var recapDismiss = el('recap-dismiss');
+  if (recapDismiss) recapDismiss.addEventListener('click', closeWeeklyRecap);
+  var recapCta = el('recap-cta');
+  if (recapCta) recapCta.addEventListener('click', advanceWeeklyRecap);
+  document.addEventListener('keydown', function(ev) {
+    if (ev.key !== 'Escape') return;
+    var ov = el('recap-overlay');
+    if (ov && ov.classList.contains('is-open')) closeWeeklyRecap();
+  });
 
   // Recipe modal close
   el('rm-close').addEventListener('click', function() { closeMotion('rm-bg', function() { curRecipe = null; }); });
