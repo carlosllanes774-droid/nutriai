@@ -265,22 +265,6 @@ body{
 .nav{display:flex;background:var(--arc-card);flex-shrink:0;box-shadow:0 -1px 0 var(--arc-divider)}
 .nbtn{flex:1;padding:10px 2px 12px;font-size:9px;font-weight:600;color:#9ca3af;cursor:pointer;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;text-transform:uppercase;letter-spacing:.05em;transition:color var(--motion-fast) var(--ease-standard);min-width:0}
 .nbtn.active{color:var(--arc-primary)}.nic{font-size:17px;line-height:1}
-/* Weekly review */
-.review-flow{padding:12px 24px 32px;background:var(--arc-surface)}
-.review-lead{font-size:15px;color:var(--arc-subtext);line-height:1.55;margin-bottom:20px;font-weight:500;max-width:34em}
-.review-block{margin-bottom:22px}
-.review-block-h{font-size:11px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
-.review-card{background:rgba(255,255,255,.55);border-radius:var(--r-md);padding:14px 16px;box-shadow:0 1px 0 var(--arc-divider),inset 0 0 0 1px rgba(31,31,31,.05)}
-.review-line{font-size:14px;color:var(--arc-text);line-height:1.45;margin-bottom:10px;padding-left:14px;position:relative}
-.review-line:last-child{margin-bottom:0}
-.review-line::before{content:'';position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--arc-primary);opacity:.75}
-.review-adapt{font-size:13px;color:var(--arc-text);line-height:1.5;margin-bottom:8px;padding:10px 0;border-bottom:1px solid var(--arc-divider)}
-.review-adapt:last-child{border-bottom:none;margin-bottom:0}
-.review-adapt strong{color:var(--arc-primary-dark);font-weight:600}
-.review-foot{margin-top:8px;font-size:12px;color:var(--arc-subtext);line-height:1.45}
-#review-refresh-btn{margin-top:8px;border-radius:16px!important;padding:14px 18px!important;font-size:15px!important}
-#review-recap-btn{margin-top:10px;width:100%;border-radius:16px;padding:14px 18px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid rgba(31,31,31,.12);background:rgba(255,255,255,.65);color:var(--arc-text);transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
-#review-recap-btn:hover{background:#fff;border-color:rgba(31,31,31,.18)}
 .week-recap-nudge{margin:0 0 16px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(31,31,31,.03));border:1px solid rgba(31,31,31,.08);box-shadow:var(--shadow-xs)}
 .week-recap-nudge-inner{display:flex;align-items:flex-start;gap:12px}
 .week-recap-nudge-ic{font-size:22px;line-height:1;flex-shrink:0;opacity:.9}
@@ -288,6 +272,22 @@ body{
 .week-recap-nudge-s{font-size:13px;color:var(--arc-subtext);line-height:1.45;margin-bottom:10px}
 .week-recap-nudge-btn{width:100%;padding:11px 14px;border-radius:12px;border:1px solid rgba(227,90,54,.35);background:#fff;color:var(--arc-primary-dark);font-size:13px;font-weight:600;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
 .week-recap-nudge-btn:hover{background:rgba(227,90,54,.06);border-color:rgba(227,90,54,.5)}
+.today-arc-strip{margin:6px 0 18px;padding:0 2px}
+.today-arc-h{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--arc-subtext);margin-bottom:10px}
+.today-arc-h-ic{font-size:8px;color:rgba(227,90,54,.65);line-height:1}
+.today-arc-card{font-size:13px;line-height:1.45;color:var(--arc-text);padding:10px 12px;margin-bottom:8px;border-radius:14px;background:rgba(255,255,255,.5);border:1px solid rgba(31,31,31,.06);box-shadow:0 1px 0 rgba(31,31,31,.04)}
+.today-arc-card:last-child{margin-bottom:0}
+.settings-arc-lead{font-size:13px;color:var(--arc-subtext);line-height:1.45;margin:-4px 0 12px}
+.settings-arc-preview{max-height:200px;overflow-y:auto}
+.settings-arc-line{font-size:13px;color:var(--arc-text);line-height:1.45;margin-bottom:10px;padding-left:12px;position:relative}
+.settings-arc-line:last-child{margin-bottom:0}
+.settings-arc-line::before{content:'';position:absolute;left:0;top:.55em;width:4px;height:4px;border-radius:50%;background:var(--arc-primary);opacity:.55}
+.settings-arc-muted{font-size:13px;color:var(--arc-subtext);line-height:1.45}
+.settings-arc-adapt{font-size:12px;color:var(--arc-text);line-height:1.45;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--arc-divider)}
+.settings-arc-adapt:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.settings-arc-adapt strong{color:var(--arc-primary-dark);font-weight:600}
+.settings-arc-adapt-sub{font-weight:400;color:var(--arc-subtext)}
+.settings-arc-foot{margin-top:10px;font-size:11px;color:var(--arc-subtext);line-height:1.4}
 .past-recap-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--arc-divider)}
 .past-recap-row:last-child{border-bottom:none;padding-bottom:4px}
 .past-recap-meta{font-size:13px;color:var(--arc-text);font-weight:600}
@@ -814,6 +814,10 @@ button:active{transform:scale(var(--press-scale))}
       <button class="btn-green today-cook-cta" id="today-cook-btn">Cook this meal</button>
     </section>
     <section class="today-timeline" id="today-timeline" aria-label="All meals today"></section>
+    <section class="today-arc-strip" id="today-arc-strip" style="display:none" aria-label="Arc intelligence">
+      <div class="today-arc-h"><span class="today-arc-h-ic" aria-hidden="true">◇</span><span>For you</span></div>
+      <div id="today-arc-cards"></div>
+    </section>
     <div class="today-foot">
       <div class="today-progress-row">
         <div class="today-ring-wrap" aria-hidden="true">
@@ -847,7 +851,7 @@ button:active{transform:scale(var(--press-scale))}
       </div>
     </div>
   </div>
-  <div class="nav"><button class="nbtn active" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn active" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- RECIPES -->
@@ -876,7 +880,7 @@ button:active{transform:scale(var(--press-scale))}
     <div id="recipes-list"></div>
   </div>
   <div class="next-bar" id="next-bar"><div class="nbi" id="goto-planner"><div><div class="nbi-label">Open Planner</div><div class="nbi-sub" id="nb-sub">0 recipes selected</div></div><div class="nbi-arrow">→</div></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn active" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn active" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- PLANNER -->
@@ -895,34 +899,14 @@ button:active{transform:scale(var(--press-scale))}
     <div id="planner-list"></div>
   </div>
   <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Open Shopping List</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn active" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn active" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- NUTRITION -->
 <div class="screen" id="s-nutrition">
   <div class="a-hdr"><h2>Nutrition stats</h2></div>
   <div class="content"><div id="ct-wrap"></div><div class="slbl">Weekly average</div><div class="stat-grid" id="nut-stats"></div><div class="slbl" style="margin-top:4px">Daily totals vs target</div><div id="nut-bars"></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn active" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
-</div>
-
-<!-- WEEKLY REVIEW -->
-<div class="screen" id="s-review">
-  <div class="a-hdr"><h2>Weekly review</h2><span style="font-size:13px;color:#9ca3af" id="review-week-pill">—</span></div>
-  <div class="content review-flow">
-    <p class="review-lead" id="review-lead">Arc learns from what you log, skip, replace, and how you shop—so plans fit real life over time.</p>
-    <div class="review-block">
-      <div class="review-block-h">Insights</div>
-      <div class="review-card" id="review-insights"><div style="font-size:14px;color:var(--arc-subtext)">Tap <strong style="color:var(--arc-text)">Update insights</strong> to analyze this Mon–Sun week.</div></div>
-    </div>
-    <div class="review-block">
-      <div class="review-block-h">Adaptive focus</div>
-      <div class="review-card" id="review-adaptations"><div style="font-size:14px;color:var(--arc-subtext)">Adjustments appear here after each update—they shape future AI recipes and week plans.</div></div>
-    </div>
-    <button type="button" class="btn-green" id="review-refresh-btn">Update insights</button>
-    <button type="button" class="btn-outline" id="review-recap-btn">Weekly recap</button>
-    <p class="review-foot" id="review-foot-note">Based on your planner, meal journal, recipe likes, and shopping check-offs.</p>
-  </div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn active" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn active" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- SHOPPING -->
@@ -934,7 +918,7 @@ button:active{transform:scale(var(--press-scale))}
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:8px;line-height:1.5;display:none" id="price-disc">* Prices are ballpark retail units for your region — real receipts will vary by brand and store.</p>
     <div id="shop-body"></div>
   </div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn active" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn active" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- LOG -->
@@ -942,7 +926,7 @@ button:active{transform:scale(var(--press-scale))}
   <div class="a-hdr"><h2>Food log</h2></div>
   <div class="content" id="log-content"><div class="slbl" style="margin-bottom:14px">Tell the AI what you ate today</div><div class="chat-body" id="chat-body"></div></div>
   <div class="chat-bar"><input type="text" id="log-inp" placeholder="e.g. I had a burger and fries..."/><button class="chat-send" id="log-send">→</button></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('review')"><span class="nic">✨</span>Review</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn active" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn active" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
 <!-- ASSIGN MODAL -->
@@ -1061,6 +1045,19 @@ button:active{transform:scale(var(--press-scale))}
           <span class="sc" data-v="6">6</span>
         </div>
       </div>
+    </div>
+
+    <!-- ARC INTELLIGENCE (insights + recap entry) -->
+    <div class="settings-sec">
+      <div class="settings-sec-title">✨ Arc intelligence</div>
+      <p class="settings-arc-lead">Quiet notes from your week—nothing to “fix,” just context for plans and recipes.</p>
+      <div class="settings-sec-title" style="margin-top:4px;font-size:9px">This week</div>
+      <div id="s-arc-insights-preview" class="settings-arc-preview"></div>
+      <div class="settings-sec-title" style="margin-top:12px;font-size:9px">Adaptive focus</div>
+      <div id="s-arc-adapt-preview" class="settings-arc-preview"></div>
+      <button type="button" class="btn-green" id="s-arc-refresh-btn" style="width:100%;margin-top:12px;border-radius:14px;padding:12px;font-size:14px">Refresh insights</button>
+      <button type="button" class="btn-outline" id="s-arc-recap-btn" style="width:100%;margin-top:10px;border-radius:14px;padding:12px;font-size:14px">This week’s recap</button>
+      <p class="settings-arc-foot" id="s-arc-foot"></p>
     </div>
 
     <!-- FOOD PREFERENCES -->
@@ -1784,8 +1781,8 @@ function runWeeklyReviewAndPersist() {
   UP.weeklyReviewHistory.push({ weekKey: metrics.weekKey, at: UP.lastWeeklyReview.generatedAt, mealsLogged: metrics.mealsLogged });
   if (UP.weeklyReviewHistory.length > 10) UP.weeklyReviewHistory = UP.weeklyReviewHistory.slice(-10);
   saveUserProfile();
-  renderWeeklyReviewScreen();
-  showToast('Weekly review saved');
+  refreshArcInsightsUI();
+  showToast('Insights refreshed');
 }
 
 function buildAdaptiveBehaviorPromptBlock() {
@@ -1818,41 +1815,45 @@ function buildAdaptiveBehaviorPromptBlock() {
   return out;
 }
 
-function renderWeeklyReviewScreen() {
-  if (!el('review-insights')) return;
+function refreshArcInsightsUI() {
   applySafeProfileDefaults(UP);
   ensureArcAdaptive(UP);
-  var pill = el('review-week-pill');
-  if (pill) pill.textContent = 'Week of ' + plannerWeekKey(new Date());
-
   var snap = UP.lastWeeklyReview;
-  var insHtml = '';
-  if (snap && Array.isArray(snap.insights) && snap.insights.length) {
-    for (var i = 0; i < snap.insights.length; i++) {
-      insHtml += '<div class="review-line">' + shopEsc(snap.insights[i]) + '</div>';
+  var insEl = el('s-arc-insights-preview');
+  if (insEl) {
+    var insHtml = '';
+    if (snap && Array.isArray(snap.insights) && snap.insights.length) {
+      for (var i = 0; i < snap.insights.length; i++) {
+        insHtml += '<div class="settings-arc-line">' + shopEsc(snap.insights[i]) + '</div>';
+      }
+    } else {
+      insHtml = '<div class="settings-arc-muted">Refresh once to summarize this Mon–Sun week from your logs, swaps, and likes.</div>';
     }
-  } else {
-    insHtml = '<div style="font-size:14px;color:var(--arc-subtext)">Tap <strong style="color:var(--arc-text)">Update insights</strong> to generate this week’s summary.</div>';
+    insEl.innerHTML = insHtml;
   }
-  el('review-insights').innerHTML = insHtml;
-
-  var adHtml = '';
-  if (snap && Array.isArray(snap.adjustments) && snap.adjustments.length) {
-    for (var j = 0; j < snap.adjustments.length; j++) {
-      var it = snap.adjustments[j];
-      adHtml += '<div class="review-adapt"><strong>' + shopEsc(it.title || '') + '</strong>';
-      if (it.body) adHtml += ' — ' + shopEsc(it.body);
-      adHtml += '</div>';
+  var adEl = el('s-arc-adapt-preview');
+  if (adEl) {
+    var adHtml = '';
+    if (snap && Array.isArray(snap.adjustments) && snap.adjustments.length) {
+      for (var j = 0; j < snap.adjustments.length; j++) {
+        var it = snap.adjustments[j];
+        adHtml += '<div class="settings-arc-adapt"><strong>' + shopEsc(it.title || '') + '</strong>';
+        if (it.body) adHtml += '<span class="settings-arc-adapt-sub"> — ' + shopEsc(it.body) + '</span>';
+        adHtml += '</div>';
+      }
+    } else {
+      adHtml = '<div class="settings-arc-muted">Adaptive focus lines appear after your first refresh.</div>';
     }
-  } else {
-    adHtml = '<div style="font-size:14px;color:var(--arc-subtext)">Adaptive cues from your behavior will appear after the first update.</div>';
+    adEl.innerHTML = adHtml;
   }
-  el('review-adaptations').innerHTML = adHtml;
-
-  var foot = el('review-foot-note');
-  if (foot && UP.arcAdaptive && UP.arcAdaptive.lastReviewAt) {
-    var dt = new Date(UP.arcAdaptive.lastReviewAt);
-    foot.textContent = 'Last model refresh: ' + dt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) + ' · Feeds recipe + week-plan AI prompts.';
+  var foot = el('s-arc-foot');
+  if (foot) {
+    if (UP.arcAdaptive && UP.arcAdaptive.lastReviewAt) {
+      var dt = new Date(UP.arcAdaptive.lastReviewAt);
+      foot.textContent = 'Last refresh: ' + dt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) + ' · quietly shapes recipes and week plans.';
+    } else {
+      foot.textContent = '';
+    }
   }
 }
 
@@ -2532,10 +2533,11 @@ function closeMotion(id, afterClose) {
 }
 
 function tab(t) {
-  var map  = {today:'s-today',recipes:'s-recipes',planner:'s-planner',nutrition:'s-nutrition',review:'s-review',shopping:'s-shopping',log:'s-log'};
+  if (t === 'review') t = 'today';
+  var map  = {today:'s-today',recipes:'s-recipes',planner:'s-planner',nutrition:'s-nutrition',shopping:'s-shopping',log:'s-log'};
   var sid  = map[t];
   if (!sid) return;
-  var keys = ['today','recipes','planner','nutrition','review','shopping','log'];
+  var keys = ['today','recipes','planner','nutrition','shopping','log'];
   var nextIdx = keys.indexOf(t);
   var curIdx  = keys.indexOf(currentTab);
   var dir = (curIdx !== -1 && nextIdx < curIdx) ? 'back' : 'forward';
@@ -2545,7 +2547,6 @@ function tab(t) {
     renderToday();
     scheduleWeeklyRecapAutoCheck();
   }
-  if (t === 'review') renderWeeklyReviewScreen();
   var btns = document.querySelectorAll('.nbtn');
   for (var i = 0; i < btns.length; i++) {
     if (keys[i % keys.length] === t) btns[i].classList.add('active');
@@ -2775,6 +2776,45 @@ function adaptiveTodayCoach(day, focusSlot, slots, consumed, planned, calTarget,
   return 'Log meals as you eat them so Arc stays honest — planned food is only a forecast until you confirm.';
 }
 
+/** Short, calm lines for Today — max 3, ambient tone (uses arcAdaptive + light same-day context). */
+function buildTodayAmbientInsightLines(ctx) {
+  ctx = ctx || {};
+  applySafeProfileDefaults(UP);
+  ensureArcAdaptive(UP);
+  var a = UP.arcAdaptive;
+  var calTarget = ctx.calTarget || getCalTarget();
+  var consumed = ctx.consumed || { cal: 0 };
+  var lines = [];
+
+  if (calTarget > 0 && consumed.cal > calTarget * 0.9) {
+    lines.push('Today is running a touch above your logged target—Arc leans toward lighter options ahead.');
+  }
+
+  if (a.highProteinCompliance === 'high') {
+    lines.push('You have been consistent with protein this week—steady, kind momentum.');
+  } else if (a.highProteinCompliance === 'medium' && lines.length < 3) {
+    lines.push('Protein has been close enough most days—small nudges, no pressure.');
+  }
+
+  if (a.skipsBreakfastOften && lines.length < 3) {
+    lines.push('Faster breakfast options surface when mornings feel full.');
+  }
+  if ((a.prefersQuickMeals || a.prefersQuickLunches) && lines.length < 3) {
+    lines.push('Quicker meals are weighted a little higher for busy stretches.');
+  }
+  if (a.prefersLowerComplexity && lines.length < 3) {
+    lines.push('Simpler recipes get a gentle bias when you want less kitchen effort.');
+  }
+  if (a.reduceGroceryVarietySuggest && lines.length < 3) {
+    lines.push('Shopping lists reuse ingredients a bit more—fewer one-off items.');
+  }
+
+  if (lines.length < 3 && a.lastReviewAt) {
+    lines.push('Your latest refresh is folded into new plans—quietly, in the background.');
+  }
+  return lines.slice(0, 3);
+}
+
 function regenerateTodayPlan() {
   if (selectedRecipes.size === 0) { showToast('Select recipes first.'); return; }
   var slots = getSlots();
@@ -2950,6 +2990,23 @@ function renderToday() {
   var tl = el('today-timeline');
   if (tl) {
     tl.innerHTML = slots.length ? buildTodayTimelineHtml(day, slots, heroSlot) : '';
+  }
+
+  var arcStrip = el('today-arc-strip');
+  var arcCards = el('today-arc-cards');
+  if (arcStrip && arcCards) {
+    var arcLines = buildTodayAmbientInsightLines({ consumed: consumed, calTarget: calTarget });
+    if (!arcLines.length) {
+      arcStrip.style.display = 'none';
+      arcCards.innerHTML = '';
+    } else {
+      arcStrip.style.display = 'block';
+      var arcH = '';
+      for (var ax = 0; ax < arcLines.length; ax++) {
+        arcH += '<div class="today-arc-card">' + shopEsc(arcLines[ax]) + '</div>';
+      }
+      arcCards.innerHTML = arcH;
+    }
   }
 
   updateWeekRecapNudgeUI();
@@ -4964,6 +5021,7 @@ function openSettings() {
 
   // Refresh targets panel
   renderSettingsTargets();
+  refreshArcInsightsUI();
   renderPastRecapsList();
 
   // Wire chip clicks (re-wire each time to avoid duplicates)
@@ -5232,10 +5290,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   el('today-regen-btn').addEventListener('click', regenerateTodayPlan);
 
-  var reviewRefresh = el('review-refresh-btn');
-  if (reviewRefresh) reviewRefresh.addEventListener('click', runWeeklyReviewAndPersist);
-  var reviewRecap = el('review-recap-btn');
-  if (reviewRecap) reviewRecap.addEventListener('click', function() { openWeeklyRecap({ source: 'manual' }); });
+  var arcRefresh = el('s-arc-refresh-btn');
+  if (arcRefresh) arcRefresh.addEventListener('click', runWeeklyReviewAndPersist);
+  var arcRecap = el('s-arc-recap-btn');
+  if (arcRecap) arcRecap.addEventListener('click', function() { openWeeklyRecap({ source: 'manual' }); });
   var nudgeOpen = el('week-recap-nudge-btn');
   if (nudgeOpen) {
     nudgeOpen.addEventListener('click', function() {
