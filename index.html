@@ -281,6 +281,20 @@ body{
 #review-refresh-btn{margin-top:8px;border-radius:16px!important;padding:14px 18px!important;font-size:15px!important}
 #review-recap-btn{margin-top:10px;width:100%;border-radius:16px;padding:14px 18px;font-size:15px;font-weight:600;cursor:pointer;border:1px solid rgba(31,31,31,.12);background:rgba(255,255,255,.65);color:var(--arc-text);transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
 #review-recap-btn:hover{background:#fff;border-color:rgba(31,31,31,.18)}
+.week-recap-nudge{margin:0 0 16px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(31,31,31,.03));border:1px solid rgba(31,31,31,.08);box-shadow:var(--shadow-xs)}
+.week-recap-nudge-inner{display:flex;align-items:flex-start;gap:12px}
+.week-recap-nudge-ic{font-size:22px;line-height:1;flex-shrink:0;opacity:.9}
+.week-recap-nudge-t{font-size:14px;font-weight:650;color:var(--arc-text);font-family:Georgia,serif;margin-bottom:4px;letter-spacing:-.02em}
+.week-recap-nudge-s{font-size:13px;color:var(--arc-subtext);line-height:1.45;margin-bottom:10px}
+.week-recap-nudge-btn{width:100%;padding:11px 14px;border-radius:12px;border:1px solid rgba(227,90,54,.35);background:#fff;color:var(--arc-primary-dark);font-size:13px;font-weight:600;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
+.week-recap-nudge-btn:hover{background:rgba(227,90,54,.06);border-color:rgba(227,90,54,.5)}
+.past-recap-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--arc-divider)}
+.past-recap-row:last-child{border-bottom:none;padding-bottom:4px}
+.past-recap-meta{font-size:13px;color:var(--arc-text);font-weight:600}
+.past-recap-sub{font-size:12px;color:var(--arc-subtext);margin-top:2px}
+.past-recap-open{flex-shrink:0;padding:8px 14px;border-radius:12px;border:1px solid rgba(31,31,31,.12);background:var(--arc-surface-2);font-size:12px;font-weight:600;cursor:pointer;color:var(--arc-text)}
+.past-recap-open:hover{background:var(--arc-soft-primary)}
+.settings-past-empty{font-size:13px;color:var(--arc-subtext);line-height:1.45}
 /* Weekly recap — full-screen moment inside app frame */
 .recap-overlay{position:absolute;inset:0;z-index:90;border-radius:28px;overflow:hidden;display:none;flex-direction:column;background:#1a1614;color:rgba(255,255,255,.92)}
 .recap-overlay.is-open{display:flex}
@@ -782,6 +796,16 @@ button:active{transform:scale(var(--press-scale))}
 <div class="screen" id="s-today">
   <div class="a-hdr"><h2>Today</h2><span style="font-size:13px;color:#9ca3af" id="today-date">—</span></div>
   <div class="content today-flow">
+    <div class="week-recap-nudge" id="week-recap-nudge" style="display:none" role="region" aria-label="Week recap">
+      <div class="week-recap-nudge-inner">
+        <span class="week-recap-nudge-ic" aria-hidden="true">✨</span>
+        <div style="flex:1;min-width:0">
+          <div class="week-recap-nudge-t" id="week-recap-nudge-title">Week recap available</div>
+          <p class="week-recap-nudge-s" id="week-recap-nudge-sub">Your gentle summary is ready whenever you want it.</p>
+          <button type="button" class="week-recap-nudge-btn" id="week-recap-nudge-btn">Open recap</button>
+        </div>
+      </div>
+    </div>
     <section class="today-hero">
       <p class="today-kicker" id="today-slot">Current meal</p>
       <div id="today-meal-wrap"></div>
@@ -1094,6 +1118,13 @@ button:active{transform:scale(var(--press-scale))}
     <div class="settings-sec">
       <div class="settings-sec-title">📊 Your Current Targets</div>
       <div id="s-targets"></div>
+    </div>
+
+    <!-- PAST WEEKLY RECAPS -->
+    <div class="settings-sec">
+      <div class="settings-sec-title">📚 Past recaps</div>
+      <p style="font-size:13px;color:var(--arc-subtext);line-height:1.45;margin:-4px 0 12px">Revisit any saved weekly recap—same calm story, on your time.</p>
+      <div id="past-recaps-list"></div>
     </div>
 
   </div><!-- /settings-body -->
@@ -1471,6 +1502,54 @@ function plannerWeekKey(d) {
   return m.getFullYear() + '-' + pad2(m.getMonth() + 1) + '-' + pad2(m.getDate());
 }
 
+/** Sunday 18:00+ or Monday (local): weekly recap auto window for the Mon–Sun block that just closed. */
+function isWeeklyRecapAutoWindow(d) {
+  d = d || new Date();
+  var dow = d.getDay();
+  if (dow === 1) return true;
+  if (dow === 0 && d.getHours() >= 18) return true;
+  return false;
+}
+
+/** Monday of the calendar week being recapped (Mon after a Sunday; previous Mon when today is Monday). */
+function getRecapAnchorMonday(d) {
+  d = d ? new Date(d.getTime()) : new Date();
+  var mon = mondayOfWeekContaining(d);
+  if (d.getDay() === 1) mon.setDate(mon.getDate() - 7);
+  return mon;
+}
+
+function getEligibleAutoRecapWeekKey(d) {
+  if (!isWeeklyRecapAutoWindow(d)) return null;
+  return plannerWeekKey(getRecapAnchorMonday(d || new Date()));
+}
+
+function defaultArcWeeklyRecap() {
+  return {
+    lastShownWeek: null,
+    lastAutoRecapWeekKey: null,
+    recapTouchedOfferWeekKey: null,
+    weeklyRecaps: []
+  };
+}
+
+function ensureArcWeeklyRecap(p) {
+  p = p || UP;
+  if (!p.arcWeeklyRecap || typeof p.arcWeeklyRecap !== 'object') p.arcWeeklyRecap = defaultArcWeeklyRecap();
+  var d = defaultArcWeeklyRecap();
+  for (var k in d) {
+    if (Object.prototype.hasOwnProperty.call(d, k) && p.arcWeeklyRecap[k] == null) p.arcWeeklyRecap[k] = d[k];
+  }
+  if (!Array.isArray(p.arcWeeklyRecap.weeklyRecaps)) p.arcWeeklyRecap.weeklyRecaps = [];
+}
+
+/** Anchor for manual recap: same Mon-boundary rules as auto on Sun/Mon; otherwise current planner week. */
+function getDefaultRecapAnchorMonday() {
+  var now = new Date();
+  if (isWeeklyRecapAutoWindow(now)) return getRecapAnchorMonday(now);
+  return mondayOfWeekContaining(now);
+}
+
 function parseRecipeMinutesFromString(t) {
   var m = String(t || '').match(/(\d+)\s*min/i);
   return m ? parseInt(m[1], 10) : 35;
@@ -1520,12 +1599,14 @@ function ensureArcAdaptive(p) {
   if (!Array.isArray(p.arcAdaptive.favoriteMealNames)) p.arcAdaptive.favoriteMealNames = [];
 }
 
-function computeWeeklyReviewMetrics() {
+function computeWeeklyReviewMetrics(anchorMonday) {
   var slots = getSlots();
   var calTarget = getCalTarget();
   var macros = UP.macros || getMacroTargets(calTarget);
   var protT = Number(macros.protein) || 0;
-  var weekKey = plannerWeekKey(new Date());
+  var anchor = anchorMonday ? new Date(anchorMonday.getTime()) : mondayOfWeekContaining(new Date());
+  anchor.setHours(0, 0, 0, 0);
+  var weekKey = plannerWeekKey(anchor);
 
   var out = {
     weekKey: weekKey,
@@ -1777,7 +1858,15 @@ function renderWeeklyReviewScreen() {
 
 // ── Weekly recap (emotional full-screen, 5 slides) ────────────
 var recapAnimTimers = [];
-var recapSession = { slides: [], idx: 0 };
+var weekRecapAutoTimer = null;
+var recapSession = {
+  slides: [],
+  idx: 0,
+  weekId: null,
+  lastPayload: null,
+  source: 'manual',
+  persistedThisOpen: false
+};
 
 function clearRecapTimers() {
   for (var i = 0; i < recapAnimTimers.length; i++) clearTimeout(recapAnimTimers[i]);
@@ -1854,15 +1943,17 @@ function buildRecapNextWeekLine(a) {
   return 'Next week Arc keeps the same calm presence—listening, not pushing.';
 }
 
-function buildWeeklyRecapPayload() {
+function buildWeeklyRecapPayload(anchorMonday) {
   applySafeProfileDefaults(UP);
   ensureArcAdaptive(UP);
-  var m = computeWeeklyReviewMetrics();
+  var mon = anchorMonday ? new Date(anchorMonday.getTime()) : getDefaultRecapAnchorMonday();
+  mon.setHours(0, 0, 0, 0);
+  var m = computeWeeklyReviewMetrics(mon);
   var a = UP.arcAdaptive;
-  var mon = mondayOfWeekContaining(new Date());
   var sun = new Date(mon.getTime());
   sun.setDate(sun.getDate() + 6);
   var weekLabel = mon.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' – ' + sun.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  var weekId = plannerWeekKey(mon);
   var presence = weekPresenceDaysCount();
   var run = longestLoggedDayRunThisWeek();
   var streakVal = run >= 2 ? run : presence;
@@ -1880,7 +1971,9 @@ function buildWeeklyRecapPayload() {
   var learned = buildRecapLearnedLines(m);
   var nextW = buildRecapNextWeekLine(a);
   return {
+    weekId: weekId,
     weekLabel: weekLabel,
+    favoriteMealName: favName || '',
     totalTrackedMeals: totalTracked,
     consistencyScore: score,
     dayStreakOrRun: streakVal,
@@ -1979,7 +2072,21 @@ function mountRecapSlide() {
 
 function advanceWeeklyRecap() {
   if (recapSession.idx >= recapSession.slides.length - 1) {
-    closeWeeklyRecap();
+    finalizeRecapSessionIfNeeded(true);
+    clearRecapTimers();
+    var ovDone = el('recap-overlay');
+    if (ovDone) {
+      ovDone.classList.remove('is-open');
+      ovDone.setAttribute('aria-hidden', 'true');
+    }
+    recapSession.slides = [];
+    recapSession.idx = 0;
+    recapSession.weekId = null;
+    recapSession.lastPayload = null;
+    recapSession.source = 'manual';
+    recapSession.persistedThisOpen = false;
+    var stageDone = el('recap-stage');
+    if (stageDone) stageDone.innerHTML = '';
     return;
   }
   var stage = el('recap-stage');
@@ -1992,28 +2099,269 @@ function advanceWeeklyRecap() {
   }, 300));
 }
 
-function openWeeklyRecap() {
+function payloadFromWeeklyRecapHistory(entry) {
+  if (!entry || typeof entry !== 'object') return null;
+  var learned = Array.isArray(entry.insights) ? entry.insights.slice() : [];
+  var fav = entry.favoriteMeal || '';
+  var metrics = null;
+  if (entry.proteinDays != null && isFinite(Number(entry.proteinDays))) {
+    var pd = Math.max(0, Math.min(7, Math.round(Number(entry.proteinDays))));
+    metrics = { proteinShortDays: Math.max(0, 7 - pd) };
+  }
+  return {
+    weekId: entry.weekId,
+    weekLabel: entry.weekLabel || '',
+    favoriteMealName: fav,
+    totalTrackedMeals: entry.totalTrackedMeals != null ? entry.totalTrackedMeals : 0,
+    consistencyScore: entry.consistencyScore != null ? entry.consistencyScore : 0,
+    dayStreakOrRun: entry.dayStreakOrRun != null ? entry.dayStreakOrRun : 0,
+    streakLabel: entry.streakLabel || 'Days you touched',
+    proteinLine: entry.proteinLine || '',
+    favoriteLine: entry.favoriteLine || (fav ? ('A stand-out this week: ' + fav + '.') : ''),
+    favoriteSub: entry.favoriteSub || '',
+    savingsUsd: entry.savingsUsd != null ? entry.savingsUsd : 0,
+    learned: learned,
+    nextWeek: entry.adaptations || '',
+    metrics: metrics
+  };
+}
+
+function buildWeeklyRecapHistoryEntry(payload, flags) {
+  flags = flags || {};
+  var protShort = payload.metrics && payload.metrics.proteinShortDays != null ? payload.metrics.proteinShortDays : 0;
+  var protDays = Math.max(0, 7 - protShort);
+  return {
+    weekId: payload.weekId,
+    weekLabel: payload.weekLabel,
+    consistencyScore: payload.consistencyScore,
+    proteinDays: protDays,
+    favoriteMeal: payload.favoriteMealName || '',
+    insights: Array.isArray(payload.learned) ? payload.learned.slice(0, 6) : [],
+    adaptations: payload.nextWeek || '',
+    totalTrackedMeals: payload.totalTrackedMeals,
+    dayStreakOrRun: payload.dayStreakOrRun,
+    streakLabel: payload.streakLabel,
+    proteinLine: payload.proteinLine,
+    favoriteLine: payload.favoriteLine,
+    favoriteSub: payload.favoriteSub,
+    savingsUsd: payload.savingsUsd,
+    savedAt: new Date().toISOString(),
+    completedView: !!flags.completedView,
+    dismissedMidFlow: !!flags.dismissedMidFlow
+  };
+}
+
+function upsertWeeklyRecapHistory(entry) {
+  ensureArcWeeklyRecap(UP);
+  var arr = UP.arcWeeklyRecap.weeklyRecaps;
+  var next = [];
+  var replaced = false;
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].weekId === entry.weekId) {
+      if (!replaced) {
+        var prev = arr[i];
+        if (prev.completedView) {
+          entry.completedView = true;
+          entry.dismissedMidFlow = false;
+        }
+        next.push(entry);
+        replaced = true;
+      }
+    } else next.push(arr[i]);
+  }
+  if (!replaced) next.push(entry);
+  next.sort(function(a, b) { return String(b.weekId).localeCompare(String(a.weekId)); });
+  if (next.length > 24) next = next.slice(0, 24);
+  UP.arcWeeklyRecap.weeklyRecaps = next;
+}
+
+function finalizeRecapSessionIfNeeded(completedAllSlides) {
+  if (!recapSession.weekId || !recapSession.lastPayload) return;
+  if (recapSession.persistedThisOpen) return;
+  recapSession.persistedThisOpen = true;
+  var entry = buildWeeklyRecapHistoryEntry(recapSession.lastPayload, {
+    completedView: completedAllSlides,
+    dismissedMidFlow: !completedAllSlides
+  });
+  upsertWeeklyRecapHistory(entry);
+  saveUserProfile();
+  updateWeekRecapNudgeUI();
+  renderPastRecapsList();
+}
+
+function isArcFlowBlockingAutoRecap() {
+  if (el('ob') && el('ob').classList.contains('active')) return true;
+  if (el('s-welcome') && el('s-welcome').classList.contains('active')) return true;
+  if (el('s-gen') && el('s-gen').classList.contains('active')) return true;
+  var ids = ['settings-overlay', 'assign-modal', 'rm-bg', 'swap-bg', 'adapt-bg', 'ai-overlay', 'loc-modal'];
+  for (var bi = 0; bi < ids.length; bi++) {
+    var n = el(ids[bi]);
+    if (n && n.classList.contains('is-open')) return true;
+  }
+  return false;
+}
+
+function hasMinimalWeekDataForAutoRecap() {
+  var a = getDefaultRecapAnchorMonday();
+  var m = computeWeeklyReviewMetrics(a);
+  var sum = m.mealsLogged + m.mealsSkipped + m.mealsReplaced;
+  if (sum >= 1) return true;
+  if (weekPresenceDaysCount() >= 1) return true;
+  if (m.shopCheckedCount >= 1) return true;
+  if (m.likedRecipeNames && m.likedRecipeNames.length) return true;
+  return false;
+}
+
+function maybeAutoOpenWeeklyRecap() {
+  var offer = getEligibleAutoRecapWeekKey(new Date());
+  if (!offer) return;
+  applySafeProfileDefaults(UP);
+  ensureArcWeeklyRecap(UP);
+  if (UP.arcWeeklyRecap.lastAutoRecapWeekKey === offer || UP.arcWeeklyRecap.recapTouchedOfferWeekKey === offer) return;
+  var v = validateUserProfile(UP);
+  if (!v.ok) return;
+  if (!recipes.length) return;
+  if (currentTab !== 'today') return;
+  if (isArcFlowBlockingAutoRecap()) return;
+  if (!hasMinimalWeekDataForAutoRecap()) return;
+  var ov0 = el('recap-overlay');
+  if (ov0 && ov0.classList.contains('is-open')) return;
+  var anchor = getRecapAnchorMonday(new Date());
+  openWeeklyRecap({ source: 'auto', anchorMonday: anchor, weekIdOverride: offer });
+}
+
+function scheduleWeeklyRecapAutoCheck() {
+  if (weekRecapAutoTimer) clearTimeout(weekRecapAutoTimer);
+  weekRecapAutoTimer = setTimeout(function() {
+    weekRecapAutoTimer = null;
+    try { maybeAutoOpenWeeklyRecap(); } catch (e) {}
+  }, 1600);
+}
+
+function updateWeekRecapNudgeUI() {
+  var box = el('week-recap-nudge');
+  if (!box) return;
+  applySafeProfileDefaults(UP);
+  ensureArcWeeklyRecap(UP);
+  var offer = getEligibleAutoRecapWeekKey(new Date());
+  var show = !!(offer && UP.arcWeeklyRecap.lastAutoRecapWeekKey === offer);
+  box.style.display = show ? 'block' : 'none';
+  if (!show) return;
+  var hist = UP.arcWeeklyRecap.weeklyRecaps;
+  var cur = null;
+  for (var hi = 0; hi < hist.length; hi++) {
+    if (hist[hi].weekId === offer) { cur = hist[hi]; break; }
+  }
+  var sub = el('week-recap-nudge-sub');
+  if (sub) {
+    if (cur && cur.completedView) sub.textContent = 'You have already taken this arc in—open again anytime for the same gentle highlights.';
+    else sub.textContent = 'Whenever you are ready, the full recap is a tap away—no rush, no guilt.';
+  }
+}
+
+function renderPastRecapsList() {
+  var wrap = el('past-recaps-list');
+  if (!wrap) return;
+  applySafeProfileDefaults(UP);
+  ensureArcWeeklyRecap(UP);
+  var arr = UP.arcWeeklyRecap.weeklyRecaps || [];
+  if (!arr.length) {
+    wrap.innerHTML = '<p class="settings-past-empty">No saved recaps yet. After each weekly moment, Arc stores a soft copy here for you.</p>';
+    return;
+  }
+  var html = '';
+  for (var pi = 0; pi < arr.length; pi++) {
+    var it = arr[pi];
+    var lbl = shopEsc(it.weekLabel || it.weekId || 'Week');
+    var sub = it.completedView ? 'Viewed' : (it.dismissedMidFlow ? 'Saved · pick up anytime' : 'Saved');
+    html += '<div class="past-recap-row"><div><div class="past-recap-meta">' + lbl + '</div><div class="past-recap-sub">' + shopEsc(sub) + '</div></div>';
+    html += '<button type="button" class="past-recap-open" data-recap-week="' + shopEsc(it.weekId) + '">Open</button></div>';
+  }
+  wrap.innerHTML = html;
+  var btns = wrap.querySelectorAll('.past-recap-open');
+  for (var bj = 0; bj < btns.length; bj++) {
+    btns[bj].onclick = function() {
+      var wk = this.getAttribute('data-recap-week');
+      openWeeklyRecapFromHistory(wk);
+      closeSettings();
+    };
+  }
+}
+
+function openWeeklyRecapFromHistory(weekId) {
+  if (!weekId) return;
+  applySafeProfileDefaults(UP);
+  ensureArcWeeklyRecap(UP);
+  var arr = UP.arcWeeklyRecap.weeklyRecaps || [];
+  var found = null;
+  for (var fi = 0; fi < arr.length; fi++) {
+    if (arr[fi].weekId === weekId) { found = arr[fi]; break; }
+  }
+  if (!found) { showToast('That recap is not in memory anymore.'); return; }
+  var payload = payloadFromWeeklyRecapHistory(found);
+  openWeeklyRecap({ source: 'history', replayPayload: payload, weekIdOverride: weekId });
+}
+
+function openWeeklyRecap(opts) {
+  opts = opts || {};
   var ov = el('recap-overlay');
   if (!ov) return;
   clearRecapTimers();
-  var payload = buildWeeklyRecapPayload();
+  var payload;
+  if (opts.replayPayload) {
+    payload = opts.replayPayload;
+    if (!payload.weekId && opts.weekIdOverride) payload.weekId = opts.weekIdOverride;
+  } else {
+    var anchor = opts.anchorMonday || getDefaultRecapAnchorMonday();
+    payload = buildWeeklyRecapPayload(anchor);
+  }
+  if (opts.weekIdOverride) payload.weekId = opts.weekIdOverride;
+
   recapSession.slides = buildWeeklyRecapSlidesFromPayload(payload);
   recapSession.idx = 0;
+  recapSession.weekId = payload.weekId || null;
+  recapSession.lastPayload = payload;
+  recapSession.source = opts.source || 'manual';
+  recapSession.persistedThisOpen = false;
+
+  var offer = getEligibleAutoRecapWeekKey(new Date());
+  ensureArcWeeklyRecap(UP);
+  if (offer && payload.weekId === offer) {
+    if (opts.source === 'auto') {
+      UP.arcWeeklyRecap.lastAutoRecapWeekKey = payload.weekId;
+      UP.arcWeeklyRecap.lastShownWeek = payload.weekId;
+      UP.arcWeeklyRecap.recapTouchedOfferWeekKey = offer;
+      saveUserProfile();
+    } else if (opts.source === 'manual') {
+      UP.arcWeeklyRecap.recapTouchedOfferWeekKey = offer;
+      saveUserProfile();
+    }
+  }
+
   ov.classList.add('is-open');
   ov.setAttribute('aria-hidden', 'false');
   mountRecapSlide();
+  updateWeekRecapNudgeUI();
 }
 
 function closeWeeklyRecap() {
   var ov = el('recap-overlay');
   if (!ov) return;
+  if (ov.classList.contains('is-open') && recapSession.weekId && recapSession.lastPayload && !recapSession.persistedThisOpen) {
+    finalizeRecapSessionIfNeeded(false);
+  }
   clearRecapTimers();
   ov.classList.remove('is-open');
   ov.setAttribute('aria-hidden', 'true');
   recapSession.slides = [];
   recapSession.idx = 0;
+  recapSession.weekId = null;
+  recapSession.lastPayload = null;
+  recapSession.source = 'manual';
+  recapSession.persistedThisOpen = false;
   var stage = el('recap-stage');
   if (stage) stage.innerHTML = '';
+  updateWeekRecapNudgeUI();
 }
 
 function categoryTargetsFor(cat, mt) {
@@ -2193,7 +2541,10 @@ function tab(t) {
   var dir = (curIdx !== -1 && nextIdx < curIdx) ? 'back' : 'forward';
   showScreen(sid, dir);
   currentTab = t;
-  if (t === 'today') renderToday();
+  if (t === 'today') {
+    renderToday();
+    scheduleWeeklyRecapAutoCheck();
+  }
   if (t === 'review') renderWeeklyReviewScreen();
   var btns = document.querySelectorAll('.nbtn');
   for (var i = 0; i < btns.length; i++) {
@@ -2600,6 +2951,8 @@ function renderToday() {
   if (tl) {
     tl.innerHTML = slots.length ? buildTodayTimelineHtml(day, slots, heroSlot) : '';
   }
+
+  updateWeekRecapNudgeUI();
 }
 
 function applyTodayMealAction(act, day, slot) {
@@ -3184,6 +3537,7 @@ function applySafeProfileDefaults(p) {
   if (!p.mealFeedback || typeof p.mealFeedback !== 'object') p.mealFeedback = {};
 
   ensureArcAdaptive(p);
+  ensureArcWeeklyRecap(p);
 }
 
 /**
@@ -3371,6 +3725,7 @@ function generateRecipes() {
         renderShopping();
         tab('today');
         saveSessionState();
+        scheduleWeeklyRecapAutoCheck();
       }, 400);
     }, 600);
   }
@@ -4609,6 +4964,7 @@ function openSettings() {
 
   // Refresh targets panel
   renderSettingsTargets();
+  renderPastRecapsList();
 
   // Wire chip clicks (re-wire each time to avoid duplicates)
   wireSettingsChips();
@@ -4879,7 +5235,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var reviewRefresh = el('review-refresh-btn');
   if (reviewRefresh) reviewRefresh.addEventListener('click', runWeeklyReviewAndPersist);
   var reviewRecap = el('review-recap-btn');
-  if (reviewRecap) reviewRecap.addEventListener('click', openWeeklyRecap);
+  if (reviewRecap) reviewRecap.addEventListener('click', function() { openWeeklyRecap({ source: 'manual' }); });
+  var nudgeOpen = el('week-recap-nudge-btn');
+  if (nudgeOpen) {
+    nudgeOpen.addEventListener('click', function() {
+      var offer = getEligibleAutoRecapWeekKey(new Date());
+      if (offer) openWeeklyRecap({ source: 'manual', anchorMonday: getRecapAnchorMonday(new Date()), weekIdOverride: offer });
+      else openWeeklyRecap({ source: 'manual' });
+    });
+  }
   var recapDismiss = el('recap-dismiss');
   if (recapDismiss) recapDismiss.addEventListener('click', closeWeeklyRecap);
   var recapCta = el('recap-cta');
