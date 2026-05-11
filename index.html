@@ -509,6 +509,28 @@ body{
 .shop-have.on{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.22)}
 .shop-have:focus-visible{outline:2px solid var(--arc-primary);outline-offset:2px}
 
+/* GROCERY INTELLIGENCE — Kroger pricing UI */
+.kroger-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--arc-card-soft-strong);border-radius:var(--r-md);padding:12px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.kroger-bar.is-on{background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(227,90,54,.02))}
+.kroger-bar .kb-lead{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.kroger-dot{width:8px;height:8px;border-radius:50%;background:#c4bdb5;flex-shrink:0;transition:background var(--motion-fast) var(--ease-standard)}
+.kroger-bar.is-on .kroger-dot{background:#22a06b;box-shadow:0 0 0 3px rgba(34,160,107,.15)}
+.kroger-bar.is-loading .kroger-dot{background:var(--arc-primary);animation:krpulse 1.1s ease-in-out infinite}
+@keyframes krpulse{0%,100%{opacity:.4}50%{opacity:1}}
+.kb-title{font-size:13px;font-weight:700;color:var(--arc-text);line-height:1.3}
+.kb-sub{font-size:11.5px;color:var(--arc-subtext);line-height:1.35}
+.kb-actions{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.kb-zip-input{padding:7px 10px;border:1px solid rgba(31,31,31,.14);border-radius:8px;font-size:13px;font-family:inherit;background:#fff;width:84px;color:var(--arc-text);font-variant-numeric:tabular-nums}
+.kb-zip-input:focus{outline:none;border-color:var(--arc-primary);box-shadow:0 0 0 3px rgba(227,90,54,.15)}
+.kb-btn{padding:7px 12px;border-radius:8px;border:none;background:var(--arc-primary);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.01em;box-shadow:var(--shadow-primary);transition:background var(--motion-fast) var(--ease-standard)}
+.kb-btn:hover{background:var(--arc-primary-dark)}
+.kb-btn.ghost{background:transparent;color:var(--arc-subtext);box-shadow:none;font-weight:600}
+.kb-btn.ghost:hover{color:var(--arc-text)}
+.kb-btn:disabled{opacity:.55;cursor:not-allowed}
+.sname-row{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.kroger-badge{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#22a06b;padding:2px 6px;border-radius:4px;flex-shrink:0;line-height:1}
+.kroger-badge.dim{background:rgba(34,160,107,.14);color:#1a7d52}
+
 /* LOG */
 .chat-body{display:flex;flex-direction:column;gap:14px}
 .cu{text-align:right}.cu span{background:var(--arc-primary);color:#fff;font-size:14px;padding:11px 16px;border-radius:18px 18px 4px 18px;display:inline-block;max-width:85%;text-align:left;line-height:1.5;box-shadow:var(--shadow-sm)}
@@ -989,6 +1011,14 @@ button:active{transform:scale(var(--press-scale))}
   <div class="a-hdr"><h2>Shopping list</h2><span style="font-size:13px;color:#9ca3af" id="shop-count"></span></div>
   <div class="content">
     <div class="shop-total" id="shop-total" style="display:none"><div><div class="shop-total-lbl">Est. cart total (to buy)</div><div class="shop-total-val" id="shop-total-val">—</div></div><div style="text-align:right"><div class="shop-total-lbl">From your planner</div><div style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600" id="shop-rc">0 recipes</div></div></div>
+    <div class="kroger-bar" id="kroger-bar" style="display:none">
+      <div class="kb-lead"><span class="kroger-dot"></span><div><div class="kb-title" id="kb-title">Use real Kroger prices</div><div class="kb-sub" id="kb-sub">Enter a US ZIP to swap estimates for live store pricing</div></div></div>
+      <div class="kb-actions" id="kb-actions">
+        <input class="kb-zip-input" id="kb-zip" type="text" inputmode="numeric" maxlength="5" placeholder="ZIP" autocomplete="postal-code" />
+        <button class="kb-btn" id="kb-apply" type="button">Apply</button>
+        <button class="kb-btn ghost" id="kb-clear" type="button" style="display:none">Change</button>
+      </div>
+    </div>
     <p class="shop-intro" id="shop-intro" style="display:none">Items are grouped like a grocery run: we bundle recipe math into bags, cartons, pounds, and other sizes you actually buy.</p>
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:8px;line-height:1.5;display:none" id="price-disc">* Prices are ballpark retail units for your region — real receipts will vary by brand and store.</p>
     <div id="shop-body"></div>
@@ -5641,7 +5671,230 @@ function buildRealisticPurchaseLine(canonicalKey, displayName, qtys, uses) {
   return defaultPurchaseLine(canonicalKey, displayName, qtys, uses);
 }
 
+// ── Grocery Intelligence V1 — Kroger live pricing ─────────────
+var ARC_API_BASE = 'https://nutriai-backend-44mg.onrender.com';
+
+// canonicalKey -> { matched, priceEffective, priceRegular, pricePromo, name, brand, size, productId, image }
+// or null = looked up but no match. Lives for the page session only;
+// the backend keeps a 12h server-side cache for the underlying calls.
+var krogerPriceCache = {};
+var krogerPendingKeys = {};
+var krogerState = {
+  status: 'idle',       // idle | loading | on | error | unsupported
+  locationId: null,
+  locationName: '',
+  message: '',
+  hits: 0
+};
+var krogerControlsBound = false;
+
+function krogerIsEligibleRegion() {
+  return typeof UP.region === 'string' && UP.region.indexOf('us-') === 0;
+}
+
+function krogerSearchTermFor(line) {
+  // The display title (e.g. "Greek yogurt") is the cleanest search term we have.
+  return String(line.title || '').trim();
+}
+
+function renderKrogerBar() {
+  var bar = el('kroger-bar');
+  if (!bar) return;
+  var titleEl = el('kb-title');
+  var subEl = el('kb-sub');
+  var zipEl = el('kb-zip');
+  var applyBtn = el('kb-apply');
+  var clearBtn = el('kb-clear');
+  if (!krogerIsEligibleRegion()) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = 'flex';
+  bar.classList.remove('is-on', 'is-loading');
+
+  if (krogerState.status === 'on') {
+    bar.classList.add('is-on');
+    titleEl.textContent = 'Kroger prices active';
+    var sub = krogerState.locationName
+      ? 'Live pricing from ' + krogerState.locationName
+      : 'Live Kroger pricing';
+    if (krogerState.hits) sub += ' · ' + krogerState.hits + ' item' + (krogerState.hits === 1 ? '' : 's') + ' matched';
+    subEl.textContent = sub;
+    zipEl.style.display = 'none';
+    applyBtn.style.display = 'none';
+    clearBtn.style.display = 'inline-flex';
+  } else if (krogerState.status === 'loading') {
+    bar.classList.add('is-loading');
+    titleEl.textContent = 'Fetching Kroger prices…';
+    subEl.textContent = 'Matching your list against your local store';
+    zipEl.style.display = 'none';
+    applyBtn.style.display = 'none';
+    clearBtn.style.display = 'none';
+  } else if (krogerState.status === 'error') {
+    titleEl.textContent = 'Kroger pricing unavailable';
+    subEl.textContent = krogerState.message || 'Showing estimated prices instead.';
+    zipEl.style.display = 'inline-block';
+    applyBtn.style.display = 'inline-flex';
+    applyBtn.textContent = 'Retry';
+    clearBtn.style.display = 'none';
+  } else {
+    titleEl.textContent = 'Use real Kroger prices';
+    subEl.textContent = 'Enter a US ZIP to swap estimates for live store pricing';
+    zipEl.style.display = 'inline-block';
+    if (UP.krogerZip) zipEl.value = UP.krogerZip;
+    applyBtn.style.display = 'inline-flex';
+    applyBtn.textContent = 'Apply';
+    clearBtn.style.display = 'none';
+  }
+}
+
+function setupKrogerControls() {
+  if (krogerControlsBound) return;
+  var bar = el('kroger-bar');
+  if (!bar) return;
+  var zipEl = el('kb-zip');
+  var applyBtn = el('kb-apply');
+  var clearBtn = el('kb-clear');
+
+  zipEl.addEventListener('input', function() {
+    this.value = (this.value || '').replace(/\D/g, '').slice(0, 5);
+  });
+  zipEl.addEventListener('keydown', function(ev) {
+    if (ev.key === 'Enter') { ev.preventDefault(); applyBtn.click(); }
+  });
+
+  applyBtn.addEventListener('click', function() {
+    var zip = (zipEl.value || '').replace(/\D/g, '').slice(0, 5);
+    if (zip.length !== 5) {
+      krogerState.status = 'error';
+      krogerState.message = 'Enter a valid 5-digit US ZIP code.';
+      renderKrogerBar();
+      return;
+    }
+    UP.krogerZip = zip;
+    UP.krogerLocationId = null;
+    krogerPriceCache = {};
+    krogerPendingKeys = {};
+    krogerState = { status: 'loading', locationId: null, locationName: '', message: '', hits: 0 };
+    try { saveSessionState(); } catch (e) {}
+    renderKrogerBar();
+    renderShopping();
+  });
+
+  clearBtn.addEventListener('click', function() {
+    UP.krogerZip = '';
+    UP.krogerLocationId = null;
+    krogerPriceCache = {};
+    krogerPendingKeys = {};
+    krogerState = { status: 'idle', locationId: null, locationName: '', message: '', hits: 0 };
+    try { saveSessionState(); } catch (e) {}
+    renderKrogerBar();
+    renderShopping();
+  });
+
+  krogerControlsBound = true;
+}
+
+function applyKrogerToLines(lines) {
+  var hits = 0;
+  for (var i = 0; i < lines.length; i++) {
+    var L = lines[i];
+    var hit = krogerPriceCache[L.key];
+    if (hit && hit.priceEffective != null) {
+      L.priceUsd = hit.priceEffective;
+      L.source = 'kroger';
+      L.krogerName = hit.name || '';
+      L.krogerBrand = hit.brand || '';
+      L.krogerSize = hit.size || '';
+      hits++;
+    }
+  }
+  krogerState.hits = hits;
+  return hits;
+}
+
+function enrichShoppingWithKroger(lines) {
+  if (!krogerIsEligibleRegion()) return;
+  if (!UP.krogerZip) return;
+  if (!lines || !lines.length) return;
+
+  var toFetch = [];
+  for (var i = 0; i < lines.length; i++) {
+    var L = lines[i];
+    if (krogerPriceCache.hasOwnProperty(L.key)) continue;
+    if (krogerPendingKeys[L.key]) continue;
+    var term = krogerSearchTermFor(L);
+    if (!term) continue;
+    krogerPendingKeys[L.key] = true;
+    toFetch.push({ key: L.key, term: term });
+  }
+  if (!toFetch.length) {
+    if (krogerState.status === 'loading') {
+      krogerState.status = krogerState.hits > 0 ? 'on' : 'idle';
+      renderKrogerBar();
+    }
+    return;
+  }
+
+  if (krogerState.status !== 'on') krogerState.status = 'loading';
+  renderKrogerBar();
+
+  var body = { items: toFetch };
+  if (UP.krogerLocationId) body.locationId = UP.krogerLocationId;
+  else if (UP.krogerZip) body.zipCode = UP.krogerZip;
+
+  fetch(ARC_API_BASE + '/api/kroger/prices', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+  .then(function(resp) {
+    return resp.json().then(function(data) {
+      return { ok: resp.ok, status: resp.status, data: data };
+    }, function() {
+      return { ok: resp.ok, status: resp.status, data: {} };
+    });
+  })
+  .then(function(result) {
+    for (var k = 0; k < toFetch.length; k++) delete krogerPendingKeys[toFetch[k].key];
+
+    if (!result.ok) {
+      krogerState.status = 'error';
+      krogerState.message = (result.data && result.data.error) || 'Could not reach Kroger right now.';
+      renderKrogerBar();
+      return;
+    }
+
+    var data = result.data || {};
+    if (data.locationId) {
+      UP.krogerLocationId = data.locationId;
+      if (data.location && data.location.name) {
+        krogerState.locationName = data.location.name +
+          (data.location.address && data.location.address.city ? ' · ' + data.location.address.city : '');
+      }
+    }
+
+    var res = data.results || {};
+    for (var key in res) {
+      if (Object.prototype.hasOwnProperty.call(res, key)) {
+        krogerPriceCache[key] = res[key]; // null = unmatched
+      }
+    }
+
+    krogerState.status = 'on';
+    try { saveSessionState(); } catch (e) {}
+    renderShopping();
+  })
+  .catch(function(err) {
+    for (var k = 0; k < toFetch.length; k++) delete krogerPendingKeys[toFetch[k].key];
+    krogerState.status = 'error';
+    krogerState.message = (err && err.message) || 'Network error reaching Kroger.';
+    renderKrogerBar();
+  });
+}
+
 function renderShopping() {
+  setupKrogerControls();
   var agg = {};
   var plannedRecipeIds = {};
   var slots = getSlots();
@@ -5677,6 +5930,10 @@ function renderShopping() {
     lines.push(buildRealisticPurchaseLine(ky, entry.display, entry.qtys, entry.qtys.length));
   }
 
+  // Merge cached Kroger pricing into the lines before totals/render.
+  var krogerHits = applyKrogerToLines(lines);
+  renderKrogerBar();
+
   el('shop-count').textContent = lines.length ? lines.length + ' items' : '';
 
   if (!lines.length) {
@@ -5711,6 +5968,13 @@ function renderShopping() {
   el('shop-total').style.display  = 'flex';
   el('shop-intro').style.display = 'block';
   el('price-disc').style.display = 'block';
+  if (krogerHits > 0) {
+    el('price-disc').textContent = '* Live Kroger pricing for ' + krogerHits + ' of ' + lines.length +
+      ' items' + (krogerState.locationName ? ' at ' + krogerState.locationName : '') +
+      '. Remaining items use regional estimates; actual totals may vary by promotion.';
+  } else {
+    el('price-disc').textContent = '* Prices are ballpark retail units for your region — real receipts will vary by brand and store.';
+  }
   el('shop-total-val').textContent = fmtPrice(buyTotalUsd);
   var rcNote = plannedIds.length + ' recipe' + (plannedIds.length === 1 ? '' : 's');
   if (pantryN) rcNote += ' · ' + pantryN + ' at home';
@@ -5731,12 +5995,21 @@ function renderShopping() {
       var rowCls = 'sitem' + (atHome ? ' is-pantry' : '');
       var priceCls = 'sprice' + (isDone || atHome ? ' muted' : '');
       var priceLabel = (isDone || atHome) ? '—' : fmtPrice(row.priceUsd);
+      var nameBadge = '';
+      var noteText = row.note;
+      if (row.source === 'kroger') {
+        var badgeCls = 'kroger-badge' + ((isDone || atHome) ? ' dim' : '');
+        nameBadge = '<span class="' + badgeCls + '" title="Live Kroger pricing">K</span>';
+        var krogerDesc = [row.krogerBrand, row.krogerName].filter(Boolean).join(' ');
+        var sizeBit = row.krogerSize ? ' (' + row.krogerSize + ')' : '';
+        noteText = 'Kroger · ' + (krogerDesc || 'matched product') + sizeBit;
+      }
       html += '<div class="' + rowCls + '">';
       html += '<div class="scheck' + (isDone ? ' on' : '') + '" data-ing="' + shopDataAttr(id) + '" role="checkbox" aria-checked="' + (isDone ? 'true' : 'false') + '">' + (isDone ? '✓' : '') + '</div>';
       html += '<div class="sbody">';
-      html += '<div class="srow"><span class="sname' + (isDone ? ' done' : '') + '">' + shopEsc(row.title) + '</span><span class="' + priceCls + '">' + priceLabel + '</span></div>';
+      html += '<div class="srow"><span class="sname-row"><span class="sname' + (isDone ? ' done' : '') + '">' + shopEsc(row.title) + '</span>' + nameBadge + '</span><span class="' + priceCls + '">' + priceLabel + '</span></div>';
       html += '<div class="sqty' + (isDone ? ' done' : '') + '">' + shopEsc(row.purchase) + '</div>';
-      html += '<div class="snote">' + shopEsc(row.note) + '</div>';
+      html += '<div class="snote">' + shopEsc(noteText) + '</div>';
       html += '</div>';
       html += '<button type="button" class="shop-have' + (atHome ? ' on' : '') + '" data-ing="' + shopDataAttr(id) + '" aria-pressed="' + (atHome ? 'true' : 'false') + '" title="Mark if you already stock this">At home</button>';
       html += '</div>';
@@ -5763,6 +6036,10 @@ function renderShopping() {
       renderShopping();
     });
   }
+
+  // Kick off live Kroger enrichment (no-op when ZIP not set or non-US).
+  enrichShoppingWithKroger(lines);
+
   saveSessionState();
 }
 
