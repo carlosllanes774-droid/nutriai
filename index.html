@@ -509,6 +509,85 @@ body{
 .shop-have.on{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.22)}
 .shop-have:focus-visible{outline:2px solid var(--arc-primary);outline-offset:2px}
 
+/* WEEKLY PLANNING — Build Your Week wizard + planner header */
+.bw-sheet{background:#fff;border-radius:24px 24px 0 0;padding:22px 22px 18px;width:100%;max-height:90%;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 -12px 40px rgba(0,0,0,0.18);transform:translateY(28px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
+.modal-bg.is-open .bw-sheet{transform:translateY(0)}
+.modal-bg.is-closing .bw-sheet{transform:translateY(28px)}
+.bw-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.bw-dots{display:flex;gap:6px;margin-left:auto}
+.bw-dot{width:6px;height:6px;border-radius:50%;background:rgba(31,31,31,.14);transition:background var(--motion-fast) var(--ease-standard),width var(--motion-fast) var(--ease-standard)}
+.bw-dot.active{background:var(--arc-primary);width:18px;border-radius:3px}
+.bw-step{display:none;flex-direction:column;gap:6px;overflow-y:auto;padding-bottom:4px}
+.bw-step.active{display:flex}
+.bw-eyebrow{font-size:11px;font-weight:700;color:var(--arc-primary);text-transform:uppercase;letter-spacing:.12em}
+.bw-h{font-size:22px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.22;letter-spacing:-.01em;margin:2px 0 4px}
+.bw-s{font-size:13.5px;color:var(--arc-subtext);line-height:1.55;margin-bottom:14px}
+.bw-options{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.bw-opt{display:flex;align-items:flex-start;gap:14px;padding:16px;border-radius:14px;border:1.5px solid rgba(31,31,31,.08);background:#fff;cursor:pointer;transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard);text-align:left;font-family:inherit;-webkit-tap-highlight-color:transparent}
+.bw-opt:hover{border-color:rgba(227,90,54,.28);background:rgba(227,90,54,.02)}
+.bw-opt.active{border-color:var(--arc-primary);background:rgba(227,90,54,.06);box-shadow:0 4px 16px rgba(227,90,54,.08)}
+.bw-opt-ic{font-size:24px;line-height:1;flex-shrink:0;margin-top:1px}
+.bw-opt-body{flex:1;min-width:0}
+.bw-opt-h{font-size:15px;font-weight:700;color:var(--arc-text);line-height:1.25;margin-bottom:3px;font-family:Georgia,serif;letter-spacing:-.01em}
+.bw-opt-s{font-size:12.5px;color:var(--arc-subtext);line-height:1.45}
+.bw-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.bw-chip{padding:9px 14px;border-radius:999px;border:1.5px solid rgba(31,31,31,.08);background:#fff;font-size:13px;font-weight:600;color:var(--arc-text);cursor:pointer;transition:all var(--motion-fast) var(--ease-standard);font-family:inherit;-webkit-tap-highlight-color:transparent}
+.bw-chip:hover{border-color:rgba(227,90,54,.3)}
+.bw-chip.active{background:var(--arc-primary);color:#fff;border-color:var(--arc-primary)}
+.bw-hint{font-size:11.5px;color:var(--arc-subtext);font-style:italic;margin:6px 0 12px}
+.bw-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px solid var(--arc-divider);flex-shrink:0}
+.bw-back,.bw-skip{padding:10px 14px;border-radius:10px;border:none;background:transparent;color:var(--arc-subtext);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.bw-back:hover,.bw-skip:hover{color:var(--arc-text)}
+.bw-next{padding:11px 22px;border-radius:12px;border:none;background:var(--arc-primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary);font-family:inherit;letter-spacing:.01em;min-width:140px;transition:background var(--motion-fast) var(--ease-standard)}
+.bw-next:hover{background:var(--arc-primary-dark)}
+.bw-next:disabled{opacity:.5;cursor:not-allowed;background:var(--arc-primary)}
+.bw-close{background:transparent;border:none;cursor:pointer;font-size:18px;color:var(--arc-subtext);padding:4px 8px;border-radius:8px;font-family:inherit}
+.bw-close:hover{color:var(--arc-text);background:rgba(31,31,31,.04)}
+
+/* Planner — Built for header + empty state */
+.plan-empty{padding:34px 24px;border-radius:var(--r-md);background:var(--arc-card-soft-strong);box-shadow:var(--shadow-sm);text-align:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);margin-bottom:18px}
+.plan-empty-ic{font-size:36px;margin-bottom:10px}
+.plan-empty-h{font-size:20px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;letter-spacing:-.01em;margin-bottom:6px}
+.plan-empty-s{font-size:13.5px;color:var(--arc-subtext);line-height:1.55;max-width:30em;margin:0 auto 18px}
+.plan-empty-btn{padding:13px 28px;border-radius:14px;border:none;background:var(--arc-primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary);font-family:inherit;letter-spacing:.01em;transition:background var(--motion-fast) var(--ease-standard)}
+.plan-empty-btn:hover{background:var(--arc-primary-dark)}
+.builtfor-card{display:flex;align-items:center;gap:12px;background:var(--arc-card-soft-strong);border-radius:var(--r-md);padding:14px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.builtfor-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px}
+.builtfor-lbl{font-size:10.5px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em}
+.builtfor-pills{display:flex;flex-wrap:wrap;gap:6px}
+.bf-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;background:rgba(227,90,54,.08);color:var(--arc-primary-dark);font-size:11.5px;font-weight:700;letter-spacing:.01em}
+.bf-pill-ic{font-size:13px;line-height:1}
+.builtfor-rebuild{flex-shrink:0;background:transparent;border:none;color:var(--arc-primary-dark);font-size:12px;font-weight:700;cursor:pointer;padding:8px 10px;border-radius:8px;font-family:inherit;letter-spacing:.01em}
+.builtfor-rebuild:hover{background:rgba(227,90,54,.06)}
+
+/* Library (repurposed Recipes tab) */
+.lib-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.lib-tab{flex-shrink:0;padding:8px 14px;border-radius:999px;border:1.5px solid rgba(31,31,31,.08);background:#fff;font-size:13px;font-weight:700;color:var(--arc-subtext);cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;transition:all var(--motion-fast) var(--ease-standard)}
+.lib-tab.active{background:var(--arc-text);color:#fff;border-color:var(--arc-text)}
+.lib-empty{padding:30px 18px;text-align:center;color:var(--arc-subtext);font-size:13.5px;line-height:1.55;font-style:italic}
+.lib-card-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-right:6px;vertical-align:middle}
+.lib-card-tag.this-week{background:rgba(227,90,54,.12);color:var(--arc-primary-dark)}
+.lib-card-tag.saved{background:rgba(34,160,107,.12);color:#1a7d52}
+.lib-card-tag.prep{background:rgba(31,31,31,.06);color:var(--arc-subtext)}
+
+/* Servings stepper inside the recipe modal */
+.rm-servings{display:flex;align-items:center;gap:14px;padding:14px 18px;margin:14px 0 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px}
+.rm-servings-body{flex:1;min-width:0;color:#fff;font-family:Georgia,serif}
+.rm-servings-h{font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:2px}
+.rm-servings-s{font-size:11.5px;color:rgba(255,255,255,.65);font-family:inherit;font-weight:500;line-height:1.4}
+.rm-stepper{display:inline-flex;align-items:center;gap:0;background:rgba(255,255,255,.15);border-radius:999px;padding:2px}
+.rm-stepper button{width:32px;height:32px;border:none;background:transparent;color:#fff;font-size:18px;font-weight:700;cursor:pointer;border-radius:999px;line-height:1;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:background var(--motion-fast) var(--ease-standard)}
+.rm-stepper button:hover{background:rgba(255,255,255,.18)}
+.rm-stepper button:disabled{opacity:.35;cursor:not-allowed}
+.rm-stepper-val{min-width:28px;text-align:center;color:#fff;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;padding:0 4px}
+
+/* Today — Prep Day banner */
+.prepday-banner{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--r-md);background:linear-gradient(135deg,rgba(227,90,54,.12),rgba(227,90,54,.04));border:1px solid rgba(227,90,54,.18);margin-bottom:14px}
+.prepday-banner-ic{font-size:24px;flex-shrink:0;line-height:1}
+.prepday-banner-body{flex:1;min-width:0}
+.prepday-banner-h{font-size:13.5px;font-weight:700;color:var(--arc-text);line-height:1.25;margin-bottom:2px}
+.prepday-banner-s{font-size:12px;color:var(--arc-subtext);line-height:1.45}
+
 /* GROCERY INTELLIGENCE — Kroger pricing UI */
 .kroger-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--arc-card-soft-strong);border-radius:var(--r-md);padding:12px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .kroger-bar.is-on{background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(227,90,54,.02))}
@@ -860,9 +939,9 @@ button:active{transform:scale(var(--press-scale))}
     <div class="ob-step" id="st3">
       <div class="fl"><label>Cooking skill <span style="color:#e76f51">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident chef</span></div></div>
       <div class="fl"><label>Weekly grocery budget <span style="color:#e76f51">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Budget</span><span class="chip" data-v="Moderate">$$ Moderate</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
-      <div class="fl"><label>Cuisine preferences</label><div class="chips" id="chip-cuisine"><span class="chip" data-v="Mediterranean">🫒 Mediterranean</span><span class="chip" data-v="Asian">🥢 Asian</span><span class="chip" data-v="Mexican">🌮 Mexican</span><span class="chip" data-v="American">🍔 American</span><span class="chip" data-v="Italian">🍝 Italian</span><span class="chip" data-v="Indian">🍛 Indian</span><span class="chip" data-v="Middle Eastern">🥙 Middle Eastern</span><span class="chip" data-v="Japanese">🍱 Japanese</span></div></div>
       <div class="fl"><label>Dietary restrictions</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
       <div class="fl"><label>Foods you dislike or avoid</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="e.g. mushrooms, spicy food, shellfish..."></textarea></div>
+      <p style="font-size:12px;color:var(--arc-subtext);line-height:1.5;margin-top:14px;font-style:italic">You'll choose cuisines, cooking style and focus right before each week. Arc adapts to how you actually live.</p>
     </div>
   </div>
   <div class="ob-footer">
@@ -892,6 +971,13 @@ button:active{transform:scale(var(--press-scale))}
 <div class="screen" id="s-today">
   <div class="a-hdr"><h2>Today</h2><span style="font-size:13px;color:#9ca3af" id="today-date">—</span></div>
   <div class="content today-flow">
+    <div class="prepday-banner" id="prepday-banner" style="display:none" role="region" aria-label="Prep day suggestion">
+      <span class="prepday-banner-ic" aria-hidden="true">🍱</span>
+      <div class="prepday-banner-body">
+        <div class="prepday-banner-h" id="prepday-banner-h">Today is your prep day</div>
+        <div class="prepday-banner-s" id="prepday-banner-s">Cook your meal-prep batches today so the rest of the week runs itself.</div>
+      </div>
+    </div>
     <div class="week-recap-nudge" id="week-recap-nudge" style="display:none" role="region" aria-label="Week recap">
       <div class="week-recap-nudge-inner">
         <span class="week-recap-nudge-ic" aria-hidden="true">✨</span>
@@ -966,17 +1052,22 @@ button:active{transform:scale(var(--press-scale))}
     <button class="settings-open-btn" id="settings-btn" title="Settings">⚙️</button>
   </div>
   <div class="content">
-    <div class="cat-tabs" id="cat-tabs">
+    <div class="a-hdr" style="padding:0;margin-bottom:6px"><h2 style="font-size:24px">Recipe library</h2></div>
+    <p style="font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 14px;max-width:36em">This week's meals and recipes you've saved. Discover more by swapping a slot in the Planner.</p>
+    <div class="lib-tabs" id="lib-tabs">
+      <button class="lib-tab active" data-lib="this-week" type="button">This week</button>
+      <button class="lib-tab" data-lib="saved" type="button">Saved</button>
+      <button class="lib-tab" data-lib="all" type="button">All categories</button>
+    </div>
+    <div class="cat-tabs" id="cat-tabs" style="display:none">
       <div class="ct active" data-cat="All">All</div>
       <div class="ct" data-cat="Breakfast">Breakfast</div>
       <div class="ct" data-cat="Lunch">Lunch</div>
       <div class="ct" data-cat="Dinner">Dinner</div>
       <div class="ct" data-cat="Snack">Snacks</div>
     </div>
-    <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:12px;line-height:1.5">* Prices are regional estimates and will vary by store.</p>
     <div id="recipes-list"></div>
   </div>
-  <div class="next-bar" id="next-bar"><div class="nbi" id="goto-planner"><div><div class="nbi-label">Open Planner</div><div class="nbi-sub" id="nb-sub">0 recipes selected</div></div><div class="nbi-arrow">→</div></div></div>
   <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn active" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
 </div>
 
@@ -984,15 +1075,27 @@ button:active{transform:scale(var(--press-scale))}
 <div class="screen" id="s-planner">
   <div class="a-hdr"><h2>Weekly planner</h2></div>
   <div class="content">
-    <div class="adapt-card">
-      <div class="adapt-card-title">✨ AI Plan Builder</div>
-      <div class="adapt-card-sub">Auto-fill your week, or check how your plan tracks and let AI fix any gaps.</div>
+    <div class="plan-empty" id="plan-empty" style="display:none">
+      <div class="plan-empty-ic">✨</div>
+      <div class="plan-empty-h">Plan your week in 30 seconds</div>
+      <div class="plan-empty-s">Tell Arc how you want to cook, what to prioritize, and what flavors you're craving. We'll design the week from there.</div>
+      <button class="plan-empty-btn" id="plan-build-btn" type="button">Build my week ✦</button>
+    </div>
+    <div class="builtfor-card" id="builtfor-card" style="display:none">
+      <div class="builtfor-body">
+        <div class="builtfor-lbl">Built for</div>
+        <div class="builtfor-pills" id="builtfor-pills"></div>
+      </div>
+      <button class="builtfor-rebuild" id="builtfor-rebuild" type="button" aria-label="Rebuild this week">Rebuild ↻</button>
+    </div>
+    <div class="adapt-card" id="planner-adapt-card" style="display:none">
+      <div class="adapt-card-title">📊 Plan health</div>
+      <div class="adapt-card-sub">Check how your plan tracks and let Arc fix any gaps.</div>
       <div style="display:flex;gap:8px">
-        <button class="btn-green" id="ai-plan-btn" style="flex:1;padding:11px;font-size:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Generate week</button>
-        <button id="adapt-btn" style="padding:12px 16px;border-radius:14px;font-size:13px;font-weight:600;border:none;background:rgba(255,255,255,.18);color:#fff;cursor:pointer;flex-shrink:0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">📊 Adapt plan</button>
+        <button id="adapt-btn" style="flex:1;padding:11px;border-radius:14px;font-size:14px;font-weight:600;border:none;background:rgba(255,255,255,.18);color:#fff;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">Adapt plan →</button>
       </div>
     </div>
-    <div class="slbl">Weekly schedule</div>
+    <div class="slbl" id="planner-list-lbl" style="display:none">Weekly schedule</div>
     <div id="planner-list"></div>
   </div>
   <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Open Shopping List</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
@@ -1039,6 +1142,68 @@ button:active{transform:scale(var(--press-scale))}
   <div class="modal-sheet"><div class="modal-handle"></div><div style="font-size:17px;font-weight:700;color:#111;margin-bottom:14px;font-family:Georgia,serif" id="assign-title">Assign meal</div><div id="assign-opts"></div><button class="modal-cancel" id="assign-cancel">Cancel</button></div>
 </div>
 
+<!-- BUILD YOUR WEEK WIZARD -->
+<div class="modal-bg" id="bw-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="bw-h-1">
+  <div class="bw-sheet">
+    <div class="bw-head">
+      <span class="bw-eyebrow" id="bw-eyebrow">This week</span>
+      <div class="bw-dots" aria-hidden="true">
+        <span class="bw-dot active" data-step="1"></span>
+        <span class="bw-dot" data-step="2"></span>
+        <span class="bw-dot" data-step="3"></span>
+      </div>
+      <button class="bw-close" id="bw-close" type="button" aria-label="Close">✕</button>
+    </div>
+
+    <!-- STEP 1: Cooking style -->
+    <div class="bw-step active" id="bw-step-1" data-step="1">
+      <div class="bw-h" id="bw-h-1">How do you want to cook this week?</div>
+      <div class="bw-s">Pick the rhythm that fits your life. We'll shape the week around it — fewer cooks for prep weeks, more variety for fresh.</div>
+      <div class="bw-options" id="bw-style-opts">
+        <button class="bw-opt" type="button" data-style="fresh"><span class="bw-opt-ic">🥗</span><span class="bw-opt-body"><span class="bw-opt-h">Fresh meals daily</span><span class="bw-opt-s">A different meal in each slot — most variety, most cooking.</span></span></button>
+        <button class="bw-opt" type="button" data-style="prep"><span class="bw-opt-ic">🍱</span><span class="bw-opt-body"><span class="bw-opt-h">Meal prep</span><span class="bw-opt-s">Cook 3–5 dishes once, repeat across the week. Smallest grocery run.</span></span></button>
+        <button class="bw-opt" type="button" data-style="mixed"><span class="bw-opt-ic">♻️</span><span class="bw-opt-body"><span class="bw-opt-h">Leftovers · mixed</span><span class="bw-opt-s">Cook a handful of dinners; planned leftovers fill the next day's lunches.</span></span></button>
+        <button class="bw-opt" type="button" data-style="family"><span class="bw-opt-ic">🍲</span><span class="bw-opt-body"><span class="bw-opt-h">Family-style</span><span class="bw-opt-s">Bigger dinners that feed everyone, plus simple breakfasts and lunches.</span></span></button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Weekly focus -->
+    <div class="bw-step" id="bw-step-2" data-step="2">
+      <div class="bw-h">What should this week prioritize?</div>
+      <div class="bw-s">One focus per week works best. You can shift gears next week.</div>
+      <div class="bw-options" id="bw-focus-opts">
+        <button class="bw-opt" type="button" data-focus="balanced"><span class="bw-opt-ic">⚖️</span><span class="bw-opt-body"><span class="bw-opt-h">Balanced</span><span class="bw-opt-s">Even macros, varied meals — the default Arc rhythm.</span></span></button>
+        <button class="bw-opt" type="button" data-focus="highProtein"><span class="bw-opt-ic">💪</span><span class="bw-opt-body"><span class="bw-opt-h">High protein</span><span class="bw-opt-s">Protein-forward meals, denser breakfasts, lean dinners.</span></span></button>
+        <button class="bw-opt" type="button" data-focus="quick"><span class="bw-opt-ic">⏱️</span><span class="bw-opt-body"><span class="bw-opt-h">Quick meals</span><span class="bw-opt-s">Most meals under 25 minutes. Fewer steps, fewer pans.</span></span></button>
+        <button class="bw-opt" type="button" data-focus="budget"><span class="bw-opt-ic">💸</span><span class="bw-opt-body"><span class="bw-opt-h">Budget</span><span class="bw-opt-s">Cheaper proteins, pantry repeats, low waste.</span></span></button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Cuisines -->
+    <div class="bw-step" id="bw-step-3" data-step="3">
+      <div class="bw-h">Any flavors you're craving?</div>
+      <div class="bw-s">Pick up to 3, or skip and let Arc surprise you.</div>
+      <div class="bw-chips" id="bw-cuisine-chips">
+        <button class="bw-chip" type="button" data-v="Mediterranean">🫒 Mediterranean</button>
+        <button class="bw-chip" type="button" data-v="Italian">🍝 Italian</button>
+        <button class="bw-chip" type="button" data-v="Asian">🥢 Asian</button>
+        <button class="bw-chip" type="button" data-v="Japanese">🍱 Japanese</button>
+        <button class="bw-chip" type="button" data-v="Mexican">🌮 Mexican</button>
+        <button class="bw-chip" type="button" data-v="American">🍔 American</button>
+        <button class="bw-chip" type="button" data-v="Indian">🍛 Indian</button>
+        <button class="bw-chip" type="button" data-v="Middle Eastern">🥙 Middle Eastern</button>
+      </div>
+      <div class="bw-hint" id="bw-cuisine-hint">No selection = varied international</div>
+    </div>
+
+    <div class="bw-actions">
+      <button class="bw-back" id="bw-back" type="button" style="visibility:hidden">← Back</button>
+      <button class="bw-skip" id="bw-skip" type="button" style="display:none">Skip</button>
+      <button class="bw-next" id="bw-next" type="button" disabled>Continue →</button>
+    </div>
+  </div>
+</div>
+
 <!-- RECIPE MODAL -->
 <div class="rm-bg" id="rm-bg" style="display:none">
   <div class="rm-sheet">
@@ -1046,6 +1211,17 @@ button:active{transform:scale(var(--press-scale))}
       <button class="rm-close" id="rm-close">✕ Close</button>
       <div class="rm-title" id="rm-title">—</div>
       <div class="rm-tags" id="rm-tags"></div>
+      <div class="rm-servings" id="rm-servings" style="display:none">
+        <div class="rm-servings-body">
+          <div class="rm-servings-h" id="rm-servings-h">Cook for 1 serving</div>
+          <div class="rm-servings-s" id="rm-servings-s">Scales the shopping list automatically</div>
+        </div>
+        <div class="rm-stepper" role="group" aria-label="Servings">
+          <button type="button" id="rm-srv-dec" aria-label="Decrease servings">−</button>
+          <span class="rm-stepper-val" id="rm-srv-val">1</span>
+          <button type="button" id="rm-srv-inc" aria-label="Increase servings">+</button>
+        </div>
+      </div>
     </div>
     <div class="rm-tabs">
       <button class="rm-tab active" data-tab="ing">Ingredients</button>
@@ -2758,6 +2934,11 @@ function tab(t) {
   if (t === 'today') {
     renderToday();
     scheduleWeeklyRecapAutoCheck();
+  } else if (t === 'recipes') {
+    setupLibraryTabs();
+    renderLibrary();
+  } else if (t === 'planner') {
+    renderPlanner();
   }
   var btns = document.querySelectorAll('.nbtn');
   for (var i = 0; i < btns.length; i++) {
@@ -2912,8 +3093,8 @@ function buildTodayPeekActions(day, slot, r) {
   var fin = isMealFinalized(day, slot);
   var dd = shopDataAttr(day);
   var ds = shopDataAttr(slot);
-  var canPick = selectedRecipes && selectedRecipes.size > 0;
-  var disAttr = canPick ? '' : ' title="Select recipes in the Recipes tab first"';
+  var canPick = recipes && recipes.length > 0;
+  var disAttr = canPick ? '' : ' title="Build your week first"';
   var html = '';
   if (fin) {
     html += '<button type="button" class="tm-peek-btn tm-peek-secondary" data-tpeek-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo status</button>';
@@ -3325,15 +3506,20 @@ function buildTodayAmbientInsightLines(ctx) {
 }
 
 function regenerateTodayPlan() {
-  if (selectedRecipes.size === 0) { showToast('Select recipes first.'); return; }
+  if (!recipes.length) {
+    showToast('Build your week first to generate today.');
+    tab('planner');
+    openBuildWeek('first');
+    return;
+  }
   var slots = getSlots();
   var day = todayKey();
   if (!mealPlan[day]) mealPlan[day] = {};
   mealJournal[day] = {};
-  var selectedPool = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
+  var pool = recipes.slice();
   var catMap = {};
-  for (var i = 0; i < selectedPool.length; i++) {
-    var r = selectedPool[i];
+  for (var i = 0; i < pool.length; i++) {
+    var r = pool[i];
     if (!catMap[r.cat]) catMap[r.cat] = [];
     catMap[r.cat].push(r);
   }
@@ -3343,9 +3529,9 @@ function regenerateTodayPlan() {
     if (/breakfast/i.test(slot)) slotCat = 'Breakfast';
     else if (/dinner/i.test(slot)) slotCat = 'Dinner';
     else if (/snack/i.test(slot)) slotCat = 'Snack';
-    var pool = catMap[slotCat] || selectedPool;
-    if (!pool.length) continue;
-    var pickId = pool[(new Date().getDate() + s) % pool.length].id;
+    var slotPool = catMap[slotCat] || pool;
+    if (!slotPool.length) continue;
+    var pickId = slotPool[(new Date().getDate() + s) % slotPool.length].id;
     mealPlan[day][slot] = pickId;
     recordRecipeSavedEngagement(pickId, 'plan', true);
   }
@@ -3357,7 +3543,36 @@ function regenerateTodayPlan() {
   showToast('Today plan regenerated ✓');
 }
 
+function renderPrepDayBanner() {
+  var banner = el('prepday-banner');
+  if (!banner) return;
+  var wp = UP.weeklyPlan;
+  if (!wp || wp.style !== 'prep') { banner.style.display = 'none'; return; }
+
+  var today = todayKey();
+  var isPrepDay = (today === 'Sun' || today === 'Mon');
+  if (!isPrepDay) { banner.style.display = 'none'; return; }
+
+  // Count unique prep recipes + total slots they fill
+  var uniq = 0, totalSlots = 0;
+  var rmap = wp.repeatMap || {};
+  var keys = Object.keys(rmap);
+  for (var i = 0; i < keys.length; i++) {
+    if (rmap[keys[i]] >= 2) { uniq++; totalSlots += rmap[keys[i]]; }
+  }
+  if (!uniq) { banner.style.display = 'none'; return; }
+
+  banner.style.display = 'flex';
+  el('prepday-banner-h').textContent = today === 'Sun'
+    ? 'Sunday — your prep day'
+    : 'Today is your prep day';
+  el('prepday-banner-s').textContent =
+    'Cook ' + uniq + ' batch recipe' + (uniq === 1 ? '' : 's') +
+    ' today and the next ' + totalSlots + ' meal' + (totalSlots === 1 ? '' : 's') + ' will run themselves.';
+}
+
 function renderToday() {
+  renderPrepDayBanner();
   if (!el('today-slot')) return;
   var d = new Date();
   var day = todayKey();
@@ -3501,10 +3716,10 @@ function renderToday() {
     if (!meal && firstSlotWithPlannedRecipe(day, slots)) swapSlot = firstSlotWithPlannedRecipe(day, slots);
     swapBtn.dataset.day = day;
     swapBtn.dataset.slot = swapSlot || '';
-    var canPickRecipe = selectedRecipes && selectedRecipes.size > 0;
+    var canPickRecipe = recipes && recipes.length > 0;
     swapBtn.disabled = !slots.length || !canPickRecipe;
     if (!slots.length) swapBtn.title = 'Add meals per day in Settings, then plan your week.';
-    else if (!canPickRecipe) swapBtn.title = 'Select recipes first — then you can swap today’s plan.';
+    else if (!canPickRecipe) swapBtn.title = 'Build your week first — then you can swap today’s plan.';
     else swapBtn.title = 'Change the planned recipe for ' + (swapSlot || 'this slot');
   }
 
@@ -3916,7 +4131,7 @@ function goStep(n) {
     el('od' + i).className = 'ob-dot' + (i < n ? ' done' : i === n ? ' active' : '');
   }
   el('ob-back').style.display = n === 1 ? 'none' : 'block';
-  el('ob-next').textContent   = n === 3 ? 'Build my plan ✦' : 'Continue →';
+  el('ob-next').textContent   = n === 3 ? "Let's plan your week →" : 'Continue →';
   document.querySelector('.ob-body').scrollTop = 0;
 }
 
@@ -3940,7 +4155,9 @@ function finishOB() {
   UP.meals         = gChip('chip-meals')    || '3';
   UP.skill         = gChip('chip-skill')    || 'Home cook';
   UP.budget        = gChip('chip-budget')   || 'Moderate';
-  UP.cuisines      = gMulti('chip-cuisine');
+  // Cuisines are no longer captured at onboarding — they're chosen weekly in Build-Your-Week.
+  // Preserve any value already on UP (e.g. migrated user) so the wizard pre-fills nicely.
+  if (!Array.isArray(UP.cuisines)) UP.cuisines = [];
   UP.restrictions  = gMulti('chip-diet');
   UP.dislikes      = el('in-dislikes').value.trim();
   UP.useCustom     = useCustom;
@@ -3961,8 +4178,10 @@ function finishOB() {
 
   applyProfileToUIBar();
 
-  showScreen('s-gen');
-  generateRecipes();
+  // New flow: identity is done. Take the user straight to the planner where
+  // the Build-Your-Week wizard greets them with the first weekly intent question.
+  tab('planner');
+  setTimeout(function() { openBuildWeek('first'); }, 80);
 }
 
 // ── Generating screen: ambient ring + phased copy (tied to real milestones) ──
@@ -4309,6 +4528,547 @@ function validateProfileForGeneration() {
   return { ok: true, errors: [] };
 }
 
+/* ─────────────────────────────────────────────────────────────
+   WEEKLY PLANNING — Build Your Week wizard + week-direct AI
+   ───────────────────────────────────────────────────────────── */
+
+var BW_STYLE_META = {
+  fresh:  { ic: '🥗', label: 'Fresh daily',   unique: 'day-slots',  servings: 1, repeats: 1 },
+  prep:   { ic: '🍱', label: 'Meal prep',     unique: 4,            servings: 4, repeats: 4 },
+  mixed:  { ic: '♻️', label: 'Mixed',         unique: 8,            servings: 2, repeats: 2 },
+  family: { ic: '🍲', label: 'Family-style',  unique: 6,            servings: 3, repeats: 3 }
+};
+var BW_FOCUS_META = {
+  balanced:    { ic: '⚖️', label: 'Balanced',     directive: 'Keep macros even across each day. No single nutrient dominates.' },
+  highProtein: { ic: '💪', label: 'High protein', directive: 'Push protein toward 35-40% of daily calories. Make every meal contribute meaningfully to the protein target.' },
+  quick:       { ic: '⏱️', label: 'Quick',        directive: 'Most meals must have time ≤ 25 minutes. Prefer single-pan, low-prep recipes. Difficulty MUST be "Easy" unless absolutely necessary.' },
+  budget:      { ic: '💸', label: 'Budget',       directive: 'Target $3-7 per serving. Lean on eggs, beans, oats, frozen produce, ground meats and pantry staples. Repeat ingredients across recipes to minimize the shopping list.' }
+};
+
+var bwState = {
+  step: 1,
+  style: null,
+  focus: null,
+  cuisines: [],
+  mode: 'first',   // 'first' (post-onboarding) | 'rebuild'
+  bound: false
+};
+
+function ensureWeeklyPlanShape() {
+  if (!UP.weeklyPlan || typeof UP.weeklyPlan !== 'object') UP.weeklyPlan = null;
+  if (!UP.servingOverrides || typeof UP.servingOverrides !== 'object') UP.servingOverrides = {};
+}
+
+function hasBuiltWeek() {
+  return !!(UP.weeklyPlan && UP.weeklyPlan.builtAt);
+}
+
+function bwSetStep(n) {
+  if (n < 1 || n > 3) return;
+  bwState.step = n;
+  var steps = document.querySelectorAll('#bw-modal .bw-step');
+  for (var i = 0; i < steps.length; i++) {
+    steps[i].classList.toggle('active', steps[i].getAttribute('data-step') === String(n));
+  }
+  var dots = document.querySelectorAll('#bw-modal .bw-dot');
+  for (var j = 0; j < dots.length; j++) {
+    dots[j].classList.toggle('active', dots[j].getAttribute('data-step') === String(n));
+  }
+  el('bw-back').style.visibility = n === 1 ? 'hidden' : 'visible';
+  el('bw-skip').style.display    = n === 3 ? 'inline-flex' : 'none';
+  el('bw-next').textContent      = n === 3 ? 'Build my week ✦' : 'Continue →';
+  bwUpdateNext();
+}
+
+function bwUpdateNext() {
+  var ok = false;
+  if (bwState.step === 1) ok = !!bwState.style;
+  else if (bwState.step === 2) ok = !!bwState.focus;
+  else if (bwState.step === 3) ok = true; // cuisines are optional
+  el('bw-next').disabled = !ok;
+}
+
+function bwSelectStyle(value) {
+  bwState.style = value;
+  var opts = document.querySelectorAll('#bw-style-opts .bw-opt');
+  for (var i = 0; i < opts.length; i++) opts[i].classList.toggle('active', opts[i].dataset.style === value);
+  bwUpdateNext();
+}
+
+function bwSelectFocus(value) {
+  bwState.focus = value;
+  var opts = document.querySelectorAll('#bw-focus-opts .bw-opt');
+  for (var i = 0; i < opts.length; i++) opts[i].classList.toggle('active', opts[i].dataset.focus === value);
+  bwUpdateNext();
+}
+
+function bwToggleCuisine(value) {
+  var idx = bwState.cuisines.indexOf(value);
+  if (idx >= 0) bwState.cuisines.splice(idx, 1);
+  else if (bwState.cuisines.length < 3) bwState.cuisines.push(value);
+  else { showToast('Pick up to 3 cuisines for the week.'); return; }
+  var chips = document.querySelectorAll('#bw-cuisine-chips .bw-chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.toggle('active', bwState.cuisines.indexOf(chips[i].dataset.v) >= 0);
+  el('bw-cuisine-hint').textContent = bwState.cuisines.length
+    ? 'This week: ' + bwState.cuisines.join(' · ')
+    : 'No selection = varied international';
+}
+
+function bwReset(mode) {
+  bwState.step = 1;
+  bwState.mode = mode || 'first';
+  bwState.style = null;
+  bwState.focus = null;
+  // Pre-seed cuisines from prior weekly plan (or legacy onboarding value) so users don't repick from scratch.
+  var seed = (UP.weeklyPlan && Array.isArray(UP.weeklyPlan.cuisines) && UP.weeklyPlan.cuisines.length)
+    ? UP.weeklyPlan.cuisines
+    : (Array.isArray(UP.cuisines) ? UP.cuisines.slice(0, 3) : []);
+  bwState.cuisines = seed.slice(0, 3);
+
+  // Pre-seed style/focus from prior plan when rebuilding.
+  if (mode === 'rebuild' && UP.weeklyPlan) {
+    if (UP.weeklyPlan.style) bwState.style = UP.weeklyPlan.style;
+    if (UP.weeklyPlan.focus) bwState.focus = UP.weeklyPlan.focus;
+  }
+
+  document.querySelectorAll('#bw-style-opts .bw-opt').forEach(function(o) {
+    o.classList.toggle('active', bwState.style && o.dataset.style === bwState.style);
+  });
+  document.querySelectorAll('#bw-focus-opts .bw-opt').forEach(function(o) {
+    o.classList.toggle('active', bwState.focus && o.dataset.focus === bwState.focus);
+  });
+  document.querySelectorAll('#bw-cuisine-chips .bw-chip').forEach(function(c) {
+    c.classList.toggle('active', bwState.cuisines.indexOf(c.dataset.v) >= 0);
+  });
+  el('bw-cuisine-hint').textContent = bwState.cuisines.length
+    ? 'This week: ' + bwState.cuisines.join(' · ')
+    : 'No selection = varied international';
+  el('bw-eyebrow').textContent = mode === 'rebuild' ? 'Rebuild this week' : 'Build this week';
+  bwSetStep(1);
+}
+
+function bwBind() {
+  if (bwState.bound) return;
+  document.querySelectorAll('#bw-style-opts .bw-opt').forEach(function(o) {
+    o.addEventListener('click', function() { bwSelectStyle(this.dataset.style); });
+  });
+  document.querySelectorAll('#bw-focus-opts .bw-opt').forEach(function(o) {
+    o.addEventListener('click', function() { bwSelectFocus(this.dataset.focus); });
+  });
+  document.querySelectorAll('#bw-cuisine-chips .bw-chip').forEach(function(c) {
+    c.addEventListener('click', function() { bwToggleCuisine(this.dataset.v); });
+  });
+  el('bw-back').addEventListener('click', function() { bwSetStep(bwState.step - 1); });
+  el('bw-next').addEventListener('click', function() {
+    if (bwState.step < 3) { bwSetStep(bwState.step + 1); return; }
+    bwSubmit();
+  });
+  el('bw-skip').addEventListener('click', function() {
+    bwState.cuisines = [];
+    document.querySelectorAll('#bw-cuisine-chips .bw-chip').forEach(function(c) { c.classList.remove('active'); });
+    bwSubmit();
+  });
+  el('bw-close').addEventListener('click', closeBuildWeek);
+  el('bw-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeBuildWeek();
+  });
+  bwState.bound = true;
+}
+
+function openBuildWeek(mode) {
+  bwBind();
+  bwReset(mode || (hasBuiltWeek() ? 'rebuild' : 'first'));
+  openMotion('bw-modal');
+}
+
+function closeBuildWeek() {
+  closeMotion('bw-modal');
+}
+
+function bwSubmit() {
+  if (!bwState.style || !bwState.focus) return;
+  closeBuildWeek();
+  // Persist intent so reloads during generation can recover.
+  UP.weeklyPlanDraft = {
+    style: bwState.style,
+    focus: bwState.focus,
+    cuisines: bwState.cuisines.slice()
+  };
+  try { saveSessionState(); } catch (e) {}
+  showScreen('s-gen');
+  generateWeeklyPlan({
+    style: bwState.style,
+    focus: bwState.focus,
+    cuisines: bwState.cuisines.slice(),
+    mode: bwState.mode
+  });
+}
+
+/* ── Week-direct AI generation (replaces 28-card pool + aiCreatePlan) ── */
+
+function planSlotsByStyle(style) {
+  var slots = getSlots();
+  return DAYS.length * slots.length;
+}
+
+function buildWeeklyPlanPrompt(intent) {
+  var ne         = buildNutritionEngine();
+  var calT       = ne.calT;
+  var macros     = ne.macros;
+  var mt         = ne.mealTargets;
+  var slots      = ne.slots;
+  var slotList   = slots.join(', ');
+  var totalSlots = DAYS.length * slots.length;
+
+  var restr      = (UP.restrictions || []).filter(function(r) { return r !== 'None'; }).join(', ') || 'none';
+  var cuis       = intent.cuisines && intent.cuisines.length
+    ? intent.cuisines.join(', ')
+    : 'varied international';
+  var budgetNote = {'Budget':'$3-7/serving','Moderate':'$5-12/serving','Flexible':'any price range'}[UP.budget] || 'moderate';
+  var skillNote  = {'Beginner':'Use max 5 ingredients, simple techniques (no sautéing, braising, or multi-step processes)','Home cook':'Standard home cooking techniques','Confident chef':'Any technique including advanced methods'}[UP.skill] || 'standard techniques';
+
+  var styleMeta  = BW_STYLE_META[intent.style] || BW_STYLE_META.fresh;
+  var focusMeta  = BW_FOCUS_META[intent.focus] || BW_FOCUS_META.balanced;
+
+  // Per-style directive
+  var styleDirective;
+  var uniqueRecipeCount;
+  if (intent.style === 'fresh') {
+    uniqueRecipeCount = totalSlots;
+    styleDirective = 'FRESH-DAILY MODE: Generate ' + totalSlots + ' UNIQUE recipes — one for every slot in the week. servings = 1 for every recipe. Distribute cuisines across the week so flavors rotate.';
+  } else if (intent.style === 'prep') {
+    var pUnique = Math.max(3, Math.min(5, Math.ceil(totalSlots / 5)));
+    uniqueRecipeCount = pUnique;
+    styleDirective = 'MEAL-PREP MODE: Generate ONLY ' + pUnique + ' unique recipes for the entire week. Each recipe MUST repeat across multiple slots — design each to be batched. Set each recipe\'s "servings" to the exact count of slots it fills (typically 3-5). Pick recipes whose ingredients overlap heavily so the shopping list is small. Group repeats on consecutive days where possible so leftovers stay fresh.';
+  } else if (intent.style === 'mixed') {
+    var mUnique = Math.max(6, Math.ceil(totalSlots * 0.55));
+    uniqueRecipeCount = mUnique;
+    styleDirective = 'LEFTOVERS/MIXED MODE: Generate ~' + mUnique + ' unique recipes. Several DINNERS should repeat the next day as LUNCH (planned leftovers). Set servings = 2 on recipes that repeat once, 1 on standalone recipes.';
+  } else {
+    var fUnique = Math.max(5, Math.ceil(totalSlots * 0.4));
+    uniqueRecipeCount = fUnique;
+    styleDirective = 'FAMILY-STYLE MODE: Generate ' + fUnique + ' unique recipes. Dinners should be shareable; the next day\'s lunch can reuse the leftover dinner. Set servings = 3 on dinners that span two slots.';
+  }
+
+  var sysMsg = 'You are an expert nutritionist and chef. You MUST respond with ONLY a valid JSON object. ' +
+               'No markdown, no code fences, no explanation before or after. ' +
+               'Start your response with { and end with }. ' +
+               'You will design a WEEK PLAN — a set of recipes AND the day×slot grid that uses them. ' +
+               'Every recipe MUST comply 100% with the MANDATORY DIETARY COMPLIANCE block; never relax it. ' +
+               'Every recipe\'s cal/p/c/f MUST fall within ±10% of its category target.';
+
+  var u = '';
+  u += 'Build a complete 7-day meal plan for this user.\n';
+  u += 'Name: ' + UP.name + '\n';
+  u += 'Body profile: ' + UP.height + ' (' + Math.round(UP.heightCm || 0) + ' cm), ' + UP.weight + ' lbs, ' + UP.activity + ' activity, goal: ' + UP.goal + '.\n';
+  u += 'Cooking skill: ' + UP.skill + ' — ' + skillNote + '\n';
+  u += 'Budget: ' + UP.budget + ' (' + budgetNote + ')\n';
+  u += 'Cuisines requested this week: ' + cuis + '\n';
+  u += 'Diet tags (informational): ' + restr + '\n';
+  u += buildMandatoryDietPrompt(UP.restrictions, UP.dislikes);
+  u += buildFeedbackPromptBlock();
+  u += buildAdaptiveBehaviorPromptBlock();
+  u += formatNutritionPromptBlock(mt, calT, macros);
+
+  u += '\nMEAL SLOTS each day: ' + slotList + ' (' + slots.length + ' per day, ' + totalSlots + ' total)\n';
+
+  u += '\nTHIS WEEK\'S COOKING STYLE — ' + styleMeta.label + ':\n' + styleDirective + '\n';
+  u += '\nTHIS WEEK\'S FOCUS — ' + focusMeta.label + ':\n' + focusMeta.directive + '\n';
+
+  u += '\nOUTPUT JSON SHAPE:\n';
+  u += '{\n';
+  u += '  "recipes": [ {"id":1,"name":"...","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch","servings":1,"tags":["High protein"],"ing":["Chicken breast","Rice","Broccoli"],"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},"steps":["Step 1 specific.","Step 2 specific.","Step 3 specific.","Step 4 specific.","Step 5 specific."]} ],\n';
+  u += '  "plan":   { "Mon":{' + slots.map(function(s){ return '"' + s + '":1'; }).join(',') + '}, "Tue":{...}, "Wed":{...}, "Thu":{...}, "Fri":{...}, "Sat":{...}, "Sun":{...} }\n';
+  u += '}\n\n';
+
+  u += 'STRICT RULES:\n';
+  u += '1. The "recipes" array MUST contain exactly ' + uniqueRecipeCount + ' UNIQUE recipes (no two with the same name).\n';
+  u += '2. The "plan" object MUST cover ALL 7 days (Mon..Sun) with ALL ' + slots.length + ' slots filled, total ' + totalSlots + ' assignments.\n';
+  u += '3. Every plan slot value MUST be the integer id of a recipe in the recipes array.\n';
+  u += '4. Slot-category match: Breakfast slot → cat "Breakfast"; Lunch → "Lunch"; Dinner → "Dinner"; *snack → "Snack".\n';
+  u += '5. Daily total calories across the slots MUST be close to ' + calT + ' kcal (±200).\n';
+  u += '6. Every recipe MUST satisfy the MANDATORY DIETARY COMPLIANCE block.\n';
+  u += '7. "servings" on each recipe MUST equal the number of times that recipe appears in the plan grid (so meal prep maths out for shopping). For fresh-daily mode, every recipe appears once and servings=1.\n';
+  u += '8. "steps" MUST have 5-8 specific, actionable instructions.\n';
+  u += '9. "ingQty" MUST list every item in "ing" with realistic amounts; prices in USD per single serving.\n';
+  u += '10. Output ONLY the JSON object. Begin with { and end with }.';
+
+  return { sysMsg: sysMsg, userMsg: u, mt: mt, calT: calT, macros: macros, slots: slots, uniqueRecipeCount: uniqueRecipeCount };
+}
+
+function generateWeeklyPlan(intent) {
+  var ok = validateProfileForGeneration();
+  if (!ok.ok) {
+    nutriDebug('Week generation blocked — invalid profile', ok.errors || ok.msg);
+    showToast(ok.msg);
+    showScreen('ob');
+    return;
+  }
+  var myGen = ++recipeGenId;
+  resetGenLoadingUI();
+
+  var built = buildWeeklyPlanPrompt(intent);
+  nutriDebug('Final week-direct AI user message (' + built.userMsg.length + ' chars)', built.userMsg.length > 20000 ? built.userMsg.slice(0, 20000) + '\n… [truncated for console]' : built.userMsg);
+  setGenPhase('balancing');
+
+  function applyWeek(err, raw) {
+    if (myGen !== recipeGenId) return;
+
+    var parsed = null;
+    if (!err && raw) parsed = parseJSON(raw);
+
+    var validRecipes = parsed && parsed.recipes && Array.isArray(parsed.recipes) && parsed.recipes.length;
+    var validPlan = parsed && parsed.plan && typeof parsed.plan === 'object';
+
+    if (!validRecipes || !validPlan) {
+      if (myGen !== recipeGenId) return;
+      stopGenLoadingUI();
+      var detail = '';
+      if (err) detail = err.message || String(err);
+      else if (!raw) detail = 'No response body from the planning service.';
+      else if (!parsed) detail = 'The AI response was not valid JSON.';
+      else detail = 'The AI response was missing recipes or plan.';
+      nutriDebug('Week-direct generation failed', { detail: detail, rawPreview: raw ? String(raw).slice(0, 600) : null });
+      tab('planner');
+      showToast('Could not build your week — try again.');
+      return;
+    }
+
+    setGenPhase('recipes');
+    recipes = parsed.recipes.map(function(r, i) { return normalizeGeneratedRecipe(r, i, built.mt); });
+
+    // Re-key plan by recipe id presence in the freshly-normalized recipes array.
+    var recById = {};
+    for (var ri = 0; ri < recipes.length; ri++) recById[recipes[ri].id] = recipes[ri];
+
+    for (var d = 0; d < DAYS.length; d++) mealPlan[DAYS[d]] = {};
+    mealJournal = {};
+    var slots = built.slots;
+    var assignmentCounts = {};
+    for (var dd = 0; dd < DAYS.length; dd++) {
+      var day = DAYS[dd];
+      var dayPlan = parsed.plan[day] || {};
+      for (var ss = 0; ss < slots.length; ss++) {
+        var slot = slots[ss];
+        var rid  = parseInt(dayPlan[slot], 10);
+        if (rid && recById[rid]) {
+          mealPlan[day][slot] = rid;
+          assignmentCounts[rid] = (assignmentCounts[rid] || 0) + 1;
+          recordRecipeSavedEngagement(rid, 'plan', true);
+        }
+      }
+    }
+
+    // Resolve recipe.servings = AI batch size, or plan-driven repeat count as a sane default.
+    // (UP.servingOverrides is reserved for user adjustments and stays untouched here.)
+    for (var rj = 0; rj < recipes.length; rj++) {
+      var rec = recipes[rj];
+      var aiServings = parseInt(rec.servings, 10);
+      var planServings = assignmentCounts[rec.id] || 1;
+      rec.servings = aiServings > 0 ? aiServings : planServings;
+    }
+
+    UP.weeklyPlan = {
+      builtAt: Date.now(),
+      style: intent.style,
+      focus: intent.focus,
+      cuisines: intent.cuisines.slice(),
+      household: parseInt(UP.household, 10) || 1,
+      uniqueRecipeIds: recipes.map(function(r) { return r.id; }),
+      repeatMap: assignmentCounts
+    };
+    // Wipe stale per-recipe servings overrides — they're tied to last week's recipe ids.
+    UP.servingOverrides = {};
+    UP.weeklyPlanDraft = null;
+
+    setGenPhase('grocery');
+    renderLibrary();
+    renderPlanner();
+    renderNutrition();
+    renderShopping();
+
+    setTimeout(function() {
+      if (myGen !== recipeGenId) return;
+      setGenPhase('finalize');
+      completeGenLoadingUI();
+      setTimeout(function() {
+        if (myGen !== recipeGenId) return;
+        saveUserProfile();
+        tab('planner'); // Land on the new week, not Today
+        scheduleWeeklyRecapAutoCheck();
+        stopGenLoadingUI();
+      }, 420);
+    }, 380);
+  }
+
+  callAIWithRetry(built.sysMsg, built.userMsg, 9000, applyWeek, 3);
+}
+
+/* ── Built-for header on the planner ── */
+
+function renderBuiltForHeader() {
+  ensureWeeklyPlanShape();
+  var emptyCard   = el('plan-empty');
+  var headerCard  = el('builtfor-card');
+  var listLbl     = el('planner-list-lbl');
+  var adaptCard   = el('planner-adapt-card');
+  if (!emptyCard || !headerCard || !listLbl) return;
+
+  if (!hasBuiltWeek()) {
+    emptyCard.style.display  = 'block';
+    headerCard.style.display = 'none';
+    listLbl.style.display    = 'none';
+    if (adaptCard) adaptCard.style.display = 'none';
+    return;
+  }
+  emptyCard.style.display  = 'none';
+  headerCard.style.display = 'flex';
+  listLbl.style.display    = 'block';
+  if (adaptCard) adaptCard.style.display = 'block';
+
+  var wp = UP.weeklyPlan;
+  var styleMeta = BW_STYLE_META[wp.style] || BW_STYLE_META.fresh;
+  var focusMeta = BW_FOCUS_META[wp.focus] || BW_FOCUS_META.balanced;
+  var pills = '';
+  pills += '<span class="bf-pill"><span class="bf-pill-ic">' + styleMeta.ic + '</span>' + shopEsc(styleMeta.label) + '</span>';
+  pills += '<span class="bf-pill"><span class="bf-pill-ic">' + focusMeta.ic + '</span>' + shopEsc(focusMeta.label) + '</span>';
+  if (wp.cuisines && wp.cuisines.length) {
+    pills += '<span class="bf-pill"><span class="bf-pill-ic">🌍</span>' + shopEsc(wp.cuisines.join(' · ')) + '</span>';
+  }
+  el('builtfor-pills').innerHTML = pills;
+}
+
+/* ── Library (repurposed Recipes tab) ── */
+
+var libView = 'this-week';
+
+function recipesUsedThisWeek() {
+  var idsInPlan = {};
+  for (var d = 0; d < DAYS.length; d++) {
+    var dayPlan = mealPlan[DAYS[d]];
+    if (!dayPlan) continue;
+    var keys = Object.keys(dayPlan);
+    for (var k = 0; k < keys.length; k++) {
+      var rid = dayPlan[keys[k]];
+      if (rid) idsInPlan[rid] = (idsInPlan[rid] || 0) + 1;
+    }
+  }
+  var out = [];
+  var idList = Object.keys(idsInPlan);
+  for (var i = 0; i < idList.length; i++) {
+    var r = findRecipe(parseInt(idList[i], 10));
+    if (r) out.push({ recipe: r, repeats: idsInPlan[idList[i]] });
+  }
+  return out.sort(function(a, b) { return b.repeats - a.repeats; });
+}
+
+function recipesSavedFromLibrary() {
+  ensureArcSavedRecipes(UP);
+  var stars = UP.arcSavedRecipes && Array.isArray(UP.arcSavedRecipes.starredRecipeIds)
+    ? UP.arcSavedRecipes.starredRecipeIds : [];
+  var out = [];
+  for (var i = 0; i < stars.length; i++) {
+    var r = findRecipe(stars[i]);
+    if (r) out.push({ recipe: r, repeats: 0 });
+  }
+  return out;
+}
+
+function renderLibrary() {
+  var listEl = el('recipes-list');
+  if (!listEl) return;
+  var catTabs = el('cat-tabs');
+  var fb = (UP.mealFeedback && typeof UP.mealFeedback === 'object') ? UP.mealFeedback : {};
+
+  var rows = [];
+  if (libView === 'this-week') {
+    if (catTabs) catTabs.style.display = 'none';
+    rows = recipesUsedThisWeek();
+    if (!rows.length) {
+      listEl.innerHTML = '<div class="lib-empty">No week planned yet.<br><br>Open the <strong>Planner</strong> and build a week to see your recipes here.</div>';
+      return;
+    }
+  } else if (libView === 'saved') {
+    if (catTabs) catTabs.style.display = 'none';
+    rows = recipesSavedFromLibrary();
+    if (!rows.length) {
+      listEl.innerHTML = '<div class="lib-empty">No saved recipes yet.<br><br>Tap the ★ inside a recipe to add it here.</div>';
+      return;
+    }
+  } else {
+    if (catTabs) catTabs.style.display = 'flex';
+    var pool = activeCat === 'All' ? recipes : recipes.filter(function(r) { return r.cat === activeCat; });
+    rows = pool.map(function(r) { return { recipe: r, repeats: 0 }; });
+    if (!rows.length) {
+      listEl.innerHTML = '<div class="lib-empty">No recipes in this category yet.</div>';
+      return;
+    }
+  }
+
+  var planIds = {};
+  var weekRows = recipesUsedThisWeek();
+  for (var w = 0; w < weekRows.length; w++) planIds[weekRows[w].recipe.id] = weekRows[w].repeats;
+
+  var html = '';
+  for (var i = 0; i < rows.length; i++) {
+    var r       = rows[i].recipe;
+    var diff    = r.difficulty || 'Easy';
+    var repeats = libView === 'this-week' ? rows[i].repeats : (planIds[r.id] || 0);
+    var tagHtml = '';
+    if (repeats > 0) tagHtml += '<span class="lib-card-tag this-week">This week' + (repeats > 1 ? ' · ×' + repeats : '') + '</span>';
+    if (repeats >= 3) tagHtml += '<span class="lib-card-tag prep">Prep batch</span>';
+
+    html += '<div class="rc">';
+    html += '<div class="rc-name">' + tagHtml + shopEsc(r.name) + '</div>';
+    html += '<div class="rc-meta"><span class="diff diff-' + diff + '">' + diff + '</span><span>' + shopEsc(r.time) + '</span><span>' + shopEsc(r.cat) + '</span></div>';
+    html += '<div class="macros">';
+    html += '<span class="m m-cal">' + r.cal + ' kcal</span>';
+    html += '<span class="m m-p">'   + r.p   + 'g protein</span>';
+    html += '<span class="m m-c">'   + r.c   + 'g carbs</span>';
+    html += '<span class="m m-f">'   + r.f   + 'g fat</span>';
+    html += '<span class="m m-price">' + fmtPrice(r.price) + '/serving</span>';
+    html += '</div>';
+    html += '<div class="rc-actions">';
+    html += '<button class="cook-btn" data-id="' + r.id + '">📖 View recipe</button>';
+    html += '<button class="pref-btn' + (fb[r.id] === 1 ? ' on-like' : '') + '" data-pref="like" data-id="' + r.id + '">👍</button>';
+    html += '<button class="pref-btn' + (fb[r.id] === -1 ? ' on-dislike' : '') + '" data-pref="dislike" data-id="' + r.id + '">👎</button>';
+    html += '</div></div>';
+  }
+  listEl.innerHTML = html;
+
+  var cookBtns = listEl.querySelectorAll('.cook-btn');
+  for (var c = 0; c < cookBtns.length; c++) {
+    cookBtns[c].addEventListener('click', function() { openRM(parseInt(this.dataset.id, 10)); });
+  }
+  var prefBtns = listEl.querySelectorAll('.pref-btn');
+  for (var p = 0; p < prefBtns.length; p++) {
+    prefBtns[p].addEventListener('click', function() {
+      var id = parseInt(this.dataset.id, 10);
+      if (!UP.mealFeedback || typeof UP.mealFeedback !== 'object') UP.mealFeedback = {};
+      var next = this.dataset.pref === 'like' ? 1 : -1;
+      UP.mealFeedback[id] = (UP.mealFeedback[id] === next) ? 0 : next;
+      if (UP.mealFeedback[id] === 0) delete UP.mealFeedback[id];
+      else if (UP.mealFeedback[id] === 1) recordRecipeSavedEngagement(id, 'select', true);
+      saveUserProfile();
+      renderLibrary();
+    });
+  }
+  saveSessionState();
+}
+
+function setupLibraryTabs() {
+  var tabs = document.querySelectorAll('#lib-tabs .lib-tab');
+  if (!tabs.length || tabs[0]._libBound) return;
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i]._libBound = true;
+    tabs[i].addEventListener('click', function() {
+      libView = this.dataset.lib;
+      for (var k = 0; k < tabs.length; k++) tabs[k].classList.toggle('active', tabs[k] === this);
+      renderLibrary();
+    });
+  }
+}
+
 function generateRecipes() {
   var ok = validateProfileForGeneration();
   if (!ok.ok) {
@@ -4451,88 +5211,12 @@ function setupCatTabs() {
   });
 }
 
-// ── Render recipes ────────────────────────────────────────────
-function renderRecipes() {
-  var filtered = activeCat === 'All' ? recipes : recipes.filter(function(r) { return r.cat === activeCat; });
-  var list     = el('recipes-list');
-  var fb       = (UP.mealFeedback && typeof UP.mealFeedback === 'object') ? UP.mealFeedback : {};
-
-  if (!filtered.length) {
-    list.innerHTML = '<p style="color:#c4bdb5;font-style:italic;font-size:14px;padding:20px 0">No recipes in this category yet.</p>';
-    updateNextBar();
-    return;
-  }
-
-  var html = '';
-  for (var i = 0; i < filtered.length; i++) {
-    var r     = filtered[i];
-    var diff  = r.difficulty || 'Easy';
-    var added = selectedRecipes.has(r.id);
-    html += '<div class="rc' + (added ? ' added' : '') + '">';
-    html += '<div class="rc-name">' + r.name + '</div>';
-    html += '<div class="rc-meta"><span class="diff diff-' + diff + '">' + diff + '</span><span>' + r.time + '</span><span>' + r.cat + '</span></div>';
-    html += '<div class="macros">';
-    html += '<span class="m m-cal">' + r.cal + ' kcal</span>';
-    html += '<span class="m m-p">'   + r.p   + 'g protein</span>';
-    html += '<span class="m m-c">'   + r.c   + 'g carbs</span>';
-    html += '<span class="m m-f">'   + r.f   + 'g fat</span>';
-    html += '<span class="m m-price">' + fmtPrice(r.price) + '/serving</span>';
-    html += '</div>';
-    html += '<div class="rc-actions">';
-    html += '<button class="cook-btn" data-id="' + r.id + '">📖 View recipe</button>';
-    html += '<button class="add-btn' + (added ? ' on' : '') + '" data-id="' + r.id + '">' + (added ? '✓ Selected' : 'Select') + '</button>';
-    html += '<button class="pref-btn' + (fb[r.id] === 1 ? ' on-like' : '') + '" data-pref="like" data-id="' + r.id + '">👍</button>';
-    html += '<button class="pref-btn' + (fb[r.id] === -1 ? ' on-dislike' : '') + '" data-pref="dislike" data-id="' + r.id + '">👎</button>';
-    html += '</div></div>';
-  }
-  list.innerHTML = html;
-
-  var addBtns  = list.querySelectorAll('.add-btn');
-  var cookBtns = list.querySelectorAll('.cook-btn');
-
-  for (var a = 0; a < addBtns.length; a++) {
-    addBtns[a].addEventListener('click', function() {
-      var id = parseInt(this.dataset.id, 10);
-      if (selectedRecipes.has(id)) {
-        selectedRecipes.delete(id);
-        removeRecipeFromMealPlan(id);
-      } else {
-        selectedRecipes.add(id);
-        recordRecipeSavedEngagement(id, 'select', true);
-      }
-      renderRecipes();
-      renderPlanner();
-      renderNutrition();
-      renderShopping();
-      updateNextBar();
-      saveSessionState();
-    });
-  }
-  for (var c = 0; c < cookBtns.length; c++) {
-    cookBtns[c].addEventListener('click', function() { openRM(parseInt(this.dataset.id, 10)); });
-  }
-  var prefBtns = list.querySelectorAll('.pref-btn');
-  for (var p = 0; p < prefBtns.length; p++) {
-    prefBtns[p].addEventListener('click', function() {
-      var id = parseInt(this.dataset.id, 10);
-      if (!UP.mealFeedback || typeof UP.mealFeedback !== 'object') UP.mealFeedback = {};
-      var next = this.dataset.pref === 'like' ? 1 : -1;
-      UP.mealFeedback[id] = (UP.mealFeedback[id] === next) ? 0 : next;
-      if (UP.mealFeedback[id] === 0) delete UP.mealFeedback[id];
-      else if (UP.mealFeedback[id] === 1) recordRecipeSavedEngagement(id, 'select', true);
-      saveUserProfile();
-      renderRecipes();
-    });
-  }
-  updateNextBar();
-  saveSessionState();
-}
-
-function updateNextBar() {
-  var n = selectedRecipes.size;
-  el('next-bar').style.display = n > 0 ? 'block' : 'none';
-  el('nb-sub').textContent     = n + ' recipe' + (n === 1 ? '' : 's') + ' selected';
-}
+// ── Render recipes (legacy alias → Library) ───────────────────
+// The dedicated "select N recipes" gate is gone. The Recipes tab is now the
+// Library, rendered by renderLibrary(). renderRecipes / updateNextBar are
+// kept as shims so legacy call-sites keep working without DOM errors.
+function renderRecipes() { return renderLibrary(); }
+function updateNextBar() { /* deprecated: no select-gate next-bar anymore */ }
 
 function removeRecipeFromMealPlan(recipeId) {
   var slots = getSlots();
@@ -4616,6 +5300,67 @@ function buildNutTab(r) {
   return html;
 }
 
+function getServingsFor(recipeId) {
+  if (!recipeId) return 1;
+  var v = UP.servingOverrides && UP.servingOverrides[recipeId];
+  v = parseInt(v, 10);
+  if (!(v > 0)) v = 1;
+  return Math.min(8, Math.max(1, v));
+}
+
+function setServingsFor(recipeId, n) {
+  if (!UP.servingOverrides || typeof UP.servingOverrides !== 'object') UP.servingOverrides = {};
+  n = Math.min(8, Math.max(1, parseInt(n, 10) || 1));
+  if (n === 1) delete UP.servingOverrides[recipeId];
+  else UP.servingOverrides[recipeId] = n;
+}
+
+function renderRMServings(r) {
+  var wrap = el('rm-servings');
+  if (!wrap) return;
+  // Only show the stepper when the recipe is part of an active week — otherwise it's meaningless.
+  var inPlan = false;
+  for (var d = 0; d < DAYS.length && !inPlan; d++) {
+    var dp = mealPlan[DAYS[d]]; if (!dp) continue;
+    var ks = Object.keys(dp);
+    for (var k = 0; k < ks.length; k++) if (dp[ks[k]] === r.id) { inPlan = true; break; }
+  }
+  if (!inPlan) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'flex';
+
+  var n = getServingsFor(r.id);
+  el('rm-srv-val').textContent = n;
+  el('rm-srv-dec').disabled = (n <= 1);
+  el('rm-srv-inc').disabled = (n >= 8);
+
+  var slotsUsing = 0;
+  for (var dd = 0; dd < DAYS.length; dd++) {
+    var dp2 = mealPlan[DAYS[dd]]; if (!dp2) continue;
+    var k2 = Object.keys(dp2);
+    for (var kk = 0; kk < k2.length; kk++) if (dp2[k2[kk]] === r.id) slotsUsing++;
+  }
+  var totalServings = slotsUsing * n;
+  el('rm-servings-h').textContent = n === 1
+    ? 'Cook for 1 serving each time'
+    : 'Cook for ' + n + ' servings each time';
+  el('rm-servings-s').textContent = slotsUsing > 1
+    ? slotsUsing + ' slots this week · total ' + totalServings + ' serving' + (totalServings === 1 ? '' : 's') + ' to buy'
+    : 'Shopping list scales automatically';
+}
+
+function bumpRMServings(delta) {
+  if (!curRecipe) return;
+  var n = getServingsFor(curRecipe.id) + delta;
+  if (n < 1 || n > 8) return;
+  setServingsFor(curRecipe.id, n);
+  renderRMServings(curRecipe);
+  renderPlanner();
+  renderNutrition();
+  renderShopping();
+  renderToday();
+  saveSessionState();
+}
+
 function openRM(id) {
   curRecipe = null;
   for (var i = 0; i < recipes.length; i++) {
@@ -4638,6 +5383,8 @@ function openRM(id) {
     ? buildStepsTab(stepCache[id])
     : '<div style="text-align:center;padding:32px;color:#9ca3af"><div class="ai-spinner" style="margin:0 auto 14px"></div><div style="font-size:14px">Generating instructions...</div></div>';
   el('tab-nut').innerHTML   = buildNutTab(curRecipe);
+
+  renderRMServings(curRecipe);
 
   // Wire swap buttons
   var swapBtns = el('tab-ing').querySelectorAll('.swap-btn');
@@ -4804,6 +5551,14 @@ function findRecipe(id) {
 }
 
 function renderPlanner() {
+  renderBuiltForHeader();
+  var listEl = el('planner-list');
+  // Hide the day grid entirely until a plan has been built (or carried over manually).
+  if (!hasBuiltWeek()) {
+    if (listEl) listEl.innerHTML = '';
+    updatePlannerBar();
+    return;
+  }
   var slots = getSlots();
   var html  = '';
 
@@ -4839,9 +5594,13 @@ function renderPlanner() {
     for (var sl = 0; sl < slots.length; sl++) {
       var slot  = slots[sl];
       var slotR = mealPlan[day][slot] ? findRecipe(mealPlan[day][slot]) : null;
+      var repeatBadge = '';
+      if (slotR && UP.weeklyPlan && UP.weeklyPlan.repeatMap && UP.weeklyPlan.repeatMap[slotR.id] > 1) {
+        repeatBadge = ' <span class="lib-card-tag prep" style="font-size:9px;padding:2px 5px;margin-left:6px">Prep ×' + UP.weeklyPlan.repeatMap[slotR.id] + '</span>';
+      }
       html += '<div class="slot-row">';
       html += '<span class="slot-lbl">' + slot + '</span>';
-      html += '<span class="slot-meal' + (slotR ? '' : ' empty') + '">' + (slotR ? slotR.name : 'Add meal') + '</span>';
+      html += '<span class="slot-meal' + (slotR ? '' : ' empty') + '">' + (slotR ? slotR.name : 'Add meal') + repeatBadge + '</span>';
       if (slotR) html += '<span class="slot-price">' + fmtPrice(slotR.price) + '</span>';
       html += '<button class="slot-add" data-day="' + day + '" data-slot="' + slot + '">+</button>';
       if (slotR) html += '<button class="slot-rm" data-day="' + day + '" data-slot="' + slot + '">✕</button>';
@@ -4885,24 +5644,123 @@ function updatePlannerBar() {
   el('pnb-sub').textContent = n + ' meal' + (n === 1 ? '' : 's') + ' planned';
 }
 
+/* ── Curated swap-from-slot logic ────────────────────────────
+   Scores a recipe against this week's focus and the slot's macro
+   targets so the swap sheet surfaces a handful of strong picks
+   first, then lets the user expand the full pool if needed. */
+function scoreRecipeForSlot(r, slotCat, focus, mealTargets) {
+  if (!r) return -Infinity;
+  var score = 0;
+
+  // Hard penalty for wrong category (still keep in the "all" list)
+  if (r.cat !== slotCat) score -= 50;
+
+  // Slot-target alignment (calories) — closer = better
+  var target = mealTargets && mealTargets[slotCat] ? mealTargets[slotCat] : null;
+  if (target && target.cal > 0) {
+    var diffPct = Math.abs(r.cal - target.cal) / target.cal;
+    score += Math.max(0, 30 - diffPct * 60);
+  }
+
+  // Focus bias
+  if (focus === 'highProtein') {
+    score += Math.min(20, (r.p || 0) * 0.5);
+  } else if (focus === 'quick') {
+    var mins = parseInt(String(r.time || '').replace(/[^0-9]/g, ''), 10) || 25;
+    score += Math.max(0, 25 - (mins - 15));
+    if (r.difficulty === 'Easy') score += 6;
+  } else if (focus === 'budget') {
+    score += Math.max(0, 18 - (r.price || 6) * 1.4);
+  } else {
+    // balanced — small protein bonus, small variety bonus
+    score += Math.min(10, (r.p || 0) * 0.2);
+  }
+
+  // Liked recipes float up, disliked sink
+  var fb = (UP.mealFeedback && UP.mealFeedback[r.id]) || 0;
+  if (fb === 1) score += 8;
+  else if (fb === -1) score -= 12;
+
+  return score;
+}
+
+function curatedSwapPicks(slotCat, currentRid, limit) {
+  var ne    = buildNutritionEngine();
+  var mt    = ne.mealTargets;
+  var focus = (UP.weeklyPlan && UP.weeklyPlan.focus) || 'balanced';
+  var pool  = recipes.filter(function(r) { return r.cat === slotCat && r.id !== currentRid; });
+  if (!pool.length) pool = recipes.filter(function(r) { return r.id !== currentRid; });
+  pool.sort(function(a, b) { return scoreRecipeForSlot(b, slotCat, focus, mt) - scoreRecipeForSlot(a, slotCat, focus, mt); });
+  return pool.slice(0, limit || 5);
+}
+
+function buildAssignRowHtml(r, focus, isPrep) {
+  var meta = r.cat + ' · ' + r.time + (r.difficulty ? ' · ' + r.difficulty : '');
+  var bias = '';
+  if (focus === 'highProtein') bias = r.p + 'g protein';
+  else if (focus === 'quick')  bias = r.time;
+  else if (focus === 'budget') bias = fmtPrice(r.price);
+  else                          bias = r.p + 'g · ' + r.c + 'g · ' + r.f + 'g';
+  var prepTag = isPrep ? '<span class="lib-card-tag prep" style="font-size:9px;padding:2px 5px;margin-right:6px;vertical-align:middle">Prep ×' + isPrep + '</span>' : '';
+  var html = '';
+  html += '<div class="modal-opt" data-id="' + r.id + '">';
+  html += '<div style="min-width:0;flex:1"><div style="font-size:14px;font-weight:600;color:#111;font-family:Georgia,serif">' + prepTag + shopEsc(r.name) + '</div>';
+  html += '<div style="font-size:12px;color:#9ca3af;margin-top:2px">' + meta + '</div></div>';
+  html += '<div style="text-align:right"><div style="font-weight:700;color:var(--arc-primary-dark);font-size:14px">' + fmtPrice(r.price) + '</div>';
+  html += '<div style="font-size:11.5px;color:#9ca3af">' + r.cal + ' cal · ' + bias + '</div></div>';
+  html += '</div>';
+  return html;
+}
+
 function openAssign(day, slot, intent) {
   assignIntent = intent || 'plan';
-  var available = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
-  if (!available.length) { showToast('Add some recipes from the Recipes tab first!'); return; }
+
+  var slotCat = 'Lunch';
+  if (/breakfast/i.test(slot)) slotCat = 'Breakfast';
+  else if (/dinner/i.test(slot)) slotCat = 'Dinner';
+  else if (/snack/i.test(slot)) slotCat = 'Snack';
+
+  if (!recipes.length) {
+    showToast('Build your week first to swap meals.');
+    if (!hasBuiltWeek()) { closeAssign(); tab('planner'); openBuildWeek('first'); }
+    return;
+  }
+
   assignDay  = day;
   assignSlot = slot;
+  var currentRid = (mealPlan[day] && mealPlan[day][slot]) || null;
+  var focus = (UP.weeklyPlan && UP.weeklyPlan.focus) || 'balanced';
+  var picks = curatedSwapPicks(slotCat, currentRid, 5);
+  var rest  = recipes.filter(function(r) {
+    if (r.id === currentRid) return false;
+    for (var k = 0; k < picks.length; k++) if (picks[k].id === r.id) return false;
+    return true;
+  });
+  rest.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
   el('assign-title').textContent = assignIntent === 'replace'
     ? ('What you ate · ' + slot)
     : (slot + ' — ' + DAY_FULL[day]);
+
+  var focusLabel = (BW_FOCUS_META[focus] || BW_FOCUS_META.balanced).label;
+
   var html = '';
-  for (var i = 0; i < available.length; i++) {
-    var r = available[i];
-    html += '<div class="modal-opt" data-id="' + r.id + '">';
-    html += '<div><div style="font-size:14px;font-weight:600;color:#111;font-family:Georgia,serif">' + r.name + '</div>';
-    html += '<div style="font-size:12px;color:#9ca3af;margin-top:2px">' + r.cat + ' · ' + r.time + '</div></div>';
-    html += '<div style="text-align:right"><div style="font-weight:700;color:var(--arc-primary-dark);font-size:14px">' + fmtPrice(r.price) + '</div>';
-    html += '<div style="font-size:12px;color:#9ca3af">' + r.cal + ' cal</div></div>';
+  html += '<div style="font-size:11.5px;color:var(--arc-subtext);font-weight:600;letter-spacing:.04em;margin:0 0 10px;text-transform:uppercase">Top picks · ' + focusLabel + '</div>';
+  if (!picks.length) {
+    html += '<div style="font-size:13px;color:#9ca3af;font-style:italic;padding:10px 0">Nothing in this category yet.</div>';
+  }
+  for (var i = 0; i < picks.length; i++) {
+    var p = picks[i];
+    var prepN = UP.weeklyPlan && UP.weeklyPlan.repeatMap ? UP.weeklyPlan.repeatMap[p.id] : 0;
+    html += buildAssignRowHtml(p, focus, prepN > 1 ? prepN : 0);
+  }
+  if (rest.length) {
+    html += '<button type="button" id="assign-show-all" style="display:block;margin:14px auto 4px;padding:8px 14px;border:1.5px solid rgba(31,31,31,.1);background:transparent;border-radius:10px;font-size:12.5px;font-weight:700;color:var(--arc-subtext);cursor:pointer;font-family:inherit">Show all ' + rest.length + ' more</button>';
+    html += '<div id="assign-more" style="display:none;margin-top:8px">';
+    for (var ri = 0; ri < rest.length; ri++) {
+      var prepN2 = UP.weeklyPlan && UP.weeklyPlan.repeatMap ? UP.weeklyPlan.repeatMap[rest[ri].id] : 0;
+      html += buildAssignRowHtml(rest[ri], focus, prepN2 > 1 ? prepN2 : 0);
+    }
     html += '</div>';
   }
   el('assign-opts').innerHTML = html;
@@ -4926,6 +5784,10 @@ function openAssign(day, slot, intent) {
         mealPlan[assignDay][assignSlot] = ridNum;
         setSlotJournal(assignDay, assignSlot, null);
         recordRecipeSavedEngagement(ridNum, 'plan');
+        // Keep repeatMap accurate when the user manually swaps a slot.
+        if (UP.weeklyPlan && UP.weeklyPlan.repeatMap) {
+          UP.weeklyPlan.repeatMap = computeRepeatMapFromPlan();
+        }
         closeAssign();
         renderPlanner();
         renderNutrition();
@@ -4934,7 +5796,30 @@ function openAssign(day, slot, intent) {
       }
     });
   }
+  var showAll = el('assign-show-all');
+  if (showAll) {
+    showAll.addEventListener('click', function() {
+      var more = el('assign-more');
+      if (!more) return;
+      more.style.display = 'block';
+      this.style.display = 'none';
+    });
+  }
   openMotion('assign-modal');
+}
+
+function computeRepeatMapFromPlan() {
+  var slots = getSlots();
+  var map = {};
+  for (var d = 0; d < DAYS.length; d++) {
+    var dp = mealPlan[DAYS[d]];
+    if (!dp) continue;
+    for (var s = 0; s < slots.length; s++) {
+      var rid = dp[slots[s]];
+      if (rid) map[rid] = (map[rid] || 0) + 1;
+    }
+  }
+  return map;
 }
 
 function closeAssign() {
@@ -5071,18 +5956,12 @@ function applySavedRecipeSheetAction(act, id) {
   var idn = parseInt(id, 10);
   if (!idn || !findRecipe(idn)) return;
   if (act === 'reuse') {
-    if (!selectedRecipes.has(idn)) {
-      selectedRecipes.add(idn);
-      recordRecipeSavedEngagement(idn, 'select');
-      renderRecipes();
-      renderPlanner();
-      renderNutrition();
-      renderShopping();
-      updateNextBar();
-      showToast('Added to your week pool');
-    } else {
-      showToast('Already in your week pool');
-    }
+    // Selection-pool is gone; "Reuse this week" now drops the user in the planner
+    // where they can slot the saved recipe wherever it fits.
+    recordRecipeSavedEngagement(idn, 'select');
+    closeSavedRecipesModal();
+    tab('planner');
+    showToast('Slot ‘' + (findRecipe(idn).name) + '’ wherever it fits this week.');
     return;
   }
   if (act === 'planner') {
@@ -5120,10 +5999,12 @@ function applySavedRecipeSheetAction(act, id) {
   }
 }
 
-// ── AI Plan Builder ───────────────────────────────────────────
+// ── AI Plan Builder (legacy — kept for backward-compat callers; new entry is openBuildWeek) ──
 function aiCreatePlan() {
-  if (!recipes.length) { showToast('Recipes are still loading...'); return; }
-  if (selectedRecipes.size === 0) { showToast('Select at least 1 recipe before generating your week.'); return; }
+  if (!recipes.length) {
+    openBuildWeek(hasBuiltWeek() ? 'rebuild' : 'first');
+    return;
+  }
   var ok = validateProfileForGeneration();
   if (!ok.ok) {
     nutriDebug('Week plan blocked — invalid profile', ok.errors || ok.msg);
@@ -5137,9 +6018,9 @@ function aiCreatePlan() {
   var calGoal  = ne.calT;
   var macros   = ne.macros;
 
-  // Build available recipe list with categories (selected recipes only)
-  var selectedPool = recipes.filter(function(r) { return selectedRecipes.has(r.id); });
-  if (!selectedPool.length) { hideAI(); showToast('Select recipes first, then generate your week.'); return; }
+  // Use the full recipe pool — selection-gate is gone.
+  var selectedPool = recipes.slice();
+  if (!selectedPool.length) { hideAI(); openBuildWeek('first'); return; }
   var byCategory = {};
   for (var i = 0; i < selectedPool.length; i++) {
     var r = selectedPool[i];
@@ -5367,11 +6248,10 @@ function openAdaptModal() {
           if (!mealPlan[day]) mealPlan[day] = {};
           mealPlan[day][slot] = rid;
           setSlotJournal(day, slot, null);
-          selectedRecipes.add(rid);
           recordRecipeSavedEngagement(rid, 'plan');
           this.closest('.adapt-change').style.opacity = '.4';
           showToast('Applied ✓');
-          renderRecipes();
+          renderLibrary();
           renderPlanner();
           renderNutrition();
           renderShopping();
@@ -5911,12 +6791,17 @@ function renderShopping() {
   for (var i = 0; i < plannedIds.length; i++) {
     var r = findRecipe(parseInt(plannedIds[i], 10));
     if (!r) continue;
+    // Servings multiplier: how many portions per slot for this recipe. Defaults to 1.
+    var mult = (UP.servingOverrides && UP.servingOverrides[r.id])
+      ? parseInt(UP.servingOverrides[r.id], 10) : 1;
+    if (!(mult > 0)) mult = 1;
+    mult = Math.min(8, mult);
     for (var j = 0; j < r.ing.length; j++) {
       var name = r.ing[j];
       var qty  = (r.ingQty && r.ingQty[name]) ? r.ingQty[name] : '1';
       var key  = ingredientLowerKey(name);
       if (!agg[key]) agg[key] = { display: name, qtys: [] };
-      agg[key].qtys.push(qty);
+      for (var mm = 0; mm < mult; mm++) agg[key].qtys.push(qty);
     }
   }
 
@@ -6253,15 +7138,16 @@ document.addEventListener('DOMContentLoaded', function() {
       resetAppAfterInvalidStoredProfile(storedProfileCheck.errors);
     } else {
       applyProfileToUIBar();
+      ensureWeeklyPlanShape();
       showScreen('s-today');
       tab('today');
       syncCatTabsUI();
-      renderRecipes();
+      setupLibraryTabs();
+      renderLibrary();
       renderPlanner();
       renderNutrition();
       renderShopping();
       renderToday();
-      updateNextBar();
       updatePlannerBar();
     }
   }
@@ -6318,7 +7204,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Chips
   singleChip('chip-region'); singleChip('chip-goal'); singleChip('chip-activity');
   singleChip('chip-meals');  singleChip('chip-skill'); singleChip('chip-budget');
-  multiChip('chip-cuisine'); multiChip('chip-diet');
+  multiChip('chip-diet');
 
   // Activity info tooltip
   el('act-ib').addEventListener('click', function(e) {
@@ -6356,7 +7242,9 @@ document.addEventListener('DOMContentLoaded', function() {
   setupCatTabs();
 
   // Next-bar buttons
-  el('goto-planner').addEventListener('click',  function() { tab('planner');  });
+  // goto-planner lived inside the removed recipes-tab next-bar — guard for legacy DOM.
+  var gotoPlanner = el('goto-planner');
+  if (gotoPlanner) gotoPlanner.addEventListener('click', function() { tab('planner'); });
   el('goto-shopping').addEventListener('click', function() { tab('shopping'); });
   el('today-cook-btn').addEventListener('click', function() {
     var rid = parseInt(this.dataset.rid, 10);
@@ -6475,6 +7363,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Recipe modal tabs
   setupRMTabs();
 
+  // Recipe modal — servings stepper
+  var dec = el('rm-srv-dec'), inc = el('rm-srv-inc');
+  if (dec) dec.addEventListener('click', function() { bumpRMServings(-1); });
+  if (inc) inc.addEventListener('click', function() { bumpRMServings(1); });
+
   // Swap modal
   el('swap-cancel').addEventListener('click', function() { closeMotion('swap-bg'); });
   el('swap-bg').addEventListener('click', function(e)    { if (e.target === this) closeMotion('swap-bg'); });
@@ -6493,11 +7386,17 @@ document.addEventListener('DOMContentLoaded', function() {
   el('today-saved-btn').addEventListener('click', function() { openSavedRecipesModal(); });
   el('s-saved-btn').addEventListener('click', function() { openSavedRecipesModal(); });
 
-  // Planner buttons
-  el('ai-plan-btn').addEventListener('click', aiCreatePlan);
+  // Planner buttons (ai-plan-btn was retired; Build-Your-Week replaces it)
+  var planBuildBtn = el('plan-build-btn');
+  if (planBuildBtn) planBuildBtn.addEventListener('click', function() { openBuildWeek('first'); });
+  var rebuildBtn = el('builtfor-rebuild');
+  if (rebuildBtn) rebuildBtn.addEventListener('click', function() { openBuildWeek('rebuild'); });
   el('adapt-btn').addEventListener('click', openAdaptModal);
   el('adapt-close').addEventListener('click', function() { closeMotion('adapt-bg'); });
   el('adapt-bg').addEventListener('click', function(e)   { if (e.target === this) closeMotion('adapt-bg'); });
+
+  // Library (Recipes tab) tabs
+  setupLibraryTabs();
 
   // Food log
   el('log-send').addEventListener('click', sendLog);
