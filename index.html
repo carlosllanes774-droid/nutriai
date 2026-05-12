@@ -533,6 +533,22 @@ body{
 .shop-have:hover{background:#fff;color:var(--arc-text)}
 .shop-have.on{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.22)}
 .shop-have:focus-visible{outline:2px solid var(--arc-primary);outline-offset:2px}
+.shop-export-wrap{position:sticky;bottom:0;z-index:5;margin:20px -4px 0;padding:16px 4px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(255,250,245,0) 0%,rgba(255,250,245,.92) 28%,var(--arc-bg) 55%);border-top:1px solid var(--arc-divider);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.btn-shop-export{width:100%;padding:16px 18px;border-radius:16px;border:none;background:var(--arc-primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary);letter-spacing:.01em;transition:background var(--motion-fast) var(--ease-standard),transform 180ms var(--ease-standard)}
+.btn-shop-export:hover{background:var(--arc-primary-dark)}
+.btn-shop-export:active{transform:scale(var(--press-scale))}
+.steps-phase-root{display:flex;flex-direction:column;gap:22px}
+.step-phase-block{border-radius:16px;padding:14px 14px 10px;border:1px solid rgba(31,23,16,.08);background:var(--arc-surface-2)}
+.step-phase--prep{border-color:rgba(34,139,87,.25);background:rgba(34,139,87,.06)}
+.step-phase--cook{border-color:rgba(227,90,54,.2);background:rgba(227,90,54,.05)}
+.step-phase--serve{border-color:rgba(99,102,241,.28);background:rgba(99,102,241,.06)}
+.step-phase-h{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--arc-subtext);margin-bottom:12px}
+.step-phase-dot{width:8px;height:8px;border-radius:50%;background:var(--arc-primary);flex-shrink:0}
+.step-phase--prep .step-phase-dot{background:#1d6b45}
+.step-phase--cook .step-phase-dot{background:var(--arc-primary)}
+.step-phase--serve .step-phase-dot{background:#6366f1}
+.step-phase-body .step-row{margin-bottom:12px}
+.step-phase-body .step-row:last-child{margin-bottom:4px}
 
 /* WEEKLY PLANNING — Build Your Week wizard + planner header */
 .bw-sheet{background:#fff;border-radius:24px 24px 0 0;padding:22px 22px 18px;width:100%;max-height:90%;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 -12px 40px rgba(0,0,0,0.18);transform:translateY(28px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
@@ -1175,6 +1191,7 @@ button:active{transform:scale(var(--press-scale))}
     <p class="shop-intro" id="shop-intro" style="display:none">Items are grouped like a grocery run: we bundle recipe math into bags, cartons, pounds, and other sizes you actually buy.</p>
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:8px;line-height:1.5;display:none" id="price-disc">* Prices are ballpark retail units for your region — real receipts will vary by brand and store.</p>
     <div id="shop-body"></div>
+    <div id="shop-export-wrap" class="shop-export-wrap" style="display:none" aria-hidden="true"></div>
   </div>
   <div class="nav"><button type="button" class="nbtn" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn active" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
@@ -1615,6 +1632,7 @@ var activeCat   = 'All';
 var curRecipe   = null;
 var todayPeekContext = null;
 var stepCache   = {};
+var lastShopLines = [];
 var swapIng     = null;
 var swapRid     = null;
 var assignDay   = null;
@@ -2849,6 +2867,31 @@ function categoryTargetsFor(cat, mt) {
   return mt.Lunch;
 }
 
+/** Normalize AI steps to { phase, instruction }[] for UI and caching (accepts legacy string[]). */
+function normalizeRecipeSteps(steps) {
+  if (!Array.isArray(steps) || !steps.length) return [];
+  var out = [];
+  function normPhase(p) {
+    var s = String(p || '').trim().toLowerCase();
+    if (s === 'prep' || /^prep\b/.test(s)) return 'Prep';
+    if (s === 'serve' || /^serve\b/.test(s) || /^plating\b/.test(s) || /^finish\b/.test(s)) return 'Serve';
+    return 'Cook';
+  }
+  for (var i = 0; i < steps.length; i++) {
+    var st = steps[i];
+    if (typeof st === 'string') {
+      var tx = st.trim();
+      if (tx) out.push({ phase: 'Cook', instruction: tx });
+    } else if (st && typeof st === 'object' && !Array.isArray(st)) {
+      var ph = normPhase(st.phase);
+      var ins = st.instruction != null ? String(st.instruction) : (st.text != null ? String(st.text) : (st.step != null ? String(st.step) : ''));
+      ins = ins.trim();
+      if (ins) out.push({ phase: ph, instruction: ins });
+    }
+  }
+  return out;
+}
+
 function normalizeGeneratedRecipe(r, i, mt) {
   var cat = r.cat || 'Lunch';
   var t = categoryTargetsFor(cat, mt);
@@ -2870,7 +2913,7 @@ function normalizeGeneratedRecipe(r, i, mt) {
     tags:       Array.isArray(r.tags) ? r.tags : [],
     ing:        Array.isArray(r.ing) ? r.ing : [],
     ingQty:     (r.ingQty && typeof r.ingQty === 'object') ? r.ingQty : {},
-    steps:      Array.isArray(r.steps) ? r.steps : []
+    steps:      normalizeRecipeSteps(Array.isArray(r.steps) ? r.steps : [])
   };
 }
 
@@ -4979,7 +5022,8 @@ function buildWeeklyPlanPrompt(intent) {
                'Start your response with { and end with }. ' +
                'You will design a WEEK PLAN — a set of recipes AND the day×slot grid that uses them. ' +
                'Every recipe MUST comply 100% with the MANDATORY DIETARY COMPLIANCE block; never relax it. ' +
-               'Every recipe\'s cal/p/c/f MUST fall within ±10% of its category target.';
+               'Every recipe\'s cal/p/c/f MUST fall within ±10% of its category target. ' +
+               'CRITICAL: The macros (cal, p, c, f) MUST mathematically align with the ingredients provided. 1g of protein = 4 cal, 1g carb = 4 cal, 1g fat = 9 cal. Do not hallucinate macros that contradict the ingredient list.';
 
   var u = '';
   u += 'Build a complete 7-day meal plan for this user.\n';
@@ -5001,7 +5045,7 @@ function buildWeeklyPlanPrompt(intent) {
 
   u += '\nOUTPUT JSON SHAPE:\n';
   u += '{\n';
-  u += '  "recipes": [ {"id":1,"name":"...","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch","servings":1,"tags":["High protein"],"ing":["Chicken breast","Rice","Broccoli"],"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},"steps":["Step 1 specific.","Step 2 specific.","Step 3 specific.","Step 4 specific.","Step 5 specific."]} ],\n';
+  u += '  "recipes": [ {"id":1,"name":"...","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch","servings":1,"tags":["High protein"],"ing":["Chicken breast","Rice","Broccoli"],"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},"steps":[{"phase":"Prep","instruction":"Slice chicken and chop broccoli."},{"phase":"Cook","instruction":"Pan-sear chicken until 165F internal; steam rice and broccoli."},{"phase":"Serve","instruction":"Plate with a squeeze of lemon."}]} ],\n';
   u += '  "plan":   { "Mon":{' + slots.map(function(s){ return '"' + s + '":1'; }).join(',') + '}, "Tue":{...}, "Wed":{...}, "Thu":{...}, "Fri":{...}, "Sat":{...}, "Sun":{...} }\n';
   u += '}\n\n';
 
@@ -5013,7 +5057,7 @@ function buildWeeklyPlanPrompt(intent) {
   u += '5. Daily total calories across the slots MUST be close to ' + calT + ' kcal (±200).\n';
   u += '6. Every recipe MUST satisfy the MANDATORY DIETARY COMPLIANCE block.\n';
   u += '7. "servings" on each recipe MUST equal the number of times that recipe appears in the plan grid (so meal prep maths out for shopping). For fresh-daily mode, every recipe appears once and servings=1.\n';
-  u += '8. "steps" MUST have 5-8 specific, actionable instructions.\n';
+  u += '8. "steps" MUST be an array of 5-8 objects: {"phase":"Prep"|"Cook"|"Serve","instruction":"..."}; each instruction must be specific and actionable.\n';
   u += '9. "ingQty" MUST list every item in "ing" with realistic amounts; prices in USD per single serving.\n';
   u += '10. Output ONLY the JSON object. Begin with { and end with }.';
 
@@ -5321,9 +5365,10 @@ function generateRecipes() {
   var sysMsg = 'You are an expert nutritionist and chef. You MUST respond with ONLY a valid JSON array. ' +
                'No markdown, no code fences, no explanation before or after. ' +
                'Start your response with [ and end with ]. ' +
-               'Every recipe object MUST have all required fields including a "steps" array with 5-8 strings. ' +
+               'Every recipe object MUST have all required fields including a "steps" array of 5-8 objects shaped like {"phase":"Prep"|"Cook"|"Serve","instruction":"string"}. ' +
                'Every recipe MUST comply 100% with the user MANDATORY DIETARY COMPLIANCE section—never relax it. ' +
-               'Every recipe\'s cal, p, c, f MUST align with the CALORIE & MACRO ALIGNMENT section within ±10% for its category.';
+               'Every recipe\'s cal, p, c, f MUST align with the CALORIE & MACRO ALIGNMENT section within ±10% for its category. ' +
+               'CRITICAL: The macros (cal, p, c, f) MUST mathematically align with the ingredients provided. 1g of protein = 4 cal, 1g carb = 4 cal, 1g fat = 9 cal. Do not hallucinate macros that contradict the ingredient list.';
 
   var userMsg = 'Generate exactly 28 personalized recipes for this user profile:\n';
   userMsg += 'Name: ' + UP.name + '\n';
@@ -5344,11 +5389,11 @@ function generateRecipes() {
   userMsg += '[{"id":1,"name":"Recipe Name","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch",';
   userMsg += '"tags":["High protein","Quick"],"ing":["Chicken breast","Rice","Broccoli"],';
   userMsg += '"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},';
-  userMsg += '"steps":["Step 1 specific action.","Step 2 specific action.","Step 3 specific action.","Step 4 specific action.","Step 5 specific action."]}]\n\n';
+  userMsg += '"steps":[{"phase":"Prep","instruction":"Slice chicken thin; rinse rice until water runs clear."},{"phase":"Cook","instruction":"Sear chicken in a hot pan; simmer rice covered 15 min; steam broccoli 5 min."},{"phase":"Serve","instruction":"Plate with soy drizzle and green onions."}]}]\n\n';
   userMsg += 'The example "ing" line is JSON shape only—your actual ingredients MUST respect the MANDATORY DIETARY COMPLIANCE section (e.g. no animal products for vegan).\n\n';
   userMsg += 'STRICT RULES:\n';
   userMsg += '1. Each recipe MUST fully satisfy the MANDATORY DIETARY COMPLIANCE section and all dislikes—ingredient names, amounts, and steps must comply; if a concept would break a rule, pick a different compliant recipe.\n';
-  userMsg += '2. steps array MUST have 5-8 specific actionable instructions (not vague placeholders like "cook until done")\n';
+  userMsg += '2. "steps" MUST be 5-8 objects with "phase" exactly Prep, Cook, or Serve and a specific "instruction" (not vague placeholders like "cook until done")\n';
   userMsg += '3. ingQty must list EVERY item in ing with realistic amounts\n';
   userMsg += '4. cal, p, c, f must be accurate for the listed ingredients AND MUST fall within ±10% of that recipe category\'s targets in the CALORIE & MACRO ALIGNMENT section\n';
   userMsg += '5. price is USD cost per serving — match the budget: ' + budgetNote + '\n';
@@ -5460,18 +5505,86 @@ function removeRecipeFromMealPlan(recipeId) {
   }
 }
 
+function gcdScaledQty(a, b) {
+  a = Math.abs(Math.round(a));
+  b = Math.abs(Math.round(b));
+  while (b) { var t = b; b = a % b; a = t; }
+  return a || 1;
+}
+
+function formatScaledAmount(val) {
+  if (!isFinite(val) || val <= 0) return String(val);
+  var eps = 1e-5;
+  var rounded = Math.round(val);
+  if (Math.abs(val - rounded) < eps) return String(rounded);
+  for (var den = 2; den <= 16; den++) {
+    var num = Math.round(val * den);
+    if (Math.abs(val - num / den) < eps / den) {
+      var g = gcdScaledQty(num, den);
+      num = Math.round(num / g);
+      var d = Math.round(den / g);
+      if (num <= 0) continue;
+      if (num >= d) {
+        var w = Math.floor(num / d);
+        num = num % d;
+        if (num === 0) return String(w);
+        return w + ' ' + num + '/' + d;
+      }
+      return num + '/' + d;
+    }
+  }
+  var t = Math.round(val * 100) / 100;
+  return (Math.abs(t - Math.round(t)) < eps) ? String(Math.round(t)) : String(t);
+}
+
+function parseLeadingQtySegment(raw) {
+  var s = String(raw == null ? '' : raw).trim();
+  if (!s) return null;
+  var m = s.match(/^(\d+)\s+(\d+)\s*\/\s*(\d+)/);
+  if (m) {
+    var w = parseInt(m[1], 10), n = parseInt(m[2], 10), d = parseInt(m[3], 10);
+    if (d > 0) return { val: w + n / d, len: m[0].length };
+  }
+  m = s.match(/^(\d+)\s*\/\s*(\d+)/);
+  if (m) {
+    var n2 = parseInt(m[1], 10), d2 = parseInt(m[2], 10);
+    if (d2 > 0) return { val: n2 / d2, len: m[0].length };
+  }
+  m = s.match(/^(\d+(?:\.\d+)?)/);
+  if (m) return { val: parseFloat(m[1]), len: m[0].length };
+  return null;
+}
+
+/** Scale the leading numeric token in a quantity string (e.g. "1/2 cup" × 4 → "2 cup") for display. */
+function scaleIngredientQtyString(qtyStr, factor) {
+  factor = parseInt(factor, 10);
+  if (!(factor > 1)) return String(qtyStr == null ? '' : qtyStr);
+  var raw = String(qtyStr == null ? '' : qtyStr).trim();
+  if (!raw) return raw;
+  var seg = parseLeadingQtySegment(raw);
+  if (!seg) return raw;
+  var scaled = seg.val * factor;
+  var rest = raw.slice(seg.len);
+  var head = formatScaledAmount(scaled);
+  if (!rest || !String(rest).trim()) return head;
+  return head + rest;
+}
+
 // ── Recipe modal ──────────────────────────────────────────────
 function buildIngredientsPeek(r) {
   if (!r) return '';
   var iq = r.ingQty || {};
   var ings = r.ing || [];
+  var mult = getServingsFor(r.id);
   if (!ings.length) {
     return '<p class="tm-peek-muted">No ingredient list stored for this recipe.</p>';
   }
   var html = '';
   for (var i = 0; i < ings.length; i++) {
     var ing = ings[i];
-    html += '<div class="ing-row"><span class="ing-name">' + shopEsc(ing) + '</span><span class="ing-qty">' + shopEsc(iq[ing] || '—') + '</span></div>';
+    var qraw = iq[ing] || '—';
+    var qdisp = qraw === '—' ? qraw : scaleIngredientQtyString(qraw, mult);
+    html += '<div class="ing-row"><span class="ing-name">' + shopEsc(ing) + '</span><span class="ing-qty">' + shopEsc(qdisp) + '</span></div>';
   }
   return html;
 }
@@ -5480,13 +5593,16 @@ function buildIngredientsTab(r) {
   var iq   = r.ingQty || {};
   var html = '';
   var ings = r.ing || [];
+  var mult = getServingsFor(r.id);
   for (var i = 0; i < ings.length; i++) {
     var ing = ings[i];
+    var qraw = iq[ing] || '—';
+    var qdisp = qraw === '—' ? qraw : scaleIngredientQtyString(qraw, mult);
     html += '<div class="ing-row">';
-    html += '<span class="ing-name">' + ing + '</span>';
+    html += '<span class="ing-name">' + shopEsc(ing) + '</span>';
     html += '<div class="ing-right">';
-    html += '<span class="ing-qty">' + (iq[ing] || '—') + '</span>';
-    html += '<button class="swap-btn" data-ing="' + ing + '">Swap</button>';
+    html += '<span class="ing-qty">' + shopEsc(qdisp) + '</span>';
+    html += '<button class="swap-btn" data-ing="' + shopDataAttr(ing) + '">Swap</button>';
     html += '</div></div>';
   }
   html += '<div style="height:8px"></div>';
@@ -5494,15 +5610,31 @@ function buildIngredientsTab(r) {
 }
 
 function buildStepsTab(steps) {
-  if (!steps || !steps.length) {
+  var norm = normalizeRecipeSteps(Array.isArray(steps) ? steps : []);
+  if (!norm.length) {
     return '<p style="color:#9ca3af;font-size:14px;padding:20px 0">No instructions available.</p>';
   }
-  var html = '<div style="display:flex;flex-direction:column;gap:14px">';
-  for (var i = 0; i < steps.length; i++) {
-    html += '<div class="step-row">';
-    html += '<div class="step-num">' + (i + 1) + '</div>';
-    html += '<div class="step-txt">' + steps[i] + '</div>';
-    html += '</div>';
+  var phaseOrder = ['Prep', 'Cook', 'Serve'];
+  var phaseCls = { Prep: 'step-phase--prep', Cook: 'step-phase--cook', Serve: 'step-phase--serve' };
+  var html = '<div class="steps-phase-root">';
+  var stepNo = 1;
+  for (var pi = 0; pi < phaseOrder.length; pi++) {
+    var P = phaseOrder[pi];
+    var bucket = [];
+    for (var bi = 0; bi < norm.length; bi++) {
+      if (norm[bi].phase === P) bucket.push(norm[bi].instruction);
+    }
+    if (!bucket.length) continue;
+    html += '<section class="step-phase-block ' + (phaseCls[P] || '') + '" aria-label="' + P + ' phase">';
+    html += '<div class="step-phase-h"><span class="step-phase-dot"></span>' + P + '</div>';
+    html += '<div class="step-phase-body">';
+    for (var j = 0; j < bucket.length; j++) {
+      html += '<div class="step-row">';
+      html += '<div class="step-num">' + (stepNo++) + '</div>';
+      html += '<div class="step-txt">' + shopEsc(bucket[j]) + '</div>';
+      html += '</div>';
+    }
+    html += '</div></section>';
   }
   html += '</div>';
   return html;
@@ -5575,12 +5707,29 @@ function renderRMServings(r) {
     : 'Shopping list scales automatically';
 }
 
+function refreshScaledIngredientsUI() {
+  if (!curRecipe) return;
+  var rm = el('rm-bg');
+  if (rm && rm.style.display === 'flex') {
+    el('tab-ing').innerHTML = buildIngredientsTab(curRecipe);
+    var swapBtns = el('tab-ing').querySelectorAll('.swap-btn');
+    for (var s = 0; s < swapBtns.length; s++) {
+      swapBtns[s].addEventListener('click', function() { openSwap(this.dataset.ing, curRecipe.id); });
+    }
+  }
+  var pb = el('tm-peek-bg');
+  if (pb && pb.classList.contains('is-open') && todayPeekContext && todayPeekContext.rid === curRecipe.id) {
+    el('tm-peek-ing').innerHTML = buildIngredientsPeek(curRecipe);
+  }
+}
+
 function bumpRMServings(delta) {
   if (!curRecipe) return;
   var n = getServingsFor(curRecipe.id) + delta;
   if (n < 1 || n > 8) return;
   setServingsFor(curRecipe.id, n);
   renderRMServings(curRecipe);
+  refreshScaledIngredientsUI();
   renderPlanner();
   renderNutrition();
   renderShopping();
@@ -5603,7 +5752,7 @@ function openRM(id) {
   el('rm-tags').innerHTML = tagHtml;
 
   // Pre-cache steps from the recipe object
-  if (curRecipe.steps && curRecipe.steps.length > 0) stepCache[id] = curRecipe.steps;
+  if (curRecipe.steps && curRecipe.steps.length > 0) stepCache[id] = normalizeRecipeSteps(curRecipe.steps);
 
   el('tab-ing').innerHTML   = buildIngredientsTab(curRecipe);
   el('tab-steps').innerHTML = stepCache[id]
@@ -5644,11 +5793,11 @@ function fetchSteps(id) {
   if (!r) return;
 
   if (r.steps && r.steps.length > 2) {
-    stepCache[id] = r.steps;
+    stepCache[id] = normalizeRecipeSteps(r.steps);
     if (curRecipe && curRecipe.id === id && el('rm-bg').style.display === 'flex') {
-      el('tab-steps').innerHTML = buildStepsTab(r.steps);
+      el('tab-steps').innerHTML = buildStepsTab(stepCache[id]);
     }
-    syncTodayPeekStepsIfOpen(id, r.steps);
+    syncTodayPeekStepsIfOpen(id, stepCache[id]);
     return;
   }
 
@@ -5660,20 +5809,25 @@ function fetchSteps(id) {
     ingList = (r.ing || []).join(', ');
   }
 
-  var sysMsg  = 'You are a professional chef. Return ONLY a JSON array of strings with no other text, markdown, or explanation.';
+  var sysMsg  = 'You are a professional chef. Return ONLY a valid JSON array. No markdown, no code fences, no text before or after. Start with [ and end with ].';
   var userMsg = 'Recipe: "' + r.name + '". ';
   userMsg    += 'Ingredients: ' + ingList + '. ';
   userMsg    += 'Skill: ' + (UP.skill || 'Home cook') + '. ';
-  userMsg    += 'Return 5-8 detailed step-by-step cooking instructions as a JSON array of strings. ';
-  userMsg    += 'Each step should be one complete, specific action. ';
-  userMsg    += 'Example: ["Preheat oven to 400F and line a baking sheet with parchment paper.","Season chicken with salt, pepper, and garlic powder on all sides."] ';
-  userMsg    += 'Start your response with [ and end with ]';
+  userMsg    += 'Return 5-8 cooking steps as a JSON array of objects. Each object MUST be exactly: {"phase":"Prep"|"Cook"|"Serve","instruction":"one clear sentence."}. ';
+  userMsg    += 'Use phase "Prep" for mise en place, washing, chopping, marinating, measuring, and preheating. ';
+  userMsg    += 'Use "Cook" for heat, combining, simmering, baking, and doneness. ';
+  userMsg    += 'Use "Serve" for resting, plating, garnishing, and storing leftovers. ';
+  userMsg    += 'Example: [{"phase":"Prep","instruction":"Dice the onion and mince the garlic."},{"phase":"Cook","instruction":"Sauté the onion in oil over medium heat until translucent, about 4 minutes."},{"phase":"Serve","instruction":"Divide between bowls and top with fresh herbs."}]';
 
   callAIWithRetry(sysMsg, userMsg, 1200, function(err, raw) {
-    var steps = ['Gather and prepare all listed ingredients.', 'Cook using standard method for this dish type.', 'Season to taste and serve immediately.'];
+    var steps = normalizeRecipeSteps([
+      { phase: 'Prep', instruction: 'Gather and prepare all listed ingredients.' },
+      { phase: 'Cook', instruction: 'Cook using a standard method appropriate for this dish until done in the center.' },
+      { phase: 'Serve', instruction: 'Season to taste and serve immediately.' }
+    ]);
     if (!err && raw) {
       var parsed = parseJSON(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) steps = parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) steps = normalizeRecipeSteps(parsed);
     }
     stepCache[id] = steps;
     if (curRecipe && curRecipe.id === id && el('rm-bg').style.display === 'flex') {
@@ -6111,7 +6265,8 @@ function refreshSingleSlotMeal() {
   var skillNote = {'Beginner': 'simple ingredients', 'Home cook': 'standard cooking', 'Confident chef': 'any technique'}[UP.skill] || 'standard';
 
   var sysMsg = 'You are an expert nutritionist and chef. Respond with ONLY a valid JSON array containing exactly ONE recipe object. No markdown. Start with [ and end with ]. ' +
-    'The object MUST include: name, cal, p, c, f, time, difficulty, price, cat, tags (array), ing (array), ingQty (object), steps (array of 5-8 strings). ' +
+    'The object MUST include: name, cal, p, c, f, time, difficulty, price, cat, tags (array), ing (array), ingQty (object), steps (array of 5-8 objects like {"phase":"Prep"|"Cook"|"Serve","instruction":"string"}). ' +
+    'CRITICAL: The macros (cal, p, c, f) MUST mathematically align with the ingredients provided. 1g of protein = 4 cal, 1g carb = 4 cal, 1g fat = 9 cal. Do not hallucinate macros that contradict the ingredient list. ' +
     'Honor all dietary compliance. cat MUST be exactly "' + slotCat + '".';
 
   var userMsg = 'Create ONE fresh ' + slotCat + ' for this user.\n';
@@ -7321,7 +7476,31 @@ function enrichShoppingWithKroger(lines) {
   });
 }
 
+/** Stub: build retailer cart payload from the current shopping list (unchecked, not marked at home). */
+function exportToRetailerCart() {
+  var lines = lastShopLines;
+  if (!lines || !lines.length) {
+    showToast('Nothing to send yet.');
+    return;
+  }
+  var payload = [];
+  for (var i = 0; i < lines.length; i++) {
+    var row = lines[i];
+    var id = row.key;
+    if (checked[id] || shopPantry[id]) continue;
+    payload.push({
+      itemName: String(row.title || ''),
+      quantity: String(row.purchase || ''),
+      category: String(row.cat || 'Pantry')
+    });
+  }
+  // TODO: map `payload` to Instacart / retailer cart API (OAuth, store id, line-item SKU resolution, substitution prefs).
+  console.log(JSON.stringify(payload, null, 2));
+  showToast('Cart integration coming soon!');
+}
+
 function renderShopping() {
+  var exportWrap = el('shop-export-wrap');
   var agg = {};
   var plannedRecipeIds = {};
   var slots = getSlots();
@@ -7376,6 +7555,12 @@ function renderShopping() {
     el('shop-intro').style.display  = 'none';
     el('price-disc').style.display  = 'none';
     el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Plan meals for the week to build your grocery list.</div>';
+    lastShopLines = [];
+    if (exportWrap) {
+      exportWrap.style.display = 'none';
+      exportWrap.innerHTML = '';
+      exportWrap.setAttribute('aria-hidden', 'true');
+    }
     saveSessionState();
     return;
   }
@@ -7457,6 +7642,15 @@ function renderShopping() {
     html += '</section>';
   }
   el('shop-body').innerHTML = html;
+
+  lastShopLines = lines;
+  if (exportWrap) {
+    exportWrap.style.display = 'block';
+    exportWrap.setAttribute('aria-hidden', 'false');
+    exportWrap.innerHTML = '<button type="button" class="btn-shop-export" id="shop-export-cart-btn">Send to Grocery Cart</button>';
+    var exb = el('shop-export-cart-btn');
+    if (exb) exb.onclick = function() { exportToRetailerCart(); };
+  }
 
   var schks = document.querySelectorAll('.scheck');
   for (var sc = 0; sc < schks.length; sc++) {
