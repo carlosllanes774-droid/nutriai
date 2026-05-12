@@ -235,12 +235,6 @@ body{
 #ob .rg{color:rgba(255,255,255,.42);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:10px;margin-bottom:6px}
 #ob .ib{background:rgba(255,255,255,.1);color:#fff;border-radius:999px}
 #ob .ibox{background:rgba(255,255,255,.06);border-radius:14px;color:rgba(255,255,255,.78);font-size:13px;line-height:1.5}
-#ob .mmb{background:rgba(255,255,255,.06);color:rgba(255,255,255,.75)}
-#ob .mmb.active{background:rgba(227,90,54,.25);color:#fff}
-#ob .cmw .mc{background:rgba(255,255,255,.05);border-radius:16px}
-#ob details.ob-details{margin-top:18px;border-radius:16px;background:rgba(255,255,255,.04);padding:4px 14px 14px;border:1px solid rgba(255,255,255,.08)}
-#ob details.ob-details > summary{cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);padding:12px 4px;list-style:none}
-#ob details.ob-details > summary::-webkit-details-marker{display:none}
 .ob-footer{padding:16px 20px 22px;display:flex;gap:12px;flex-shrink:0;align-items:center;background:rgba(14,12,10,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.08)}
 #ob .ob-back-btn{flex:0 0 auto;min-width:88px;padding:14px 12px;border:none;border-radius:14px;background:transparent;color:rgba(255,255,255,.55);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
 #ob .ob-back-btn:hover{color:#fff;background:rgba(255,255,255,.06)}
@@ -274,14 +268,6 @@ body{
 .nchip:hover{background:#fff;color:var(--arc-primary)}
 .nchip.sel{background:var(--arc-soft-primary);color:var(--arc-primary);box-shadow:inset 0 0 0 1.5px var(--arc-primary)}
 .rg{font-size:10px;font-weight:700;color:#c4bdb5;text-transform:uppercase;letter-spacing:.08em;width:100%;margin-top:10px;margin-bottom:2px}
-.cmw{overflow:hidden;max-height:0;opacity:0;transition:max-height var(--motion-sheet) var(--ease-standard),opacity var(--motion-fast) var(--ease-standard)}
-.cmw.open{max-height:400px;opacity:1}
-.mc{background:var(--arc-soft-primary);border-radius:var(--r-md);padding:18px}
-.mc-hint{font-size:12px;color:var(--arc-primary-dark);font-style:italic;margin-top:12px;line-height:1.5}
-.mm{display:flex;gap:8px;margin-bottom:14px}
-.mmb{flex:1;padding:12px;border-radius:var(--r-sm);border:none;font-size:13px;font-weight:600;cursor:pointer;color:var(--arc-subtext);background:var(--arc-surface-2);transition:all var(--motion-fast) var(--ease-standard);text-align:center}
-.mmb:hover{background:#fff}
-.mmb.active{background:var(--arc-soft-primary);color:var(--arc-primary);box-shadow:inset 0 0 0 1.5px var(--arc-primary)}
 .loc-btn{width:100%;padding:14px 16px;border:none;border-radius:var(--r-md);background:var(--arc-soft-primary);color:var(--arc-primary);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all var(--motion-fast) var(--ease-standard);margin-bottom:14px;box-shadow:var(--shadow-xs)}
 .loc-btn:hover{background:#f7e6df;box-shadow:var(--shadow-sm)}
 .loc-det{background:var(--arc-soft-primary);border-radius:var(--r-md);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px;box-shadow:var(--shadow-xs)}
@@ -1019,13 +1005,13 @@ button:active{transform:scale(var(--press-scale))}
   </div>
 </div>
 
-<!-- ONBOARDING — recap-inspired, 7 calm beats -->
+<!-- ONBOARDING — recap-inspired, unified 6-step flow -->
 <div class="screen" id="ob">
   <div class="ob-top">
     <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
     <div class="ob-dots" aria-hidden="true">
       <div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div><div class="ob-dot" id="od4"></div>
-      <div class="ob-dot" id="od5"></div><div class="ob-dot" id="od6"></div><div class="ob-dot" id="od7"></div>
+      <div class="ob-dot" id="od5"></div><div class="ob-dot" id="od6"></div>
     </div>
     <div class="ob-heading" id="ob-h">A quiet hello</div>
     <div class="ob-sub" id="ob-s">Arc builds around your real routine.</div>
@@ -1033,7 +1019,7 @@ button:active{transform:scale(var(--press-scale))}
   <div class="ob-body">
     <div class="ob-step active" id="st1">
       <div class="ob-pane">
-        <div class="ob-kicker">Step 1 of 7</div>
+        <div class="ob-kicker">Step 1 of 6</div>
         <div class="ob-hero">What should we call you?</div>
         <p class="ob-whisper">Start simple. Arc will adapt as it learns you.</p>
         <div class="ob-fl"><label class="ob-label" for="in-name">First name <span class="req">*</span></label><input class="fi" id="in-name" placeholder="Jordan" autocomplete="given-name"/></div>
@@ -1042,9 +1028,9 @@ button:active{transform:scale(var(--press-scale))}
     </div>
     <div class="ob-step" id="st2">
       <div class="ob-pane">
-        <div class="ob-kicker">Step 2 of 7</div>
-        <div class="ob-hero">The basics</div>
-        <p class="ob-whisper">Just enough to personalize your baseline.</p>
+        <div class="ob-kicker">Step 2 of 6</div>
+        <div class="ob-hero">Your baseline</div>
+        <p class="ob-whisper">Just enough to personalize your targets.</p>
         <div class="fg2 ob-fl">
           <div><label class="ob-label">Weight <span class="req">*</span></label><div class="uw"><input class="fi" id="in-wt" type="number" min="50" max="700" placeholder="160"/><span class="ul">lbs</span></div></div>
           <div><label class="ob-label">Height</label><div class="uw"><input class="fi" id="in-ht" inputmode="numeric" placeholder="5'8&quot;" autocomplete="off"/></div></div>
@@ -1053,13 +1039,61 @@ button:active{transform:scale(var(--press-scale))}
           <div><label class="ob-label">Age</label><input class="fi" id="in-age" type="number" min="10" max="100" placeholder="28"/></div>
           <div><label class="ob-label">Sex</label><select class="fi" id="in-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
         </div>
+        <div class="ob-fl">
+          <label class="ob-label">Typical week <span class="req">*</span> <button type="button" class="ib" id="act-ib" aria-label="Activity guide">i</button></label>
+          <div class="ibox" id="act-ibox" style="display:none;margin-bottom:10px;padding:12px"><div><strong>🪑 Sedentary</strong> — Desk job, little/no exercise</div><div><strong>🚶 Light</strong> — Light exercise 1–3x/week</div><div><strong>🏃 Moderate</strong> — Gym or cardio 3–5x/week</div><div><strong>⚡ Very active</strong> — Intense training 6–7x/week</div><div><strong>🏆 Athlete</strong> — Professional/twice-daily training</div></div>
+          <div class="chips" id="chip-activity"><span class="chip" data-v="Sedentary">🪑 Mostly desk</span><span class="chip" data-v="Light">🚶 Light movement</span><span class="chip" data-v="Moderate">🏃 Active week</span><span class="chip" data-v="Very active">⚡ Very active</span><span class="chip" data-v="Athlete">🏆 Athlete</span></div>
+        </div>
       </div>
     </div>
     <div class="ob-step" id="st3">
       <div class="ob-pane">
-        <div class="ob-kicker">Step 3 of 7</div>
-        <div class="ob-hero">Where life happens</div>
-        <p class="ob-whisper">This keeps grocery guidance realistic.</p>
+        <div class="ob-kicker">Step 3 of 6</div>
+        <div class="ob-hero">What are you working toward?</div>
+        <p class="ob-whisper">Arc tunes around this direction.</p>
+        <div class="ob-fl"><label class="ob-label">Current focus <span class="req">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Ease up</span><span class="chip" data-v="Build muscle">Grow stronger</span><span class="chip" data-v="Maintain weight">Stay steady</span><span class="chip" data-v="Improve energy">More energy</span><span class="chip" data-v="Eat healthier">Eat cleaner</span></div></div>
+        <div class="ob-fl">
+          <label class="ob-label">How do your weeks usually feel? <span class="req">*</span></label>
+          <div class="ob-cards" id="chip-eat-style">
+            <div class="chip ob-card-choice" data-v="busy_simple"><div class="ob-card-t">Busy and simple</div><div class="ob-card-d">Fewer decisions, more room in the day</div></div>
+            <div class="chip ob-card-choice" data-v="balanced_flexible"><div class="ob-card-t">Balanced and flexible</div><div class="ob-card-d">Mostly steady, with room to bend</div></div>
+            <div class="chip ob-card-choice" data-v="performance"><div class="ob-card-t">Performance-focused</div><div class="ob-card-d">Training and fuel on purpose</div></div>
+            <div class="chip ob-card-choice" data-v="meal_prep"><div class="ob-card-t">Prep-centered</div><div class="ob-card-d">Cook once, coast through the week</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-step" id="st4">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 4 of 6</div>
+        <div class="ob-hero">How do you realistically like to cook?</div>
+        <p class="ob-whisper">Choose what is sustainable this month.</p>
+        <div class="ob-cards" id="chip-cook-style">
+          <div class="chip ob-card-choice" data-v="fresh"><div class="ob-card-t">Fresh meals</div><div class="ob-card-d">More variety, more time at the stove</div></div>
+          <div class="chip ob-card-choice" data-v="balanced_mix"><div class="ob-card-t">Balanced mix</div><div class="ob-card-d">Fresh plates with gentle repeats</div></div>
+          <div class="chip ob-card-choice" data-v="prepared_ahead"><div class="ob-card-t">Prepared ahead</div><div class="ob-card-d">Batch-friendly rhythms</div></div>
+          <div class="chip ob-card-choice" data-v="family_style"><div class="ob-card-t">Family style</div><div class="ob-card-d">Shared tables, generous dinners</div></div>
+        </div>
+        <div class="fg2 ob-fl" style="margin-top:16px">
+          <div><label class="ob-label">Kitchen comfort <span class="req">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident</span></div></div>
+          <div><label class="ob-label">Budget sensitivity <span class="req">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Lean</span><span class="chip" data-v="Moderate">$$ Balanced</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-step" id="st5">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 5 of 6</div>
+        <div class="ob-hero">Any food boundaries?</div>
+        <p class="ob-whisper">Arc filters around your preferences from day one.</p>
+        <div class="ob-fl"><label class="ob-label">Anything off the table?</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
+        <div class="ob-fl"><label class="ob-label">Flavors to skip</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="Optional"></textarea></div>
+      </div>
+    </div>
+    <div class="ob-step" id="st6">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 6 of 6</div>
+        <div class="ob-hero">Where do you usually shop?</div>
+        <p class="ob-whisper">This keeps grocery estimates grounded.</p>
         <button class="loc-btn" type="button" id="loc-detect-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg> Use my location</button>
         <div id="loc-det" style="display:none;margin-top:12px" class="loc-det"><div style="font-size:22px">📍</div><div style="flex:1"><div class="loc-det-text" id="loc-city">—</div><div class="loc-det-sub" id="loc-rlabel">—</div></div><button type="button" class="loc-chg" id="loc-chg">Change</button></div>
         <div class="or-row" id="or-row" style="margin-top:18px"><div class="or-line"></div><span class="or-text">or pick a region</span><div class="or-line"></div></div>
@@ -1073,75 +1107,6 @@ button:active{transform:scale(var(--press-scale))}
             <div class="rg">Other</div><span class="chip" data-v="gulf">Gulf Region</span><span class="chip" data-v="other">Other / International</span>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="ob-step" id="st4">
-      <div class="ob-pane">
-        <div class="ob-kicker">Step 4 of 7</div>
-        <div class="ob-hero">How do your days usually feel?</div>
-        <p class="ob-whisper">Tap what resonates — you can change this anytime.</p>
-        <div class="ob-cards" id="chip-eat-style">
-          <div class="chip ob-card-choice" data-v="busy_simple"><div class="ob-card-t">Busy and simple</div><div class="ob-card-d">Fewer decisions, more room in the day</div></div>
-          <div class="chip ob-card-choice" data-v="balanced_flexible"><div class="ob-card-t">Balanced and flexible</div><div class="ob-card-d">Mostly steady, with room to bend</div></div>
-          <div class="chip ob-card-choice" data-v="performance"><div class="ob-card-t">Performance-focused</div><div class="ob-card-d">Training, focus, and fuel on purpose</div></div>
-          <div class="chip ob-card-choice" data-v="meal_prep"><div class="ob-card-t">Meal prep oriented</div><div class="ob-card-d">Cook once, live easier through the week</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="ob-step" id="st5">
-      <div class="ob-pane">
-        <div class="ob-kicker">Step 5 of 7</div>
-        <div class="ob-hero">How do you prefer to cook?</div>
-        <p class="ob-whisper">Choose what feels realistic right now.</p>
-        <div class="ob-cards" id="chip-cook-style">
-          <div class="chip ob-card-choice" data-v="fresh"><div class="ob-card-t">Fresh meals</div><div class="ob-card-d">More variety, more time at the stove</div></div>
-          <div class="chip ob-card-choice" data-v="balanced_mix"><div class="ob-card-t">Balanced mix</div><div class="ob-card-d">Fresh plates with a few gentle repeats</div></div>
-          <div class="chip ob-card-choice" data-v="prepared_ahead"><div class="ob-card-t">Prepared ahead</div><div class="ob-card-d">Batch-friendly rhythms</div></div>
-          <div class="chip ob-card-choice" data-v="family_style"><div class="ob-card-t">Family style</div><div class="ob-card-d">Shared tables, generous dinners</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="ob-step" id="st6">
-      <div class="ob-pane">
-        <div class="ob-kicker">Step 6 of 7</div>
-        <div class="ob-hero">Energy &amp; direction</div>
-        <p class="ob-whisper">A quick read on your current direction.</p>
-        <div class="ob-fl"><label class="ob-label">What are you moving toward? <span class="req">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Ease up</span><span class="chip" data-v="Build muscle">Grow stronger</span><span class="chip" data-v="Maintain weight">Stay steady</span><span class="chip" data-v="Improve energy">More energy</span><span class="chip" data-v="Eat healthier">Eat cleaner</span></div></div>
-        <div class="ob-fl">
-          <label class="ob-label">Typical week <span class="req">*</span> <button type="button" class="ib" id="act-ib" aria-label="Activity guide">i</button></label>
-          <div class="ibox" id="act-ibox" style="display:none;margin-bottom:10px;padding:12px"><div><strong>🪑 Sedentary</strong> — Desk job, little/no exercise</div><div><strong>🚶 Light</strong> — Light exercise 1–3x/week</div><div><strong>🏃 Moderate</strong> — Gym or cardio 3–5x/week</div><div><strong>⚡ Very active</strong> — Intense training 6–7x/week</div><div><strong>🏆 Athlete</strong> — Professional/twice-daily training</div></div>
-          <div class="chips" id="chip-activity"><span class="chip" data-v="Sedentary">🪑 Mostly desk</span><span class="chip" data-v="Light">🚶 Light movement</span><span class="chip" data-v="Moderate">🏃 Active week</span><span class="chip" data-v="Very active">⚡ Very active</span><span class="chip" data-v="Athlete">🏆 Athlete</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="ob-step" id="st7">
-      <div class="ob-pane">
-        <div class="ob-kicker">Step 7 of 7</div>
-        <div class="ob-hero">Almost home</div>
-        <p class="ob-whisper">Final touches, then your week is ready.</p>
-        <div class="ob-fl"><label class="ob-label">What matters most now? <span class="req">*</span></label><div class="chips" id="chip-life-priority"><span class="chip" data-v="convenience">Convenience</span><span class="chip" data-v="performance">Performance</span><span class="chip" data-v="fat_loss">Fat loss</span><span class="chip" data-v="muscle">Muscle gain</span><span class="chip" data-v="budget">Budget</span><span class="chip" data-v="cooking">Cooking joy</span></div></div>
-        <div class="fg2 ob-fl">
-          <div><label class="ob-label">Kitchen comfort <span class="req">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident</span></div></div>
-          <div><label class="ob-label">Groceries <span class="req">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Lean</span><span class="chip" data-v="Moderate">$$ Balanced</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
-        </div>
-        <div class="ob-fl"><label class="ob-label">Anything off the table?</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
-        <div class="ob-fl"><label class="ob-label">Flavors to skip</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="Optional"></textarea></div>
-        <details class="ob-details">
-          <summary>Fine-tune calories</summary>
-          <div style="margin-top:12px">
-            <div class="mm"><div class="mmb active" id="mm-ai">✦ Arc recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
-            <div class="cmw" id="cmw">
-              <div class="mc">
-                <div style="margin-bottom:12px"><label class="ob-label">Daily calories</label><div class="uw"><input class="fi" id="in-cal" type="number" min="800" max="6000" placeholder="2000"/><span class="ul">kcal</span></div></div>
-                <div class="fg2" style="gap:10px;margin-bottom:10px">
-                  <div><label class="ob-label">Protein</label><div class="uw"><input class="fi" id="in-protein" type="number" placeholder="150"/><span class="ul">g</span></div></div>
-                  <div><label class="ob-label">Carbs</label><div class="uw"><input class="fi" id="in-carbs" type="number" placeholder="200"/><span class="ul">g</span></div></div>
-                </div>
-                <div><label class="ob-label">Fat</label><div class="uw" style="max-width:49%"><input class="fi" id="in-fat" type="number" placeholder="65"/><span class="ul">g</span></div></div>
-              </div>
-            </div>
-          </div>
-        </details>
       </div>
     </div>
   </div>
@@ -1945,6 +1910,7 @@ var mealJournal = {};
 var locDetected = false;
 var useCustom   = false;
 var obStep      = 1;
+var OB_TOTAL_STEPS = 6;
 var htDigits    = '';
 var recipeGenId = 0;
 var currentTab  = 'today';
@@ -3331,13 +3297,13 @@ function showScreen(id, dir) {
 
   if (id === 'ob') {
     obStep = 1;
-    for (var si = 1; si <= 7; si++) {
+    for (var si = 1; si <= OB_TOTAL_STEPS; si++) {
       var stEl = el('st' + si);
       if (stEl) stEl.classList.remove('active');
     }
     var st1 = el('st1');
     if (st1) st1.classList.add('active');
-    for (var oi = 1; oi <= 7; oi++) {
+    for (var oi = 1; oi <= OB_TOTAL_STEPS; oi++) {
       var odEl = el('od' + oi);
       if (odEl) odEl.className = 'ob-dot' + (oi === 1 ? ' active' : '');
     }
@@ -4720,24 +4686,19 @@ function valStep(n) {
     if (!(wt > 0)) { setErr('Weight'); markErr('in-wt'); return false; }
     var hp = parseHeightInput(el('in-ht').value);
     if (!hp.ok) { setErr(hp.error || 'Height'); markErr('in-ht'); return false; }
-  }
-  if (n === 3) {
-    if (!locDetected && !gChip('chip-region')) { setErr('Region'); pulse('chip-region'); return false; }
-  }
-  if (n === 4) {
-    if (!gChip('chip-eat-style')) { setErr('Pick a day rhythm'); pulse('chip-eat-style'); return false; }
-  }
-  if (n === 5) {
-    if (!gChip('chip-cook-style')) { setErr('Pick a cook style'); pulse('chip-cook-style'); return false; }
-  }
-  if (n === 6) {
-    if (!gChip('chip-goal')) { setErr('Direction'); pulse('chip-goal'); return false; }
     if (!gChip('chip-activity')) { setErr('Typical week'); pulse('chip-activity'); return false; }
   }
-  if (n === 7) {
-    if (!gChip('chip-life-priority')) { setErr('What matters'); pulse('chip-life-priority'); return false; }
+  if (n === 3) {
+    if (!gChip('chip-goal')) { setErr('Direction'); pulse('chip-goal'); return false; }
+    if (!gChip('chip-eat-style')) { setErr('Week rhythm'); pulse('chip-eat-style'); return false; }
+  }
+  if (n === 4) {
+    if (!gChip('chip-cook-style')) { setErr('Cook style'); pulse('chip-cook-style'); return false; }
     if (!gChip('chip-skill')) { setErr('Kitchen comfort'); pulse('chip-skill'); return false; }
-    if (!gChip('chip-budget')) { setErr('Groceries'); pulse('chip-budget'); return false; }
+    if (!gChip('chip-budget')) { setErr('Budget'); pulse('chip-budget'); return false; }
+  }
+  if (n === 6) {
+    if (!locDetected && !gChip('chip-region')) { setErr('Region'); pulse('chip-region'); return false; }
   }
   return true;
 }
@@ -4745,33 +4706,32 @@ function valStep(n) {
 // ── Onboarding navigation ─────────────────────────────────────
 var stepMeta = [
   { h: 'A quiet hello', s: 'Arc builds around your real routine.' },
-  { h: 'Your baseline', s: 'Quick details for a steady starting point.' },
-  { h: 'Where you shop', s: 'Keeps grocery guidance realistic.' },
-  { h: 'Your days', s: 'Pick what feels most like your week.' },
-  { h: 'Your kitchen', s: 'Choose the rhythm you can sustain.' },
-  { h: 'Direction', s: 'Arc tunes around what matters now.' },
-  { h: 'Almost there', s: 'Final touches, then your week opens.' }
+  { h: 'Your baseline', s: 'Quick details for steady targets.' },
+  { h: 'Direction', s: 'What you are working toward.' },
+  { h: 'Cooking rhythm', s: 'Realistic, repeatable, sustainable.' },
+  { h: 'Food boundaries', s: 'Arc filters around your preferences.' },
+  { h: 'Where you shop', s: 'Keeps grocery guidance realistic.' }
 ];
 
 function goStep(n) {
-  if (n < 1 || n > 7) return;
+  if (n < 1 || n > OB_TOTAL_STEPS) return;
   el('st' + obStep).classList.remove('active');
   obStep = n;
   el('st' + n).classList.add('active');
   el('ob-h').textContent = stepMeta[n - 1].h;
   el('ob-s').textContent = stepMeta[n - 1].s;
-  for (var i = 1; i <= 7; i++) {
+  for (var i = 1; i <= OB_TOTAL_STEPS; i++) {
     el('od' + i).className = 'ob-dot' + (i < n ? ' done' : i === n ? ' active' : '');
   }
   el('ob-back').style.display = n === 1 ? 'none' : 'block';
-  el('ob-next').textContent = n === 7 ? 'Open week' : 'Continue';
+  el('ob-next').textContent = n === OB_TOTAL_STEPS ? 'Open week' : 'Continue';
   document.querySelector('#ob .ob-body').scrollTop = 0;
 }
 
 // ── Finish onboarding ─────────────────────────────────────────
 function finishOB() {
   var vs;
-  for (vs = 1; vs <= 7; vs++) {
+  for (vs = 1; vs <= OB_TOTAL_STEPS; vs++) {
     if (!valStep(vs)) {
       goStep(vs);
       return;
@@ -4793,21 +4753,20 @@ function finishOB() {
   UP.activity      = gChip('chip-activity') || 'Moderate';
   UP.eatStyle      = gChip('chip-eat-style') || 'balanced_flexible';
   UP.prefCookStyle = gChip('chip-cook-style') || 'balanced_mix';
-  UP.lifePriority  = gChip('chip-life-priority') || defaultLifePriorityFromGoal(UP.goal);
+  UP.lifePriority  = (gChip('chip-budget') === 'Budget') ? 'budget' : defaultLifePriorityFromGoal(UP.goal);
   UP.mealsMode     = 'adaptive';
   UP.arcRhythmMigrated = true;
   UP.skill         = gChip('chip-skill')    || 'Home cook';
   UP.budget        = gChip('chip-budget')   || 'Moderate';
-  // Cuisines are no longer captured at onboarding — they're chosen weekly in Build-Your-Week.
-  // Preserve any value already on UP (e.g. migrated user) so the wizard pre-fills nicely.
+  // Cuisines are chosen week-to-week; preserve migrated values if present.
   if (!Array.isArray(UP.cuisines)) UP.cuisines = [];
   UP.restrictions  = gMulti('chip-diet');
   UP.dislikes      = el('in-dislikes').value.trim();
-  UP.useCustom     = useCustom;
-  UP.customCal     = parseInt(el('in-cal').value,10)     || null;
-  UP.customProtein = parseInt(el('in-protein').value,10) || null;
-  UP.customCarbs   = parseInt(el('in-carbs').value,10)   || null;
-  UP.customFat     = parseInt(el('in-fat').value,10)     || null;
+  UP.useCustom     = false;
+  UP.customCal     = null;
+  UP.customProtein = null;
+  UP.customCarbs   = null;
+  UP.customFat     = null;
 
   // ── Compute TDEE using Mifflin-St Jeor ───────────────────
   UP.tdee   = calcTDEE();
@@ -4822,10 +4781,10 @@ function finishOB() {
 
   applyProfileToUIBar();
 
-  // New flow: identity is done. Take the user straight to the planner where
-  // the Build-Your-Week wizard greets them with the first weekly intent question.
-  tab('plan');
-  setTimeout(function() { openBuildWeek('first'); }, 80);
+  // Unified onboarding: generate the first week directly from onboarding answers.
+  var firstIntent = inferFirstWeekIntent();
+  showScreen('s-gen');
+  generateWeeklyPlan(firstIntent);
 }
 
 // ── Generating screen: ambient ring + phased copy (tied to real milestones) ──
@@ -5367,6 +5326,26 @@ function openBuildWeek(mode) {
 
 function closeBuildWeek() {
   closeMotion('bw-modal');
+}
+
+function inferFirstWeekIntent() {
+  var style = mapPrefCookToBwStyle(UP.prefCookStyle);
+  if (!style && UP.eatStyle) {
+    var es = normalizeEatStyleToken(UP.eatStyle);
+    if (es === 'meal_prep') style = 'prep';
+    else if (es === 'performance') style = 'fresh';
+    else style = 'balanced';
+  }
+  var focus = 'balanced';
+  if (UP.budget === 'Budget') focus = 'budget';
+  else if (UP.goal === 'Build muscle' || UP.goal === 'Improve energy') focus = 'highProtein';
+  else if (normalizeEatStyleToken(UP.eatStyle) === 'busy_simple') focus = 'quick';
+  return {
+    style: style || 'balanced',
+    focus: focus,
+    cuisines: (Array.isArray(UP.cuisines) ? UP.cuisines.slice(0, 3) : []),
+    mode: 'first'
+  };
 }
 
 function bwSubmit() {
@@ -8753,7 +8732,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Chips
   singleChip('chip-region'); singleChip('chip-goal'); singleChip('chip-activity');
-  singleChip('chip-eat-style'); singleChip('chip-cook-style'); singleChip('chip-life-priority'); singleChip('chip-skill'); singleChip('chip-budget');
+  singleChip('chip-eat-style'); singleChip('chip-cook-style'); singleChip('chip-skill'); singleChip('chip-budget');
   multiChip('chip-diet');
 
   // Activity info tooltip
@@ -8767,24 +8746,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (b) b.style.display = 'none';
   });
 
-  // Custom macros toggle
-  el('mm-ai').addEventListener('click', function() {
-    useCustom = false;
-    el('mm-ai').classList.add('active');
-    el('mm-custom').classList.remove('active');
-    el('cmw').classList.remove('open');
-  });
-  el('mm-custom').addEventListener('click', function() {
-    useCustom = true;
-    el('mm-custom').classList.add('active');
-    el('mm-ai').classList.remove('active');
-    el('cmw').classList.add('open');
-  });
-
   // Onboarding nav
   el('ob-next').addEventListener('click', function() {
-    if (obStep < 7) { if (valStep(obStep)) goStep(obStep + 1); }
-    else { if (valStep(7)) finishOB(); }
+    if (obStep < OB_TOTAL_STEPS) { if (valStep(obStep)) goStep(obStep + 1); }
+    else { if (valStep(OB_TOTAL_STEPS)) finishOB(); }
   });
   el('ob-back').addEventListener('click', function() { if (obStep <= 1) return; clearErr(); goStep(obStep - 1); });
 
