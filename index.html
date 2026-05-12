@@ -416,7 +416,7 @@ body{
 .recap-micro{font-size:11px;color:rgba(255,255,255,.35);margin-top:14px;line-height:1.45;max-width:28em;margin-left:auto;margin-right:auto}
 /* Today — single flowing screen, hero + compact support */
 #s-today .content.today-flow{padding:12px 24px 36px;background:var(--arc-surface)}
-.today-hero{padding:32px 4px 40px;text-align:left}
+.today-hero{padding:36px 4px 30px;text-align:left}
 .today-hero .today-kicker{font-size:11px;font-weight:600;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.14em;margin-bottom:18px}
 .today-name{font-size:34px;font-weight:700;color:var(--arc-text);font-family:Georgia,serif;line-height:1.12;margin-bottom:18px;letter-spacing:-.025em}
 .today-meta{font-size:15px;color:var(--arc-subtext);display:flex;gap:14px;flex-wrap:wrap;font-weight:500}
@@ -459,8 +459,9 @@ body{
 .rm-servings{align-items:flex-start}
 .today-replace-note{font-size:12px;color:var(--arc-subtext);margin-top:8px;line-height:1.45;max-width:36em}
 .today-empty{font-size:16px;color:var(--arc-subtext);font-style:normal;line-height:1.55}
-.today-cook-cta{margin-top:20px;width:100%;padding:18px 22px!important;border-radius:18px!important;font-size:17px!important;font-weight:600!important;min-height:58px;box-shadow:0 12px 32px rgba(227,90,54,.26)}
-.today-cook-cta:disabled{box-shadow:none;opacity:.5}
+.today-cook-cta{margin-top:12px;width:100%;padding:14px 18px!important;border-radius:16px!important;font-size:14px!important;font-weight:600!important;min-height:48px;box-shadow:none;border:1px solid rgba(31,31,31,.12);background:rgba(255,255,255,.72);color:var(--arc-text)}
+.today-cook-cta:hover{background:#fff}
+.today-cook-cta:disabled{opacity:.5}
 /* Today timeline — full day, compact */
 .today-timeline{margin-top:4px;padding:0 0 8px}
 .today-tl-hdr{font-size:11px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
@@ -485,7 +486,7 @@ body{
 .today-tl-row--tap:hover{background:rgba(255,255,255,.42)}
 .today-tl-row--tap:active{background:rgba(31,31,31,.05)}
 .today-tl-row--tap:focus-visible{outline:2px solid var(--arc-primary);outline-offset:-4px;position:relative;z-index:1}
-.today-foot{margin-top:8px;padding-top:40px;display:flex;flex-direction:column;gap:0}
+.today-foot{margin-top:4px;padding-top:30px;display:flex;flex-direction:column;gap:0}
 .today-progress-row{display:flex;align-items:center;gap:clamp(20px,5vw,36px);margin-bottom:40px}
 .today-ring-wrap{position:relative;width:108px;height:108px;flex-shrink:0;padding:4px}
 .today-ring-svg{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);transform:rotate(-90deg)}
@@ -587,7 +588,7 @@ body{
 .prog-fill{height:100%;border-radius:3px;transition:width .6s ease}
 
 /* SHOPPING */
-.shop-intro{font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 18px;max-width:36em}
+.shop-intro{font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 12px;max-width:36em}
 .shop-total{background:var(--arc-primary);border-radius:var(--r-md);padding:18px 22px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow-primary)}
 .shop-total-lbl{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:3px}
 .shop-total-val{font-size:24px;font-weight:700;color:#fff;letter-spacing:-.3px}
@@ -1004,15 +1005,15 @@ button:active{transform:scale(var(--press-scale))}
 <div class="screen" id="s-welcome">
   <div class="welcome-top">
     <div class="wl-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div>
-    <div class="wl-title">Eat smarter,<br>feel better</div>
-    <div class="wl-sub">Adaptive nutrition planning tuned to your goals, body, and budget</div>
+    <div class="wl-title">Eat with clarity,<br>feel steady</div>
+    <div class="wl-sub">Arc quietly adapts to your life, goals, and rhythm.</div>
   </div>
   <div class="welcome-bottom">
     <div class="feat-list">
-      <div class="feat"><div class="feat-ic">✦</div><div><div class="feat-title">Meals shaped for you</div><div class="feat-sub">Arc Intelligence composes your week — not a static recipe bank</div></div></div>
-      <div class="feat"><div class="feat-ic">📅</div><div><div class="feat-title">Smart weekly planning</div><div class="feat-sub">Your plan stays fluid when life shifts your goals</div></div></div>
-      <div class="feat"><div class="feat-ic">🍳</div><div><div class="feat-title">Full cook view &amp; swaps</div><div class="feat-sub">Step-by-step instructions, swap any ingredient you dislike</div></div></div>
-      <div class="feat"><div class="feat-ic">🛒</div><div><div class="feat-title">Smart shopping lists</div><div class="feat-sub">Accurate quantities with local pricing for your region</div></div></div>
+      <div class="feat"><div class="feat-ic">✦</div><div><div class="feat-title">Meals shaped for you</div><div class="feat-sub">A week that flexes with real life.</div></div></div>
+      <div class="feat"><div class="feat-ic">📅</div><div><div class="feat-title">Adaptive weekly flow</div><div class="feat-sub">Arc adjusts as your week changes.</div></div></div>
+      <div class="feat"><div class="feat-ic">🍳</div><div><div class="feat-title">Simple cooking view</div><div class="feat-sub">Clear steps when you need them.</div></div></div>
+      <div class="feat"><div class="feat-ic">🛒</div><div><div class="feat-title">Clean grocery list</div><div class="feat-sub">Realistic quantities and local pricing.</div></div></div>
     </div>
     <button class="btn-green" id="get-started-btn" style="border-radius:16px;padding:16px;font-size:16px">Get Started →</button>
   </div>
@@ -1034,7 +1035,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="ob-pane">
         <div class="ob-kicker">Step 1 of 7</div>
         <div class="ob-hero">What should we call you?</div>
-        <p class="ob-whisper">No perfection required — just you, as you are.</p>
+        <p class="ob-whisper">Start simple. Arc will adapt as it learns you.</p>
         <div class="ob-fl"><label class="ob-label" for="in-name">First name <span class="req">*</span></label><input class="fi" id="in-name" placeholder="Jordan" autocomplete="given-name"/></div>
         <p class="ob-micro">Built for consistency, not perfection.</p>
       </div>
@@ -1043,7 +1044,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="ob-pane">
         <div class="ob-kicker">Step 2 of 7</div>
         <div class="ob-hero">The basics</div>
-        <p class="ob-whisper">Your plan adapts over time.</p>
+        <p class="ob-whisper">Just enough to personalize your baseline.</p>
         <div class="fg2 ob-fl">
           <div><label class="ob-label">Weight <span class="req">*</span></label><div class="uw"><input class="fi" id="in-wt" type="number" min="50" max="700" placeholder="160"/><span class="ul">lbs</span></div></div>
           <div><label class="ob-label">Height</label><div class="uw"><input class="fi" id="in-ht" inputmode="numeric" placeholder="5'8&quot;" autocomplete="off"/></div></div>
@@ -1058,7 +1059,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="ob-pane">
         <div class="ob-kicker">Step 3 of 7</div>
         <div class="ob-hero">Where life happens</div>
-        <p class="ob-whisper">So pricing stays grounded where you shop.</p>
+        <p class="ob-whisper">This keeps grocery guidance realistic.</p>
         <button class="loc-btn" type="button" id="loc-detect-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg> Use my location</button>
         <div id="loc-det" style="display:none;margin-top:12px" class="loc-det"><div style="font-size:22px">📍</div><div style="flex:1"><div class="loc-det-text" id="loc-city">—</div><div class="loc-det-sub" id="loc-rlabel">—</div></div><button type="button" class="loc-chg" id="loc-chg">Change</button></div>
         <div class="or-row" id="or-row" style="margin-top:18px"><div class="or-line"></div><span class="or-text">or pick a region</span><div class="or-line"></div></div>
@@ -1091,7 +1092,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="ob-pane">
         <div class="ob-kicker">Step 5 of 7</div>
         <div class="ob-hero">How do you prefer to cook?</div>
-        <p class="ob-whisper">This nudges your first week — not a contract.</p>
+        <p class="ob-whisper">Choose what feels realistic right now.</p>
         <div class="ob-cards" id="chip-cook-style">
           <div class="chip ob-card-choice" data-v="fresh"><div class="ob-card-t">Fresh meals</div><div class="ob-card-d">More variety, more time at the stove</div></div>
           <div class="chip ob-card-choice" data-v="balanced_mix"><div class="ob-card-t">Balanced mix</div><div class="ob-card-d">Fresh plates with a few gentle repeats</div></div>
@@ -1104,7 +1105,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="ob-pane">
         <div class="ob-kicker">Step 6 of 7</div>
         <div class="ob-hero">Energy &amp; direction</div>
-        <p class="ob-whisper">Arc is learning you — not configuring software.</p>
+        <p class="ob-whisper">A quick read on your current direction.</p>
         <div class="ob-fl"><label class="ob-label">What are you moving toward? <span class="req">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Ease up</span><span class="chip" data-v="Build muscle">Grow stronger</span><span class="chip" data-v="Maintain weight">Stay steady</span><span class="chip" data-v="Improve energy">More energy</span><span class="chip" data-v="Eat healthier">Eat cleaner</span></div></div>
         <div class="ob-fl">
           <label class="ob-label">Typical week <span class="req">*</span> <button type="button" class="ib" id="act-ib" aria-label="Activity guide">i</button></label>
@@ -1117,14 +1118,14 @@ button:active{transform:scale(var(--press-scale))}
       <div class="ob-pane">
         <div class="ob-kicker">Step 7 of 7</div>
         <div class="ob-hero">Almost home</div>
-        <p class="ob-whisper">A few preferences — then your week opens.</p>
+        <p class="ob-whisper">Final touches, then your week is ready.</p>
         <div class="ob-fl"><label class="ob-label">What matters most now? <span class="req">*</span></label><div class="chips" id="chip-life-priority"><span class="chip" data-v="convenience">Convenience</span><span class="chip" data-v="performance">Performance</span><span class="chip" data-v="fat_loss">Fat loss</span><span class="chip" data-v="muscle">Muscle gain</span><span class="chip" data-v="budget">Budget</span><span class="chip" data-v="cooking">Cooking joy</span></div></div>
         <div class="fg2 ob-fl">
           <div><label class="ob-label">Kitchen comfort <span class="req">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident</span></div></div>
           <div><label class="ob-label">Groceries <span class="req">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Lean</span><span class="chip" data-v="Moderate">$$ Balanced</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
         </div>
         <div class="ob-fl"><label class="ob-label">Anything off the table?</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
-        <div class="ob-fl"><label class="ob-label">Flavors to skip</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="Optional — e.g. mushrooms, very spicy…"></textarea></div>
+        <div class="ob-fl"><label class="ob-label">Flavors to skip</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="Optional"></textarea></div>
         <details class="ob-details">
           <summary>Fine-tune calories</summary>
           <div style="margin-top:12px">
@@ -1193,7 +1194,8 @@ button:active{transform:scale(var(--press-scale))}
       <div id="today-meal-wrap"></div>
       <div id="today-meal-status" class="today-meal-status"></div>
       <div id="today-meal-actions" class="today-meal-actions"></div>
-      <button class="btn-green today-cook-cta" id="today-cook-btn">Cook this meal</button>
+      <button type="button" class="today-mac-btn today-mac-btn--primary" id="today-log-primary">Log meal</button>
+      <button class="today-cook-cta" id="today-cook-btn">View recipe</button>
     </section>
     <section class="today-timeline" id="today-timeline" aria-label="All meals today"></section>
     <section class="today-arc-strip" id="today-arc-strip" style="display:none" aria-label="Arc intelligence">
@@ -1228,13 +1230,13 @@ button:active{transform:scale(var(--press-scale))}
         <div class="today-foot-wrap">
           <button type="button" class="today-seg-btn today-seg-btn--solo" id="today-log-btn">
             <span class="today-seg-ic" aria-hidden="true">✏️</span>
-            <span class="today-seg-txt">Log food</span>
+            <span class="today-seg-txt">Food notes</span>
           </button>
           <details class="today-foot-details" id="today-foot-more">
-            <summary type="button">More</summary>
+            <summary type="button">Options</summary>
             <div class="today-foot-details-panel">
-              <button type="button" class="today-foot-details-btn" data-today-foot="swap">Swap planned meal</button>
-              <button type="button" class="today-foot-details-btn" data-today-foot="regen">Shuffle today</button>
+              <button type="button" class="today-foot-details-btn" data-today-foot="swap">Swap meal</button>
+              <button type="button" class="today-foot-details-btn" data-today-foot="regen">Refresh today</button>
             </div>
           </details>
         </div>
@@ -1256,9 +1258,9 @@ button:active{transform:scale(var(--press-scale))}
     <div class="content">
       <div class="plan-empty" id="plan-empty" style="display:none">
         <div class="plan-empty-ic">✨</div>
-        <div class="plan-empty-h">Plan your week in 30 seconds</div>
-        <div class="plan-empty-s">Tell Arc how you want to cook, what to prioritize, and what flavors you're craving. We'll design the week from there.</div>
-        <button class="plan-empty-btn" id="plan-build-btn" type="button">Build my week ✦</button>
+        <div class="plan-empty-h">Shape this week</div>
+        <div class="plan-empty-s">Pick a rhythm and Arc builds the rest.</div>
+        <button class="plan-empty-btn" id="plan-build-btn" type="button">Build week</button>
       </div>
       <div class="builtfor-card" id="builtfor-card" style="display:none">
         <div class="builtfor-body">
@@ -1277,7 +1279,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="slbl" id="planner-list-lbl" style="display:none">Weekly schedule</div>
       <div id="planner-list"></div>
     </div>
-    <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Open grocery list</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
+    <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Open grocery</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
   </div>
   <div id="plan-library-root" class="plan-hub-pane" style="display:none">
     <div class="ubar">
@@ -1288,13 +1290,13 @@ button:active{transform:scale(var(--press-scale))}
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
         <div class="cal-badge" id="u-cal">—</div>
-        <div class="arc-intelligence-badge" id="api-badge">Arc Intelligence</div>
+        <div class="arc-intelligence-badge" id="api-badge">Adaptive</div>
       </div>
-      <button type="button" class="settings-open-btn" id="settings-btn" title="Preferences">⚙️</button>
+      <button type="button" class="settings-open-btn" id="settings-btn" title="Edit profile">⚙️</button>
     </div>
     <div class="content">
-      <div class="a-hdr" style="padding:0;margin-bottom:6px"><h2 style="font-size:24px">Recipe library</h2></div>
-      <p style="font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 14px;max-width:36em">This week's meals and recipes you've saved. Discover more by swapping a slot in your plan.</p>
+      <div class="a-hdr" style="padding:0;margin-bottom:6px"><h2 style="font-size:24px">Recipes</h2></div>
+      <p style="font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 14px;max-width:36em">This week, saved picks, and new ideas.</p>
       <div class="lib-tabs" id="lib-tabs">
         <button class="lib-tab active" data-lib="this-week" type="button">This week</button>
         <button class="lib-tab" data-lib="saved" type="button">Saved</button>
@@ -1334,11 +1336,11 @@ button:active{transform:scale(var(--press-scale))}
 <div class="screen" id="s-shopping">
   <div class="a-hdr"><h2>Grocery</h2><span style="font-size:13px;color:#9ca3af" id="shop-count"></span></div>
   <div class="content">
-    <div class="shop-total" id="shop-total" style="display:none"><div><div class="shop-total-lbl">Est. cart total (to buy)</div><div class="shop-total-val" id="shop-total-val">—</div></div><div style="text-align:right"><div class="shop-total-lbl">From your planner</div><div style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600" id="shop-rc">0 recipes</div></div></div>
+    <div class="shop-total" id="shop-total" style="display:none"><div><div class="shop-total-lbl">Estimated total</div><div class="shop-total-val" id="shop-total-val">—</div></div><div style="text-align:right"><div class="shop-total-lbl">From your week</div><div style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600" id="shop-rc">0 recipes</div></div></div>
     <div class="grocery-live-bar" id="grocery-live-bar" style="display:none">
       <div class="kb-lead"><span class="grocery-live-dot"></span><div><div class="kb-title" id="kb-title">Local Grocery Pricing</div><div class="kb-sub" id="kb-sub"></div></div></div>
     </div>
-    <p class="shop-intro" id="shop-intro" style="display:none">Items are grouped like a grocery run: we bundle recipe math into bags, cartons, pounds, and other sizes you actually buy.</p>
+    <p class="shop-intro" id="shop-intro" style="display:none">Grouped the way you actually shop.</p>
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:8px;line-height:1.5;display:none" id="price-disc">* Prices are ballpark retail units for your region — real receipts will vary by brand and store.</p>
     <div id="shop-body"></div>
     <div id="shop-export-wrap" class="shop-export-wrap" style="display:none" aria-hidden="true"></div>
@@ -1362,8 +1364,8 @@ button:active{transform:scale(var(--press-scale))}
       <div class="profile-soft-card"><div class="profile-soft-h">Favorite flavors</div><div class="profile-soft-body" id="profile-favorites-line">—</div></div>
       <div class="profile-soft-card"><div class="profile-soft-h">Progress pulse</div><div class="profile-soft-body" id="profile-progress-line">—</div></div>
     </div>
-    <p class="profile-hint">Preferences hold targets and tastes. Weekly intelligence sits on Today, beside your day.</p>
-    <button type="button" class="btn-green" id="profile-open-settings">Preferences</button>
+    <p class="profile-hint">A quick snapshot of how Arc is supporting you.</p>
+    <button type="button" class="btn-green" id="profile-open-settings">Edit profile</button>
   </div>
   <div class="nav"><button type="button" class="nbtn" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn active" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
@@ -1451,7 +1453,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="rm-servings" id="rm-servings" style="display:none">
         <div class="rm-servings-body">
           <div class="rm-servings-h" id="rm-servings-h">Prepared for your week</div>
-          <div class="rm-servings-s" id="rm-servings-s">Portions follow who you cook for in Settings.</div>
+          <div class="rm-servings-s" id="rm-servings-s">Portions adapt to your household rhythm.</div>
         </div>
       </div>
     </div>
@@ -1551,17 +1553,17 @@ button:active{transform:scale(var(--press-scale))}
 <div class="settings-overlay" id="settings-overlay" style="display:none">
 <div class="settings-sheet">
   <div class="settings-hdr">
-    <h2>⚙️ Settings</h2>
+    <h2>Profile</h2>
     <button class="settings-close" id="settings-close">✕ Close</button>
   </div>
   <div class="settings-body">
 
     <!-- PROFILE -->
     <div class="settings-sec">
-      <div class="settings-sec-title">👤 Profile</div>
+      <div class="settings-sec-title">Profile</div>
       <div id="s-regen-card" class="regen-card" style="display:none">
-        <div class="regen-txt"><strong>Profile updated</strong> Save, then regenerate to refresh your plan.</div>
-        <button class="btn-green" id="s-regen" style="padding:9px 14px;font-size:12px;white-space:nowrap;flex-shrink:0">🔄 Regenerate</button>
+        <div class="regen-txt"><strong>Profile updated</strong> Save, then refresh your week.</div>
+        <button class="btn-green" id="s-regen" style="padding:9px 14px;font-size:12px;white-space:nowrap;flex-shrink:0">Refresh week</button>
       </div>
       <div class="fg2 fl" style="margin-bottom:12px">
         <div><label class="s-lbl">Name</label><input class="fi" id="s-name" placeholder="Your name"/></div>
@@ -1628,41 +1630,25 @@ button:active{transform:scale(var(--press-scale))}
           <span class="sc" data-v="solo">Just me</span>
           <span class="sc" data-v="partner">Partner &amp; me</span>
           <span class="sc" data-v="family">Family</span>
-          <span class="sc" data-v="mealprep">Prep week</span>
-        </div>
-      </div>
-      <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--arc-divider)">
-        <div style="font-size:13px;font-weight:700;color:var(--arc-text);margin-bottom:6px">Advanced</div>
-        <p class="settings-arc-lead" style="margin-top:0">Optional. Most people let Arc choose eating occasions.</p>
-        <label class="s-lbl" style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600;margin-top:8px">
-          <input type="checkbox" id="s-meals-manual" style="width:18px;height:18px;accent-color:var(--arc-primary)"/> Set eating occasions manually
-        </label>
-        <div id="s-adv-meals-wrap" style="display:none;margin-top:12px">
-          <label class="s-lbl">Occasions per day</label>
-          <div class="s-chips" id="sg-adv-meals">
-            <span class="sc" data-v="2">2</span><span class="sc" data-v="3">3</span>
-            <span class="sc" data-v="4">4</span><span class="sc" data-v="5">5</span>
-            <span class="sc" data-v="6">6</span>
-          </div>
         </div>
       </div>
       <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--arc-divider)">
         <button type="button" class="btn-outline" id="s-saved-btn" style="width:100%;border-radius:14px;padding:12px;font-size:14px;font-weight:600">Saved recipes</button>
-        <p style="font-size:12px;color:var(--arc-subtext);margin:8px 0 0;line-height:1.45">Saved, starred, and repeats.</p>
+        <p style="font-size:12px;color:var(--arc-subtext);margin:8px 0 0;line-height:1.45">Saved favorites and regulars.</p>
       </div>
     </div>
 
     <!-- Recap & history (weekly notes live on Today) -->
     <div class="settings-sec">
-      <div class="settings-sec-title">✨ Recap &amp; history</div>
-      <p class="settings-arc-lead">Week summaries and past recaps. Notes refresh from <strong>Today</strong>.</p>
-      <button type="button" class="btn-outline" id="s-arc-recap-btn" style="width:100%;margin-top:4px;border-radius:14px;padding:12px;font-size:14px">This week’s recap</button>
+      <div class="settings-sec-title">Recaps</div>
+      <p class="settings-arc-lead">Your weekly story, whenever you want to revisit it.</p>
+      <button type="button" class="btn-outline" id="s-arc-recap-btn" style="width:100%;margin-top:4px;border-radius:14px;padding:12px;font-size:14px">Open this week</button>
       <p class="settings-arc-foot" id="s-arc-foot" style="margin-top:10px"></p>
     </div>
 
     <!-- FOOD PREFERENCES -->
     <div class="settings-sec">
-      <div class="settings-sec-title">🍽️ Food Preferences</div>
+      <div class="settings-sec-title">Food preferences</div>
       <div class="fl" style="margin-bottom:12px">
         <label class="s-lbl">Cooking Skill</label>
         <div class="s-chips" id="sg-skill">
@@ -1713,21 +1699,21 @@ button:active{transform:scale(var(--press-scale))}
 
     <!-- CURRENT TARGETS (read-only) -->
     <div class="settings-sec">
-      <div class="settings-sec-title">📊 Your Current Targets</div>
+      <div class="settings-sec-title">Current targets</div>
       <div id="s-targets"></div>
     </div>
 
     <!-- PAST WEEKLY RECAPS -->
     <div class="settings-sec">
-      <div class="settings-sec-title">📚 Past recaps</div>
-      <p style="font-size:13px;color:var(--arc-subtext);line-height:1.45;margin:-4px 0 12px">Revisit any saved weekly recap—same calm story, on your time.</p>
+      <div class="settings-sec-title">Recap archive</div>
+      <p style="font-size:13px;color:var(--arc-subtext);line-height:1.45;margin:-4px 0 12px">A calm timeline of previous weeks.</p>
       <div id="past-recaps-list"></div>
     </div>
 
   </div><!-- /settings-body -->
   <div class="settings-footer">
     <button type="button" class="btn-outline" id="s-reset-data" style="width:100%;margin-bottom:10px;border-radius:14px">Clear saved data &amp; restart</button>
-    <button class="btn-dark btn" id="s-save" style="width:100%;border-radius:14px">✓ Save Profile</button>
+    <button class="btn-dark btn" id="s-save" style="width:100%;border-radius:14px">Save profile</button>
   </div>
 </div><!-- /settings-sheet -->
 </div><!-- /settings-overlay -->
@@ -3602,7 +3588,7 @@ function firstSlotWithPlannedRecipe(day, slots) {
 }
 
 function buildTodayOverflowMenuHtml(dd, ds, hasRecipe) {
-  var html = '<details class="today-act-details" onclick="event.stopPropagation()"><summary>More</summary>';
+  var html = '<details class="today-act-details" onclick="event.stopPropagation()"><summary>Options</summary>';
   html += '<div class="today-act-details-panel">';
   html += '<button type="button" class="today-act-details-btn" data-today-act="skip" data-day="' + dd + '" data-slot="' + ds + '">Skip</button>';
   html += '<button type="button" class="today-act-details-btn" data-today-act="replace" data-day="' + dd + '" data-slot="' + ds + '">Replace</button>';
@@ -4202,6 +4188,7 @@ function renderToday() {
 
   var stEl = el('today-meal-status');
   var actEl = el('today-meal-actions');
+  var primaryLogBtn = el('today-log-primary');
   var j = heroSlot ? getSlotJournal(day, heroSlot) : null;
 
   if (meal) {
@@ -4226,7 +4213,7 @@ function renderToday() {
       var stHtml = '<span class="' + cls + '">' + label + '</span>';
       if (j && j.status === 'replaced' && j.actualRid) {
         var ar = findRecipe(j.actualRid);
-        if (ar) stHtml += '<div class="today-replace-note">Logged: ' + ar.name + ' · ' + ar.cal + ' kcal</div>';
+        if (ar) stHtml += '<div class="today-replace-note">Logged as: ' + ar.name + ' · ' + ar.cal + ' kcal</div>';
       }
       stEl.innerHTML = stHtml;
 
@@ -4240,6 +4227,13 @@ function renderToday() {
         act += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo</button>';
       }
       actEl.innerHTML = act;
+      if (primaryLogBtn) {
+        primaryLogBtn.style.display = '';
+        primaryLogBtn.setAttribute('data-day', dd);
+        primaryLogBtn.setAttribute('data-slot', ds);
+        primaryLogBtn.setAttribute('data-today-act', j ? 'undo' : 'log');
+        primaryLogBtn.textContent = j ? 'Undo log' : 'Log meal';
+      }
     }
   } else {
     el('today-meal-wrap').innerHTML = '<div class="today-empty">Nothing planned for this slot.</div>';
@@ -4260,7 +4254,7 @@ function renderToday() {
       var stHtmlE = '<span class="' + clsE + '">' + labelE + '</span>';
       if (j && j.status === 'replaced' && j.actualRid) {
         var arE = findRecipe(j.actualRid);
-        if (arE) stHtmlE += '<div class="today-replace-note">Logged: ' + arE.name + ' · ' + arE.cal + ' kcal</div>';
+        if (arE) stHtmlE += '<div class="today-replace-note">Logged as: ' + arE.name + ' · ' + arE.cal + ' kcal</div>';
       }
       stEl.innerHTML = stHtmlE;
       var dsE = shopDataAttr(heroSlot);
@@ -4273,9 +4267,17 @@ function renderToday() {
         actE += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + ddE + '" data-slot="' + dsE + '">Undo</button>';
       }
       actEl.innerHTML = actE;
+      if (primaryLogBtn) {
+        primaryLogBtn.style.display = '';
+        primaryLogBtn.setAttribute('data-day', ddE);
+        primaryLogBtn.setAttribute('data-slot', dsE);
+        primaryLogBtn.setAttribute('data-today-act', j ? 'undo' : 'assign');
+        primaryLogBtn.textContent = j ? 'Undo log' : 'Log meal';
+      }
     } else {
       if (stEl) stEl.innerHTML = '';
       if (actEl) actEl.innerHTML = '';
+      if (primaryLogBtn) primaryLogBtn.style.display = 'none';
     }
   }
 
@@ -4284,9 +4286,9 @@ function renderToday() {
   var protTgt = macros.protein || 0;
   var protRem = Math.max(0, protTgt - consumed.p);
   var kEl = el('today-kcal-remaining');
-  if (kEl) kEl.textContent = kcalRem.toLocaleString(undefined) + ' kcal remaining (logged)';
+  if (kEl) kEl.textContent = kcalRem.toLocaleString(undefined) + ' kcal remaining';
   var pEl = el('today-protein-remaining');
-  if (pEl) pEl.textContent = Math.round(protRem).toLocaleString(undefined) + 'g protein left (logged)';
+  if (pEl) pEl.textContent = Math.round(protRem).toLocaleString(undefined) + 'g protein left';
   var ring = el('today-ring-bar');
   if (ring) {
     var rad = 41;
@@ -4300,7 +4302,7 @@ function renderToday() {
     var ahead = remainingPlannedCalOnMenu(day, slots);
     if (ahead > 0 && consumed.cal < calTarget) {
       fEl.style.display = 'block';
-      fEl.textContent = 'On your menu: ~' + Math.round(ahead).toLocaleString(undefined) + ' kcal (not logged yet)';
+      fEl.textContent = 'Still on your menu: ~' + Math.round(ahead).toLocaleString(undefined) + ' kcal';
     } else {
       fEl.style.display = 'none';
       fEl.textContent = '';
@@ -4743,12 +4745,12 @@ function valStep(n) {
 // ── Onboarding navigation ─────────────────────────────────────
 var stepMeta = [
   { h: 'A quiet hello', s: 'Arc builds around your real routine.' },
-  { h: 'The basics', s: 'Your plan adapts over time.' },
-  { h: 'Where life happens', s: 'So pricing stays grounded where you shop.' },
-  { h: 'Your days', s: 'Tap what resonates — change anytime.' },
-  { h: 'Your kitchen', s: 'This nudges your first week.' },
-  { h: 'Energy & direction', s: 'Arc is learning you.' },
-  { h: 'Almost home', s: 'A few preferences — then your week opens.' }
+  { h: 'Your baseline', s: 'Quick details for a steady starting point.' },
+  { h: 'Where you shop', s: 'Keeps grocery guidance realistic.' },
+  { h: 'Your days', s: 'Pick what feels most like your week.' },
+  { h: 'Your kitchen', s: 'Choose the rhythm you can sustain.' },
+  { h: 'Direction', s: 'Arc tunes around what matters now.' },
+  { h: 'Almost there', s: 'Final touches, then your week opens.' }
 ];
 
 function goStep(n) {
@@ -4762,7 +4764,7 @@ function goStep(n) {
     el('od' + i).className = 'ob-dot' + (i < n ? ' done' : i === n ? ' active' : '');
   }
   el('ob-back').style.display = n === 1 ? 'none' : 'block';
-  el('ob-next').textContent = n === 7 ? 'Open your week' : 'Continue';
+  el('ob-next').textContent = n === 7 ? 'Open week' : 'Continue';
   document.querySelector('#ob .ob-body').scrollTop = 0;
 }
 
@@ -5239,7 +5241,7 @@ function bwSetStep(n) {
   }
   el('bw-back').style.visibility = n === 1 ? 'hidden' : 'visible';
   el('bw-skip').style.display    = n === 3 ? 'inline-flex' : 'none';
-  el('bw-next').textContent      = n === 3 ? 'Build my week ✦' : 'Continue →';
+  el('bw-next').textContent      = n === 3 ? 'Build week' : 'Continue';
   bwUpdateNext();
 }
 
@@ -8275,7 +8277,7 @@ function renderShopping() {
     el('shop-total').style.display   = 'none';
     el('shop-intro').style.display  = 'none';
     el('price-disc').style.display  = 'none';
-    el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Plan meals for the week to build your grocery list.</div>';
+    el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Build your week to generate a grocery list.</div>';
     lastShopLines = [];
     if (exportWrap) {
       exportWrap.style.display = 'none';
@@ -8312,9 +8314,9 @@ function renderShopping() {
   if (krogerHits > 0) {
     var nearBit = UP.groceryNearCity ? (' near ' + UP.groceryNearCity) : '';
     el('price-disc').textContent = '* Estimated pricing' + nearBit + ' — ' + krogerHits + ' of ' + lines.length +
-      ' lines refined with store-level detail where available. Remaining lines use regional benchmarks; receipts still vary.';
+      ' items use live shelf detail. Final totals still vary by store and brand.';
   } else {
-    el('price-disc').textContent = '* ' + regionalPricingLine().replace(/\.$/, '') + ' Receipts still vary by store, brand, and week.';
+    el('price-disc').textContent = '* ' + regionalPricingLine().replace(/\.$/, '') + ' Final totals still vary by store and brand.';
   }
   el('shop-total-val').textContent = fmtPrice(buyTotalUsd);
   var rcNote = plannedIds.length + ' recipe' + (plannedIds.length === 1 ? '' : 's');
@@ -8368,12 +8370,9 @@ function renderShopping() {
   if (exportWrap) {
     exportWrap.style.display = 'block';
     exportWrap.setAttribute('aria-hidden', 'false');
-    exportWrap.innerHTML = '<button type="button" class="btn-shop-local" id="shop-local-store-btn">Shop at Local Store</button>' +
-      '<button type="button" class="btn-shop-export-secondary" id="shop-export-cart-btn">Send to Grocery Cart</button>';
+    exportWrap.innerHTML = '<button type="button" class="btn-shop-local" id="shop-local-store-btn">Shop This List</button>';
     var localB = el('shop-local-store-btn');
-    var exb = el('shop-export-cart-btn');
     if (localB) localB.onclick = function() { prepareUniversalCart(); };
-    if (exb) exb.onclick = function() { exportToRetailerCart(); };
   }
 
   var schks = document.querySelectorAll('.scheck');
@@ -8507,17 +8506,6 @@ function openSettings() {
   sSetChip('sg-cooking-for', UP.cookingFor || 'solo');
   sSetChip('sg-skill',    UP.skill);
   sSetChip('sg-budget',   UP.budget);
-  sSetChip('sg-adv-meals', String(UP.meals || '3'));
-  var man = el('s-meals-manual');
-  var advWrap = el('s-adv-meals-wrap');
-  if (man) {
-    man.checked = UP.mealsMode === 'manual';
-    man.onchange = function() {
-      if (advWrap) advWrap.style.display = man.checked ? 'block' : 'none';
-      flagDirty();
-    };
-    if (advWrap) advWrap.style.display = man.checked ? 'block' : 'none';
-  }
 
   // Populate multi-select chips
   sSetMulti('sg-cuisine', UP.cuisines     || []);
@@ -8582,7 +8570,7 @@ function sGetMulti(gid) {
 }
 
 function wireSettingsChips() {
-  var singles = ['sg-goal','sg-activity','sg-eat-style','sg-cook-style','sg-life-priority','sg-cooking-for','sg-skill','sg-budget','sg-adv-meals'];
+  var singles = ['sg-goal','sg-activity','sg-eat-style','sg-cook-style','sg-life-priority','sg-cooking-for','sg-skill','sg-budget'];
   for (var si = 0; si < singles.length; si++) {
     (function(gid) {
       var chips = document.querySelectorAll('#' + gid + ' .sc');
@@ -8634,9 +8622,7 @@ function applySettingsProfile() {
   UP.prefCookStyle = sGetChip('sg-cook-style')   || UP.prefCookStyle || 'balanced_mix';
   UP.lifePriority = sGetChip('sg-life-priority') || UP.lifePriority || defaultLifePriorityFromGoal(UP.goal);
   UP.cookingFor   = sGetChip('sg-cooking-for')   || inferCookingForFromProfile();
-  var manEl = el('s-meals-manual');
-  UP.mealsMode    = manEl && manEl.checked ? 'manual' : 'adaptive';
-  if (UP.mealsMode === 'manual') UP.meals = sGetChip('sg-adv-meals') || String(UP.meals || '3');
+  UP.mealsMode    = 'adaptive';
   UP.skill        = sGetChip('sg-skill')         || UP.skill;
   UP.budget       = sGetChip('sg-budget')        || UP.budget;
   UP.cuisines     = sGetMulti('sg-cuisine');
@@ -8656,7 +8642,7 @@ function applySettingsProfile() {
   settingsDirty = false;
   el('s-regen-card').style.display = 'none';
   saveUserProfile();
-  showToast('Profile saved ✓');
+  showToast('Profile saved');
 }
 
 // ── Wire everything up on DOMContentLoaded ────────────────────
@@ -8813,6 +8799,13 @@ document.addEventListener('DOMContentLoaded', function() {
   el('today-cook-btn').addEventListener('click', function() {
     var rid = parseInt(this.dataset.rid, 10);
     if (rid) openRM(rid);
+  });
+  el('today-log-primary').addEventListener('click', function() {
+    var act = this.getAttribute('data-today-act');
+    var day = this.getAttribute('data-day');
+    var slot = this.getAttribute('data-slot');
+    if (!act || !day || !slot) return;
+    applyTodayMealAction(act, day, slot);
   });
   el('today-log-btn').addEventListener('click', function() { tab('progress', { progressPanel: 'log' }); });
 
