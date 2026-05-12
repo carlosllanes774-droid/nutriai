@@ -188,20 +188,73 @@ body{
 }
 .gen-live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
-/* ONBOARDING */
-.ob-top{background:var(--arc-primary);padding:32px 24px 22px;flex-shrink:0}
-.ob-brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
-.ob-mark{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center}
-.ob-brand-name{font-size:20px;font-weight:700;letter-spacing:-.4px;color:#fff}
-.ob-dots{display:flex;gap:6px;margin-bottom:18px}
-.ob-dot{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.2);transition:background var(--motion-sheet) var(--ease-standard)}
-.ob-dot.done{background:rgba(255,255,255,.5)}.ob-dot.active{background:var(--arc-primary)}
-.ob-heading{font-size:24px;font-weight:700;letter-spacing:-.5px;font-family:Georgia,serif;color:#fff;margin-bottom:4px}
-.ob-sub{font-size:14px;color:rgba(255,255,255,.6)}
-.ob-body{flex:1;overflow-y:auto;padding:28px 24px}
-.ob-footer{padding:18px 24px 22px;box-shadow:0 -1px 0 var(--arc-divider);display:flex;gap:10px;flex-shrink:0;background:var(--arc-card)}
-.ob-err{font-size:13px;color:#e76f51;text-align:center;padding:4px 24px 14px;min-height:22px}
-.ob-step{display:none}.ob-step.active{display:block}
+/* ONBOARDING — Weekly Recap visual language: dark, spacious, cinematic */
+#ob.screen{background:#12100e;color:rgba(255,255,255,.92)}
+#ob .ob-top{flex-shrink:0;padding:22px 22px 12px;position:relative;background:transparent}
+#ob .ob-top::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);opacity:.7}
+.ob-brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.ob-mark{width:38px;height:38px;background:rgba(255,255,255,.1);border-radius:12px;display:flex;align-items:center;justify-content:center}
+#ob .ob-mark svg{stroke:rgba(255,255,255,.88)!important}
+.ob-brand-name{font-size:18px;font-weight:700;letter-spacing:-.3px;color:rgba(255,255,255,.92)}
+.ob-dots{display:flex;gap:5px;margin-bottom:16px}
+.ob-dot{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.12);transition:background 420ms cubic-bezier(0.4,0,0.2,1),transform 420ms cubic-bezier(0.4,0,0.2,1)}
+.ob-dot.done{background:rgba(255,255,255,.38)}
+.ob-dot.active{background:linear-gradient(90deg,var(--arc-primary),#f4a082);box-shadow:0 0 12px rgba(227,90,54,.35)}
+.ob-heading{font-size:clamp(26px,6.2vw,32px);font-weight:700;letter-spacing:-.04em;font-family:Georgia,serif;color:#fff;margin-bottom:8px;line-height:1.12}
+.ob-sub{font-size:15px;line-height:1.5;color:rgba(255,255,255,.52);font-weight:500;max-width:22em}
+#ob .ob-body{flex:1;overflow-y:auto;padding:8px 20px 36px;position:relative;min-height:0;-webkit-overflow-scrolling:touch}
+#ob .ob-body::before{content:'';position:absolute;inset:0;background:radial-gradient(120% 70% at 50% -20%,rgba(227,90,54,.28) 0%,transparent 52%),radial-gradient(90% 55% at 100% 100%,rgba(255,255,255,.05) 0%,transparent 42%),linear-gradient(168deg,#141210 0%,#1a1714 42%,#12100e 100%);pointer-events:none;z-index:0}
+#ob .ob-step{position:relative;z-index:1;display:none}
+#ob .ob-step.active{display:block}
+#ob .ob-pane{animation:obPaneIn 420ms cubic-bezier(0.4,0,0.2,1) both}
+@keyframes obPaneIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+#ob .ob-kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:14px}
+#ob .ob-hero{font-family:Georgia,serif;font-size:clamp(22px,5.5vw,28px);font-weight:700;color:#fff;line-height:1.15;letter-spacing:-.03em;margin-bottom:8px}
+#ob .ob-whisper{font-size:15px;line-height:1.55;color:rgba(255,255,255,.5);font-weight:500;margin-bottom:26px;max-width:24em}
+#ob .ob-micro{font-size:12px;line-height:1.5;color:rgba(255,255,255,.34);margin-top:24px;max-width:26em}
+#ob .ob-fl{margin-bottom:26px}
+#ob .ob-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.48);margin-bottom:10px;letter-spacing:.01em}
+#ob .ob-label .req{color:#f4a082}
+#ob .fi{background:rgba(255,255,255,.07);color:#fff;border-radius:16px;padding:16px 18px;font-size:17px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+#ob .fi::placeholder{color:rgba(255,255,255,.32)}
+#ob .fi:focus{outline:none;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 2px rgba(227,90,54,.75),0 0 0 1px rgba(227,90,54,.2)}
+#ob .fi.err{background:rgba(227,90,54,.12);box-shadow:inset 0 0 0 2px #e76f51}
+#ob .chips{gap:10px}
+#ob .chip{background:rgba(255,255,255,.06);color:rgba(255,255,255,.88);border-radius:16px;padding:12px 16px;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+#ob .chip:hover{background:rgba(255,255,255,.1);color:#fff}
+#ob .chip.sel{background:rgba(227,90,54,.2);color:#fff;box-shadow:inset 0 0 0 1.5px var(--arc-primary)}
+#ob .ob-cards{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+#ob .ob-card-choice{display:block;width:100%;text-align:left;border-radius:18px;padding:18px 18px;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),transform 160ms var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard)}
+#ob .ob-card-choice:active{transform:scale(var(--press-scale))}
+#ob .ob-card-t{font-weight:650;font-size:16px;color:#fff;margin-bottom:4px;letter-spacing:-.02em}
+#ob .ob-card-d{font-size:13px;color:rgba(255,255,255,.45);line-height:1.4;font-weight:500}
+#ob .loc-btn{background:rgba(255,255,255,.08);color:#fff;border-radius:14px}
+#ob .loc-btn:hover{background:rgba(255,255,255,.12)}
+#ob .or-text{color:rgba(255,255,255,.38)}
+#ob .or-line{background:rgba(255,255,255,.1)}
+#ob .rg{color:rgba(255,255,255,.42);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:10px;margin-bottom:6px}
+#ob .ib{background:rgba(255,255,255,.1);color:#fff;border-radius:999px}
+#ob .ibox{background:rgba(255,255,255,.06);border-radius:14px;color:rgba(255,255,255,.78);font-size:13px;line-height:1.5}
+#ob .mmb{background:rgba(255,255,255,.06);color:rgba(255,255,255,.75)}
+#ob .mmb.active{background:rgba(227,90,54,.25);color:#fff}
+#ob .cmw .mc{background:rgba(255,255,255,.05);border-radius:16px}
+#ob details.ob-details{margin-top:18px;border-radius:16px;background:rgba(255,255,255,.04);padding:4px 14px 14px;border:1px solid rgba(255,255,255,.08)}
+#ob details.ob-details > summary{cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,.5);padding:12px 4px;list-style:none}
+#ob details.ob-details > summary::-webkit-details-marker{display:none}
+.ob-footer{padding:16px 20px 22px;display:flex;gap:12px;flex-shrink:0;align-items:center;background:rgba(14,12,10,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.08)}
+#ob .ob-back-btn{flex:0 0 auto;min-width:88px;padding:14px 12px;border:none;border-radius:14px;background:transparent;color:rgba(255,255,255,.55);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+#ob .ob-back-btn:hover{color:#fff;background:rgba(255,255,255,.06)}
+#ob .ob-cta{flex:1;padding:16px 18px;border-radius:18px;border:none;font-size:16px;font-weight:650;cursor:pointer;font-family:inherit;background:var(--arc-primary);color:#fff;box-shadow:0 10px 32px rgba(227,90,54,.32);transition:transform 160ms var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+#ob .ob-cta:hover{background:var(--arc-primary-dark)}
+#ob .ob-cta:active{transform:scale(var(--press-scale))}
+#ob .loc-det{background:rgba(255,255,255,.08);box-shadow:none}
+#ob .loc-det-text{color:#fff}
+#ob .loc-det-sub{color:rgba(255,255,255,.5)}
+#ob .ul{color:rgba(255,255,255,.45)}
+@media (prefers-reduced-motion:reduce){
+  #ob .ob-pane{animation:none!important}
+  #ob .ob-dot{transition:none!important}
+}
 
 /* FORMS */
 .fl{margin-bottom:22px}
@@ -965,32 +1018,51 @@ button:active{transform:scale(var(--press-scale))}
   </div>
 </div>
 
-<!-- ONBOARDING -->
+<!-- ONBOARDING — recap-inspired, 7 calm beats -->
 <div class="screen" id="ob">
   <div class="ob-top">
-    <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
-    <div class="ob-dots"><div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div></div>
-    <div class="ob-heading" id="ob-h">About you</div>
-    <div class="ob-sub" id="ob-s">Let's get the basics down</div>
+    <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
+    <div class="ob-dots" aria-hidden="true">
+      <div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div><div class="ob-dot" id="od4"></div>
+      <div class="ob-dot" id="od5"></div><div class="ob-dot" id="od6"></div><div class="ob-dot" id="od7"></div>
+    </div>
+    <div class="ob-heading" id="ob-h">A quiet hello</div>
+    <div class="ob-sub" id="ob-s">Arc builds around your real routine.</div>
   </div>
   <div class="ob-body">
-    <!-- STEP 1 -->
     <div class="ob-step active" id="st1">
-      <div class="fl"><label>Your name <span style="color:#e76f51">*</span></label><input class="fi" id="in-name" placeholder="e.g. Jordan"/></div>
-      <div class="fg2 fl">
-        <div><label>Age</label><input class="fi" id="in-age" type="number" min="10" max="100" placeholder="28"/></div>
-        <div><label>Sex</label><select class="fi" id="in-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 1 of 7</div>
+        <div class="ob-hero">What should we call you?</div>
+        <p class="ob-whisper">No perfection required — just you, as you are.</p>
+        <div class="ob-fl"><label class="ob-label" for="in-name">First name <span class="req">*</span></label><input class="fi" id="in-name" placeholder="Jordan" autocomplete="given-name"/></div>
+        <p class="ob-micro">Built for consistency, not perfection.</p>
       </div>
-      <div class="fg2 fl">
-        <div><label>Weight <span style="color:#e76f51">*</span></label><div class="uw"><input class="fi" id="in-wt" type="number" min="50" max="700" placeholder="160"/><span class="ul">lbs</span></div></div>
-        <div><label>Height</label><div class="uw"><input class="fi" id="in-ht" inputmode="numeric" placeholder="5'8&quot;" autocomplete="off"/></div></div>
+    </div>
+    <div class="ob-step" id="st2">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 2 of 7</div>
+        <div class="ob-hero">The basics</div>
+        <p class="ob-whisper">Your plan adapts over time.</p>
+        <div class="fg2 ob-fl">
+          <div><label class="ob-label">Weight <span class="req">*</span></label><div class="uw"><input class="fi" id="in-wt" type="number" min="50" max="700" placeholder="160"/><span class="ul">lbs</span></div></div>
+          <div><label class="ob-label">Height</label><div class="uw"><input class="fi" id="in-ht" inputmode="numeric" placeholder="5'8&quot;" autocomplete="off"/></div></div>
+        </div>
+        <div class="fg2 ob-fl">
+          <div><label class="ob-label">Age</label><input class="fi" id="in-age" type="number" min="10" max="100" placeholder="28"/></div>
+          <div><label class="ob-label">Sex</label><select class="fi" id="in-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+        </div>
       </div>
-      <div class="fl">
-        <label>Your region <span style="color:#e76f51">*</span></label>
-        <button class="loc-btn" id="loc-detect-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg> Use my location for accurate pricing</button>
-        <div id="loc-det" style="display:none" class="loc-det"><div style="font-size:22px">📍</div><div style="flex:1"><div class="loc-det-text" id="loc-city">—</div><div class="loc-det-sub" id="loc-rlabel">—</div></div><button class="loc-chg" id="loc-chg">Change</button></div>
-        <div class="or-row" id="or-row"><div class="or-line"></div><span class="or-text">or choose manually</span><div class="or-line"></div></div>
-        <div id="man-region">
+    </div>
+    <div class="ob-step" id="st3">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 3 of 7</div>
+        <div class="ob-hero">Where life happens</div>
+        <p class="ob-whisper">So pricing stays grounded where you shop.</p>
+        <button class="loc-btn" type="button" id="loc-detect-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg> Use my location</button>
+        <div id="loc-det" style="display:none;margin-top:12px" class="loc-det"><div style="font-size:22px">📍</div><div style="flex:1"><div class="loc-det-text" id="loc-city">—</div><div class="loc-det-sub" id="loc-rlabel">—</div></div><button type="button" class="loc-chg" id="loc-chg">Change</button></div>
+        <div class="or-row" id="or-row" style="margin-top:18px"><div class="or-line"></div><span class="or-text">or pick a region</span><div class="or-line"></div></div>
+        <div id="man-region" class="ob-fl">
           <div class="chips" id="chip-region">
             <div class="rg" style="margin-top:0">United States</div>
             <span class="chip" data-v="us-midwest">Midwest</span><span class="chip" data-v="us-southeast">Southeast</span><span class="chip" data-v="us-south">South/Texas</span><span class="chip" data-v="us-midatlantic">Mid-Atlantic</span><span class="chip" data-v="us-northeast">Northeast</span><span class="chip" data-v="us-california">California</span><span class="chip" data-v="us-pacific-nw">Pacific NW</span><span class="chip" data-v="us-mountain">Mountain West</span>
@@ -1002,44 +1074,79 @@ button:active{transform:scale(var(--press-scale))}
         </div>
       </div>
     </div>
-    <!-- STEP 2 -->
-    <div class="ob-step" id="st2">
-      <div class="fl"><label>Primary goal <span style="color:#e76f51">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Lose weight</span><span class="chip" data-v="Build muscle">Build muscle</span><span class="chip" data-v="Maintain weight">Maintain weight</span><span class="chip" data-v="Improve energy">Improve energy</span><span class="chip" data-v="Eat healthier">Eat healthier</span></div></div>
-      <div class="fl">
-        <label>Activity level <span style="color:#e76f51">*</span> <button class="ib" id="act-ib">i</button></label>
-        <div class="ibox" id="act-ibox" style="display:none"><div><strong>🪑 Sedentary</strong> — Desk job, little/no exercise</div><div><strong>🚶 Light</strong> — Light exercise 1–3x/week</div><div><strong>🏃 Moderate</strong> — Gym or cardio 3–5x/week</div><div><strong>⚡ Very active</strong> — Intense training 6–7x/week</div><div><strong>🏆 Athlete</strong> — Professional/twice-daily training</div></div>
-        <div class="chips" id="chip-activity"><span class="chip" data-v="Sedentary">🪑 Sedentary</span><span class="chip" data-v="Light">🚶 Light</span><span class="chip" data-v="Moderate">🏃 Moderate</span><span class="chip" data-v="Very active">⚡ Very active</span><span class="chip" data-v="Athlete">🏆 Athlete</span></div>
-      </div>
-      <div class="fl"><label>How do you like to eat? <span style="color:#e76f51">*</span></label><div class="chips" id="chip-eat-style"><span class="chip" data-v="simpler">Simpler days</span><span class="chip" data-v="balanced">Balanced meals</span><span class="chip" data-v="frequent">Frequent fueling</span><span class="chip" data-v="prep">Meal prep focused</span></div><p style="font-size:12px;color:var(--arc-subtext);margin:8px 0 0;line-height:1.45">Arc sets meal count, snacks, and portions from this — no math here.</p></div>
-      <div class="fl"><label>What matters most right now? <span style="color:#e76f51">*</span></label><div class="chips" id="chip-life-priority"><span class="chip" data-v="convenience">Convenience</span><span class="chip" data-v="performance">Performance</span><span class="chip" data-v="fat_loss">Fat loss</span><span class="chip" data-v="muscle">Muscle gain</span><span class="chip" data-v="budget">Budget</span><span class="chip" data-v="cooking">Cooking joy</span></div></div>
-      <div class="fl">
-        <label>Calorie &amp; macro targets <span style="font-size:11px;font-weight:600;color:var(--arc-subtext)">(optional)</span></label>
-        <div class="mm"><div class="mmb active" id="mm-ai">✦ Arc recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
-        <div class="cmw" id="cmw">
-          <div class="mc">
-            <div style="margin-bottom:12px"><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Daily calories</label><div class="uw"><input class="fi" id="in-cal" type="number" min="800" max="6000" placeholder="2000"/><span class="ul">kcal</span></div></div>
-            <div class="fg2" style="gap:10px;margin-bottom:10px">
-              <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Protein</label><div class="uw"><input class="fi" id="in-protein" type="number" placeholder="150"/><span class="ul">g</span></div></div>
-              <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Carbs</label><div class="uw"><input class="fi" id="in-carbs" type="number" placeholder="200"/><span class="ul">g</span></div></div>
-            </div>
-            <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Fat</label><div class="uw" style="max-width:49%"><input class="fi" id="in-fat" type="number" placeholder="65"/><span class="ul">g</span></div></div>
-            <div class="mc-hint">These targets override Arc recommendations in your stats.</div>
-          </div>
+    <div class="ob-step" id="st4">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 4 of 7</div>
+        <div class="ob-hero">How do your days usually feel?</div>
+        <p class="ob-whisper">Tap what resonates — you can change this anytime.</p>
+        <div class="ob-cards" id="chip-eat-style">
+          <div class="chip ob-card-choice" data-v="busy_simple"><div class="ob-card-t">Busy and simple</div><div class="ob-card-d">Fewer decisions, more room in the day</div></div>
+          <div class="chip ob-card-choice" data-v="balanced_flexible"><div class="ob-card-t">Balanced and flexible</div><div class="ob-card-d">Mostly steady, with room to bend</div></div>
+          <div class="chip ob-card-choice" data-v="performance"><div class="ob-card-t">Performance-focused</div><div class="ob-card-d">Training, focus, and fuel on purpose</div></div>
+          <div class="chip ob-card-choice" data-v="meal_prep"><div class="ob-card-t">Meal prep oriented</div><div class="ob-card-d">Cook once, live easier through the week</div></div>
         </div>
       </div>
     </div>
-    <!-- STEP 3 -->
-    <div class="ob-step" id="st3">
-      <div class="fl"><label>Cooking skill <span style="color:#e76f51">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident chef</span></div></div>
-      <div class="fl"><label>Weekly grocery budget <span style="color:#e76f51">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Budget</span><span class="chip" data-v="Moderate">$$ Moderate</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
-      <div class="fl"><label>Dietary restrictions</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
-      <div class="fl"><label>Foods you dislike or avoid</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="e.g. mushrooms, spicy food, shellfish..."></textarea></div>
-      <p style="font-size:12px;color:var(--arc-subtext);line-height:1.5;margin-top:14px;font-style:italic">Cuisines and weekly cooking style come next. Arc keeps the structure light — you steer goals and rhythm, not spreadsheets.</p>
+    <div class="ob-step" id="st5">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 5 of 7</div>
+        <div class="ob-hero">How do you prefer to cook?</div>
+        <p class="ob-whisper">This nudges your first week — not a contract.</p>
+        <div class="ob-cards" id="chip-cook-style">
+          <div class="chip ob-card-choice" data-v="fresh"><div class="ob-card-t">Fresh meals</div><div class="ob-card-d">More variety, more time at the stove</div></div>
+          <div class="chip ob-card-choice" data-v="balanced_mix"><div class="ob-card-t">Balanced mix</div><div class="ob-card-d">Fresh plates with a few gentle repeats</div></div>
+          <div class="chip ob-card-choice" data-v="prepared_ahead"><div class="ob-card-t">Prepared ahead</div><div class="ob-card-d">Batch-friendly rhythms</div></div>
+          <div class="chip ob-card-choice" data-v="family_style"><div class="ob-card-t">Family style</div><div class="ob-card-d">Shared tables, generous dinners</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-step" id="st6">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 6 of 7</div>
+        <div class="ob-hero">Energy &amp; direction</div>
+        <p class="ob-whisper">Arc is learning you — not configuring software.</p>
+        <div class="ob-fl"><label class="ob-label">What are you moving toward? <span class="req">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Ease up</span><span class="chip" data-v="Build muscle">Grow stronger</span><span class="chip" data-v="Maintain weight">Stay steady</span><span class="chip" data-v="Improve energy">More energy</span><span class="chip" data-v="Eat healthier">Eat cleaner</span></div></div>
+        <div class="ob-fl">
+          <label class="ob-label">Typical week <span class="req">*</span> <button type="button" class="ib" id="act-ib" aria-label="Activity guide">i</button></label>
+          <div class="ibox" id="act-ibox" style="display:none;margin-bottom:10px;padding:12px"><div><strong>🪑 Sedentary</strong> — Desk job, little/no exercise</div><div><strong>🚶 Light</strong> — Light exercise 1–3x/week</div><div><strong>🏃 Moderate</strong> — Gym or cardio 3–5x/week</div><div><strong>⚡ Very active</strong> — Intense training 6–7x/week</div><div><strong>🏆 Athlete</strong> — Professional/twice-daily training</div></div>
+          <div class="chips" id="chip-activity"><span class="chip" data-v="Sedentary">🪑 Mostly desk</span><span class="chip" data-v="Light">🚶 Light movement</span><span class="chip" data-v="Moderate">🏃 Active week</span><span class="chip" data-v="Very active">⚡ Very active</span><span class="chip" data-v="Athlete">🏆 Athlete</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-step" id="st7">
+      <div class="ob-pane">
+        <div class="ob-kicker">Step 7 of 7</div>
+        <div class="ob-hero">Almost home</div>
+        <p class="ob-whisper">A few preferences — then your week opens.</p>
+        <div class="ob-fl"><label class="ob-label">What matters most now? <span class="req">*</span></label><div class="chips" id="chip-life-priority"><span class="chip" data-v="convenience">Convenience</span><span class="chip" data-v="performance">Performance</span><span class="chip" data-v="fat_loss">Fat loss</span><span class="chip" data-v="muscle">Muscle gain</span><span class="chip" data-v="budget">Budget</span><span class="chip" data-v="cooking">Cooking joy</span></div></div>
+        <div class="fg2 ob-fl">
+          <div><label class="ob-label">Kitchen comfort <span class="req">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident</span></div></div>
+          <div><label class="ob-label">Groceries <span class="req">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Lean</span><span class="chip" data-v="Moderate">$$ Balanced</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
+        </div>
+        <div class="ob-fl"><label class="ob-label">Anything off the table?</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
+        <div class="ob-fl"><label class="ob-label">Flavors to skip</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="Optional — e.g. mushrooms, very spicy…"></textarea></div>
+        <details class="ob-details">
+          <summary>Fine-tune calories</summary>
+          <div style="margin-top:12px">
+            <div class="mm"><div class="mmb active" id="mm-ai">✦ Arc recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
+            <div class="cmw" id="cmw">
+              <div class="mc">
+                <div style="margin-bottom:12px"><label class="ob-label">Daily calories</label><div class="uw"><input class="fi" id="in-cal" type="number" min="800" max="6000" placeholder="2000"/><span class="ul">kcal</span></div></div>
+                <div class="fg2" style="gap:10px;margin-bottom:10px">
+                  <div><label class="ob-label">Protein</label><div class="uw"><input class="fi" id="in-protein" type="number" placeholder="150"/><span class="ul">g</span></div></div>
+                  <div><label class="ob-label">Carbs</label><div class="uw"><input class="fi" id="in-carbs" type="number" placeholder="200"/><span class="ul">g</span></div></div>
+                </div>
+                <div><label class="ob-label">Fat</label><div class="uw" style="max-width:49%"><input class="fi" id="in-fat" type="number" placeholder="65"/><span class="ul">g</span></div></div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
     </div>
   </div>
   <div class="ob-footer">
-    <button class="btn btn-ghost" id="ob-back" style="display:none">← Back</button>
-    <button class="btn btn-dark" id="ob-next">Continue →</button>
+    <button type="button" class="ob-back-btn" id="ob-back" style="display:none">Back</button>
+    <button type="button" class="ob-cta" id="ob-next">Continue</button>
   </div>
   <div class="ob-err" id="ob-err"></div>
 </div>
@@ -1489,10 +1596,19 @@ button:active{transform:scale(var(--press-scale))}
       <div class="fl" style="margin-bottom:12px">
         <label class="s-lbl">How you eat</label>
         <div class="s-chips" id="sg-eat-style">
-          <span class="sc" data-v="simpler">Simpler days</span>
-          <span class="sc" data-v="balanced">Balanced meals</span>
-          <span class="sc" data-v="frequent">Frequent fueling</span>
-          <span class="sc" data-v="prep">Meal prep cadence</span>
+          <span class="sc" data-v="busy_simple">Busy &amp; simple</span>
+          <span class="sc" data-v="balanced_flexible">Balanced &amp; flexible</span>
+          <span class="sc" data-v="performance">Performance</span>
+          <span class="sc" data-v="meal_prep">Meal prep</span>
+        </div>
+      </div>
+      <div class="fl" style="margin-bottom:12px">
+        <label class="s-lbl">How you cook</label>
+        <div class="s-chips" id="sg-cook-style">
+          <span class="sc" data-v="fresh">Fresh meals</span>
+          <span class="sc" data-v="balanced_mix">Balanced mix</span>
+          <span class="sc" data-v="prepared_ahead">Prepared ahead</span>
+          <span class="sc" data-v="family_style">Family style</span>
         </div>
       </div>
       <div class="fl" style="margin-bottom:12px">
@@ -1670,12 +1786,22 @@ var SLOT_SETS = {
   '6': ['Breakfast','Morning snack','Lunch','Afternoon snack','Dinner','Evening snack']
 };
 
-/** Lifestyle rhythm — Arc derives slot count unless mealsMode === 'manual'. */
+/** Lifestyle rhythm labels (stored keys on UP.eatStyle). */
 var EAT_STYLE_LABELS = {
-  simpler: 'Simpler days',
-  balanced: 'Balanced meals',
-  frequent: 'Frequent fueling',
-  prep: 'Meal prep cadence'
+  busy_simple: 'Busy and simple',
+  balanced_flexible: 'Balanced and flexible',
+  performance: 'Performance-focused',
+  meal_prep: 'Meal prep oriented',
+  simpler: 'Busy and simple',
+  balanced: 'Balanced and flexible',
+  frequent: 'Performance-focused',
+  prep: 'Meal prep oriented'
+};
+var COOK_STYLE_LABELS = {
+  fresh: 'Fresh meals',
+  balanced_mix: 'Balanced mix',
+  prepared_ahead: 'Prepared ahead',
+  family_style: 'Family style'
 };
 var LIFE_PRIORITY_LABELS = {
   convenience: 'Convenience',
@@ -1685,6 +1811,26 @@ var LIFE_PRIORITY_LABELS = {
   budget: 'Budget',
   cooking: 'Cooking joy'
 };
+
+/** Map stored eatStyle (new or legacy) to internal rhythm bucket for meal-count logic. */
+function normalizeEatStyleToken(es) {
+  var x = String(es || '').trim();
+  var legacy = { simpler: 'busy_simple', balanced: 'balanced_flexible', frequent: 'performance', prep: 'meal_prep' };
+  if (legacy[x]) x = legacy[x];
+  if (x === 'busy_simple' || x === 'balanced_flexible' || x === 'performance' || x === 'meal_prep') return x;
+  return 'balanced_flexible';
+}
+
+/** Default weekly cook bias from onboarding; seeds Build Your Week. */
+function mapPrefCookToBwStyle(pc) {
+  switch (pc) {
+    case 'fresh': return 'fresh';
+    case 'balanced_mix': return 'balanced';
+    case 'prepared_ahead': return 'prep';
+    case 'family_style': return 'family';
+    default: return null;
+  }
+}
 
 function defaultLifePriorityFromGoal(goal) {
   switch (goal) {
@@ -1704,10 +1850,14 @@ function migrateArcRhythmFields(p) {
   if (!p.eatStyle) {
     var mk0 = String(p.meals || '3');
     if (!SLOT_SETS[mk0]) mk0 = '3';
-    if (mk0 === '2') p.eatStyle = 'simpler';
-    else if (mk0 === '3') p.eatStyle = 'balanced';
-    else p.eatStyle = 'frequent';
+    if (mk0 === '2') p.eatStyle = 'busy_simple';
+    else if (mk0 === '3') p.eatStyle = 'balanced_flexible';
+    else p.eatStyle = 'performance';
   }
+  var legEat = { simpler: 'busy_simple', balanced: 'balanced_flexible', frequent: 'performance', prep: 'meal_prep' };
+  if (legEat[p.eatStyle]) p.eatStyle = legEat[p.eatStyle];
+  var okCook = { fresh: true, balanced_mix: true, prepared_ahead: true, family_style: true };
+  if (!okCook[p.prefCookStyle]) p.prefCookStyle = 'balanced_mix';
   if (p.mealsMode == null || p.mealsMode === '') p.mealsMode = 'manual';
   p.arcRhythmMigrated = true;
 }
@@ -1715,46 +1865,47 @@ function migrateArcRhythmFields(p) {
 /** Derive 2–6 daily eating occasions from lifestyle, goal, activity, and prep context. */
 function deriveAdaptiveMealsKey(p) {
   p = p || UP;
-  var eat = p.eatStyle || 'balanced';
+  var eat = normalizeEatStyleToken(p.eatStyle);
   var pri = p.lifePriority || 'convenience';
   var goal = p.goal || '';
   var act = p.activity || 'Moderate';
   var cf = p.cookingFor || 'solo';
 
   var n = 3;
-  if (eat === 'simpler') n = 3;
-  else if (eat === 'balanced') n = 3;
-  else if (eat === 'frequent') n = 5;
-  else if (eat === 'prep') n = 4;
+  if (eat === 'busy_simple') n = 3;
+  else if (eat === 'balanced_flexible') n = 3;
+  else if (eat === 'performance') n = 5;
+  else if (eat === 'meal_prep') n = 4;
 
   if (pri === 'muscle' || goal === 'Build muscle') {
     n = Math.max(n, 4);
-    if (eat === 'frequent' || act === 'Athlete' || act === 'Very active') n = Math.max(n, 5);
-    if (act === 'Athlete' && eat === 'frequent') n = 6;
+    if (eat === 'performance' || act === 'Athlete' || act === 'Very active') n = Math.max(n, 5);
+    if (act === 'Athlete' && eat === 'performance') n = 6;
   }
   if (pri === 'performance' && (act === 'Very active' || act === 'Athlete')) n = Math.max(n, 5);
 
   if (pri === 'fat_loss' || goal === 'Lose weight') {
-    if (eat === 'simpler') n = 2;
-    else if (eat === 'frequent') n = 4;
+    if (eat === 'busy_simple') n = 2;
+    else if (eat === 'performance') n = 4;
     else n = Math.min(n, 3);
   }
 
-  if (pri === 'budget' && eat === 'balanced') n = Math.min(Math.max(n, 3), 4);
+  if (pri === 'budget' && eat === 'balanced_flexible') n = Math.min(Math.max(n, 3), 4);
 
   if (cf === 'mealprep') n = Math.min(Math.max(n, 3), 4);
 
-  if (eat === 'prep' && pri !== 'fat_loss') n = Math.max(n, 4);
+  if (eat === 'meal_prep' && pri !== 'fat_loss') n = Math.max(n, 4);
 
   return String(Math.max(2, Math.min(6, n)));
 }
 
 function buildArcRhythmPromptBlock() {
-  var eat = EAT_STYLE_LABELS[UP.eatStyle] || 'Balanced meals';
+  var eat = EAT_STYLE_LABELS[UP.eatStyle] || EAT_STYLE_LABELS[normalizeEatStyleToken(UP.eatStyle)] || 'Balanced and flexible';
+  var cook = COOK_STYLE_LABELS[UP.prefCookStyle] || 'Balanced mix';
   var pri = LIFE_PRIORITY_LABELS[UP.lifePriority] || 'Convenience';
   var mode = UP.mealsMode === 'manual' ? 'Manual eating schedule' : 'Arc-adaptive schedule';
   var slots = getSlots();
-  return '\n=== EATING RHYTHM ===\n' + mode + ': ' + eat + ' · What matters now: ' + pri + '.\n' +
+  return '\n=== EATING RHYTHM ===\n' + mode + ': ' + eat + ' · ' + cook + ' · Focus: ' + pri + '.\n' +
     'Daily structure: ' + slots.length + ' occasions — ' + slots.join(', ') + '.\n' +
     'Scale portions so each day lands near the daily calorie and macro targets.\n';
 }
@@ -3191,6 +3342,27 @@ function showScreen(id, dir) {
   setTimeout(function() {
     from.classList.remove('active', 'exit-to-left', 'exit-to-right');
   }, MOTION_SCREEN + 20);
+
+  if (id === 'ob') {
+    obStep = 1;
+    for (var si = 1; si <= 7; si++) {
+      var stEl = el('st' + si);
+      if (stEl) stEl.classList.remove('active');
+    }
+    var st1 = el('st1');
+    if (st1) st1.classList.add('active');
+    for (var oi = 1; oi <= 7; oi++) {
+      var odEl = el('od' + oi);
+      if (odEl) odEl.className = 'ob-dot' + (oi === 1 ? ' active' : '');
+    }
+    if (el('ob-h')) el('ob-h').textContent = stepMeta[0].h;
+    if (el('ob-s')) el('ob-s').textContent = stepMeta[0].s;
+    if (el('ob-back')) el('ob-back').style.display = 'none';
+    if (el('ob-next')) el('ob-next').textContent = 'Continue';
+    if (el('ob-err')) el('ob-err').textContent = '';
+    var obbd = document.querySelector('#ob .ob-body');
+    if (obbd) obbd.scrollTop = 0;
+  }
 }
 
 function openMotion(id, display) {
@@ -4532,61 +4704,80 @@ function markErr(id) {
 function pulse(gid) {
   var e = el(gid);
   if (!e) return;
-  e.style.cssText = 'padding:8px;border-radius:12px;border:1.5px solid #e76f51;background:#fff8f6';
+  e.style.cssText = 'padding:8px;border-radius:14px;border:1.5px solid rgba(244,160,130,.85);background:rgba(227,90,54,.12);box-shadow:0 0 0 1px rgba(227,90,54,.2)';
   setTimeout(function() { e.style.cssText = ''; }, 2200);
 }
 
 function valStep(n) {
   clearErr();
   if (n === 1) {
-    if (!el('in-name').value.trim()) { setErr('Please enter your name'); markErr('in-name'); return false; }
-    var wt = parseFloat(el('in-wt').value);
-    if (!(wt > 0))                   { setErr('Please enter your weight'); markErr('in-wt'); return false; }
-    var hp = parseHeightInput(el('in-ht').value);
-    if (!hp.ok)                      { setErr(hp.error || 'Please enter your height'); markErr('in-ht'); return false; }
-    if (!locDetected && !gChip('chip-region')) { setErr('Please select your region'); pulse('chip-region'); return false; }
+    if (!el('in-name').value.trim()) { setErr('Your name'); markErr('in-name'); return false; }
   }
   if (n === 2) {
-    if (!gChip('chip-goal'))     { setErr('Please select a goal');           pulse('chip-goal');     return false; }
-    if (!gChip('chip-activity')) { setErr('Please select activity level');   pulse('chip-activity'); return false; }
-    if (!gChip('chip-eat-style')) { setErr('Please choose how you like to eat'); pulse('chip-eat-style'); return false; }
-    if (!gChip('chip-life-priority')) { setErr('Please choose what matters most'); pulse('chip-life-priority'); return false; }
+    var wt = parseFloat(el('in-wt').value);
+    if (!(wt > 0)) { setErr('Weight'); markErr('in-wt'); return false; }
+    var hp = parseHeightInput(el('in-ht').value);
+    if (!hp.ok) { setErr(hp.error || 'Height'); markErr('in-ht'); return false; }
   }
   if (n === 3) {
-    if (!gChip('chip-skill'))  { setErr('Please select cooking skill');  pulse('chip-skill');  return false; }
-    if (!gChip('chip-budget')) { setErr('Please select a budget');       pulse('chip-budget'); return false; }
+    if (!locDetected && !gChip('chip-region')) { setErr('Region'); pulse('chip-region'); return false; }
+  }
+  if (n === 4) {
+    if (!gChip('chip-eat-style')) { setErr('Pick a day rhythm'); pulse('chip-eat-style'); return false; }
+  }
+  if (n === 5) {
+    if (!gChip('chip-cook-style')) { setErr('Pick a cook style'); pulse('chip-cook-style'); return false; }
+  }
+  if (n === 6) {
+    if (!gChip('chip-goal')) { setErr('Direction'); pulse('chip-goal'); return false; }
+    if (!gChip('chip-activity')) { setErr('Typical week'); pulse('chip-activity'); return false; }
+  }
+  if (n === 7) {
+    if (!gChip('chip-life-priority')) { setErr('What matters'); pulse('chip-life-priority'); return false; }
+    if (!gChip('chip-skill')) { setErr('Kitchen comfort'); pulse('chip-skill'); return false; }
+    if (!gChip('chip-budget')) { setErr('Groceries'); pulse('chip-budget'); return false; }
   }
   return true;
 }
 
 // ── Onboarding navigation ─────────────────────────────────────
 var stepMeta = [
-  {h:'About you',        s:"Let's get the basics down"},
-  {h:'Goals & rhythm',   s:'Arc shapes your eating schedule'},
-  {h:'Your preferences', s:'One more step'}
+  { h: 'A quiet hello', s: 'Arc builds around your real routine.' },
+  { h: 'The basics', s: 'Your plan adapts over time.' },
+  { h: 'Where life happens', s: 'So pricing stays grounded where you shop.' },
+  { h: 'Your days', s: 'Tap what resonates — change anytime.' },
+  { h: 'Your kitchen', s: 'This nudges your first week.' },
+  { h: 'Energy & direction', s: 'Arc is learning you.' },
+  { h: 'Almost home', s: 'A few preferences — then your week opens.' }
 ];
 
 function goStep(n) {
-  if (n < 1 || n > 3) return;
+  if (n < 1 || n > 7) return;
   el('st' + obStep).classList.remove('active');
   obStep = n;
   el('st' + n).classList.add('active');
   el('ob-h').textContent = stepMeta[n - 1].h;
   el('ob-s').textContent = stepMeta[n - 1].s;
-  for (var i = 1; i <= 3; i++) {
+  for (var i = 1; i <= 7; i++) {
     el('od' + i).className = 'ob-dot' + (i < n ? ' done' : i === n ? ' active' : '');
   }
   el('ob-back').style.display = n === 1 ? 'none' : 'block';
-  el('ob-next').textContent   = n === 3 ? "Let's plan your week →" : 'Continue →';
-  document.querySelector('.ob-body').scrollTop = 0;
+  el('ob-next').textContent = n === 7 ? 'Open your week' : 'Continue';
+  document.querySelector('#ob .ob-body').scrollTop = 0;
 }
 
 // ── Finish onboarding ─────────────────────────────────────────
 function finishOB() {
-  if (!valStep(1) || !valStep(2) || !valStep(3)) return;
+  var vs;
+  for (vs = 1; vs <= 7; vs++) {
+    if (!valStep(vs)) {
+      goStep(vs);
+      return;
+    }
+  }
   var name = el('in-name').value.trim();
   var hp = parseHeightInput(el('in-ht').value);
-  if (!hp.ok) { setErr(hp.error || 'Please enter your height'); markErr('in-ht'); goStep(1); return; }
+  if (!hp.ok) { setErr(hp.error || 'Height'); markErr('in-ht'); goStep(2); return; }
   if (!locDetected) UP.region = gChip('chip-region') || 'us-midwest';
 
   UP.name          = name;
@@ -4598,7 +4789,8 @@ function finishOB() {
   UP.heightCm      = hp.cm;
   UP.goal          = gChip('chip-goal')     || 'Eat healthier';
   UP.activity      = gChip('chip-activity') || 'Moderate';
-  UP.eatStyle      = gChip('chip-eat-style') || 'balanced';
+  UP.eatStyle      = gChip('chip-eat-style') || 'balanced_flexible';
+  UP.prefCookStyle = gChip('chip-cook-style') || 'balanced_mix';
   UP.lifePriority  = gChip('chip-life-priority') || defaultLifePriorityFromGoal(UP.goal);
   UP.mealsMode     = 'adaptive';
   UP.arcRhythmMigrated = true;
@@ -4860,6 +5052,10 @@ function applySafeProfileDefaults(p) {
   if (p.activity == null || String(p.activity).trim() === '' || !VALID_ACTIVITIES[p.activity]) p.activity = 'Moderate';
 
   migrateArcRhythmFields(p);
+  var _legacyEat = { simpler: 'busy_simple', balanced: 'balanced_flexible', frequent: 'performance', prep: 'meal_prep' };
+  if (_legacyEat[p.eatStyle]) p.eatStyle = _legacyEat[p.eatStyle];
+  var cookOk = { fresh: true, balanced_mix: true, prepared_ahead: true, family_style: true };
+  if (!cookOk[p.prefCookStyle]) p.prefCookStyle = 'balanced_mix';
   if (p.mealsMode === 'manual') {
     var mKeyM = p.meals != null ? String(p.meals).trim() : '';
     if (!mKeyM || !SLOT_SETS[mKeyM]) p.meals = '3';
@@ -4974,7 +5170,7 @@ function resetAppAfterInvalidStoredProfile(errors) {
   useCustom = false;
   locDetected = false;
   recipeGenId++;
-  UP = { region: 'us-midwest', mealFeedback: {}, arcAdaptive: defaultArcAdaptive(), weeklyReviewHistory: [], mealsMode: 'adaptive', arcRhythmMigrated: true };
+  UP = { region: 'us-midwest', mealFeedback: {}, arcAdaptive: defaultArcAdaptive(), weeklyReviewHistory: [], mealsMode: 'adaptive', arcRhythmMigrated: true, prefCookStyle: 'balanced_mix' };
   obStep = 1;
   var msg = (errors && errors[0]) ? errors[0] : 'Saved profile was incomplete or damaged. Please run onboarding again.';
   showToast(msg);
@@ -5099,10 +5295,15 @@ function bwReset(mode) {
   }
   if (bwState.style === 'mixed') bwState.style = 'balanced';
 
-  if (mode === 'first' && !bwState.style && UP.eatStyle) {
-    if (UP.eatStyle === 'prep') bwState.style = 'prep';
-    else if (UP.eatStyle === 'frequent') bwState.style = 'fresh';
-    else bwState.style = 'balanced';
+  if (mode === 'first' && !bwState.style) {
+    var fromCook = mapPrefCookToBwStyle(UP.prefCookStyle);
+    if (fromCook) bwState.style = fromCook;
+    else if (UP.eatStyle) {
+      var esN = normalizeEatStyleToken(UP.eatStyle);
+      if (esN === 'meal_prep') bwState.style = 'prep';
+      else if (esN === 'performance') bwState.style = 'fresh';
+      else bwState.style = 'balanced';
+    }
   }
   if (mode === 'first' && !bwState.focus && UP.lifePriority) {
     var lp = UP.lifePriority;
@@ -8300,7 +8501,8 @@ function openSettings() {
   // Populate single-select chips
   sSetChip('sg-goal',     UP.goal);
   sSetChip('sg-activity', UP.activity);
-  sSetChip('sg-eat-style', UP.eatStyle || 'balanced');
+  sSetChip('sg-eat-style', UP.eatStyle || 'balanced_flexible');
+  sSetChip('sg-cook-style', UP.prefCookStyle || 'balanced_mix');
   sSetChip('sg-life-priority', UP.lifePriority || defaultLifePriorityFromGoal(UP.goal));
   sSetChip('sg-cooking-for', UP.cookingFor || 'solo');
   sSetChip('sg-skill',    UP.skill);
@@ -8380,7 +8582,7 @@ function sGetMulti(gid) {
 }
 
 function wireSettingsChips() {
-  var singles = ['sg-goal','sg-activity','sg-eat-style','sg-life-priority','sg-cooking-for','sg-skill','sg-budget','sg-adv-meals'];
+  var singles = ['sg-goal','sg-activity','sg-eat-style','sg-cook-style','sg-life-priority','sg-cooking-for','sg-skill','sg-budget','sg-adv-meals'];
   for (var si = 0; si < singles.length; si++) {
     (function(gid) {
       var chips = document.querySelectorAll('#' + gid + ' .sc');
@@ -8428,7 +8630,8 @@ function applySettingsProfile() {
   UP.sex          = el('s-sex').value;
   UP.goal         = sGetChip('sg-goal')          || UP.goal;
   UP.activity     = sGetChip('sg-activity')      || UP.activity;
-  UP.eatStyle     = sGetChip('sg-eat-style')     || UP.eatStyle || 'balanced';
+  UP.eatStyle     = sGetChip('sg-eat-style')     || UP.eatStyle || 'balanced_flexible';
+  UP.prefCookStyle = sGetChip('sg-cook-style')   || UP.prefCookStyle || 'balanced_mix';
   UP.lifePriority = sGetChip('sg-life-priority') || UP.lifePriority || defaultLifePriorityFromGoal(UP.goal);
   UP.cookingFor   = sGetChip('sg-cooking-for')   || inferCookingForFromProfile();
   var manEl = el('s-meals-manual');
@@ -8538,8 +8741,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Welcome → Onboarding
   el('get-started-btn').addEventListener('click', function() {
-    el('s-welcome').classList.remove('active');
-    el('ob').classList.add('active');
+    showScreen('ob', 'forward');
   });
 
   // Height input
@@ -8565,7 +8767,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Chips
   singleChip('chip-region'); singleChip('chip-goal'); singleChip('chip-activity');
-  singleChip('chip-eat-style'); singleChip('chip-life-priority'); singleChip('chip-skill'); singleChip('chip-budget');
+  singleChip('chip-eat-style'); singleChip('chip-cook-style'); singleChip('chip-life-priority'); singleChip('chip-skill'); singleChip('chip-budget');
   multiChip('chip-diet');
 
   // Activity info tooltip
@@ -8595,8 +8797,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Onboarding nav
   el('ob-next').addEventListener('click', function() {
-    if (obStep < 3) { if (valStep(obStep)) goStep(obStep + 1); }
-    else            { if (valStep(3))      finishOB(); }
+    if (obStep < 7) { if (valStep(obStep)) goStep(obStep + 1); }
+    else { if (valStep(7)) finishOB(); }
   });
   el('ob-back').addEventListener('click', function() { if (obStep <= 1) return; clearErr(); goStep(obStep - 1); });
 
