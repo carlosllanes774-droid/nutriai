@@ -270,9 +270,19 @@ body{
 .a-hdr{padding:24px 24px 16px;display:flex;align-items:center;gap:12px;background:var(--arc-card);flex-shrink:0}
 .a-hdr h2{font-size:var(--fs-heading);font-weight:700;color:var(--arc-text);flex:1;font-family:Georgia,serif;letter-spacing:-.4px}
 .content{flex:1;padding:28px 24px;overflow-y:auto;background:var(--arc-surface)}
-.nav{display:flex;background:var(--arc-card);flex-shrink:0;box-shadow:0 -1px 0 var(--arc-divider)}
-.nbtn{flex:1;padding:10px 2px 12px;font-size:9px;font-weight:600;color:#9ca3af;cursor:pointer;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;text-transform:uppercase;letter-spacing:.05em;transition:color var(--motion-fast) var(--ease-standard);min-width:0}
-.nbtn.active{color:var(--arc-primary)}.nic{font-size:17px;line-height:1}
+.nav{display:flex;background:var(--arc-card);flex-shrink:0;padding:4px 0 2px;box-shadow:0 -8px 24px rgba(25,20,16,0.06)}
+.nbtn{flex:1;padding:8px 2px 10px;font-size:9px;font-weight:650;color:#9ca3af;cursor:pointer;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:2px;text-transform:uppercase;letter-spacing:.06em;transition:color var(--motion-fast) var(--ease-standard),transform var(--motion-fast) var(--ease-standard);min-width:0;border-radius:12px;margin:0 2px}
+.nbtn.active{color:var(--arc-primary-dark)}.nbtn.active .nic{transform:translateY(-1px)}.nic{font-size:18px;line-height:1;transition:transform var(--motion-fast) var(--ease-standard)}
+.hub-seg{display:flex;gap:5px;padding:10px 16px 6px;background:var(--arc-card);flex-shrink:0}
+.hub-seg-btn{flex:1;padding:10px 8px;border:none;border-radius:14px;background:transparent;font-size:13px;font-weight:650;color:var(--arc-subtext);cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard)}
+.hub-seg-btn.active{background:var(--arc-card-soft-strong);color:var(--arc-text);box-shadow:var(--shadow-xs)}
+.plan-hub-pane{display:flex;flex-direction:column;flex:1;min-height:0}
+#plan-library-root .content{flex:1;min-height:0}
+.profile-card-arc{background:var(--arc-card-soft-strong);border-radius:var(--r-lg);padding:22px;text-align:center;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.profile-av-lg{width:72px;height:72px;border-radius:22px;margin:0 auto 14px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;background:var(--arc-soft-primary);color:var(--arc-primary-dark)}
+.profile-name{font-size:20px;font-weight:700;font-family:Georgia,serif;color:var(--arc-text);letter-spacing:-.02em;margin-bottom:6px}
+.profile-goal,.profile-cal{font-size:13px;color:var(--arc-subtext);line-height:1.45}
+.profile-hint{font-size:13px;color:var(--arc-subtext);line-height:1.5;margin-bottom:18px}
 .week-recap-nudge{margin:0 0 16px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(31,31,31,.03));border:1px solid rgba(31,31,31,.08);box-shadow:var(--shadow-xs)}
 .week-recap-nudge-inner{display:flex;align-items:flex-start;gap:12px}
 .week-recap-nudge-ic{font-size:22px;line-height:1;flex-shrink:0;opacity:.9}
@@ -588,13 +598,13 @@ body{
 .prepday-banner-h{font-size:13.5px;font-weight:700;color:var(--arc-text);line-height:1.25;margin-bottom:2px}
 .prepday-banner-s{font-size:12px;color:var(--arc-subtext);line-height:1.45}
 
-/* GROCERY INTELLIGENCE — Kroger pricing UI */
-.kroger-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--arc-card-soft-strong);border-radius:var(--r-md);padding:12px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.kroger-bar.is-on{background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(227,90,54,.02))}
-.kroger-bar .kb-lead{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
-.kroger-dot{width:8px;height:8px;border-radius:50%;background:#c4bdb5;flex-shrink:0;transition:background var(--motion-fast) var(--ease-standard)}
-.kroger-bar.is-on .kroger-dot{background:#22a06b;box-shadow:0 0 0 3px rgba(34,160,107,.15)}
-.kroger-bar.is-loading .kroger-dot{background:var(--arc-primary);animation:krpulse 1.1s ease-in-out infinite}
+/* Grocery live pricing — provider-agnostic UI (v1 data path: regional store feed) */
+.grocery-live-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--arc-card-soft-strong);border-radius:var(--r-md);padding:12px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.grocery-live-bar.is-on{background:linear-gradient(135deg,rgba(227,90,54,.08),rgba(227,90,54,.02))}
+.grocery-live-bar .kb-lead{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.grocery-live-dot{width:8px;height:8px;border-radius:50%;background:#c4bdb5;flex-shrink:0;transition:background var(--motion-fast) var(--ease-standard)}
+.grocery-live-bar.is-on .grocery-live-dot{background:#22a06b;box-shadow:0 0 0 3px rgba(34,160,107,.15)}
+.grocery-live-bar.is-loading .grocery-live-dot{background:var(--arc-primary);animation:krpulse 1.1s ease-in-out infinite}
 @keyframes krpulse{0%,100%{opacity:.4}50%{opacity:1}}
 .kb-title{font-size:13px;font-weight:700;color:var(--arc-text);line-height:1.3}
 .kb-sub{font-size:11.5px;color:var(--arc-subtext);line-height:1.35}
@@ -607,8 +617,8 @@ body{
 .kb-btn.ghost:hover{color:var(--arc-text)}
 .kb-btn:disabled{opacity:.55;cursor:not-allowed}
 .sname-row{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
-.kroger-badge{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#22a06b;padding:2px 6px;border-radius:4px;flex-shrink:0;line-height:1}
-.kroger-badge.dim{background:rgba(34,160,107,.14);color:#1a7d52}
+.live-price-badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#22a06b;padding:2px 7px;border-radius:999px;flex-shrink:0;line-height:1}
+.live-price-badge.dim{background:rgba(34,160,107,.14);color:#1a7d52}
 
 /* LOG */
 .chat-body{display:flex;flex-direction:column;gap:14px}
@@ -771,8 +781,8 @@ button:active{transform:scale(var(--press-scale))}
   animation:contentFadeUp var(--motion-sheet) var(--ease-standard) both;
 }
 
-/* CLAUDE BADGE */
-.claude-badge{font-size:9px;font-weight:700;padding:4px 9px;border-radius:999px;background:var(--arc-soft-primary);color:var(--arc-primary-dark);letter-spacing:.04em;white-space:nowrap}
+/* Arc Intelligence — quiet status chip */
+.arc-intelligence-badge{font-size:9px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--arc-soft-primary);color:var(--arc-primary-dark);letter-spacing:.04em;white-space:nowrap}
 
 /* SETTINGS OVERLAY */
 .settings-overlay{position:absolute;inset:0;background:rgba(0,0,0,.52);z-index:60;border-radius:28px;display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity var(--motion-sheet) var(--ease-standard)}
@@ -860,12 +870,12 @@ button:active{transform:scale(var(--press-scale))}
   <div class="welcome-top">
     <div class="wl-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div>
     <div class="wl-title">Eat smarter,<br>feel better</div>
-    <div class="wl-sub">AI-powered meal planning personalized to your goals, body, and budget</div>
+    <div class="wl-sub">Adaptive nutrition planning tuned to your goals, body, and budget</div>
   </div>
   <div class="welcome-bottom">
     <div class="feat-list">
-      <div class="feat"><div class="feat-ic">🤖</div><div><div class="feat-title">AI recipes built for you</div><div class="feat-sub">Every recipe generated fresh — not a fixed database</div></div></div>
-      <div class="feat"><div class="feat-ic">📅</div><div><div class="feat-title">Smart weekly planning</div><div class="feat-sub">AI fills your week and adapts when you fall behind on goals</div></div></div>
+      <div class="feat"><div class="feat-ic">✦</div><div><div class="feat-title">Meals shaped for you</div><div class="feat-sub">Arc Intelligence composes your week — not a static recipe bank</div></div></div>
+      <div class="feat"><div class="feat-ic">📅</div><div><div class="feat-title">Smart weekly planning</div><div class="feat-sub">Your plan stays fluid when life shifts your goals</div></div></div>
       <div class="feat"><div class="feat-ic">🍳</div><div><div class="feat-title">Full cook view &amp; swaps</div><div class="feat-sub">Step-by-step instructions, swap any ingredient you dislike</div></div></div>
       <div class="feat"><div class="feat-ic">🛒</div><div><div class="feat-title">Smart shopping lists</div><div class="feat-sub">Accurate quantities with local pricing for your region</div></div></div>
     </div>
@@ -921,7 +931,7 @@ button:active{transform:scale(var(--press-scale))}
       <div class="fl"><label>Meals per day <span style="color:#e76f51">*</span></label><div class="nchips" id="chip-meals"><div class="nchip" data-v="2">2</div><div class="nchip" data-v="3">3</div><div class="nchip" data-v="4">4</div><div class="nchip" data-v="5">5</div><div class="nchip" data-v="6">6</div></div></div>
       <div class="fl">
         <label>Calorie &amp; macro targets</label>
-        <div class="mm"><div class="mmb active" id="mm-ai">✦ AI recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
+        <div class="mm"><div class="mmb active" id="mm-ai">✦ Arc recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
         <div class="cmw" id="cmw">
           <div class="mc">
             <div style="margin-bottom:12px"><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Daily calories</label><div class="uw"><input class="fi" id="in-cal" type="number" min="800" max="6000" placeholder="2000"/><span class="ul">kcal</span></div></div>
@@ -930,7 +940,7 @@ button:active{transform:scale(var(--press-scale))}
               <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Carbs</label><div class="uw"><input class="fi" id="in-carbs" type="number" placeholder="200"/><span class="ul">g</span></div></div>
             </div>
             <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Fat</label><div class="uw" style="max-width:49%"><input class="fi" id="in-fat" type="number" placeholder="65"/><span class="ul">g</span></div></div>
-            <div class="mc-hint">These targets override AI recommendations in your stats.</div>
+            <div class="mc-hint">These targets override Arc recommendations in your stats.</div>
           </div>
         </div>
       </div>
@@ -969,7 +979,7 @@ button:active{transform:scale(var(--press-scale))}
 
 <!-- TODAY -->
 <div class="screen" id="s-today">
-  <div class="a-hdr"><h2>Today</h2><span style="font-size:13px;color:#9ca3af" id="today-date">—</span></div>
+  <div class="a-hdr"><h2 style="flex-shrink:0">Today</h2><span style="flex:1;text-align:right;font-size:13px;color:#9ca3af;padding-right:8px" id="today-date">—</span><button type="button" class="settings-open-btn" id="hdr-profile-btn" title="Profile" aria-label="Profile">👤</button></div>
   <div class="content today-flow">
     <div class="prepday-banner" id="prepday-banner" style="display:none" role="region" aria-label="Prep day suggestion">
       <span class="prepday-banner-ic" aria-hidden="true">🍱</span>
@@ -1034,107 +1044,132 @@ button:active{transform:scale(var(--press-scale))}
       <button type="button" class="today-saved-link" id="today-saved-btn">Saved recipes</button>
     </div>
   </div>
-  <div class="nav"><button class="nbtn active" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button type="button" class="nbtn active" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
 
-<!-- RECIPES -->
-<div class="screen" id="s-recipes">
-  <div class="ubar">
-    <div class="avatar" id="u-av">?</div>
-    <div style="flex:1">
-      <div class="ubar-name" id="u-name">Loading...</div>
-      <div class="ubar-goal" id="u-goal">—</div>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-      <div class="cal-badge" id="u-cal">—</div>
-      <div class="claude-badge" id="api-badge">⚡ Connected to Claude</div>
-    </div>
-    <button class="settings-open-btn" id="settings-btn" title="Settings">⚙️</button>
-  </div>
-  <div class="content">
-    <div class="a-hdr" style="padding:0;margin-bottom:6px"><h2 style="font-size:24px">Recipe library</h2></div>
-    <p style="font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 14px;max-width:36em">This week's meals and recipes you've saved. Discover more by swapping a slot in the Planner.</p>
-    <div class="lib-tabs" id="lib-tabs">
-      <button class="lib-tab active" data-lib="this-week" type="button">This week</button>
-      <button class="lib-tab" data-lib="saved" type="button">Saved</button>
-      <button class="lib-tab" data-lib="all" type="button">All categories</button>
-    </div>
-    <div class="cat-tabs" id="cat-tabs" style="display:none">
-      <div class="ct active" data-cat="All">All</div>
-      <div class="ct" data-cat="Breakfast">Breakfast</div>
-      <div class="ct" data-cat="Lunch">Lunch</div>
-      <div class="ct" data-cat="Dinner">Dinner</div>
-      <div class="ct" data-cat="Snack">Snacks</div>
-    </div>
-    <div id="recipes-list"></div>
-  </div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn active" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
-</div>
-
-<!-- PLANNER -->
+<!-- PLAN: week + recipe library -->
 <div class="screen" id="s-planner">
-  <div class="a-hdr"><h2>Weekly planner</h2></div>
-  <div class="content">
-    <div class="plan-empty" id="plan-empty" style="display:none">
-      <div class="plan-empty-ic">✨</div>
-      <div class="plan-empty-h">Plan your week in 30 seconds</div>
-      <div class="plan-empty-s">Tell Arc how you want to cook, what to prioritize, and what flavors you're craving. We'll design the week from there.</div>
-      <button class="plan-empty-btn" id="plan-build-btn" type="button">Build my week ✦</button>
-    </div>
-    <div class="builtfor-card" id="builtfor-card" style="display:none">
-      <div class="builtfor-body">
-        <div class="builtfor-lbl">Built for</div>
-        <div class="builtfor-pills" id="builtfor-pills"></div>
-      </div>
-      <button class="builtfor-rebuild" id="builtfor-rebuild" type="button" aria-label="Rebuild this week">Rebuild ↻</button>
-    </div>
-    <div class="adapt-card" id="planner-adapt-card" style="display:none">
-      <div class="adapt-card-title">📊 Plan health</div>
-      <div class="adapt-card-sub">Check how your plan tracks and let Arc fix any gaps.</div>
-      <div style="display:flex;gap:8px">
-        <button id="adapt-btn" style="flex:1;padding:11px;border-radius:14px;font-size:14px;font-weight:600;border:none;background:rgba(255,255,255,.18);color:#fff;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">Adapt plan →</button>
-      </div>
-    </div>
-    <div class="slbl" id="planner-list-lbl" style="display:none">Weekly schedule</div>
-    <div id="planner-list"></div>
+  <div class="hub-seg plan-hub-seg" id="plan-hub-seg" role="tablist" aria-label="Plan">
+    <button type="button" class="hub-seg-btn active" data-plan-hub="week" role="tab" aria-selected="true">This week</button>
+    <button type="button" class="hub-seg-btn" data-plan-hub="library" role="tab" aria-selected="false">Recipes</button>
   </div>
-  <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Open Shopping List</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn active" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div id="plan-week-root" class="plan-hub-pane">
+    <div class="a-hdr"><h2>Plan</h2></div>
+    <div class="content">
+      <div class="plan-empty" id="plan-empty" style="display:none">
+        <div class="plan-empty-ic">✨</div>
+        <div class="plan-empty-h">Plan your week in 30 seconds</div>
+        <div class="plan-empty-s">Tell Arc how you want to cook, what to prioritize, and what flavors you're craving. We'll design the week from there.</div>
+        <button class="plan-empty-btn" id="plan-build-btn" type="button">Build my week ✦</button>
+      </div>
+      <div class="builtfor-card" id="builtfor-card" style="display:none">
+        <div class="builtfor-body">
+          <div class="builtfor-lbl">Built for</div>
+          <div class="builtfor-pills" id="builtfor-pills"></div>
+        </div>
+        <button class="builtfor-rebuild" id="builtfor-rebuild" type="button" aria-label="Rebuild this week">Rebuild ↻</button>
+      </div>
+      <div class="adapt-card" id="planner-adapt-card" style="display:none">
+        <div class="adapt-card-title">Plan health</div>
+        <div class="adapt-card-sub">See how your week lines up and let Arc gently rebalance.</div>
+        <div style="display:flex;gap:8px">
+          <button id="adapt-btn" style="flex:1;padding:11px;border-radius:14px;font-size:14px;font-weight:600;border:none;background:rgba(255,255,255,.18);color:#fff;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">Adapt plan →</button>
+        </div>
+      </div>
+      <div class="slbl" id="planner-list-lbl" style="display:none">Weekly schedule</div>
+      <div id="planner-list"></div>
+    </div>
+    <div class="next-bar" id="planner-next-bar"><div class="nbi" id="goto-shopping"><div><div class="nbi-label">Open grocery list</div><div class="nbi-sub" id="pnb-sub">0 meals planned</div></div><div class="nbi-arrow">→</div></div></div>
+  </div>
+  <div id="plan-library-root" class="plan-hub-pane" style="display:none">
+    <div class="ubar">
+      <div class="avatar" id="u-av">?</div>
+      <div style="flex:1">
+        <div class="ubar-name" id="u-name">Loading...</div>
+        <div class="ubar-goal" id="u-goal">—</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div class="cal-badge" id="u-cal">—</div>
+        <div class="arc-intelligence-badge" id="api-badge">Arc Intelligence</div>
+      </div>
+      <button type="button" class="settings-open-btn" id="settings-btn" title="Preferences">⚙️</button>
+    </div>
+    <div class="content">
+      <div class="a-hdr" style="padding:0;margin-bottom:6px"><h2 style="font-size:24px">Recipe library</h2></div>
+      <p style="font-size:13px;color:var(--arc-subtext);line-height:1.55;margin:0 0 14px;max-width:36em">This week's meals and recipes you've saved. Discover more by swapping a slot in your plan.</p>
+      <div class="lib-tabs" id="lib-tabs">
+        <button class="lib-tab active" data-lib="this-week" type="button">This week</button>
+        <button class="lib-tab" data-lib="saved" type="button">Saved</button>
+        <button class="lib-tab" data-lib="all" type="button">All categories</button>
+      </div>
+      <div class="cat-tabs" id="cat-tabs" style="display:none">
+        <div class="ct active" data-cat="All">All</div>
+        <div class="ct" data-cat="Breakfast">Breakfast</div>
+        <div class="ct" data-cat="Lunch">Lunch</div>
+        <div class="ct" data-cat="Dinner">Dinner</div>
+        <div class="ct" data-cat="Snack">Snacks</div>
+      </div>
+      <div id="recipes-list"></div>
+    </div>
+  </div>
+  <div class="nav"><button type="button" class="nbtn" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn active" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
 
-<!-- NUTRITION -->
-<div class="screen" id="s-nutrition">
-  <div class="a-hdr"><h2>Nutrition stats</h2></div>
-  <div class="content"><div id="ct-wrap"></div><div class="slbl">Weekly average</div><div class="stat-grid" id="nut-stats"></div><div class="slbl" style="margin-top:4px">Daily totals vs target</div><div id="nut-bars"></div></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn active" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+<!-- PROGRESS: overview + log -->
+<div class="screen" id="s-progress">
+  <div class="a-hdr"><h2>Progress</h2></div>
+  <div class="hub-seg" id="progress-hub-seg" role="tablist" aria-label="Progress">
+    <button type="button" class="hub-seg-btn active" data-progress-hub="stats" role="tab" aria-selected="true">Overview</button>
+    <button type="button" class="hub-seg-btn" data-progress-hub="log" role="tab" aria-selected="false">Log</button>
+  </div>
+  <div id="progress-stats-root" class="plan-hub-pane">
+    <div class="content"><div id="ct-wrap"></div><div class="slbl">Weekly average</div><div class="stat-grid" id="nut-stats"></div><div class="slbl" style="margin-top:4px">Daily totals vs target</div><div id="nut-bars"></div></div>
+  </div>
+  <div id="progress-log-root" class="plan-hub-pane" style="display:none">
+    <div class="content" id="log-content"><div class="slbl" style="margin-bottom:14px">What did you eat?</div><div class="chat-body" id="chat-body"></div></div>
+    <div class="chat-bar"><input type="text" id="log-inp" placeholder="e.g. salmon, rice, and broccoli…" autocomplete="off"/><button type="button" class="chat-send" id="log-send">→</button></div>
+  </div>
+  <div class="nav"><button type="button" class="nbtn" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn active" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
 
-<!-- SHOPPING -->
+<!-- GROCERY -->
 <div class="screen" id="s-shopping">
-  <div class="a-hdr"><h2>Shopping list</h2><span style="font-size:13px;color:#9ca3af" id="shop-count"></span></div>
+  <div class="a-hdr"><h2>Grocery</h2><span style="font-size:13px;color:#9ca3af" id="shop-count"></span></div>
   <div class="content">
     <div class="shop-total" id="shop-total" style="display:none"><div><div class="shop-total-lbl">Est. cart total (to buy)</div><div class="shop-total-val" id="shop-total-val">—</div></div><div style="text-align:right"><div class="shop-total-lbl">From your planner</div><div style="color:rgba(255,255,255,.7);font-size:13px;font-weight:600" id="shop-rc">0 recipes</div></div></div>
-    <div class="kroger-bar" id="kroger-bar" style="display:none">
-      <div class="kb-lead"><span class="kroger-dot"></span><div><div class="kb-title" id="kb-title">Use real Kroger prices</div><div class="kb-sub" id="kb-sub">Enter a US ZIP to swap estimates for live store pricing</div></div></div>
+    <div class="grocery-live-bar" id="grocery-live-bar" style="display:none">
+      <div class="kb-lead"><span class="grocery-live-dot"></span><div><div class="kb-title" id="kb-title">Local Grocery Pricing</div><div class="kb-sub" id="kb-sub">Blend nearby shelf prices with your list when available.</div></div></div>
       <div class="kb-actions" id="kb-actions">
-        <input class="kb-zip-input" id="kb-zip" type="text" inputmode="numeric" maxlength="5" placeholder="ZIP" autocomplete="postal-code" />
-        <button class="kb-btn" id="kb-apply" type="button">Apply</button>
-        <button class="kb-btn ghost" id="kb-clear" type="button" style="display:none">Change</button>
+        <button type="button" class="kb-btn" id="kb-enable" style="display:none">Enable Local Grocery Pricing</button>
+        <button type="button" class="kb-btn ghost" id="kb-zip-fallback" style="display:none">Use ZIP instead</button>
+        <span class="kb-zip-row" id="kb-zip-row" style="display:none;align-items:center;gap:6px;flex-wrap:wrap">
+          <input class="kb-zip-input" id="kb-zip" type="text" inputmode="numeric" maxlength="5" placeholder="ZIP" autocomplete="postal-code" aria-label="ZIP code" />
+          <button type="button" class="kb-btn" id="kb-apply">Confirm</button>
+        </span>
+        <button type="button" class="kb-btn ghost" id="kb-clear" style="display:none">Turn off</button>
       </div>
     </div>
     <p class="shop-intro" id="shop-intro" style="display:none">Items are grouped like a grocery run: we bundle recipe math into bags, cartons, pounds, and other sizes you actually buy.</p>
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:8px;line-height:1.5;display:none" id="price-disc">* Prices are ballpark retail units for your region — real receipts will vary by brand and store.</p>
     <div id="shop-body"></div>
   </div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn active" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+  <div class="nav"><button type="button" class="nbtn" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn active" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
 
-<!-- LOG -->
-<div class="screen" id="s-log">
-  <div class="a-hdr"><h2>Food log</h2></div>
-  <div class="content" id="log-content"><div class="slbl" style="margin-bottom:14px">Tell the AI what you ate today</div><div class="chat-body" id="chat-body"></div></div>
-  <div class="chat-bar"><input type="text" id="log-inp" placeholder="e.g. I had a burger and fries..."/><button class="chat-send" id="log-send">→</button></div>
-  <div class="nav"><button class="nbtn" onclick="tab('today')"><span class="nic">🏠</span>Today</button><button class="nbtn" onclick="tab('recipes')"><span class="nic">🍽️</span>Recipes</button><button class="nbtn" onclick="tab('planner')"><span class="nic">📅</span>Planner</button><button class="nbtn" onclick="tab('nutrition')"><span class="nic">📊</span>Stats</button><button class="nbtn" onclick="tab('shopping')"><span class="nic">🛒</span>Shop</button><button class="nbtn active" onclick="tab('log')"><span class="nic">✏️</span>Log</button></div>
+<!-- PROFILE -->
+<div class="screen" id="s-profile">
+  <div class="a-hdr"><h2>Profile</h2></div>
+  <div class="content profile-tab-content">
+    <div class="profile-card-arc">
+      <div class="avatar profile-av-lg" id="profile-av">?</div>
+      <div class="profile-name" id="profile-name">—</div>
+      <div class="profile-goal" id="profile-goal-line">—</div>
+      <div class="profile-cal" id="profile-cal-line">—</div>
+    </div>
+    <p class="profile-hint">Targets, tastes, and Arc Insights live in one calm place.</p>
+    <button type="button" class="btn-green" id="profile-open-settings">Preferences</button>
+  </div>
+  <div class="nav"><button type="button" class="nbtn" data-tab="today" onclick="tab('today')"><span class="nic" aria-hidden="true">☀</span>Today</button><button type="button" class="nbtn" data-tab="plan" onclick="tab('plan')"><span class="nic" aria-hidden="true">📋</span>Plan</button><button type="button" class="nbtn" data-tab="grocery" onclick="tab('grocery')"><span class="nic" aria-hidden="true">🛒</span>Grocery</button><button type="button" class="nbtn" data-tab="progress" onclick="tab('progress')"><span class="nic" aria-hidden="true">◎</span>Progress</button><button type="button" class="nbtn active" data-tab="profile" onclick="tab('profile')"><span class="nic" aria-hidden="true">👤</span>Profile</button></div>
 </div>
 
 <!-- ASSIGN MODAL -->
@@ -1561,6 +1596,8 @@ var obStep      = 1;
 var htDigits    = '';
 var recipeGenId = 0;
 var currentTab  = 'today';
+var planHubMode = 'week';       /* week | library */
+var progressHubMode = 'stats';  /* stats | log */
 var arcRestoredFromStorage = false;
 var MOTION_FAST = 200;
 var MOTION_SCREEN = 300;
@@ -1657,12 +1694,18 @@ function clearAllPersistedData() {
 function applyProfileToUIBar() {
   var name = ((UP.name || 'Friend') + '').trim() || 'Friend';
   var initials = name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2) || (name[0] || '?').toUpperCase();
-  el('u-av').textContent   = initials;
-  el('u-name').textContent = 'Hey ' + name.split(' ')[0] + '!';
-  el('u-goal').textContent = 'Goal: ' + (UP.goal || '') + ' · ' + (UP.activity || '');
+  var uav = el('u-av');
+  var un = el('u-name');
+  var ug = el('u-goal');
+  var uc = el('u-cal');
+  if (uav) uav.textContent = initials;
+  if (un) un.textContent = 'Hey ' + name.split(' ')[0] + '!';
+  if (ug) ug.textContent = 'Goal: ' + (UP.goal || '') + ' · ' + (UP.activity || '');
   var calDisplay = (UP.useCustom && UP.customCal) ? (UP.customCal + ' cal') : ((UP.tdee || 1800) + ' cal');
-  el('u-cal').textContent = calDisplay;
-  el('api-badge').style.display = 'block';
+  if (uc) uc.textContent = calDisplay;
+  var ab = el('api-badge');
+  if (ab) ab.style.display = 'block';
+  renderProfileTab();
 }
 
 function restorePersistedState() {
@@ -2920,30 +2963,98 @@ function closeMotion(id, afterClose) {
   }, MOTION_SHEET);
 }
 
-function tab(t) {
+function applyPlanHubMode() {
+  var w = el('plan-week-root');
+  var l = el('plan-library-root');
+  if (!w || !l) return;
+  var weekOn = planHubMode === 'week';
+  w.style.display = weekOn ? 'flex' : 'none';
+  l.style.display = weekOn ? 'none' : 'flex';
+  l.style.flexDirection = 'column';
+  var seg = document.querySelectorAll('[data-plan-hub]');
+  for (var i = 0; i < seg.length; i++) {
+    var on = seg[i].getAttribute('data-plan-hub') === planHubMode;
+    seg[i].classList.toggle('active', on);
+    seg[i].setAttribute('aria-selected', on ? 'true' : 'false');
+  }
+}
+
+function applyProgressHubMode() {
+  var s = el('progress-stats-root');
+  var lo = el('progress-log-root');
+  if (!s || !lo) return;
+  var statsOn = progressHubMode === 'stats';
+  s.style.display = statsOn ? 'flex' : 'none';
+  lo.style.display = statsOn ? 'none' : 'flex';
+  lo.style.flexDirection = 'column';
+  var seg = document.querySelectorAll('[data-progress-hub]');
+  for (var j = 0; j < seg.length; j++) {
+    var on2 = seg[j].getAttribute('data-progress-hub') === progressHubMode;
+    seg[j].classList.toggle('active', on2);
+    seg[j].setAttribute('aria-selected', on2 ? 'true' : 'false');
+  }
+}
+
+function setNavActive(tabId) {
+  var btns = document.querySelectorAll('.nbtn[data-tab]');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle('active', btns[i].getAttribute('data-tab') === tabId);
+  }
+}
+
+function renderProfileTab() {
+  var name = ((UP.name || 'Friend') + '').trim() || 'Friend';
+  var first = name.split(' ')[0];
+  var initials = name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2) || (name[0] || '?').toUpperCase();
+  var pa = el('profile-av');
+  var pn = el('profile-name');
+  var pg = el('profile-goal-line');
+  var pc = el('profile-cal-line');
+  if (pa) pa.textContent = initials;
+  if (pn) pn.textContent = first;
+  if (pg) pg.textContent = (UP.goal || 'Adaptive nutrition') + ' · ' + (UP.activity || '');
+  if (pc) pc.textContent = (UP.useCustom && UP.customCal) ? (UP.customCal + ' kcal / day') : ((UP.tdee || 1800) + ' kcal / day');
+}
+
+function tab(t, opts) {
+  opts = opts || {};
   if (t === 'review') t = 'today';
-  var map  = {today:'s-today',recipes:'s-recipes',planner:'s-planner',nutrition:'s-nutrition',shopping:'s-shopping',log:'s-log'};
-  var sid  = map[t];
+  if (t === 'recipes') t = 'plan';
+  if (t === 'planner') t = 'plan';
+  if (t === 'shopping') t = 'grocery';
+  if (t === 'nutrition') t = 'progress';
+  if (t === 'log') t = 'progress';
+  if (t === 'plan' && opts.planMode) planHubMode = opts.planMode;
+  if (t === 'progress' && opts.progressPanel) progressHubMode = opts.progressPanel;
+
+  var map = { today: 's-today', plan: 's-planner', grocery: 's-shopping', progress: 's-progress', profile: 's-profile' };
+  var sid = map[t];
   if (!sid) return;
-  var keys = ['today','recipes','planner','nutrition','shopping','log'];
+  var keys = ['today', 'plan', 'grocery', 'progress', 'profile'];
   var nextIdx = keys.indexOf(t);
-  var curIdx  = keys.indexOf(currentTab);
+  var curIdx = keys.indexOf(currentTab);
   var dir = (curIdx !== -1 && nextIdx < curIdx) ? 'back' : 'forward';
   showScreen(sid, dir);
   currentTab = t;
+  setNavActive(t);
+
   if (t === 'today') {
     renderToday();
     scheduleWeeklyRecapAutoCheck();
-  } else if (t === 'recipes') {
-    setupLibraryTabs();
-    renderLibrary();
-  } else if (t === 'planner') {
-    renderPlanner();
-  }
-  var btns = document.querySelectorAll('.nbtn');
-  for (var i = 0; i < btns.length; i++) {
-    if (keys[i % keys.length] === t) btns[i].classList.add('active');
-    else btns[i].classList.remove('active');
+  } else if (t === 'plan') {
+    applyPlanHubMode();
+    if (planHubMode === 'week') renderPlanner();
+    else {
+      applyProfileToUIBar();
+      setupLibraryTabs();
+      renderLibrary();
+    }
+  } else if (t === 'progress') {
+    applyProgressHubMode();
+    renderNutrition();
+    if (progressHubMode === 'log') renderLog();
+  } else if (t === 'profile') {
+    renderProfileTab();
   }
 }
 
@@ -3508,7 +3619,7 @@ function buildTodayAmbientInsightLines(ctx) {
 function regenerateTodayPlan() {
   if (!recipes.length) {
     showToast('Build your week first to generate today.');
-    tab('planner');
+    tab('plan');
     openBuildWeek('first');
     return;
   }
@@ -3803,7 +3914,7 @@ function showAI(title, sub) {
 
 function hideAI() { el('ai-overlay').style.display = 'none'; }
 
-// ── AI helpers — all requests go through the backend ──────────
+// ── Arc Intelligence (server-assisted) ───────────────────────
 function extractAiResponseText(data) {
   if (!data || data.content == null) return '';
   var c = data.content;
@@ -3851,14 +3962,14 @@ function callAI(system, userMsg, maxTok, callback) {
     }
     if (data.error) {
       var err = data.error;
-      callback(new Error(typeof err === 'string' ? err : (err.message || 'API error')), null);
+      callback(new Error(typeof err === 'string' ? err : (err.message || 'Request could not be completed')), null);
       return;
     }
 
     var text = extractAiResponseText(data).trim();
 
     if (!text) {
-      callback(new Error('No message text in API response (expected content[0].text or text blocks).'), null);
+      callback(new Error('No usable reply from Arc Intelligence. Try again in a moment.'), null);
       return;
     }
 
@@ -4180,7 +4291,7 @@ function finishOB() {
 
   // New flow: identity is done. Take the user straight to the planner where
   // the Build-Your-Week wizard greets them with the first weekly intent question.
-  tab('planner');
+  tab('plan');
   setTimeout(function() { openBuildWeek('first'); }, 80);
 }
 
@@ -4826,10 +4937,10 @@ function generateWeeklyPlan(intent) {
       var detail = '';
       if (err) detail = err.message || String(err);
       else if (!raw) detail = 'No response body from the planning service.';
-      else if (!parsed) detail = 'The AI response was not valid JSON.';
-      else detail = 'The AI response was missing recipes or plan.';
+      else if (!parsed) detail = 'Arc could not read that response. Try generating again.';
+      else detail = 'That response was missing recipes or your plan.';
       nutriDebug('Week-direct generation failed', { detail: detail, rawPreview: raw ? String(raw).slice(0, 600) : null });
-      tab('planner');
+      tab('plan');
       showToast('Could not build your week — try again.');
       return;
     }
@@ -4894,7 +5005,7 @@ function generateWeeklyPlan(intent) {
       setTimeout(function() {
         if (myGen !== recipeGenId) return;
         saveUserProfile();
-        tab('planner'); // Land on the new week, not Today
+        tab('plan'); // Land on the new week, not Today
         scheduleWeeklyRecapAutoCheck();
         stopGenLoadingUI();
       }, 420);
@@ -4985,7 +5096,7 @@ function renderLibrary() {
     if (catTabs) catTabs.style.display = 'none';
     rows = recipesUsedThisWeek();
     if (!rows.length) {
-      listEl.innerHTML = '<div class="lib-empty">No week planned yet.<br><br>Open the <strong>Planner</strong> and build a week to see your recipes here.</div>';
+      listEl.innerHTML = '<div class="lib-empty">No week planned yet.<br><br>Open <strong>Plan</strong> and build a week to see your recipes here.</div>';
       return;
     }
   } else if (libView === 'saved') {
@@ -5152,8 +5263,8 @@ function generateRecipes() {
       stopGenLoadingUI();
       var detail = '';
       if (err) detail = err.message || String(err);
-      else if (!raw) detail = 'No response body from the recipe service. Check your network connection and try again.';
-      else if (!parsed) detail = 'The AI response was not valid JSON. Try generating again, or check server logs.';
+      else if (!raw) detail = 'No reply arrived. Check your connection and try again.';
+      else if (!parsed) detail = 'That reply was not usable. Try generating again.';
       else detail = 'The model returned only ' + (Array.isArray(parsed) ? parsed.length : 0) + ' recipes (need at least 10). Try again.';
 
       nutriDebug('Recipe generation failed', { detail: detail, rawPreview: raw ? String(raw).slice(0, 500) : null });
@@ -5162,8 +5273,9 @@ function generateRecipes() {
         return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       }
 
-      showScreen('s-recipes');
-      el('recipes-list').innerHTML = '<div style="padding:24px;text-align:center"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:15px;font-weight:600;color:#111;margin-bottom:6px">Recipe generation failed</div><div style="font-size:13px;color:#9ca3af;line-height:1.5">' + escRecGen(detail) + '</div></div>';
+      planHubMode = 'library';
+      tab('plan');
+      el('recipes-list').innerHTML = '<div style="padding:24px;text-align:center"><div style="font-size:32px;margin-bottom:12px">⚠️</div><div style="font-size:15px;font-weight:600;color:#111;margin-bottom:6px">Something did not finish</div><div style="font-size:13px;color:#9ca3af;line-height:1.5">' + escRecGen(detail) + '</div></div>';
       return;
     }
 
@@ -5722,7 +5834,7 @@ function openAssign(day, slot, intent) {
 
   if (!recipes.length) {
     showToast('Build your week first to swap meals.');
-    if (!hasBuiltWeek()) { closeAssign(); tab('planner'); openBuildWeek('first'); }
+    if (!hasBuiltWeek()) { closeAssign(); tab('plan'); openBuildWeek('first'); }
     return;
   }
 
@@ -5960,13 +6072,13 @@ function applySavedRecipeSheetAction(act, id) {
     // where they can slot the saved recipe wherever it fits.
     recordRecipeSavedEngagement(idn, 'select');
     closeSavedRecipesModal();
-    tab('planner');
+    tab('plan');
     showToast('Slot ‘' + (findRecipe(idn).name) + '’ wherever it fits this week.');
     return;
   }
   if (act === 'planner') {
     closeSavedRecipesModal();
-    tab('planner');
+    tab('plan');
     return;
   }
   if (act === 'view') {
@@ -6199,7 +6311,7 @@ function openAdaptModal() {
     return;
   }
 
-  el('adapt-suggestions').innerHTML = '<div class="slbl" style="margin-top:4px">AI suggestions</div><div style="text-align:center;padding:16px"><div class="ai-spinner" style="margin:0 auto"></div></div>';
+  el('adapt-suggestions').innerHTML = '<div class="slbl" style="margin-top:4px">Arc Insights</div><div style="text-align:center;padding:16px"><div class="ai-spinner" style="margin:0 auto"></div></div>';
 
   var ctx = problemDays.map(function(day) {
     var idx   = DAYS.indexOf(day);
@@ -6285,7 +6397,7 @@ function renderNutrition() {
     // Show computed TDEE summary
     var macros = UP.macros || getMacroTargets(calTarget);
     var tdeeHtml = '<div style="background:var(--arc-soft-primary);border-radius:16px;padding:16px;margin-bottom:16px">';
-    tdeeHtml += '<div style="font-size:11px;font-weight:700;color:var(--arc-primary-dark);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Your AI-calculated targets</div>';
+    tdeeHtml += '<div style="font-size:11px;font-weight:700;color:var(--arc-primary-dark);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px">Your Adaptive Nutrition targets</div>';
     tdeeHtml += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center">';
     tdeeHtml += '<div><div style="font-size:16px;font-weight:700;color:var(--arc-primary)">' + calTarget + '</div><div style="font-size:10px;color:var(--arc-primary);font-weight:700">KCAL</div></div>';
     tdeeHtml += '<div><div style="font-size:16px;font-weight:700;color:var(--arc-primary)">' + macros.protein + 'g</div><div style="font-size:10px;color:var(--arc-primary);font-weight:700">PROTEIN</div></div>';
@@ -6551,16 +6663,15 @@ function buildRealisticPurchaseLine(canonicalKey, displayName, qtys, uses) {
   return defaultPurchaseLine(canonicalKey, displayName, qtys, uses);
 }
 
-// ── Grocery Intelligence V1 — Kroger live pricing ─────────────
+// ── Local Grocery Pricing (provider-agnostic client; v1 uses regional store feed on server)
 var ARC_API_BASE = 'https://nutriai-backend-44mg.onrender.com';
+// Provider-agnostic route (server may fan out to Kroger, Walmart, etc. over time).
+var GROCERY_LIVE_PRICE_URL = ARC_API_BASE + '/api/grocery/prices';
 
-// canonicalKey -> { matched, priceEffective, priceRegular, pricePromo, name, brand, size, productId, image }
-// or null = looked up but no match. Lives for the page session only;
-// the backend keeps a 12h server-side cache for the underlying calls.
 var krogerPriceCache = {};
 var krogerPendingKeys = {};
 var krogerState = {
-  status: 'idle',       // idle | loading | on | error | unsupported
+  status: 'idle',
   locationId: null,
   locationName: '',
   message: '',
@@ -6573,18 +6684,36 @@ function krogerIsEligibleRegion() {
 }
 
 function krogerSearchTermFor(line) {
-  // The display title (e.g. "Greek yogurt") is the cleanest search term we have.
   return String(line.title || '').trim();
 }
 
-function renderKrogerBar() {
-  var bar = el('kroger-bar');
+function groceryNearSummary() {
+  if (UP.groceryNearCity) return 'Using grocery pricing near ' + UP.groceryNearCity;
+  if (krogerState.locationName && / · /.test(krogerState.locationName)) {
+    var p = krogerState.locationName.split(' · ');
+    var last = p[p.length - 1];
+    if (last) return 'Using grocery pricing near ' + last;
+  }
+  if (krogerState.locationName) return 'Using grocery pricing · ' + krogerState.locationName;
+  return 'Shelf prices matched where we can confirm them for your area.';
+}
+
+function setGroceryZipRowVisible(show) {
+  var row = el('kb-zip-row');
+  if (row) row.style.display = show ? 'inline-flex' : 'none';
+}
+
+function renderGroceryPricingBar() {
+  var bar = el('grocery-live-bar');
   if (!bar) return;
   var titleEl = el('kb-title');
   var subEl = el('kb-sub');
   var zipEl = el('kb-zip');
   var applyBtn = el('kb-apply');
   var clearBtn = el('kb-clear');
+  var enableBtn = el('kb-enable');
+  var zipRow = el('kb-zip-row');
+  var zipFb = el('kb-zip-fallback');
   if (!krogerIsEligibleRegion()) {
     bar.style.display = 'none';
     return;
@@ -6594,61 +6723,143 @@ function renderKrogerBar() {
 
   if (krogerState.status === 'on') {
     bar.classList.add('is-on');
-    titleEl.textContent = 'Kroger prices active';
-    var sub = krogerState.locationName
-      ? 'Live pricing from ' + krogerState.locationName
-      : 'Live Kroger pricing';
+    if (titleEl) titleEl.textContent = 'Local pricing on';
+    var sub = groceryNearSummary();
     if (krogerState.hits) sub += ' · ' + krogerState.hits + ' item' + (krogerState.hits === 1 ? '' : 's') + ' matched';
-    subEl.textContent = sub;
-    zipEl.style.display = 'none';
-    applyBtn.style.display = 'none';
-    clearBtn.style.display = 'inline-flex';
+    if (subEl) subEl.textContent = sub;
+    if (zipRow) zipRow.style.display = 'none';
+    if (enableBtn) enableBtn.style.display = 'none';
+    if (zipFb) zipFb.style.display = 'none';
+    if (applyBtn) applyBtn.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'inline-flex';
   } else if (krogerState.status === 'loading') {
     bar.classList.add('is-loading');
-    titleEl.textContent = 'Fetching Kroger prices…';
-    subEl.textContent = 'Matching your list against your local store';
-    zipEl.style.display = 'none';
-    applyBtn.style.display = 'none';
-    clearBtn.style.display = 'none';
+    if (titleEl) titleEl.textContent = 'Calibrating prices…';
+    if (subEl) subEl.textContent = 'Matching your list to nearby shelves.';
+    if (zipRow) zipRow.style.display = 'none';
+    if (enableBtn) enableBtn.style.display = 'none';
+    if (zipFb) zipFb.style.display = 'none';
+    if (applyBtn) applyBtn.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'none';
   } else if (krogerState.status === 'error') {
-    titleEl.textContent = 'Kroger pricing unavailable';
-    subEl.textContent = krogerState.message || 'Showing estimated prices instead.';
-    zipEl.style.display = 'inline-block';
-    applyBtn.style.display = 'inline-flex';
-    applyBtn.textContent = 'Retry';
-    clearBtn.style.display = 'none';
+    if (titleEl) titleEl.textContent = 'Local pricing paused';
+    if (subEl) subEl.textContent = krogerState.message || 'Regional estimates still apply.';
+    if (zipRow) zipRow.style.display = 'inline-flex';
+    if (enableBtn) enableBtn.style.display = 'none';
+    if (zipFb) zipFb.style.display = 'none';
+    if (applyBtn) { applyBtn.style.display = 'inline-flex'; applyBtn.textContent = 'Retry'; }
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (zipEl && UP.krogerZip) zipEl.value = UP.krogerZip;
   } else {
-    titleEl.textContent = 'Use real Kroger prices';
-    subEl.textContent = 'Enter a US ZIP to swap estimates for live store pricing';
-    zipEl.style.display = 'inline-block';
-    if (UP.krogerZip) zipEl.value = UP.krogerZip;
-    applyBtn.style.display = 'inline-flex';
-    applyBtn.textContent = 'Apply';
-    clearBtn.style.display = 'none';
+    if (UP.krogerZip) {
+      if (titleEl) titleEl.textContent = 'Local Grocery Pricing';
+      if (subEl) subEl.textContent = 'Updating nearby prices for your list…';
+      if (zipEl) zipEl.value = UP.krogerZip;
+      if (zipRow) zipRow.style.display = 'none';
+      if (enableBtn) enableBtn.style.display = 'none';
+      if (zipFb) zipFb.style.display = 'none';
+      if (applyBtn) applyBtn.style.display = 'none';
+      if (clearBtn) clearBtn.style.display = 'inline-flex';
+    } else {
+      if (titleEl) titleEl.textContent = 'Local Grocery Pricing';
+      if (subEl) subEl.textContent = 'Optional location or ZIP helps Arc align your cart with stores near you.';
+      if (zipEl) zipEl.value = '';
+      if (zipRow) zipRow.style.display = 'none';
+      if (enableBtn) enableBtn.style.display = 'inline-flex';
+      if (zipFb) zipFb.style.display = 'inline-flex';
+      if (applyBtn) { applyBtn.style.display = 'none'; applyBtn.textContent = 'Confirm'; }
+      if (clearBtn) clearBtn.style.display = 'none';
+    }
   }
+}
+
+function beginGroceryPricingFromLocation() {
+  krogerState.status = 'loading';
+  krogerState.message = '';
+  renderGroceryPricingBar();
+  if (!navigator.geolocation) {
+    krogerState.status = 'idle';
+    setGroceryZipRowVisible(true);
+    if (el('kb-sub')) el('kb-sub').textContent = 'Add your ZIP to enable Local Grocery Pricing.';
+    renderGroceryPricingBar();
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      var lat = pos.coords.latitude;
+      var lon = pos.coords.longitude;
+      fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + encodeURIComponent(lat) + '&longitude=' + encodeURIComponent(lon) + '&localityLanguage=en')
+        .then(function(r) { return r.json(); })
+        .then(function(geo) {
+          if (!geo || geo.countryCode !== 'US') {
+            krogerState.status = 'idle';
+            setGroceryZipRowVisible(true);
+            if (el('kb-sub')) el('kb-sub').textContent = 'Local shelf pricing is tuned for US stores. Add a ZIP to continue.';
+            renderGroceryPricingBar();
+            return;
+          }
+          var pc = (geo.postcode) ? String(geo.postcode).replace(/\D/g, '').slice(0, 5) : '';
+          var city = (geo.city || geo.locality || '').trim();
+          if (city) UP.groceryNearCity = city;
+          if (pc.length === 5) {
+            UP.krogerZip = pc;
+            UP.krogerLocationId = null;
+            krogerPriceCache = {};
+            krogerPendingKeys = {};
+            krogerState = { status: 'loading', locationId: null, locationName: '', message: '', hits: 0 };
+            try { saveSessionState(); } catch (e2) {}
+            renderShopping();
+          } else {
+            krogerState.status = 'idle';
+            setGroceryZipRowVisible(true);
+            if (el('kb-sub')) el('kb-sub').textContent = city
+              ? ('Near ' + city + ' — add your ZIP to match shelves precisely.')
+              : 'Add your ZIP to match shelves in your area.';
+            renderGroceryPricingBar();
+          }
+        })
+        .catch(function() {
+          krogerState.status = 'idle';
+          setGroceryZipRowVisible(true);
+          if (el('kb-sub')) el('kb-sub').textContent = 'Add your ZIP to enable Local Grocery Pricing.';
+          renderGroceryPricingBar();
+        });
+    },
+    function() {
+      krogerState.status = 'idle';
+      setGroceryZipRowVisible(true);
+      if (el('kb-sub')) el('kb-sub').textContent = 'Location unavailable. Add your ZIP to enable Local Grocery Pricing.';
+      renderGroceryPricingBar();
+    },
+    { enableHighAccuracy: false, timeout: 12000, maximumAge: 300000 }
+  );
 }
 
 function setupKrogerControls() {
   if (krogerControlsBound) return;
-  var bar = el('kroger-bar');
+  var bar = el('grocery-live-bar');
   if (!bar) return;
   var zipEl = el('kb-zip');
   var applyBtn = el('kb-apply');
   var clearBtn = el('kb-clear');
+  var enableBtn = el('kb-enable');
+  var zipFb = el('kb-zip-fallback');
 
-  zipEl.addEventListener('input', function() {
-    this.value = (this.value || '').replace(/\D/g, '').slice(0, 5);
-  });
-  zipEl.addEventListener('keydown', function(ev) {
-    if (ev.key === 'Enter') { ev.preventDefault(); applyBtn.click(); }
-  });
+  if (zipEl) {
+    zipEl.addEventListener('input', function() {
+      this.value = (this.value || '').replace(/\D/g, '').slice(0, 5);
+    });
+    zipEl.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); applyBtn.click(); }
+    });
+  }
 
-  applyBtn.addEventListener('click', function() {
-    var zip = (zipEl.value || '').replace(/\D/g, '').slice(0, 5);
+  if (applyBtn) applyBtn.addEventListener('click', function() {
+    var zip = (zipEl && zipEl.value || '').replace(/\D/g, '').slice(0, 5);
     if (zip.length !== 5) {
       krogerState.status = 'error';
-      krogerState.message = 'Enter a valid 5-digit US ZIP code.';
-      renderKrogerBar();
+      krogerState.message = 'Use a valid 5-digit US ZIP.';
+      renderGroceryPricingBar();
       return;
     }
     UP.krogerZip = zip;
@@ -6657,19 +6868,31 @@ function setupKrogerControls() {
     krogerPendingKeys = {};
     krogerState = { status: 'loading', locationId: null, locationName: '', message: '', hits: 0 };
     try { saveSessionState(); } catch (e) {}
-    renderKrogerBar();
+    renderGroceryPricingBar();
     renderShopping();
   });
 
-  clearBtn.addEventListener('click', function() {
+  if (clearBtn) clearBtn.addEventListener('click', function() {
     UP.krogerZip = '';
     UP.krogerLocationId = null;
+    UP.groceryNearCity = '';
     krogerPriceCache = {};
     krogerPendingKeys = {};
     krogerState = { status: 'idle', locationId: null, locationName: '', message: '', hits: 0 };
     try { saveSessionState(); } catch (e) {}
-    renderKrogerBar();
+    renderGroceryPricingBar();
     renderShopping();
+  });
+
+  if (enableBtn) enableBtn.addEventListener('click', function() { beginGroceryPricingFromLocation(); });
+  if (zipFb) zipFb.addEventListener('click', function() {
+    krogerState.status = 'idle';
+    setGroceryZipRowVisible(true);
+    if (enableBtn) enableBtn.style.display = 'none';
+    if (zipFb) zipFb.style.display = 'none';
+    if (applyBtn) applyBtn.style.display = 'inline-flex';
+    if (el('kb-sub')) el('kb-sub').textContent = 'Enter your ZIP to match this list with stores in your area.';
+    renderGroceryPricingBar();
   });
 
   krogerControlsBound = true;
@@ -6682,7 +6905,7 @@ function applyKrogerToLines(lines) {
     var hit = krogerPriceCache[L.key];
     if (hit && hit.priceEffective != null) {
       L.priceUsd = hit.priceEffective;
-      L.source = 'kroger';
+      L.source = 'liveRetail';
       L.krogerName = hit.name || '';
       L.krogerBrand = hit.brand || '';
       L.krogerSize = hit.size || '';
@@ -6711,19 +6934,19 @@ function enrichShoppingWithKroger(lines) {
   if (!toFetch.length) {
     if (krogerState.status === 'loading') {
       krogerState.status = krogerState.hits > 0 ? 'on' : 'idle';
-      renderKrogerBar();
+      renderGroceryPricingBar();
     }
     return;
   }
 
   if (krogerState.status !== 'on') krogerState.status = 'loading';
-  renderKrogerBar();
+  renderGroceryPricingBar();
 
   var body = { items: toFetch };
   if (UP.krogerLocationId) body.locationId = UP.krogerLocationId;
   else if (UP.krogerZip) body.zipCode = UP.krogerZip;
 
-  fetch(ARC_API_BASE + '/api/kroger/prices', {
+  fetch(GROCERY_LIVE_PRICE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
@@ -6740,8 +6963,8 @@ function enrichShoppingWithKroger(lines) {
 
     if (!result.ok) {
       krogerState.status = 'error';
-      krogerState.message = (result.data && result.data.error) || 'Could not reach Kroger right now.';
-      renderKrogerBar();
+      krogerState.message = (result.data && result.data.error) || 'Could not refresh local prices right now.';
+      renderGroceryPricingBar();
       return;
     }
 
@@ -6751,13 +6974,14 @@ function enrichShoppingWithKroger(lines) {
       if (data.location && data.location.name) {
         krogerState.locationName = data.location.name +
           (data.location.address && data.location.address.city ? ' · ' + data.location.address.city : '');
+        if (data.location.address && data.location.address.city) UP.groceryNearCity = data.location.address.city;
       }
     }
 
     var res = data.results || {};
     for (var key in res) {
       if (Object.prototype.hasOwnProperty.call(res, key)) {
-        krogerPriceCache[key] = res[key]; // null = unmatched
+        krogerPriceCache[key] = res[key];
       }
     }
 
@@ -6768,8 +6992,8 @@ function enrichShoppingWithKroger(lines) {
   .catch(function(err) {
     for (var k = 0; k < toFetch.length; k++) delete krogerPendingKeys[toFetch[k].key];
     krogerState.status = 'error';
-    krogerState.message = (err && err.message) || 'Network error reaching Kroger.';
-    renderKrogerBar();
+    krogerState.message = (err && err.message) || 'Could not reach the pricing service.';
+    renderGroceryPricingBar();
   });
 }
 
@@ -6815,9 +7039,9 @@ function renderShopping() {
     lines.push(buildRealisticPurchaseLine(ky, entry.display, entry.qtys, entry.qtys.length));
   }
 
-  // Merge cached Kroger pricing into the lines before totals/render.
+  // Merge cached live retail pricing into lines before totals/render.
   var krogerHits = applyKrogerToLines(lines);
-  renderKrogerBar();
+  renderGroceryPricingBar();
 
   el('shop-count').textContent = lines.length ? lines.length + ' items' : '';
 
@@ -6825,7 +7049,7 @@ function renderShopping() {
     el('shop-total').style.display   = 'none';
     el('shop-intro').style.display  = 'none';
     el('price-disc').style.display  = 'none';
-    el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Plan meals in the planner to build your grocery list.</div>';
+    el('shop-body').innerHTML = '<div style="color:#c4bdb5;font-size:14px;font-style:italic;padding:16px 0">Plan meals for the week to build your grocery list.</div>';
     saveSessionState();
     return;
   }
@@ -6854,9 +7078,9 @@ function renderShopping() {
   el('shop-intro').style.display = 'block';
   el('price-disc').style.display = 'block';
   if (krogerHits > 0) {
-    el('price-disc').textContent = '* Live Kroger pricing for ' + krogerHits + ' of ' + lines.length +
-      ' items' + (krogerState.locationName ? ' at ' + krogerState.locationName : '') +
-      '. Remaining items use regional estimates; actual totals may vary by promotion.';
+    var nearBit = UP.groceryNearCity ? (' near ' + UP.groceryNearCity) : '';
+    el('price-disc').textContent = '* Local Grocery Pricing matched ' + krogerHits + ' of ' + lines.length +
+      ' items' + nearBit + '. Other lines use regional estimates; receipts still vary by store and week.';
   } else {
     el('price-disc').textContent = '* Prices are ballpark retail units for your region — real receipts will vary by brand and store.';
   }
@@ -6882,12 +7106,12 @@ function renderShopping() {
       var priceLabel = (isDone || atHome) ? '—' : fmtPrice(row.priceUsd);
       var nameBadge = '';
       var noteText = row.note;
-      if (row.source === 'kroger') {
-        var badgeCls = 'kroger-badge' + ((isDone || atHome) ? ' dim' : '');
-        nameBadge = '<span class="' + badgeCls + '" title="Live Kroger pricing">K</span>';
+      if (row.source === 'liveRetail' || row.source === 'kroger') {
+        var badgeCls = 'live-price-badge' + ((isDone || atHome) ? ' dim' : '');
+        nameBadge = '<span class="' + badgeCls + '" title="Local shelf match">●</span>';
         var krogerDesc = [row.krogerBrand, row.krogerName].filter(Boolean).join(' ');
         var sizeBit = row.krogerSize ? ' (' + row.krogerSize + ')' : '';
-        noteText = 'Kroger · ' + (krogerDesc || 'matched product') + sizeBit;
+        noteText = 'In-store match · ' + (krogerDesc || 'local product') + sizeBit;
       }
       html += '<div class="' + rowCls + '">';
       html += '<div class="scheck' + (isDone ? ' on' : '') + '" data-ing="' + shopDataAttr(id) + '" role="checkbox" aria-checked="' + (isDone ? 'true' : 'false') + '">' + (isDone ? '✓' : '') + '</div>';
@@ -6922,7 +7146,7 @@ function renderShopping() {
     });
   }
 
-  // Kick off live Kroger enrichment (no-op when ZIP not set or non-US).
+  // Kick off Local Grocery Pricing enrichment (no-op when ZIP not set or non-US).
   enrichShoppingWithKroger(lines);
 
   saveSessionState();
@@ -7152,9 +7376,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  applyPlanHubMode();
+  applyProgressHubMode();
+
+  var planHubBtns = document.querySelectorAll('[data-plan-hub]');
+  for (var ph = 0; ph < planHubBtns.length; ph++) {
+    planHubBtns[ph].addEventListener('click', function() {
+      planHubMode = this.getAttribute('data-plan-hub') || 'week';
+      applyPlanHubMode();
+      if (planHubMode === 'week') renderPlanner();
+      else {
+        applyProfileToUIBar();
+        setupLibraryTabs();
+        renderLibrary();
+      }
+    });
+  }
+  var progHubBtns = document.querySelectorAll('[data-progress-hub]');
+  for (var pr = 0; pr < progHubBtns.length; pr++) {
+    progHubBtns[pr].addEventListener('click', function() {
+      progressHubMode = this.getAttribute('data-progress-hub') || 'stats';
+      applyProgressHubMode();
+      renderNutrition();
+      if (progressHubMode === 'log') renderLog();
+    });
+  }
+
   // ── Settings events ───────────────────────────────────────
   el('settings-btn').addEventListener('click', openSettings);
   el('settings-close').addEventListener('click', closeSettings);
+  var hdrProf = el('hdr-profile-btn');
+  if (hdrProf) hdrProf.addEventListener('click', function() { tab('profile'); });
+  var profOpen = el('profile-open-settings');
+  if (profOpen) profOpen.addEventListener('click', openSettings);
 
   // Save profile
   el('s-save').addEventListener('click', applySettingsProfile);
@@ -7244,13 +7498,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Next-bar buttons
   // goto-planner lived inside the removed recipes-tab next-bar — guard for legacy DOM.
   var gotoPlanner = el('goto-planner');
-  if (gotoPlanner) gotoPlanner.addEventListener('click', function() { tab('planner'); });
-  el('goto-shopping').addEventListener('click', function() { tab('shopping'); });
+  if (gotoPlanner) gotoPlanner.addEventListener('click', function() { tab('plan'); });
+  el('goto-shopping').addEventListener('click', function() { tab('grocery'); });
   el('today-cook-btn').addEventListener('click', function() {
     var rid = parseInt(this.dataset.rid, 10);
     if (rid) openRM(rid);
   });
-  el('today-log-btn').addEventListener('click', function() { tab('log'); });
+  el('today-log-btn').addEventListener('click', function() { tab('progress', { progressPanel: 'log' }); });
   el('today-swap-btn').addEventListener('click', function() {
     var day = this.dataset.day;
     var slot = this.dataset.slot;
