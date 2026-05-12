@@ -534,9 +534,6 @@ body{
 .shop-have.on{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.22)}
 .shop-have:focus-visible{outline:2px solid var(--arc-primary);outline-offset:2px}
 .shop-export-wrap{position:sticky;bottom:0;z-index:5;margin:20px -4px 0;padding:16px 4px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(255,250,245,0) 0%,rgba(255,250,245,.92) 28%,var(--arc-bg) 55%);border-top:1px solid var(--arc-divider);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.btn-shop-export{width:100%;padding:16px 18px;border-radius:16px;border:none;background:var(--arc-primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary);letter-spacing:.01em;transition:background var(--motion-fast) var(--ease-standard),transform 180ms var(--ease-standard)}
-.btn-shop-export:hover{background:var(--arc-primary-dark)}
-.btn-shop-export:active{transform:scale(var(--press-scale))}
 .steps-phase-root{display:flex;flex-direction:column;gap:22px}
 .step-phase-block{border-radius:16px;padding:14px 14px 10px;border:1px solid rgba(31,23,16,.08);background:var(--arc-surface-2)}
 .step-phase--prep{border-color:rgba(34,139,87,.25);background:rgba(34,139,87,.06)}
@@ -549,6 +546,27 @@ body{
 .step-phase--serve .step-phase-dot{background:#6366f1}
 .step-phase-body .step-row{margin-bottom:12px}
 .step-phase-body .step-row:last-child{margin-bottom:4px}
+.rm-portion-bar{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 22px 12px;background:var(--arc-surface-2);border-bottom:1px solid var(--arc-divider)}
+.rm-portion-lbl{font-size:11px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em}
+.rm-portion-seg{display:inline-flex;border-radius:12px;padding:3px;background:rgba(31,23,16,.06);border:1px solid rgba(31,23,16,.08)}
+.rm-portion-btn{border:none;background:transparent;color:var(--arc-subtext);font-size:13px;font-weight:650;padding:8px 14px;border-radius:9px;cursor:pointer;font-family:inherit;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard)}
+.rm-portion-btn.active{background:#fff;color:var(--arc-text);box-shadow:var(--shadow-xs)}
+.step-check-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--arc-divider);cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:left}
+.step-check-item:last-child{border-bottom:none}
+.step-check-ui{flex-shrink:0;width:22px;height:22px;border-radius:6px;border:2px solid rgba(31,23,16,.22);background:#fff;margin-top:2px;transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.step-check-item.is-done .step-check-ui{border-color:var(--arc-primary);background:var(--arc-primary);box-shadow:inset 0 0 0 2px #fff}
+.step-check-item.is-done .step-check-ui::after{content:'✓';display:block;font-size:12px;font-weight:800;color:#fff;text-align:center;line-height:18px}
+.step-check-txt{font-size:15px;color:var(--arc-text);line-height:1.55;flex:1;min-width:0}
+.step-check-item.is-done .step-check-txt{opacity:.45;color:var(--arc-subtext)}
+.step-check-item:focus-visible{outline:2px solid var(--arc-primary);outline-offset:3px;border-radius:10px}
+.nut-verify-badge{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid rgba(31,23,16,.1)}
+.nut-verify-badge--pending{background:rgba(99,102,241,.1);color:#4338ca;border-color:rgba(99,102,241,.25)}
+.nut-verify-badge--ok{background:rgba(34,139,87,.14);color:#14532d;border-color:rgba(34,139,87,.28)}
+.nut-verify-badge--fallback{background:rgba(227,90,54,.1);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.22)}
+.btn-shop-local{width:100%;padding:16px 18px;border-radius:16px;border:none;background:var(--arc-primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-primary);margin-bottom:10px;transition:background var(--motion-fast) var(--ease-standard)}
+.btn-shop-local:hover{background:var(--arc-primary-dark)}
+.btn-shop-export-secondary{width:100%;padding:12px 14px;border-radius:14px;border:1px solid rgba(31,23,16,.14);background:rgba(255,255,255,.85);color:var(--arc-text);font-size:14px;font-weight:650;cursor:pointer;font-family:inherit}
+.btn-shop-export-secondary:hover{background:#fff}
 
 /* WEEKLY PLANNING — Build Your Week wizard + planner header */
 .bw-sheet{background:#fff;border-radius:24px 24px 0 0;padding:22px 22px 18px;width:100%;max-height:90%;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 -12px 40px rgba(0,0,0,0.18);transform:translateY(28px);transition:transform var(--motion-sheet) var(--ease-standard);will-change:transform}
@@ -1315,6 +1333,13 @@ button:active{transform:scale(var(--press-scale))}
       <button class="rm-tab" data-tab="steps">Instructions</button>
       <button class="rm-tab" data-tab="nut">Nutrition</button>
     </div>
+    <div class="rm-portion-bar" id="rm-portion-bar" aria-label="Ingredient amount scale">
+      <span class="rm-portion-lbl">Amounts</span>
+      <div class="rm-portion-seg" role="group">
+        <button type="button" class="rm-portion-btn" id="rm-portion-one" data-portion="one">Single serving</button>
+        <button type="button" class="rm-portion-btn" id="rm-portion-batch" data-portion="batch">Weekly batch</button>
+      </div>
+    </div>
     <div class="rm-body">
       <div class="tab-p active" id="tab-ing"></div>
       <div class="tab-p" id="tab-steps"></div>
@@ -1633,6 +1658,9 @@ var curRecipe   = null;
 var todayPeekContext = null;
 var stepCache   = {};
 var lastShopLines = [];
+var universalCartData = [];
+var edamamNutritionCache = {};
+var edamamNutritionPending = {};
 var swapIng     = null;
 var swapRid     = null;
 var assignDay   = null;
@@ -2867,7 +2895,7 @@ function categoryTargetsFor(cat, mt) {
   return mt.Lunch;
 }
 
-/** Normalize AI steps to { phase, instruction }[] for UI and caching (accepts legacy string[]). */
+/** Normalize AI steps to { phase, instruction }[] (instruction holds text; legacy string[] supported). */
 function normalizeRecipeSteps(steps) {
   if (!Array.isArray(steps) || !steps.length) return [];
   var out = [];
@@ -2884,7 +2912,7 @@ function normalizeRecipeSteps(steps) {
       if (tx) out.push({ phase: 'Cook', instruction: tx });
     } else if (st && typeof st === 'object' && !Array.isArray(st)) {
       var ph = normPhase(st.phase);
-      var ins = st.instruction != null ? String(st.instruction) : (st.text != null ? String(st.text) : (st.step != null ? String(st.step) : ''));
+      var ins = st.text != null ? String(st.text) : (st.instruction != null ? String(st.instruction) : (st.step != null ? String(st.step) : ''));
       ins = ins.trim();
       if (ins) out.push({ phase: ph, instruction: ins });
     }
@@ -3409,8 +3437,10 @@ function openTodayMealPeek(day, slot) {
     todayPeekContext = { rid: r.id, day: day, slot: slot };
     if (stepCache[r.id] || (r.steps && r.steps.length > 2)) {
       el('tm-peek-steps').innerHTML = buildStepsTab(stepCache[r.id] || r.steps);
+      wireRecipeStepChecklist('tm-peek-steps');
     } else if (r.steps && r.steps.length > 0) {
       el('tm-peek-steps').innerHTML = buildStepsTab(r.steps);
+      wireRecipeStepChecklist('tm-peek-steps');
     } else {
       el('tm-peek-steps').innerHTML = '<div style="text-align:center;padding:20px 0;color:var(--arc-subtext)"><div class="ai-spinner" style="margin:0 auto 12px"></div><span style="font-size:13px">Preparing steps…</span></div>';
       fetchSteps(r.id);
@@ -5045,7 +5075,7 @@ function buildWeeklyPlanPrompt(intent) {
 
   u += '\nOUTPUT JSON SHAPE:\n';
   u += '{\n';
-  u += '  "recipes": [ {"id":1,"name":"...","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch","servings":1,"tags":["High protein"],"ing":["Chicken breast","Rice","Broccoli"],"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},"steps":[{"phase":"Prep","instruction":"Slice chicken and chop broccoli."},{"phase":"Cook","instruction":"Pan-sear chicken until 165F internal; steam rice and broccoli."},{"phase":"Serve","instruction":"Plate with a squeeze of lemon."}]} ],\n';
+  u += '  "recipes": [ {"id":1,"name":"...","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch","servings":1,"tags":["High protein"],"ing":["Chicken breast","Rice","Broccoli"],"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},"steps":[{"phase":"Prep","text":"Slice chicken and chop broccoli."},{"phase":"Cook","text":"Pan-sear chicken until 165F internal; steam rice and broccoli."},{"phase":"Serve","text":"Plate with a squeeze of lemon."}]} ],\n';
   u += '  "plan":   { "Mon":{' + slots.map(function(s){ return '"' + s + '":1'; }).join(',') + '}, "Tue":{...}, "Wed":{...}, "Thu":{...}, "Fri":{...}, "Sat":{...}, "Sun":{...} }\n';
   u += '}\n\n';
 
@@ -5057,7 +5087,7 @@ function buildWeeklyPlanPrompt(intent) {
   u += '5. Daily total calories across the slots MUST be close to ' + calT + ' kcal (±200).\n';
   u += '6. Every recipe MUST satisfy the MANDATORY DIETARY COMPLIANCE block.\n';
   u += '7. "servings" on each recipe MUST equal the number of times that recipe appears in the plan grid (so meal prep maths out for shopping). For fresh-daily mode, every recipe appears once and servings=1.\n';
-  u += '8. "steps" MUST be an array of 5-8 objects: {"phase":"Prep"|"Cook"|"Serve","instruction":"..."}; each instruction must be specific and actionable.\n';
+  u += '8. "steps" MUST be an array of 5-8 objects: {"phase":"Prep"|"Cook"|"Serve","text":"..."}; each step must be specific and actionable.\n';
   u += '9. "ingQty" MUST list every item in "ing" with realistic amounts; prices in USD per single serving.\n';
   u += '10. Output ONLY the JSON object. Begin with { and end with }.';
 
@@ -5365,7 +5395,7 @@ function generateRecipes() {
   var sysMsg = 'You are an expert nutritionist and chef. You MUST respond with ONLY a valid JSON array. ' +
                'No markdown, no code fences, no explanation before or after. ' +
                'Start your response with [ and end with ]. ' +
-               'Every recipe object MUST have all required fields including a "steps" array of 5-8 objects shaped like {"phase":"Prep"|"Cook"|"Serve","instruction":"string"}. ' +
+               'Every recipe object MUST have all required fields including a "steps" array of 5-8 objects shaped like {"phase":"Prep"|"Cook"|"Serve","text":"string"}. ' +
                'Every recipe MUST comply 100% with the user MANDATORY DIETARY COMPLIANCE section—never relax it. ' +
                'Every recipe\'s cal, p, c, f MUST align with the CALORIE & MACRO ALIGNMENT section within ±10% for its category. ' +
                'CRITICAL: The macros (cal, p, c, f) MUST mathematically align with the ingredients provided. 1g of protein = 4 cal, 1g carb = 4 cal, 1g fat = 9 cal. Do not hallucinate macros that contradict the ingredient list.';
@@ -5389,11 +5419,11 @@ function generateRecipes() {
   userMsg += '[{"id":1,"name":"Recipe Name","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch",';
   userMsg += '"tags":["High protein","Quick"],"ing":["Chicken breast","Rice","Broccoli"],';
   userMsg += '"ingQty":{"Chicken breast":"6 oz","Rice":"1/2 cup","Broccoli":"1 cup"},';
-  userMsg += '"steps":[{"phase":"Prep","instruction":"Slice chicken thin; rinse rice until water runs clear."},{"phase":"Cook","instruction":"Sear chicken in a hot pan; simmer rice covered 15 min; steam broccoli 5 min."},{"phase":"Serve","instruction":"Plate with soy drizzle and green onions."}]}]\n\n';
+  userMsg += '"steps":[{"phase":"Prep","text":"Slice chicken thin; rinse rice until water runs clear."},{"phase":"Cook","text":"Sear chicken in a hot pan; simmer rice covered 15 min; steam broccoli 5 min."},{"phase":"Serve","text":"Plate with soy drizzle and green onions."}]}]\n\n';
   userMsg += 'The example "ing" line is JSON shape only—your actual ingredients MUST respect the MANDATORY DIETARY COMPLIANCE section (e.g. no animal products for vegan).\n\n';
   userMsg += 'STRICT RULES:\n';
   userMsg += '1. Each recipe MUST fully satisfy the MANDATORY DIETARY COMPLIANCE section and all dislikes—ingredient names, amounts, and steps must comply; if a concept would break a rule, pick a different compliant recipe.\n';
-  userMsg += '2. "steps" MUST be 5-8 objects with "phase" exactly Prep, Cook, or Serve and a specific "instruction" (not vague placeholders like "cook until done")\n';
+  userMsg += '2. "steps" MUST be 5-8 objects with "phase" exactly Prep, Cook, or Serve and a specific "text" field for the step (not vague placeholders like "cook until done")\n';
   userMsg += '3. ingQty must list EVERY item in ing with realistic amounts\n';
   userMsg += '4. cal, p, c, f must be accurate for the listed ingredients AND MUST fall within ±10% of that recipe category\'s targets in the CALORIE & MACRO ALIGNMENT section\n';
   userMsg += '5. price is USD cost per serving — match the budget: ' + budgetNote + '\n';
@@ -5555,19 +5585,107 @@ function parseLeadingQtySegment(raw) {
   return null;
 }
 
-/** Scale the leading numeric token in a quantity string (e.g. "1/2 cup" × 4 → "2 cup") for display. */
-function scaleIngredientQtyString(qtyStr, factor) {
-  factor = parseInt(factor, 10);
-  if (!(factor > 1)) return String(qtyStr == null ? '' : qtyStr);
+/** Scale the leading numeric token in a quantity string by a positive factor (float). */
+function scaleLeadingNumericInQtyString(qtyStr, factor) {
+  var f = Number(factor);
+  if (!isFinite(f) || f <= 0) return String(qtyStr == null ? '' : qtyStr);
+  if (Math.abs(f - 1) < 1e-9) return String(qtyStr == null ? '' : qtyStr).trim();
   var raw = String(qtyStr == null ? '' : qtyStr).trim();
   if (!raw) return raw;
   var seg = parseLeadingQtySegment(raw);
   if (!seg) return raw;
-  var scaled = seg.val * factor;
+  var scaled = seg.val * f;
   var rest = raw.slice(seg.len);
   var head = formatScaledAmount(scaled);
   if (!rest || !String(rest).trim()) return head;
   return head + rest;
+}
+
+function countPlanSlotsForRecipe(rid) {
+  if (!rid) return 0;
+  var slots = getSlots();
+  var n = 0;
+  for (var d = 0; d < DAYS.length; d++) {
+    var dp = mealPlan[DAYS[d]];
+    if (!dp) continue;
+    for (var s = 0; s < slots.length; s++) {
+      if (dp[slots[s]] === rid) n++;
+    }
+  }
+  return n;
+}
+
+function countPlanDaysForRecipe(rid) {
+  if (!rid) return 0;
+  var slots = getSlots();
+  var seen = {};
+  for (var d = 0; d < DAYS.length; d++) {
+    var day = DAYS[d];
+    var dp = mealPlan[day];
+    if (!dp) continue;
+    for (var s = 0; s < slots.length; s++) {
+      if (dp[slots[s]] === rid) {
+        seen[day] = true;
+        break;
+      }
+    }
+  }
+  var keys = Object.keys(seen);
+  return keys.length;
+}
+
+/** Single serving: divide weekly totals by distinct plan days with this recipe. Weekly batch: full planned amounts. */
+function displayIngredientQtyForModal(r, qraw) {
+  if (qraw === '—') return qraw;
+  var mult = getServingsFor(r.id);
+  var slotCount = countPlanSlotsForRecipe(r.id);
+  var dayCount = countPlanDaysForRecipe(r.id);
+  var mode = UP.rmPortionView === 'batch' ? 'batch' : 'one';
+  if (slotCount < 1) {
+    return scaleLeadingNumericInQtyString(qraw, mult);
+  }
+  var weeklyFactor = mult * slotCount;
+  if (mode === 'batch') {
+    return scaleLeadingNumericInQtyString(qraw, weeklyFactor);
+  }
+  var div = Math.max(1, dayCount);
+  return scaleLeadingNumericInQtyString(qraw, weeklyFactor / div);
+}
+
+function renderRMPortionToggle(r) {
+  var bar = el('rm-portion-bar');
+  if (!bar) return;
+  var slotCount = countPlanSlotsForRecipe(r.id);
+  if (slotCount < 1) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = 'flex';
+  if (UP.rmPortionView !== 'batch' && UP.rmPortionView !== 'one') UP.rmPortionView = 'one';
+  var mode = UP.rmPortionView === 'batch' ? 'batch' : 'one';
+  var b1 = el('rm-portion-one');
+  var b2 = el('rm-portion-batch');
+  if (b1) b1.classList.toggle('active', mode === 'one');
+  if (b2) b2.classList.toggle('active', mode === 'batch');
+}
+
+function wireRecipeStepChecklist(containerId) {
+  var pane = el(containerId);
+  if (!pane) return;
+  var items = pane.querySelectorAll('.step-check-item');
+  for (var i = 0; i < items.length; i++) {
+    items[i].addEventListener('click', function() {
+      var on = this.classList.toggle('is-done');
+      var u = this.querySelector('.step-check-ui');
+      if (u) u.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    items[i].addEventListener('keydown', function(ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        this.click();
+      }
+    });
+  }
 }
 
 // ── Recipe modal ──────────────────────────────────────────────
@@ -5575,7 +5693,6 @@ function buildIngredientsPeek(r) {
   if (!r) return '';
   var iq = r.ingQty || {};
   var ings = r.ing || [];
-  var mult = getServingsFor(r.id);
   if (!ings.length) {
     return '<p class="tm-peek-muted">No ingredient list stored for this recipe.</p>';
   }
@@ -5583,7 +5700,7 @@ function buildIngredientsPeek(r) {
   for (var i = 0; i < ings.length; i++) {
     var ing = ings[i];
     var qraw = iq[ing] || '—';
-    var qdisp = qraw === '—' ? qraw : scaleIngredientQtyString(qraw, mult);
+    var qdisp = qraw === '—' ? qraw : displayIngredientQtyForModal(r, qraw);
     html += '<div class="ing-row"><span class="ing-name">' + shopEsc(ing) + '</span><span class="ing-qty">' + shopEsc(qdisp) + '</span></div>';
   }
   return html;
@@ -5593,11 +5710,10 @@ function buildIngredientsTab(r) {
   var iq   = r.ingQty || {};
   var html = '';
   var ings = r.ing || [];
-  var mult = getServingsFor(r.id);
   for (var i = 0; i < ings.length; i++) {
     var ing = ings[i];
     var qraw = iq[ing] || '—';
-    var qdisp = qraw === '—' ? qraw : scaleIngredientQtyString(qraw, mult);
+    var qdisp = qraw === '—' ? qraw : displayIngredientQtyForModal(r, qraw);
     html += '<div class="ing-row">';
     html += '<span class="ing-name">' + shopEsc(ing) + '</span>';
     html += '<div class="ing-right">';
@@ -5617,7 +5733,6 @@ function buildStepsTab(steps) {
   var phaseOrder = ['Prep', 'Cook', 'Serve'];
   var phaseCls = { Prep: 'step-phase--prep', Cook: 'step-phase--cook', Serve: 'step-phase--serve' };
   var html = '<div class="steps-phase-root">';
-  var stepNo = 1;
   for (var pi = 0; pi < phaseOrder.length; pi++) {
     var P = phaseOrder[pi];
     var bucket = [];
@@ -5629,9 +5744,10 @@ function buildStepsTab(steps) {
     html += '<div class="step-phase-h"><span class="step-phase-dot"></span>' + P + '</div>';
     html += '<div class="step-phase-body">';
     for (var j = 0; j < bucket.length; j++) {
-      html += '<div class="step-row">';
-      html += '<div class="step-num">' + (stepNo++) + '</div>';
-      html += '<div class="step-txt">' + shopEsc(bucket[j]) + '</div>';
+      var stepTxt = bucket[j];
+      html += '<div class="step-check-item" tabindex="0" role="button">';
+      html += '<span class="step-check-ui" role="checkbox" aria-checked="false"></span>';
+      html += '<span class="step-check-txt">' + shopEsc(stepTxt) + '</span>';
       html += '</div>';
     }
     html += '</div></section>';
@@ -5640,18 +5756,129 @@ function buildStepsTab(steps) {
   return html;
 }
 
+function buildRecipeIngrLinesForEdamam(r) {
+  var out = [];
+  var ing = r.ing || [];
+  var iq = r.ingQty || {};
+  for (var i = 0; i < ing.length; i++) {
+    var name = ing[i];
+    var q = iq[name] ? String(iq[name]).trim() : '';
+    out.push(q ? (q + ' ' + name) : String(name));
+  }
+  return out;
+}
+
+function updateNutTabDomAfterEdamam(rid, apiBody, useFallback) {
+  if (!curRecipe || curRecipe.id !== rid) return;
+  var rm = el('rm-bg');
+  if (!rm || rm.style.display !== 'flex') return;
+  var badge = el('rm-nut-badge');
+  var calEl = el('rm-nut-cal');
+  var pEl = el('rm-nut-p');
+  var cEl = el('rm-nut-c');
+  var fEl = el('rm-nut-f');
+  var pctLbl = el('rm-nut-pct-lbl');
+  var pctFill = el('rm-nut-pct-fill');
+  if (!badge || !calEl || !pEl || !cEl || !fEl) return;
+  var rr = findRecipe(rid);
+  var calT = getCalTarget();
+  if (useFallback || !apiBody || !apiBody.totalNutrients) {
+    badge.textContent = 'Estimate';
+    badge.className = 'nut-verify-badge nut-verify-badge--fallback';
+    if (rr) {
+      calEl.textContent = rr.cal;
+      pEl.textContent = rr.p;
+      cEl.textContent = rr.c;
+      fEl.textContent = rr.f;
+      var pf = Math.min(100, Math.round((rr.cal / calT) * 100));
+      if (pctLbl) pctLbl.textContent = pf + '%';
+      if (pctFill) pctFill.style.width = pf + '%';
+    }
+    return;
+  }
+  var tn = apiBody.totalNutrients;
+  badge.textContent = 'Verified';
+  badge.className = 'nut-verify-badge nut-verify-badge--ok';
+  calEl.textContent = tn.calories != null ? tn.calories : (rr ? rr.cal : '—');
+  pEl.textContent = tn.protein != null ? tn.protein : (rr ? rr.p : '—');
+  cEl.textContent = tn.carbs != null ? tn.carbs : (rr ? rr.c : '—');
+  fEl.textContent = tn.fat != null ? tn.fat : (rr ? rr.f : '—');
+  var cals = tn.calories != null ? tn.calories : (rr ? rr.cal : 0);
+  var pf2 = calT > 0 ? Math.min(100, Math.round((Number(cals) / calT) * 100)) : 0;
+  if (pctLbl) pctLbl.textContent = pf2 + '%';
+  if (pctFill) pctFill.style.width = pf2 + '%';
+}
+
+function scheduleEdamamNutritionVerify(r) {
+  if (!r || !r.id) return;
+  var rid = r.id;
+  if (Object.prototype.hasOwnProperty.call(edamamNutritionCache, rid)) {
+    var cached = edamamNutritionCache[rid];
+    updateNutTabDomAfterEdamam(rid, cached === false ? null : cached, cached === false);
+    return;
+  }
+  if (edamamNutritionPending[rid]) return;
+  var ingr = buildRecipeIngrLinesForEdamam(r);
+  if (!ingr.length) {
+    edamamNutritionCache[rid] = false;
+    updateNutTabDomAfterEdamam(rid, null, true);
+    return;
+  }
+  edamamNutritionPending[rid] = true;
+  fetch(NUTRITION_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: r.name || 'Recipe', ingr: ingr })
+  })
+    .then(function(resp) {
+      return resp.text().then(function(text) {
+        var j = null;
+        try {
+          j = text ? JSON.parse(text) : null;
+        } catch (e) {
+          j = { error: 'bad_json' };
+        }
+        return { ok: resp.ok, j: j };
+      });
+    })
+    .then(function(x) {
+      edamamNutritionPending[rid] = false;
+      if (!x.ok || !x.j || x.j.error || !x.j.totalNutrients) {
+        delete edamamNutritionCache[rid];
+        updateNutTabDomAfterEdamam(rid, null, true);
+        return;
+      }
+      var tn = x.j.totalNutrients;
+      if (tn.calories == null && tn.protein == null && tn.carbs == null && tn.fat == null) {
+        delete edamamNutritionCache[rid];
+        updateNutTabDomAfterEdamam(rid, null, true);
+        return;
+      }
+      edamamNutritionCache[rid] = x.j;
+      updateNutTabDomAfterEdamam(rid, x.j, false);
+    })
+    .catch(function() {
+      edamamNutritionPending[rid] = false;
+      delete edamamNutritionCache[rid];
+      updateNutTabDomAfterEdamam(rid, null, true);
+    });
+}
+
 function buildNutTab(r) {
-  var calT   = getCalTarget();
-  var pctCal = Math.min(100, Math.round((r.cal / calT) * 100));
-  var html   = '<div class="stat-grid" style="margin-bottom:14px">';
-  html += '<div class="stat-c"><div class="stat-lbl">Calories</div><div class="stat-val">' + r.cal + '<span class="stat-unit"> kcal</span></div></div>';
-  html += '<div class="stat-c"><div class="stat-lbl">Protein</div><div class="stat-val">'  + r.p   + '<span class="stat-unit"> g</span></div></div>';
-  html += '<div class="stat-c"><div class="stat-lbl">Carbs</div><div class="stat-val">'    + r.c   + '<span class="stat-unit"> g</span></div></div>';
-  html += '<div class="stat-c"><div class="stat-lbl">Fat</div><div class="stat-val">'      + r.f   + '<span class="stat-unit"> g</span></div></div>';
+  var calT = getCalTarget();
+  var html = '<div class="nut-macros-head" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap">';
+  html += '<span style="font-size:11px;font-weight:800;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em">Macros</span>';
+  html += '<span id="rm-nut-badge" class="nut-verify-badge nut-verify-badge--pending">Verifying…</span>';
+  html += '</div>';
+  html += '<div class="stat-grid" style="margin-bottom:14px">';
+  html += '<div class="stat-c"><div class="stat-lbl">Calories</div><div class="stat-val"><span id="rm-nut-cal">…</span><span class="stat-unit"> kcal</span></div></div>';
+  html += '<div class="stat-c"><div class="stat-lbl">Protein</div><div class="stat-val"><span id="rm-nut-p">…</span><span class="stat-unit"> g</span></div></div>';
+  html += '<div class="stat-c"><div class="stat-lbl">Carbs</div><div class="stat-val"><span id="rm-nut-c">…</span><span class="stat-unit"> g</span></div></div>';
+  html += '<div class="stat-c"><div class="stat-lbl">Fat</div><div class="stat-val"><span id="rm-nut-f">…</span><span class="stat-unit"> g</span></div></div>';
   html += '</div>';
   html += '<div style="background:var(--arc-surface-2);border-radius:14px;padding:14px;margin-bottom:12px">';
-  html += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--arc-subtext);margin-bottom:8px"><span>% of daily target (' + calT + ' cal)</span><span>' + pctCal + '%</span></div>';
-  html += '<div style="height:6px;background:rgba(31,23,16,0.06);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + pctCal + '%;background:var(--arc-primary);border-radius:3px"></div></div>';
+  html += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--arc-subtext);margin-bottom:8px"><span>% of daily target (' + calT + ' cal)</span><span id="rm-nut-pct-lbl">Verifying…</span></div>';
+  html += '<div style="height:6px;background:rgba(31,23,16,0.06);border-radius:3px;overflow:hidden"><div id="rm-nut-pct-fill" style="height:100%;width:0%;background:var(--arc-primary);border-radius:3px"></div></div>';
   html += '</div>';
   html += '<div style="background:var(--arc-soft-primary);border-radius:14px;padding:14px;font-size:13px;color:var(--arc-primary-dark)">';
   html += 'Estimated cost: <strong>' + fmtPrice(r.price) + '</strong> per serving based on your region.';
@@ -5758,9 +5985,12 @@ function openRM(id) {
   el('tab-steps').innerHTML = stepCache[id]
     ? buildStepsTab(stepCache[id])
     : '<div style="text-align:center;padding:32px;color:#9ca3af"><div class="ai-spinner" style="margin:0 auto 14px"></div><div style="font-size:14px">Generating instructions...</div></div>';
+  if (stepCache[id]) wireRecipeStepChecklist('tab-steps');
   el('tab-nut').innerHTML   = buildNutTab(curRecipe);
+  scheduleEdamamNutritionVerify(curRecipe);
 
   renderRMServings(curRecipe);
+  renderRMPortionToggle(curRecipe);
 
   // Wire swap buttons
   var swapBtns = el('tab-ing').querySelectorAll('.swap-btn');
@@ -5785,6 +6015,7 @@ function syncTodayPeekStepsIfOpen(id, steps) {
   var pb = el('tm-peek-bg');
   if (!pb || !pb.classList.contains('is-open') || !todayPeekContext || todayPeekContext.rid !== id) return;
   el('tm-peek-steps').innerHTML = buildStepsTab(steps);
+  wireRecipeStepChecklist('tm-peek-steps');
 }
 
 function fetchSteps(id) {
@@ -5796,6 +6027,7 @@ function fetchSteps(id) {
     stepCache[id] = normalizeRecipeSteps(r.steps);
     if (curRecipe && curRecipe.id === id && el('rm-bg').style.display === 'flex') {
       el('tab-steps').innerHTML = buildStepsTab(stepCache[id]);
+      wireRecipeStepChecklist('tab-steps');
     }
     syncTodayPeekStepsIfOpen(id, stepCache[id]);
     return;
@@ -5813,17 +6045,17 @@ function fetchSteps(id) {
   var userMsg = 'Recipe: "' + r.name + '". ';
   userMsg    += 'Ingredients: ' + ingList + '. ';
   userMsg    += 'Skill: ' + (UP.skill || 'Home cook') + '. ';
-  userMsg    += 'Return 5-8 cooking steps as a JSON array of objects. Each object MUST be exactly: {"phase":"Prep"|"Cook"|"Serve","instruction":"one clear sentence."}. ';
+  userMsg    += 'Return 5-8 cooking steps as a JSON array of objects. Each object MUST be exactly: {"phase":"Prep"|"Cook"|"Serve","text":"one clear sentence."}. ';
   userMsg    += 'Use phase "Prep" for mise en place, washing, chopping, marinating, measuring, and preheating. ';
   userMsg    += 'Use "Cook" for heat, combining, simmering, baking, and doneness. ';
   userMsg    += 'Use "Serve" for resting, plating, garnishing, and storing leftovers. ';
-  userMsg    += 'Example: [{"phase":"Prep","instruction":"Dice the onion and mince the garlic."},{"phase":"Cook","instruction":"Sauté the onion in oil over medium heat until translucent, about 4 minutes."},{"phase":"Serve","instruction":"Divide between bowls and top with fresh herbs."}]';
+  userMsg    += 'Example: [{"phase":"Prep","text":"Dice the onion and mince the garlic."},{"phase":"Cook","text":"Sauté the onion in oil over medium heat until translucent, about 4 minutes."},{"phase":"Serve","text":"Divide between bowls and top with fresh herbs."}]';
 
   callAIWithRetry(sysMsg, userMsg, 1200, function(err, raw) {
     var steps = normalizeRecipeSteps([
-      { phase: 'Prep', instruction: 'Gather and prepare all listed ingredients.' },
-      { phase: 'Cook', instruction: 'Cook using a standard method appropriate for this dish until done in the center.' },
-      { phase: 'Serve', instruction: 'Season to taste and serve immediately.' }
+      { phase: 'Prep', text: 'Gather and prepare all listed ingredients.' },
+      { phase: 'Cook', text: 'Cook using a standard method appropriate for this dish until done in the center.' },
+      { phase: 'Serve', text: 'Season to taste and serve immediately.' }
     ]);
     if (!err && raw) {
       var parsed = parseJSON(raw);
@@ -5832,6 +6064,7 @@ function fetchSteps(id) {
     stepCache[id] = steps;
     if (curRecipe && curRecipe.id === id && el('rm-bg').style.display === 'flex') {
       el('tab-steps').innerHTML = buildStepsTab(steps);
+      wireRecipeStepChecklist('tab-steps');
     }
     syncTodayPeekStepsIfOpen(id, steps);
   }, 2);
@@ -5919,6 +6152,8 @@ function applySwap(newName, newQty) {
     }
   }
   stepCache[swapRid] = null;
+  delete edamamNutritionCache[swapRid];
+  delete edamamNutritionPending[swapRid];
   closeMotion('swap-bg');
   showToast('Ingredient swapped ✓');
   if (curRecipe && curRecipe.id === swapRid) openRM(swapRid);
@@ -6265,7 +6500,7 @@ function refreshSingleSlotMeal() {
   var skillNote = {'Beginner': 'simple ingredients', 'Home cook': 'standard cooking', 'Confident chef': 'any technique'}[UP.skill] || 'standard';
 
   var sysMsg = 'You are an expert nutritionist and chef. Respond with ONLY a valid JSON array containing exactly ONE recipe object. No markdown. Start with [ and end with ]. ' +
-    'The object MUST include: name, cal, p, c, f, time, difficulty, price, cat, tags (array), ing (array), ingQty (object), steps (array of 5-8 objects like {"phase":"Prep"|"Cook"|"Serve","instruction":"string"}). ' +
+    'The object MUST include: name, cal, p, c, f, time, difficulty, price, cat, tags (array), ing (array), ingQty (object), steps (array of 5-8 objects like {"phase":"Prep"|"Cook"|"Serve","text":"string"}). ' +
     'CRITICAL: The macros (cal, p, c, f) MUST mathematically align with the ingredients provided. 1g of protein = 4 cal, 1g carb = 4 cal, 1g fat = 9 cal. Do not hallucinate macros that contradict the ingredient list. ' +
     'Honor all dietary compliance. cat MUST be exactly "' + slotCat + '".';
 
@@ -7316,6 +7551,7 @@ function buildRealisticPurchaseLine(canonicalKey, displayName, qtys, uses) {
 // ── Local Grocery Pricing (home area from onboarding; passive shelf refinement)
 var ARC_API_BASE = 'https://nutriai-backend-44mg.onrender.com';
 var GROCERY_LIVE_PRICE_URL = ARC_API_BASE + '/api/grocery/prices';
+var NUTRITION_API_URL = ARC_API_BASE + '/api/nutrition';
 
 var krogerPriceCache = {};
 var krogerPendingKeys = {};
@@ -7474,6 +7710,27 @@ function enrichShoppingWithKroger(lines) {
     krogerState.message = '';
     renderGroceryPricingBar();
   });
+}
+
+/** Stub: lines for a universal / local handoff (unchecked, not at home). */
+function prepareUniversalCart() {
+  var lines = lastShopLines;
+  universalCartData = [];
+  if (!lines || !lines.length) {
+    console.log('universalCartData', universalCartData);
+    showToast('Nothing to shop yet.');
+    return;
+  }
+  for (var i = 0; i < lines.length; i++) {
+    var row = lines[i];
+    if (checked[row.key] || shopPantry[row.key]) continue;
+    var p = (row.purchase || '').trim();
+    var t = (row.title || '').trim();
+    var s = (p && t) ? (p + ' ' + t).replace(/\s+/g, ' ').trim() : (p || t);
+    if (s) universalCartData.push(s);
+  }
+  console.log('universalCartData', universalCartData);
+  showToast('Local store handoff coming soon');
 }
 
 /** Stub: build retailer cart payload from the current shopping list (unchecked, not marked at home). */
@@ -7647,8 +7904,11 @@ function renderShopping() {
   if (exportWrap) {
     exportWrap.style.display = 'block';
     exportWrap.setAttribute('aria-hidden', 'false');
-    exportWrap.innerHTML = '<button type="button" class="btn-shop-export" id="shop-export-cart-btn">Send to Grocery Cart</button>';
+    exportWrap.innerHTML = '<button type="button" class="btn-shop-local" id="shop-local-store-btn">Shop at Local Store</button>' +
+      '<button type="button" class="btn-shop-export-secondary" id="shop-export-cart-btn">Send to Grocery Cart</button>';
+    var localB = el('shop-local-store-btn');
     var exb = el('shop-export-cart-btn');
+    if (localB) localB.onclick = function() { prepareUniversalCart(); };
     if (exb) exb.onclick = function() { exportToRetailerCart(); };
   }
 
@@ -8185,6 +8445,21 @@ document.addEventListener('DOMContentLoaded', function() {
   var dec = el('rm-srv-dec'), inc = el('rm-srv-inc');
   if (dec) dec.addEventListener('click', function() { bumpRMServings(-1); });
   if (inc) inc.addEventListener('click', function() { bumpRMServings(1); });
+
+  var portionBar = el('rm-portion-bar');
+  if (portionBar && !portionBar._portionBound) {
+    portionBar._portionBound = true;
+    portionBar.addEventListener('click', function(e) {
+      var b = e.target.closest('.rm-portion-btn');
+      if (!b || !curRecipe) return;
+      var p = b.getAttribute('data-portion');
+      if (p !== 'one' && p !== 'batch') return;
+      UP.rmPortionView = p === 'batch' ? 'batch' : 'one';
+      saveSessionState();
+      renderRMPortionToggle(curRecipe);
+      refreshScaledIngredientsUI();
+    });
+  }
 
   // Swap modal
   el('swap-cancel').addEventListener('click', function() { closeMotion('swap-bg'); });
