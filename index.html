@@ -1188,7 +1188,7 @@ button:active{transform:scale(var(--press-scale))}
     <div class="grocery-live-bar" id="grocery-live-bar" style="display:none">
       <div class="kb-lead"><span class="grocery-live-dot"></span><div><div class="kb-title" id="kb-title">Local Grocery Pricing</div><div class="kb-sub" id="kb-sub"></div></div></div>
     </div>
-    <p class="shop-intro" id="shop-intro" style="display:none">Auto-built from your week. Buy what you need.</p>
+    <p class="shop-intro" id="shop-intro" style="display:none">Items are grouped like a grocery run: we bundle recipe math into bags, cartons, pounds, and other sizes you actually buy.</p>
     <p style="font-size:12px;color:#9ca3af;font-style:italic;margin-bottom:8px;line-height:1.5;display:none" id="price-disc">* Prices are ballpark retail units for your region — real receipts will vary by brand and store.</p>
     <div id="shop-body"></div>
     <div id="shop-export-wrap" class="shop-export-wrap" style="display:none" aria-hidden="true"></div>
@@ -3851,7 +3851,6 @@ function renderToday() {
   var stEl = el('today-meal-status');
   var actEl = el('today-meal-actions');
   var j = heroSlot ? getSlotJournal(day, heroSlot) : null;
-  var hasWeekPlan = hasBuiltWeek();
 
   if (meal) {
     var wrap = '<div class="today-name">' + meal.name + '</div>';
@@ -3859,8 +3858,6 @@ function renderToday() {
     wrap += '<div style="font-size:11px;color:var(--arc-subtext);margin-top:10px;font-weight:500;letter-spacing:.02em">Planned on your menu · not counted until you log it</div>';
     el('today-meal-wrap').innerHTML = wrap;
     el('today-cook-btn').disabled = false;
-    el('today-cook-btn').style.display = '';
-    el('today-cook-btn').textContent = 'View recipe';
 
     if (stEl && actEl && heroSlot) {
       var label = 'Planned';
@@ -3885,19 +3882,18 @@ function renderToday() {
       var ds = shopDataAttr(heroSlot);
       var dd = shopDataAttr(day);
       var act = '';
-      if (!j || j.status === 'skipped' || j.status === 'replaced') {
-        act += '<button type="button" class="today-mac-btn today-mac-btn--primary" data-today-act="cook" data-day="' + dd + '" data-slot="' + ds + '">Cook this meal</button>';
-      } else if (j.status === 'logged') {
-        act += '<button type="button" class="today-mac-btn today-mac-btn--primary" data-today-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo status</button>';
+      if (!j) {
+        act += '<button type="button" class="today-mac-btn" data-today-act="log" data-day="' + dd + '" data-slot="' + ds + '">Log meal</button>';
+        act += '<button type="button" class="today-mac-btn secondary" data-today-act="skip" data-day="' + dd + '" data-slot="' + ds + '">Skip</button>';
+        act += '<button type="button" class="today-mac-btn secondary" data-today-act="replace" data-day="' + dd + '" data-slot="' + ds + '">Replace</button>';
+      } else if (j.status === 'logged' || j.status === 'skipped' || j.status === 'replaced') {
+        act += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + dd + '" data-slot="' + ds + '">Undo</button>';
       }
       actEl.innerHTML = act;
     }
   } else {
-    el('today-meal-wrap').innerHTML = hasWeekPlan
-      ? '<div class="today-empty">No meal planned for this slot yet.</div>'
-      : '<div class="today-empty">Build your week once and Arc will keep Today ready with your next meal.</div>';
+    el('today-meal-wrap').innerHTML = '<div class="today-empty">No meal planned for this slot yet.</div>';
     el('today-cook-btn').disabled = true;
-    el('today-cook-btn').style.display = hasWeekPlan ? '' : 'none';
     if (stEl && actEl && heroSlot) {
       var labelE = 'Planned';
       var clsE = 'today-status today-status--planned';
@@ -3920,12 +3916,12 @@ function renderToday() {
       var dsE = shopDataAttr(heroSlot);
       var ddE = shopDataAttr(day);
       var actE = '';
-      if (!hasWeekPlan) {
-        actE += '<button type="button" class="today-mac-btn today-mac-btn--primary" data-today-act="buildweek" data-day="' + ddE + '" data-slot="' + dsE + '">Build my week</button>';
-      } else if (!j) {
-        actE += '<button type="button" class="today-mac-btn today-mac-btn--primary" data-today-act="assign" data-day="' + ddE + '" data-slot="' + dsE + '">Plan this meal</button>';
+      if (!j) {
+        actE += '<button type="button" class="today-mac-btn" data-today-act="assign" data-day="' + ddE + '" data-slot="' + dsE + '">Plan</button>';
+        actE += '<button type="button" class="today-mac-btn secondary" data-today-act="skip" data-day="' + ddE + '" data-slot="' + dsE + '">Skip</button>';
+        actE += '<button type="button" class="today-mac-btn secondary" data-today-act="replace" data-day="' + ddE + '" data-slot="' + dsE + '">Replace</button>';
       } else if (j.status === 'logged' || j.status === 'skipped' || j.status === 'replaced') {
-        actE += '<button type="button" class="today-mac-btn today-mac-btn--primary" data-today-act="buildweek" data-day="' + ddE + '" data-slot="' + dsE + '">Build my week</button>';
+        actE += '<button type="button" class="today-mac-btn secondary" data-today-act="undo" data-day="' + ddE + '" data-slot="' + dsE + '">Undo</button>';
       }
       actEl.innerHTML = actE;
     } else {
@@ -3962,11 +3958,7 @@ function renderToday() {
     }
   }
 
-  if (!hasWeekPlan) {
-    el('today-suggestion').textContent = 'Start with a single step: build your week, then Today stays ready.';
-  } else {
-    el('today-suggestion').textContent = getDailyAdaptiveCoachMessage(day, heroSlot, slots, consumed, planned, calTarget, macros.protein, behaviorState, engineOut);
-  }
+  el('today-suggestion').textContent = getDailyAdaptiveCoachMessage(day, heroSlot, slots, consumed, planned, calTarget, macros.protein, behaviorState, engineOut);
 
   el('today-cook-btn').dataset.rid = meal ? meal.id : '';
   var swapBtn = el('today-swap-btn');
@@ -3975,16 +3967,12 @@ function renderToday() {
     if (!meal && firstSlotWithPlannedRecipe(day, slots)) swapSlot = firstSlotWithPlannedRecipe(day, slots);
     swapBtn.dataset.day = day;
     swapBtn.dataset.slot = swapSlot || '';
-    var canPickRecipe = hasWeekPlan && recipes && recipes.length > 0;
+    var canPickRecipe = recipes && recipes.length > 0;
     swapBtn.disabled = !slots.length || !canPickRecipe;
     if (!slots.length) swapBtn.title = 'Add meals per day in Settings, then plan your week.';
     else if (!canPickRecipe) swapBtn.title = 'Build your week first — then you can swap today’s plan.';
     else swapBtn.title = 'Change the planned recipe for ' + (swapSlot || 'this slot');
   }
-  var quickActions = el('today-actions');
-  if (quickActions) quickActions.style.display = 'none';
-  var savedLink = el('today-saved-btn');
-  if (savedLink) savedLink.style.display = 'none';
 
   var tl = el('today-timeline');
   if (tl) {
@@ -4023,21 +4011,6 @@ function renderToday() {
 }
 
 function applyTodayMealAction(act, day, slot) {
-  if (act === 'buildweek') {
-    tab('plan');
-    openBuildWeek(hasBuiltWeek() ? 'rebuild' : 'first');
-    return;
-  }
-  if (act === 'cook') {
-    if (!day || !slot) return;
-    var ridCook = mealPlan[day] && mealPlan[day][slot] ? mealPlan[day][slot] : null;
-    if (!ridCook) {
-      showToast('Nothing planned for this slot.');
-      return;
-    }
-    openRM(ridCook);
-    return;
-  }
   if (!day || !slot) return;
   if (act === 'log') {
     if (!mealPlan[day] || !mealPlan[day][slot]) {
@@ -4391,6 +4364,7 @@ function valStep(n) {
   }
   if (n === 2) {
     if (!gChip('chip-goal'))     { setErr('Please select a goal');           pulse('chip-goal');     return false; }
+    if (!gChip('chip-activity')) { setErr('Please select activity level');   pulse('chip-activity'); return false; }
     if (!gChip('chip-meals'))    { setErr('Please select meals per day');    pulse('chip-meals');    return false; }
   }
   if (n === 3) {
@@ -4465,8 +4439,10 @@ function finishOB() {
 
   applyProfileToUIBar();
 
-  // Identity is done. Land on Today and keep one clear build-week action there.
-  tab('today');
+  // New flow: identity is done. Take the user straight to the planner where
+  // the Build-Your-Week wizard greets them with the first weekly intent question.
+  tab('plan');
+  setTimeout(function() { openBuildWeek('first'); }, 80);
 }
 
 // ── Generating screen: ambient ring + phased copy (tied to real milestones) ──
@@ -5188,7 +5164,7 @@ function generateWeeklyPlan(intent) {
       setTimeout(function() {
         if (myGen !== recipeGenId) return;
         saveUserProfile();
-        tab('today');
+        tab('plan'); // Land on the new week, not Today
         scheduleWeeklyRecapAutoCheck();
         stopGenLoadingUI();
       }, 420);
@@ -5218,7 +5194,7 @@ function renderBuiltForHeader() {
   emptyCard.style.display  = 'none';
   headerCard.style.display = 'flex';
   listLbl.style.display    = 'block';
-  if (adaptCard) adaptCard.style.display = 'none';
+  if (adaptCard) adaptCard.style.display = 'block';
 
   var wp = UP.weeklyPlan;
   var styleMeta = BW_STYLE_META[wp.style] || BW_STYLE_META.fresh;
