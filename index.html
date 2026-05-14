@@ -166,6 +166,65 @@ body{
 .feat-title{font-size:16px;font-weight:600;color:var(--arc-text);margin-bottom:4px;letter-spacing:-.01em}
 .feat-sub{font-size:14px;color:var(--arc-subtext);line-height:1.5}
 
+/* FIRST-USE INTRO (recap-inspired) */
+.intro-welcome{position:relative;flex:1;display:flex;flex-direction:column;padding:20px 20px 24px;overflow:hidden;background:#151210;color:rgba(255,255,255,.92)}
+.intro-ambience{position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(125% 85% at 50% -5%,rgba(227,90,54,.34) 0%,transparent 56%),
+  radial-gradient(68% 52% at 100% 16%,rgba(244,160,130,.18) 0%,transparent 58%),
+  radial-gradient(74% 56% at 2% 96%,rgba(255,255,255,.07) 0%,transparent 60%),
+  linear-gradient(165deg,#141210 0%,#1f1b18 52%,#151311 100%)}
+.intro-skip{position:relative;z-index:2;align-self:flex-end;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.72);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:10px 14px;border-radius:999px;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard)}
+.intro-skip:hover{background:rgba(255,255,255,.13);color:#fff}
+.intro-deck{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;min-height:0;padding-top:14px}
+.intro-progress{height:3px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;margin-bottom:16px}
+.intro-progress>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--arc-primary),#f4a082);border-radius:3px;transition:width 500ms var(--ease-standard)}
+.intro-chip{display:inline-flex;align-items:center;align-self:flex-start;padding:7px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.15);font-size:11px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:14px;background:rgba(255,255,255,.03)}
+.intro-stage-wrap{flex:1;display:flex;min-height:0;cursor:pointer}
+.intro-stage{flex:1;display:flex;flex-direction:column;opacity:1;transform:translateY(0);transition:opacity 260ms var(--ease-standard),transform 260ms var(--ease-standard)}
+.intro-stage.is-exiting{opacity:0;transform:translateY(10px)}
+.intro-title{font-family:Georgia,serif;font-size:31px;line-height:1.12;letter-spacing:-.03em;color:#fff;margin-bottom:10px;max-width:10.8em}
+.intro-sub{font-size:14px;line-height:1.55;color:rgba(255,255,255,.63);max-width:22em;margin-bottom:18px}
+.intro-phone{margin-top:auto;border-radius:24px;padding:14px;background:linear-gradient(165deg,rgba(255,255,255,.16),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 46px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
+.intro-phone-screen{border-radius:18px;padding:14px 14px 12px;background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(246,239,231,.9));color:var(--arc-text);box-shadow:inset 0 0 0 1px rgba(31,23,16,.06)}
+.intro-mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.intro-mock-title{font-size:12px;font-weight:700;color:var(--arc-subtext);letter-spacing:.06em;text-transform:uppercase}
+.intro-mock-badge{font-size:11px;font-weight:600;color:var(--arc-primary-dark);background:var(--arc-soft-primary);border-radius:999px;padding:5px 9px}
+.intro-list{display:flex;flex-direction:column;gap:8px}
+.intro-list-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;border-radius:12px;background:#fff;box-shadow:var(--shadow-xs)}
+.intro-list-row strong{font-size:13px;color:var(--arc-text)}
+.intro-list-row span{font-size:11px;color:var(--arc-subtext)}
+.intro-list-dot{width:8px;height:8px;border-radius:50%;background:var(--arc-primary)}
+.intro-today-stat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.intro-pill{padding:10px 11px;border-radius:12px;background:rgba(227,90,54,.09)}
+.intro-pill-lbl{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--arc-subtext);margin-bottom:4px}
+.intro-pill-val{font-size:13px;font-weight:700;color:var(--arc-primary-dark)}
+.intro-primary-card{padding:12px;border-radius:14px;background:#fff;box-shadow:var(--shadow-sm)}
+.intro-primary-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.intro-primary-head strong{font-size:14px;letter-spacing:-.01em}
+.intro-progress-line{height:7px;border-radius:99px;background:#f2ece4;overflow:hidden;margin-top:10px}
+.intro-progress-line>span{display:block;height:100%;width:72%;border-radius:99px;background:linear-gradient(90deg,var(--arc-primary),#f4a082)}
+.intro-swap-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:12px;background:#fff;border:1px solid rgba(31,23,16,.08);margin-bottom:8px}
+.intro-swap-arrow{font-size:14px;color:var(--arc-subtext)}
+.intro-swap-chip{font-size:11px;font-weight:600;padding:5px 8px;border-radius:999px;background:rgba(227,90,54,.12);color:var(--arc-primary-dark)}
+.intro-recap-card{border-radius:14px;padding:13px;background:linear-gradient(165deg,#1d1916,#23201c);color:rgba(255,255,255,.9);box-shadow:0 12px 26px rgba(0,0,0,.28)}
+.intro-recap-k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:8px}
+.intro-recap-num{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1;color:#fff}
+.intro-recap-copy{font-size:12px;line-height:1.5;color:rgba(255,255,255,.66);margin-top:8px}
+.intro-bottom{padding-top:14px}
+.intro-dots{display:flex;justify-content:center;gap:7px;margin-bottom:12px}
+.intro-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.24);transition:transform 220ms var(--ease-standard),background 220ms var(--ease-standard)}
+.intro-dot.on{background:rgba(255,255,255,.86);transform:scale(1.15)}
+.intro-controls{display:flex;align-items:center;gap:10px}
+.intro-back{width:88px;padding:13px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);color:rgba(255,255,255,.78);font-size:14px;font-weight:600;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),opacity var(--motion-fast) var(--ease-standard)}
+.intro-back[disabled]{opacity:.4;cursor:default}
+.intro-next{flex:1;padding:14px 18px;border-radius:16px;border:none;background:var(--arc-primary);color:#fff;font-size:15px;font-weight:650;cursor:pointer;box-shadow:0 12px 34px rgba(227,90,54,.38);transition:transform 180ms var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.intro-next:hover{background:var(--arc-primary-dark)}
+.intro-next:active{transform:scale(var(--press-scale))}
+.intro-foot{font-size:11px;text-align:center;color:rgba(255,255,255,.38);margin-top:10px;line-height:1.45}
+@media (prefers-reduced-motion:reduce){
+  .intro-progress>span,.intro-stage,.intro-dot,.intro-back,.intro-next{transition:none}
+}
+
 /* GENERATING — calm, spacious progress (no %, no frantic spinner) */
 .s-gen{background:var(--arc-primary);align-items:center;justify-content:center;text-align:center;padding:48px 28px 40px}
 .gen-ring-wrap{width:118px;height:118px;margin:0 auto 32px;position:relative;flex-shrink:0}
@@ -906,19 +965,24 @@ button:active{transform:scale(var(--press-scale))}
 
 <!-- WELCOME -->
 <div class="screen" id="s-welcome">
-  <div class="welcome-top">
-    <div class="wl-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div>
-    <div class="wl-title">Eat smarter,<br>feel better</div>
-    <div class="wl-sub">Adaptive nutrition planning tuned to your goals, body, and budget</div>
-  </div>
-  <div class="welcome-bottom">
-    <div class="feat-list">
-      <div class="feat"><div class="feat-ic">✦</div><div><div class="feat-title">Meals shaped for you</div><div class="feat-sub">Arc Intelligence composes your week — not a static recipe bank</div></div></div>
-      <div class="feat"><div class="feat-ic">📅</div><div><div class="feat-title">Smart weekly planning</div><div class="feat-sub">Your plan stays fluid when life shifts your goals</div></div></div>
-      <div class="feat"><div class="feat-ic">🍳</div><div><div class="feat-title">Full cook view &amp; swaps</div><div class="feat-sub">Step-by-step instructions, swap any ingredient you dislike</div></div></div>
-      <div class="feat"><div class="feat-ic">🛒</div><div><div class="feat-title">Smart shopping lists</div><div class="feat-sub">Accurate quantities with local pricing for your region</div></div></div>
+  <div class="intro-welcome">
+    <div class="intro-ambience" aria-hidden="true"></div>
+    <button type="button" class="intro-skip" id="intro-skip-btn">Skip</button>
+    <div class="intro-deck">
+      <div class="intro-progress" aria-hidden="true"><span id="intro-progress-fill"></span></div>
+      <div class="intro-chip" id="intro-chip">Arc first look</div>
+      <div class="intro-stage-wrap" id="intro-stage-wrap" aria-live="polite">
+        <div class="intro-stage" id="intro-stage"></div>
+      </div>
+      <div class="intro-bottom">
+        <div class="intro-dots" id="intro-dots" role="tablist" aria-label="Intro progress"></div>
+        <div class="intro-controls">
+          <button type="button" class="intro-back" id="intro-back-btn">Back</button>
+          <button type="button" class="intro-next" id="intro-next-btn">Continue</button>
+        </div>
+        <p class="intro-foot">Arc meets you where your week actually happens.</p>
+      </div>
     </div>
-    <button class="btn-green" id="get-started-btn" style="border-radius:16px;padding:16px;font-size:16px">Get Started →</button>
   </div>
 </div>
 
@@ -7912,6 +7976,174 @@ function applySettingsProfile() {
   showToast('Profile saved ✓');
 }
 
+// ── First-use intro (before onboarding) ────────────────────────
+var introState = {
+  idx: 0,
+  leaving: false,
+  touchStartX: null,
+  touchStartY: null
+};
+
+var INTRO_SLIDES = [
+  {
+    kicker: 'Arc creates your week',
+    title: 'A full meal plan\nfor the week',
+    sub: 'Arc builds a clear week map around your goals, preferences, and real schedule.',
+    visual: 'week'
+  },
+  {
+    kicker: 'Daily clarity',
+    title: 'One next action,\neach day',
+    sub: 'Open Today and Arc shows your next meal, your momentum, and exactly what to do now.',
+    visual: 'today'
+  },
+  {
+    kicker: 'Life shifts, plan adapts',
+    title: 'Swap in seconds\nwhen life changes',
+    sub: 'Late meeting? Missing ingredient? Arc reshapes the plan without starting from zero.',
+    visual: 'adapt'
+  },
+  {
+    kicker: 'Lighter planning',
+    title: 'Less decision fatigue,\nmore calm',
+    sub: 'Gentle recap-style guidance keeps you moving without overthinking every meal.',
+    visual: 'recap'
+  }
+];
+
+function startOnboardingFromIntro() {
+  var welcome = el('s-welcome');
+  var onboarding = el('ob');
+  if (welcome) welcome.classList.remove('active');
+  if (onboarding) onboarding.classList.add('active');
+}
+
+function buildIntroVisual(kind) {
+  if (kind === 'week') {
+    return '<div class="intro-phone"><div class="intro-phone-screen">' +
+      '<div class="intro-mock-head"><div class="intro-mock-title">Weekly plan</div><div class="intro-mock-badge">Balanced</div></div>' +
+      '<div class="intro-list">' +
+      '<div class="intro-list-row"><div><strong>Mon - Salmon bowl</strong><span>Lunch</span></div><div class="intro-list-dot"></div></div>' +
+      '<div class="intro-list-row"><div><strong>Tue - Greek chicken wraps</strong><span>Dinner</span></div><div class="intro-list-dot"></div></div>' +
+      '<div class="intro-list-row"><div><strong>Wed - Yogurt parfait</strong><span>Breakfast</span></div><div class="intro-list-dot"></div></div>' +
+      '<div class="intro-list-row"><div><strong>Thu - Tofu stir fry</strong><span>Dinner</span></div><div class="intro-list-dot"></div></div>' +
+      '</div></div></div>';
+  }
+  if (kind === 'today') {
+    return '<div class="intro-phone"><div class="intro-phone-screen">' +
+      '<div class="intro-mock-head"><div class="intro-mock-title">Today</div><div class="intro-mock-badge">3/4 done</div></div>' +
+      '<div class="intro-today-stat">' +
+      '<div class="intro-pill"><div class="intro-pill-lbl">Protein</div><div class="intro-pill-val">86g of 120g</div></div>' +
+      '<div class="intro-pill"><div class="intro-pill-lbl">Hydration</div><div class="intro-pill-val">5 cups</div></div>' +
+      '</div>' +
+      '<div class="intro-primary-card"><div class="intro-primary-head"><strong>Next meal: 7:00 PM</strong><span class="intro-swap-chip">Ready</span></div>' +
+      '<div style="font-size:13px;color:var(--arc-subtext)">Turkey chili + avocado toast</div><div class="intro-progress-line"><span></span></div></div>' +
+      '</div></div>';
+  }
+  if (kind === 'adapt') {
+    return '<div class="intro-phone"><div class="intro-phone-screen">' +
+      '<div class="intro-mock-head"><div class="intro-mock-title">Flexible swap</div><div class="intro-mock-badge">2 min</div></div>' +
+      '<div class="intro-swap-row"><strong>Chicken grain bowl</strong><span class="intro-swap-arrow">→</span><strong>Egg tacos</strong></div>' +
+      '<div class="intro-swap-row"><span style="font-size:12px;color:var(--arc-subtext)">Schedule changed to 8:30 PM</span><span class="intro-swap-chip">Adjusted</span></div>' +
+      '<div class="intro-primary-card" style="margin-top:10px"><div class="intro-primary-head"><strong>Arc updated your day</strong><span style="font-size:11px;color:var(--arc-subtext)">No rebuild needed</span></div>' +
+      '<div style="font-size:13px;color:var(--arc-subtext)">Macros stay aligned. Grocery list synced automatically.</div></div>' +
+      '</div></div>';
+  }
+  return '<div class="intro-phone"><div class="intro-phone-screen">' +
+    '<div class="intro-mock-head"><div class="intro-mock-title">Guidance moment</div><div class="intro-mock-badge">Weekly recap</div></div>' +
+    '<div class="intro-recap-card"><div class="intro-recap-k">This week</div><div class="intro-recap-num">14 meals</div>' +
+    '<div class="intro-recap-copy">You stayed consistent on busy days. Arc carries that rhythm into next week.</div></div>' +
+    '<div class="intro-primary-card" style="margin-top:10px"><div class="intro-primary-head"><strong>Suggested focus</strong><span class="intro-swap-chip">Keep momentum</span></div>' +
+    '<div style="font-size:13px;color:var(--arc-subtext)">Prep one protein tonight to make tomorrow easier.</div></div>' +
+    '</div></div>';
+}
+
+function renderIntroDots() {
+  var wrap = el('intro-dots');
+  if (!wrap) return;
+  var html = '';
+  for (var i = 0; i < INTRO_SLIDES.length; i++) {
+    html += '<span class="intro-dot' + (i === introState.idx ? ' on' : '') + '" role="presentation"></span>';
+  }
+  wrap.innerHTML = html;
+}
+
+function renderIntroSlide() {
+  var stage = el('intro-stage');
+  if (!stage) return;
+  var slide = INTRO_SLIDES[introState.idx] || INTRO_SLIDES[0];
+  stage.innerHTML =
+    '<h1 class="intro-title">' + shopEsc(slide.title).replace(/\n/g, '<br>') + '</h1>' +
+    '<p class="intro-sub">' + shopEsc(slide.sub) + '</p>' +
+    buildIntroVisual(slide.visual);
+  var chip = el('intro-chip');
+  if (chip) chip.textContent = slide.kicker;
+  var fill = el('intro-progress-fill');
+  if (fill) fill.style.width = (((introState.idx + 1) / INTRO_SLIDES.length) * 100) + '%';
+  var next = el('intro-next-btn');
+  if (next) next.textContent = introState.idx >= INTRO_SLIDES.length - 1 ? 'Start onboarding' : 'Continue';
+  var back = el('intro-back-btn');
+  if (back) back.disabled = introState.idx === 0;
+  renderIntroDots();
+}
+
+function introChange(delta) {
+  if (introState.leaving) return;
+  var nextIdx = introState.idx + delta;
+  if (nextIdx < 0) return;
+  if (nextIdx >= INTRO_SLIDES.length) {
+    startOnboardingFromIntro();
+    return;
+  }
+  var stage = el('intro-stage');
+  if (!stage) return;
+  introState.leaving = true;
+  stage.classList.add('is-exiting');
+  setTimeout(function() {
+    introState.idx = nextIdx;
+    stage.classList.remove('is-exiting');
+    renderIntroSlide();
+    introState.leaving = false;
+  }, 220);
+}
+
+function initFirstUseIntro() {
+  var skip = el('intro-skip-btn');
+  var back = el('intro-back-btn');
+  var next = el('intro-next-btn');
+  var wrap = el('intro-stage-wrap');
+  if (!skip || !back || !next || !wrap) return;
+
+  skip.addEventListener('click', startOnboardingFromIntro);
+  back.addEventListener('click', function() { introChange(-1); });
+  next.addEventListener('click', function() { introChange(1); });
+
+  wrap.addEventListener('click', function(ev) {
+    if (ev.target.closest('button,a,input,textarea,select')) return;
+    var box = wrap.getBoundingClientRect();
+    var isRight = (ev.clientX - box.left) > (box.width * 0.52);
+    introChange(isRight ? 1 : -1);
+  });
+
+  wrap.addEventListener('touchstart', function(ev) {
+    if (!ev.touches || !ev.touches.length) return;
+    introState.touchStartX = ev.touches[0].clientX;
+    introState.touchStartY = ev.touches[0].clientY;
+  }, { passive: true });
+
+  wrap.addEventListener('touchend', function(ev) {
+    if (introState.touchStartX == null || !ev.changedTouches || !ev.changedTouches.length) return;
+    var dx = ev.changedTouches[0].clientX - introState.touchStartX;
+    var dy = ev.changedTouches[0].clientY - introState.touchStartY;
+    introState.touchStartX = null;
+    introState.touchStartY = null;
+    if (Math.abs(dx) < 34 || Math.abs(dx) < Math.abs(dy)) return;
+    introChange(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  renderIntroSlide();
+}
+
 // ── Wire everything up on DOMContentLoaded ────────────────────
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -7992,11 +8224,8 @@ document.addEventListener('DOMContentLoaded', function() {
     location.reload();
   });
 
-  // Welcome → Onboarding
-  el('get-started-btn').addEventListener('click', function() {
-    el('s-welcome').classList.remove('active');
-    el('ob').classList.add('active');
-  });
+  // Welcome intro (first-use) → Onboarding
+  initFirstUseIntro();
 
   // Height input
   setupHeightInput();
