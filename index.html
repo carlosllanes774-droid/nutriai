@@ -248,7 +248,7 @@ body{
 .gen-live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
 /* ONBOARDING */
-.ob-top{background:var(--arc-primary);padding:32px 24px 22px;flex-shrink:0}
+.ob-top{background:linear-gradient(160deg,#cf4e2f 0%,var(--arc-primary) 42%,#b84328 100%);padding:32px 24px 22px;flex-shrink:0;box-shadow:inset 0 -1px 0 rgba(255,255,255,.08)}
 .ob-brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
 .ob-mark{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:10px;display:flex;align-items:center;justify-content:center}
 .ob-brand-name{font-size:20px;font-weight:700;letter-spacing:-.4px;color:#fff}
@@ -257,10 +257,14 @@ body{
 .ob-dot.done{background:rgba(255,255,255,.5)}.ob-dot.active{background:var(--arc-primary)}
 .ob-heading{font-size:24px;font-weight:700;letter-spacing:-.5px;font-family:Georgia,serif;color:#fff;margin-bottom:4px}
 .ob-sub{font-size:14px;color:rgba(255,255,255,.6)}
-.ob-body{flex:1;overflow-y:auto;padding:28px 24px}
+.ob-body{flex:1;overflow-y:auto;padding:22px 20px;background:linear-gradient(180deg,var(--arc-surface) 0%,#f4efe8 100%)}
 .ob-footer{padding:18px 24px 22px;box-shadow:0 -1px 0 var(--arc-divider);display:flex;gap:10px;flex-shrink:0;background:var(--arc-card)}
 .ob-err{font-size:13px;color:#e76f51;text-align:center;padding:4px 24px 14px;min-height:22px}
 .ob-step{display:none}.ob-step.active{display:block}
+.ob-card{background:rgba(255,255,255,.84);border:1px solid rgba(31,23,16,.07);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);box-shadow:var(--shadow-sm);border-radius:18px;padding:16px 14px;margin-bottom:12px}
+.ob-card-h{font-size:11px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.09em;margin-bottom:12px}
+.ob-note{font-size:12px;color:var(--arc-subtext);line-height:1.5;margin:2px 2px 0}
+.ob-step-foot{font-size:12px;color:var(--arc-subtext);line-height:1.55;margin-top:12px;font-style:italic}
 
 /* FORMS */
 .fl{margin-bottom:22px}
@@ -630,6 +634,11 @@ body{
 .bw-opt-body{flex:1;min-width:0}
 .bw-opt-h{font-size:15px;font-weight:700;color:var(--arc-text);line-height:1.25;margin-bottom:3px;font-family:Georgia,serif;letter-spacing:-.01em}
 .bw-opt-s{font-size:12.5px;color:var(--arc-subtext);line-height:1.45}
+.bw-subhead{display:flex;align-items:center;gap:8px}
+.bw-help-btn{width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(122,130,144,.6);background:none;color:var(--arc-subtext);font-size:11px;font-weight:700;font-style:italic;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--motion-fast) var(--ease-standard)}
+.bw-help-btn:hover{border-color:var(--arc-primary);color:var(--arc-primary)}
+.bw-help{display:none;background:var(--arc-soft-primary);border-radius:14px;padding:12px 13px;color:#514843;font-size:12.5px;line-height:1.6;box-shadow:var(--shadow-xs);margin:-2px 0 10px}
+.bw-help strong{color:var(--arc-primary-dark)}
 .bw-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
 .bw-chip{padding:9px 14px;border-radius:999px;border:1.5px solid rgba(31,31,31,.08);background:#fff;font-size:13px;font-weight:600;color:var(--arc-text);cursor:pointer;transition:all var(--motion-fast) var(--ease-standard);font-family:inherit;-webkit-tap-highlight-color:transparent}
 .bw-chip:hover{border-color:rgba(227,90,54,.3)}
@@ -991,70 +1000,84 @@ button:active{transform:scale(var(--press-scale))}
   <div class="ob-top">
     <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
     <div class="ob-dots"><div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div></div>
-    <div class="ob-heading" id="ob-h">About you</div>
-    <div class="ob-sub" id="ob-s">Let's get the basics down</div>
+    <div class="ob-heading" id="ob-h">Body + baseline</div>
+    <div class="ob-sub" id="ob-s">Core metrics for accurate nutrition targets</div>
   </div>
   <div class="ob-body">
     <!-- STEP 1 -->
     <div class="ob-step active" id="st1">
-      <div class="fl"><label>Your name <span style="color:#e76f51">*</span></label><input class="fi" id="in-name" placeholder="e.g. Jordan"/></div>
-      <div class="fg2 fl">
-        <div><label>Age</label><input class="fi" id="in-age" type="number" min="10" max="100" placeholder="28"/></div>
-        <div><label>Sex</label><select class="fi" id="in-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+      <div class="ob-card">
+        <div class="ob-card-h">Body baseline</div>
+        <div class="fg2 fl">
+          <div><label>Age <span style="color:#e76f51">*</span></label><input class="fi" id="in-age" type="number" min="10" max="100" placeholder="28"/></div>
+          <div><label>Sex <span style="color:#e76f51">*</span></label><select class="fi" id="in-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+        </div>
+        <div class="fg2 fl" style="margin-bottom:0">
+          <div><label>Weight <span style="color:#e76f51">*</span></label><div class="uw"><input class="fi" id="in-wt" type="number" min="50" max="700" placeholder="160"/><span class="ul">lbs</span></div></div>
+          <div><label>Height <span style="color:#e76f51">*</span></label><div class="uw"><input class="fi" id="in-ht" inputmode="numeric" placeholder="5'8&quot;" autocomplete="off"/></div></div>
+        </div>
       </div>
-      <div class="fg2 fl">
-        <div><label>Weight <span style="color:#e76f51">*</span></label><div class="uw"><input class="fi" id="in-wt" type="number" min="50" max="700" placeholder="160"/><span class="ul">lbs</span></div></div>
-        <div><label>Height</label><div class="uw"><input class="fi" id="in-ht" inputmode="numeric" placeholder="5'8&quot;" autocomplete="off"/></div></div>
-      </div>
-      <div class="fl">
-        <label>Your region <span style="color:#e76f51">*</span></label>
-        <button class="loc-btn" id="loc-detect-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg> Use my location for accurate pricing</button>
-        <div id="loc-det" style="display:none" class="loc-det"><div style="font-size:22px">📍</div><div style="flex:1"><div class="loc-det-text" id="loc-city">—</div><div class="loc-det-sub" id="loc-rlabel">—</div></div><button class="loc-chg" id="loc-chg">Change</button></div>
-        <div class="or-row" id="or-row"><div class="or-line"></div><span class="or-text">or choose manually</span><div class="or-line"></div></div>
-        <div id="man-region">
-          <div class="chips" id="chip-region">
-            <div class="rg" style="margin-top:0">United States</div>
-            <span class="chip" data-v="us-midwest">Midwest</span><span class="chip" data-v="us-southeast">Southeast</span><span class="chip" data-v="us-south">South/Texas</span><span class="chip" data-v="us-midatlantic">Mid-Atlantic</span><span class="chip" data-v="us-northeast">Northeast</span><span class="chip" data-v="us-california">California</span><span class="chip" data-v="us-pacific-nw">Pacific NW</span><span class="chip" data-v="us-mountain">Mountain West</span>
-            <div class="rg">Canada</div><span class="chip" data-v="canada-east">Eastern Canada</span><span class="chip" data-v="canada-west">Western Canada</span>
-            <div class="rg">Europe &amp; UK</div><span class="chip" data-v="uk">United Kingdom</span><span class="chip" data-v="ireland">Ireland</span><span class="chip" data-v="scandinavia">Scandinavia</span><span class="chip" data-v="europe-west">Western Europe</span><span class="chip" data-v="europe-east">Eastern Europe</span>
-            <div class="rg">Pacific &amp; Oceania</div><span class="chip" data-v="australia">Australia</span><span class="chip" data-v="newzealand">New Zealand</span><span class="chip" data-v="japan">Japan</span><span class="chip" data-v="southkorea">South Korea</span>
-            <div class="rg">Other</div><span class="chip" data-v="gulf">Gulf Region</span><span class="chip" data-v="other">Other / International</span>
+      <div class="ob-card">
+        <div class="ob-card-h">Location for pricing</div>
+        <div class="fl" style="margin-bottom:0">
+          <label>Your region <span style="color:#e76f51">*</span></label>
+          <button class="loc-btn" id="loc-detect-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg> Use my location for accurate pricing</button>
+          <div id="loc-det" style="display:none" class="loc-det"><div style="font-size:22px">📍</div><div style="flex:1"><div class="loc-det-text" id="loc-city">—</div><div class="loc-det-sub" id="loc-rlabel">—</div></div><button class="loc-chg" id="loc-chg">Change</button></div>
+          <div class="or-row" id="or-row"><div class="or-line"></div><span class="or-text">or choose manually</span><div class="or-line"></div></div>
+          <div id="man-region">
+            <div class="chips" id="chip-region">
+              <div class="rg" style="margin-top:0">United States</div>
+              <span class="chip" data-v="us-midwest">Midwest</span><span class="chip" data-v="us-southeast">Southeast</span><span class="chip" data-v="us-south">South/Texas</span><span class="chip" data-v="us-midatlantic">Mid-Atlantic</span><span class="chip" data-v="us-northeast">Northeast</span><span class="chip" data-v="us-california">California</span><span class="chip" data-v="us-pacific-nw">Pacific NW</span><span class="chip" data-v="us-mountain">Mountain West</span>
+              <div class="rg">Canada</div><span class="chip" data-v="canada-east">Eastern Canada</span><span class="chip" data-v="canada-west">Western Canada</span>
+              <div class="rg">Europe &amp; UK</div><span class="chip" data-v="uk">United Kingdom</span><span class="chip" data-v="ireland">Ireland</span><span class="chip" data-v="scandinavia">Scandinavia</span><span class="chip" data-v="europe-west">Western Europe</span><span class="chip" data-v="europe-east">Eastern Europe</span>
+              <div class="rg">Pacific &amp; Oceania</div><span class="chip" data-v="australia">Australia</span><span class="chip" data-v="newzealand">New Zealand</span><span class="chip" data-v="japan">Japan</span><span class="chip" data-v="southkorea">South Korea</span>
+              <div class="rg">Other</div><span class="chip" data-v="gulf">Gulf Region</span><span class="chip" data-v="other">Other / International</span>
+            </div>
           </div>
         </div>
       </div>
+      <p class="ob-note">We use this to personalize your nutrition targets and local grocery estimates.</p>
     </div>
     <!-- STEP 2 -->
     <div class="ob-step" id="st2">
-      <div class="fl"><label>Primary goal <span style="color:#e76f51">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Lose weight</span><span class="chip" data-v="Build muscle">Build muscle</span><span class="chip" data-v="Maintain weight">Maintain weight</span><span class="chip" data-v="Improve energy">Improve energy</span><span class="chip" data-v="Eat healthier">Eat healthier</span></div></div>
-      <div class="fl">
-        <label>Activity level <span style="color:#e76f51">*</span> <button class="ib" id="act-ib">i</button></label>
-        <div class="ibox" id="act-ibox" style="display:none"><div><strong>🪑 Sedentary</strong> — Desk job, little/no exercise</div><div><strong>🚶 Light</strong> — Light exercise 1–3x/week</div><div><strong>🏃 Moderate</strong> — Gym or cardio 3–5x/week</div><div><strong>⚡ Very active</strong> — Intense training 6–7x/week</div><div><strong>🏆 Athlete</strong> — Professional/twice-daily training</div></div>
-        <div class="chips" id="chip-activity"><span class="chip" data-v="Sedentary">🪑 Sedentary</span><span class="chip" data-v="Light">🚶 Light</span><span class="chip" data-v="Moderate">🏃 Moderate</span><span class="chip" data-v="Very active">⚡ Very active</span><span class="chip" data-v="Athlete">🏆 Athlete</span></div>
-      </div>
-      <div class="fl"><label>Meals per day <span style="color:#e76f51">*</span></label><div class="nchips" id="chip-meals"><div class="nchip" data-v="2">2</div><div class="nchip" data-v="3">3</div><div class="nchip" data-v="4">4</div><div class="nchip" data-v="5">5</div><div class="nchip" data-v="6">6</div></div></div>
-      <div class="fl">
-        <label>Calorie &amp; macro targets</label>
-        <div class="mm"><div class="mmb active" id="mm-ai">✦ Arc recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
-        <div class="cmw" id="cmw">
-          <div class="mc">
-            <div style="margin-bottom:12px"><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Daily calories</label><div class="uw"><input class="fi" id="in-cal" type="number" min="800" max="6000" placeholder="2000"/><span class="ul">kcal</span></div></div>
-            <div class="fg2" style="gap:10px;margin-bottom:10px">
-              <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Protein</label><div class="uw"><input class="fi" id="in-protein" type="number" placeholder="150"/><span class="ul">g</span></div></div>
-              <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Carbs</label><div class="uw"><input class="fi" id="in-carbs" type="number" placeholder="200"/><span class="ul">g</span></div></div>
-            </div>
-            <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Fat</label><div class="uw" style="max-width:49%"><input class="fi" id="in-fat" type="number" placeholder="65"/><span class="ul">g</span></div></div>
-            <div class="mc-hint">These targets override Arc recommendations in your stats.</div>
-          </div>
+      <div class="ob-card">
+        <div class="ob-card-h">Goal + rhythm</div>
+        <div class="fl"><label>Primary goal <span style="color:#e76f51">*</span></label><div class="chips" id="chip-goal"><span class="chip" data-v="Lose weight">Lose weight</span><span class="chip" data-v="Build muscle">Build muscle</span><span class="chip" data-v="Maintain weight">Maintain weight</span><span class="chip" data-v="Improve energy">Improve energy</span><span class="chip" data-v="Eat healthier">Eat healthier</span></div></div>
+        <div class="fl" style="margin-bottom:0">
+          <label>Activity level <span style="color:#e76f51">*</span> <button class="ib" id="act-ib">i</button></label>
+          <div class="ibox" id="act-ibox" style="display:none"><div><strong>🪑 Sedentary</strong> — Desk job, little/no exercise</div><div><strong>🚶 Light</strong> — Light exercise 1–3x/week</div><div><strong>🏃 Moderate</strong> — Gym or cardio 3–5x/week</div><div><strong>⚡ Very active</strong> — Intense training 6–7x/week</div><div><strong>🏆 Athlete</strong> — Professional/twice-daily training</div></div>
+          <div class="chips" id="chip-activity"><span class="chip" data-v="Sedentary">🪑 Sedentary</span><span class="chip" data-v="Light">🚶 Light</span><span class="chip" data-v="Moderate">🏃 Moderate</span><span class="chip" data-v="Very active">⚡ Very active</span><span class="chip" data-v="Athlete">🏆 Athlete</span></div>
         </div>
       </div>
+      <div class="ob-card">
+        <div class="ob-card-h">Nutrition settings</div>
+        <div class="fl" style="margin-bottom:0">
+          <label>Calorie &amp; macro targets</label>
+          <div class="mm"><div class="mmb active" id="mm-ai">✦ Arc recommended</div><div class="mmb" id="mm-custom">Set my own</div></div>
+          <div class="cmw" id="cmw">
+            <div class="mc">
+              <div style="margin-bottom:12px"><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Daily calories</label><div class="uw"><input class="fi" id="in-cal" type="number" min="800" max="6000" placeholder="2000"/><span class="ul">kcal</span></div></div>
+              <div class="fg2" style="gap:10px;margin-bottom:10px">
+                <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Protein</label><div class="uw"><input class="fi" id="in-protein" type="number" placeholder="150"/><span class="ul">g</span></div></div>
+                <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Carbs</label><div class="uw"><input class="fi" id="in-carbs" type="number" placeholder="200"/><span class="ul">g</span></div></div>
+              </div>
+              <div><label style="display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Fat</label><div class="uw" style="max-width:49%"><input class="fi" id="in-fat" type="number" placeholder="65"/><span class="ul">g</span></div></div>
+              <div class="mc-hint">These targets override Arc recommendations in your stats.</div>
+            </div>
+          </div>
+        </div>        
+      </div>
+      <p class="ob-note">Meals-per-day stays editable later in Preferences. Arc sets a smart default for now.</p>
     </div>
     <!-- STEP 3 -->
     <div class="ob-step" id="st3">
-      <div class="fl"><label>Cooking skill <span style="color:#e76f51">*</span></label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident chef</span></div></div>
-      <div class="fl"><label>Weekly grocery budget <span style="color:#e76f51">*</span></label><div class="chips" id="chip-budget"><span class="chip" data-v="Budget">$ Budget</span><span class="chip" data-v="Moderate">$$ Moderate</span><span class="chip" data-v="Flexible">$$$ Flexible</span></div></div>
-      <div class="fl"><label>Dietary restrictions</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
-      <div class="fl"><label>Foods you dislike or avoid</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="e.g. mushrooms, spicy food, shellfish..."></textarea></div>
-      <p style="font-size:12px;color:var(--arc-subtext);line-height:1.5;margin-top:14px;font-style:italic">You'll choose cuisines, cooking style and focus right before each week. Arc adapts to how you actually live.</p>
+      <div class="ob-card">
+        <div class="ob-card-h">Preferences</div>
+        <div class="fl"><label>Dietary restrictions</label><div class="chips" id="chip-diet"><span class="chip" data-v="Vegetarian">Vegetarian</span><span class="chip" data-v="Vegan">Vegan</span><span class="chip" data-v="Gluten-free">Gluten-free</span><span class="chip" data-v="Dairy-free">Dairy-free</span><span class="chip" data-v="Nut allergy">Nut allergy</span><span class="chip" data-v="Halal">Halal</span><span class="chip" data-v="Keto">Keto</span><span class="chip" data-v="Paleo">Paleo</span><span class="chip" data-v="None">None</span></div></div>
+        <div class="fl"><label>Foods you dislike or avoid</label><textarea class="fi" id="in-dislikes" rows="2" style="resize:none" placeholder="e.g. mushrooms, spicy food, shellfish..."></textarea></div>
+        <div class="fl" style="margin-bottom:0"><label>Cooking skill</label><div class="chips" id="chip-skill"><span class="chip" data-v="Beginner">🌱 Beginner</span><span class="chip" data-v="Home cook">🍳 Home cook</span><span class="chip" data-v="Confident chef">👨‍🍳 Confident chef</span></div></div>
+      </div>
+      <p class="ob-step-foot">You'll choose cuisines, cooking style, weekly focus, and budget right before this week is built.</p>
     </div>
   </div>
   <div class="ob-footer">
@@ -1302,6 +1325,7 @@ button:active{transform:scale(var(--press-scale))}
         <span class="bw-dot active" data-step="1"></span>
         <span class="bw-dot" data-step="2"></span>
         <span class="bw-dot" data-step="3"></span>
+        <span class="bw-dot" data-step="4"></span>
       </div>
       <button class="bw-close" id="bw-close" type="button" aria-label="Close">✕</button>
     </div>
@@ -1330,8 +1354,26 @@ button:active{transform:scale(var(--press-scale))}
       </div>
     </div>
 
-    <!-- STEP 3: Cuisines -->
+    <!-- STEP 3: Weekly budget -->
     <div class="bw-step" id="bw-step-3" data-step="3">
+      <div class="bw-subhead">
+        <div class="bw-h">What budget vibe fits this week?</div>
+        <button class="bw-help-btn" id="bw-budget-help-btn" type="button" aria-label="Budget help">i</button>
+      </div>
+      <div class="bw-help" id="bw-budget-help">
+        <div><strong>Budget</strong>: roughly $50-150 per week, pantry staples, repeat ingredients, lower-cost proteins.</div>
+        <div><strong>Moderate</strong>: roughly $150-250 per week, more variety and a balanced ingredient mix.</div>
+        <div><strong>Flexible</strong>: $150+ per week, wider ingredient range, premium proteins, and more variety.</div>
+      </div>
+      <div class="bw-options" id="bw-budget-opts">
+        <button class="bw-opt" type="button" data-budget="Budget"><span class="bw-opt-ic">💸</span><span class="bw-opt-body"><span class="bw-opt-h">Budget</span><span class="bw-opt-s">Lean staples, repeat ingredients, and lower-cost proteins.</span></span></button>
+        <button class="bw-opt" type="button" data-budget="Moderate"><span class="bw-opt-ic">⚖️</span><span class="bw-opt-body"><span class="bw-opt-h">Moderate</span><span class="bw-opt-s">Balanced variety across the week without premium-only picks.</span></span></button>
+        <button class="bw-opt" type="button" data-budget="Flexible"><span class="bw-opt-ic">✨</span><span class="bw-opt-body"><span class="bw-opt-h">Flexible</span><span class="bw-opt-s">More premium proteins and wider ingredient variety.</span></span></button>
+      </div>
+    </div>
+
+    <!-- STEP 4: Cuisines -->
+    <div class="bw-step" id="bw-step-4" data-step="4">
       <div class="bw-h">Any flavors you're craving?</div>
       <div class="bw-s">Pick up to 3, or skip and let Arc surprise you.</div>
       <div class="bw-chips" id="bw-cuisine-chips">
@@ -1684,7 +1726,7 @@ var REGIONS = {
 };
 
 // ── Application state ─────────────────────────────────────────
-var UP          = {region:'us-midwest'};
+var UP          = {region:'us-midwest', budget:'Moderate', weeklyBudget:'Moderate'};
 var recipes     = [];
 var mealPlan    = {};
 var selectedRecipes = new Set();
@@ -4419,7 +4461,8 @@ function pulse(gid) {
 function valStep(n) {
   clearErr();
   if (n === 1) {
-    if (!el('in-name').value.trim()) { setErr('Please enter your name'); markErr('in-name'); return false; }
+    var age = parseInt(el('in-age').value, 10);
+    if (!isFinite(age) || age < 10 || age > 100) { setErr('Please enter your age'); markErr('in-age'); return false; }
     var wt = parseFloat(el('in-wt').value);
     if (!(wt > 0))                   { setErr('Please enter your weight'); markErr('in-wt'); return false; }
     var hp = parseHeightInput(el('in-ht').value);
@@ -4429,20 +4472,18 @@ function valStep(n) {
   if (n === 2) {
     if (!gChip('chip-goal'))     { setErr('Please select a goal');           pulse('chip-goal');     return false; }
     if (!gChip('chip-activity')) { setErr('Please select activity level');   pulse('chip-activity'); return false; }
-    if (!gChip('chip-meals'))    { setErr('Please select meals per day');    pulse('chip-meals');    return false; }
   }
   if (n === 3) {
     if (!gChip('chip-skill'))  { setErr('Please select cooking skill');  pulse('chip-skill');  return false; }
-    if (!gChip('chip-budget')) { setErr('Please select a budget');       pulse('chip-budget'); return false; }
   }
   return true;
 }
 
 // ── Onboarding navigation ─────────────────────────────────────
 var stepMeta = [
-  {h:'About you',        s:"Let's get the basics down"},
-  {h:'Your goals',       s:'Help us personalize your plan'},
-  {h:'Your preferences', s:'One more step'}
+  {h:'Body + baseline',       s:'Core metrics for accurate nutrition targets'},
+  {h:'Goal + nutrition',      s:'Set your direction and activity rhythm'},
+  {h:'Preferences',           s:'Taste and restrictions to guide recipes'}
 ];
 
 function goStep(n) {
@@ -4456,19 +4497,18 @@ function goStep(n) {
     el('od' + i).className = 'ob-dot' + (i < n ? ' done' : i === n ? ' active' : '');
   }
   el('ob-back').style.display = n === 1 ? 'none' : 'block';
-  el('ob-next').textContent   = n === 3 ? "Let's plan your week →" : 'Continue →';
+  el('ob-next').textContent   = n === 3 ? 'Create my week profile →' : 'Continue →';
   document.querySelector('.ob-body').scrollTop = 0;
 }
 
 // ── Finish onboarding ─────────────────────────────────────────
 function finishOB() {
   if (!valStep(1) || !valStep(2) || !valStep(3)) return;
-  var name = el('in-name').value.trim();
   var hp = parseHeightInput(el('in-ht').value);
   if (!hp.ok) { setErr(hp.error || 'Please enter your height'); markErr('in-ht'); goStep(1); return; }
   if (!locDetected) UP.region = gChip('chip-region') || 'us-midwest';
 
-  UP.name          = name;
+  UP.name          = (UP.name && String(UP.name).trim()) ? UP.name : 'Friend';
   UP.age           = el('in-age').value;
   UP.sex           = el('in-sex').value;
   UP.weight        = parseFloat(el('in-wt').value);
@@ -4477,9 +4517,10 @@ function finishOB() {
   UP.heightCm      = hp.cm;
   UP.goal          = gChip('chip-goal')     || 'Eat healthier';
   UP.activity      = gChip('chip-activity') || 'Moderate';
-  UP.meals         = gChip('chip-meals')    || '3';
+  UP.meals         = inferMealsDefault(UP.goal, UP.activity);
   UP.skill         = gChip('chip-skill')    || 'Home cook';
-  UP.budget        = gChip('chip-budget')   || 'Moderate';
+  UP.budget        = normalizeBudgetValue(UP.budget);
+  UP.weeklyBudget  = normalizeBudgetValue(UP.weeklyBudget || UP.budget);
   // Cuisines are no longer captured at onboarding — they're chosen weekly in Build-Your-Week.
   // Preserve any value already on UP (e.g. migrated user) so the wizard pre-fills nicely.
   if (!Array.isArray(UP.cuisines)) UP.cuisines = [];
@@ -4502,11 +4543,19 @@ function finishOB() {
   saveUserProfile();
 
   applyProfileToUIBar();
-
-  // New flow: identity is done. Take the user straight to the planner where
-  // the Build-Your-Week wizard greets them with the first weekly intent question.
-  tab('plan');
-  setTimeout(function() { openBuildWeek('first'); }, 80);
+  // New flow: onboarding closes with a short profile-calibration moment,
+  // then we move directly into Build Your Week.
+  showScreen('s-gen');
+  resetGenLoadingUI();
+  setGenPhase('profile');
+  setTimeout(function() {
+    completeGenLoadingUI();
+    setTimeout(function() {
+      tab('plan');
+      stopGenLoadingUI();
+      openBuildWeek('first');
+    }, 260);
+  }, 900);
 }
 
 // ── Generating screen: ambient ring + phased copy (tied to real milestones) ──
@@ -4706,6 +4755,7 @@ function buildMandatoryDietPrompt(restrictions, dislikeRaw) {
 
 // ── Profile validation / safe defaults (mobile + localStorage) ─
 var VALID_ACTIVITIES = { 'Sedentary': true, 'Light': true, 'Moderate': true, 'Very active': true, 'Athlete': true };
+var VALID_BUDGETS = { Budget: true, Moderate: true, Flexible: true };
 
 function nutriDebug() {
   if (typeof console === 'undefined' || !console.log) return;
@@ -4719,6 +4769,18 @@ function cloneProfileForLog(p) {
   } catch (e) {
     return { _note: 'clone failed', keys: p ? Object.keys(p) : [] };
   }
+}
+
+function normalizeBudgetValue(v) {
+  var key = v != null ? String(v).trim() : '';
+  return VALID_BUDGETS[key] ? key : 'Moderate';
+}
+
+function inferMealsDefault(goal, activity) {
+  var g = goal != null ? String(goal).trim() : '';
+  var a = activity != null ? String(activity).trim() : '';
+  if (g === 'Build muscle' && (a === 'Moderate' || a === 'Very active' || a === 'Athlete')) return '4';
+  return '3';
 }
 
 /** Normalize partial/corrupt profile so prompts and TDEE never see undefined. Mutates `p` (default: UP). */
@@ -4735,10 +4797,11 @@ function applySafeProfileDefaults(p) {
   if (p.activity == null || String(p.activity).trim() === '' || !VALID_ACTIVITIES[p.activity]) p.activity = 'Moderate';
 
   var mKey = p.meals != null ? String(p.meals).trim() : '';
-  if (!mKey || !SLOT_SETS[mKey]) p.meals = '3';
+  if (!mKey || !SLOT_SETS[mKey]) p.meals = inferMealsDefault(p.goal, p.activity);
 
   if (p.skill == null || String(p.skill).trim() === '') p.skill = 'Home cook';
-  if (p.budget == null || String(p.budget).trim() === '') p.budget = 'Moderate';
+  p.budget = normalizeBudgetValue(p.budget);
+  p.weeklyBudget = normalizeBudgetValue(p.weeklyBudget || p.budget);
 
   if (!Array.isArray(p.cuisines)) p.cuisines = [];
   if (!Array.isArray(p.restrictions)) {
@@ -4787,7 +4850,7 @@ function applySafeProfileDefaults(p) {
 }
 
 /**
- * Required for AI + nutrition: height, weight, goal, activity, mealsPerDay (UP.meals), diet (UP.restrictions).
+ * Required for AI + nutrition: age, height, weight, goal, activity, region, mealsPerDay (auto-defaulted), diet.
  * @returns {{ ok: boolean, errors: string[] }}
  */
 function validateUserProfile(p) {
@@ -4802,6 +4865,9 @@ function validateUserProfile(p) {
   var w = parseFloat(p.weight);
   if (!isFinite(w) || !(w > 0)) errors.push('Weight is missing or invalid. Re-enter your weight in onboarding.');
 
+  var age = parseInt(p.age, 10);
+  if (!isFinite(age) || age < 10 || age > 100) errors.push('Age is missing or invalid. Re-enter your age in onboarding.');
+
   var hi = parseFloat(p.heightInches);
   var hp = parseHeightInput(p.height);
   if (!(hi > 0 && isFinite(hi)) && !hp.ok) {
@@ -4814,7 +4880,9 @@ function validateUserProfile(p) {
   else if (!VALID_ACTIVITIES[p.activity]) errors.push('Activity level is invalid. Select Sedentary, Light, Moderate, Very active, or Athlete.');
 
   var mealsKey = p.meals != null ? String(p.meals).trim() : '';
-  if (!mealsKey || !SLOT_SETS[mealsKey]) errors.push('Meals per day is missing or invalid. Choose 2–6 meals per day in onboarding.');
+  if (!mealsKey || !SLOT_SETS[mealsKey]) errors.push('Meals-per-day default is missing or invalid. Open Preferences and reselect it.');
+
+  if (p.region == null || String(p.region).trim() === '') errors.push('Region is missing. Re-enter your location in onboarding.');
 
   if (!Array.isArray(p.restrictions)) errors.push('Diet preferences are missing or corrupted. Re-select diet options in onboarding.');
   else if (!p.restrictions.length) errors.push('Diet preferences are empty. Select at least “None” or a diet tag in onboarding.');
@@ -4836,7 +4904,7 @@ function resetAppAfterInvalidStoredProfile(errors) {
   useCustom = false;
   locDetected = false;
   recipeGenId++;
-  UP = { region: 'us-midwest', mealFeedback: {}, arcAdaptive: defaultArcAdaptive(), weeklyReviewHistory: [] };
+  UP = { region: 'us-midwest', budget: 'Moderate', weeklyBudget: 'Moderate', mealFeedback: {}, arcAdaptive: defaultArcAdaptive(), weeklyReviewHistory: [] };
   obStep = 1;
   var msg = (errors && errors[0]) ? errors[0] : 'Saved profile was incomplete or damaged. Please run onboarding again.';
   showToast(msg);
@@ -4878,6 +4946,7 @@ var bwState = {
   step: 1,
   style: null,
   focus: null,
+  weeklyBudget: 'Moderate',
   cuisines: [],
   mode: 'first',   // 'first' (post-onboarding) | 'rebuild'
   bound: false
@@ -4893,7 +4962,7 @@ function hasBuiltWeek() {
 }
 
 function bwSetStep(n) {
-  if (n < 1 || n > 3) return;
+  if (n < 1 || n > 4) return;
   bwState.step = n;
   var steps = document.querySelectorAll('#bw-modal .bw-step');
   for (var i = 0; i < steps.length; i++) {
@@ -4904,8 +4973,8 @@ function bwSetStep(n) {
     dots[j].classList.toggle('active', dots[j].getAttribute('data-step') === String(n));
   }
   el('bw-back').style.visibility = n === 1 ? 'hidden' : 'visible';
-  el('bw-skip').style.display    = n === 3 ? 'inline-flex' : 'none';
-  el('bw-next').textContent      = n === 3 ? 'Build my week ✦' : 'Continue →';
+  el('bw-skip').style.display    = n === 4 ? 'inline-flex' : 'none';
+  el('bw-next').textContent      = n === 4 ? 'Build my week ✦' : 'Continue →';
   bwUpdateNext();
 }
 
@@ -4913,7 +4982,8 @@ function bwUpdateNext() {
   var ok = false;
   if (bwState.step === 1) ok = !!bwState.style;
   else if (bwState.step === 2) ok = !!bwState.focus;
-  else if (bwState.step === 3) ok = true; // cuisines are optional
+  else if (bwState.step === 3) ok = !!bwState.weeklyBudget;
+  else if (bwState.step === 4) ok = true; // cuisines are optional
   el('bw-next').disabled = !ok;
 }
 
@@ -4928,6 +4998,13 @@ function bwSelectFocus(value) {
   bwState.focus = value;
   var opts = document.querySelectorAll('#bw-focus-opts .bw-opt');
   for (var i = 0; i < opts.length; i++) opts[i].classList.toggle('active', opts[i].dataset.focus === value);
+  bwUpdateNext();
+}
+
+function bwSelectBudget(value) {
+  bwState.weeklyBudget = normalizeBudgetValue(value);
+  var opts = document.querySelectorAll('#bw-budget-opts .bw-opt');
+  for (var i = 0; i < opts.length; i++) opts[i].classList.toggle('active', opts[i].dataset.budget === bwState.weeklyBudget);
   bwUpdateNext();
 }
 
@@ -4948,6 +5025,7 @@ function bwReset(mode) {
   bwState.mode = mode || 'first';
   bwState.style = null;
   bwState.focus = null;
+  bwState.weeklyBudget = normalizeBudgetValue(UP.weeklyBudget || UP.budget);
   // Pre-seed cuisines from prior weekly plan (or legacy onboarding value) so users don't repick from scratch.
   var seed = (UP.weeklyPlan && Array.isArray(UP.weeklyPlan.cuisines) && UP.weeklyPlan.cuisines.length)
     ? UP.weeklyPlan.cuisines
@@ -4958,6 +5036,7 @@ function bwReset(mode) {
   if (mode === 'rebuild' && UP.weeklyPlan) {
     if (UP.weeklyPlan.style) bwState.style = UP.weeklyPlan.style;
     if (UP.weeklyPlan.focus) bwState.focus = UP.weeklyPlan.focus;
+    if (UP.weeklyPlan.weeklyBudget) bwState.weeklyBudget = normalizeBudgetValue(UP.weeklyPlan.weeklyBudget);
   }
   if (bwState.style === 'mixed') bwState.style = 'balanced';
 
@@ -4967,12 +5046,16 @@ function bwReset(mode) {
   document.querySelectorAll('#bw-focus-opts .bw-opt').forEach(function(o) {
     o.classList.toggle('active', bwState.focus && o.dataset.focus === bwState.focus);
   });
+  document.querySelectorAll('#bw-budget-opts .bw-opt').forEach(function(o) {
+    o.classList.toggle('active', o.dataset.budget === bwState.weeklyBudget);
+  });
   document.querySelectorAll('#bw-cuisine-chips .bw-chip').forEach(function(c) {
     c.classList.toggle('active', bwState.cuisines.indexOf(c.dataset.v) >= 0);
   });
   el('bw-cuisine-hint').textContent = bwState.cuisines.length
     ? 'This week: ' + bwState.cuisines.join(' · ')
     : 'No selection = varied international';
+  if (el('bw-budget-help')) el('bw-budget-help').style.display = 'none';
   el('bw-eyebrow').textContent = mode === 'rebuild' ? 'Rebuild this week' : 'Build this week';
   bwSetStep(1);
 }
@@ -4985,12 +5068,23 @@ function bwBind() {
   document.querySelectorAll('#bw-focus-opts .bw-opt').forEach(function(o) {
     o.addEventListener('click', function() { bwSelectFocus(this.dataset.focus); });
   });
+  document.querySelectorAll('#bw-budget-opts .bw-opt').forEach(function(o) {
+    o.addEventListener('click', function() { bwSelectBudget(this.dataset.budget); });
+  });
   document.querySelectorAll('#bw-cuisine-chips .bw-chip').forEach(function(c) {
     c.addEventListener('click', function() { bwToggleCuisine(this.dataset.v); });
   });
+  var budgetHelpBtn = el('bw-budget-help-btn');
+  var budgetHelp = el('bw-budget-help');
+  if (budgetHelpBtn && budgetHelp) {
+    budgetHelpBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      budgetHelp.style.display = budgetHelp.style.display === 'block' ? 'none' : 'block';
+    });
+  }
   el('bw-back').addEventListener('click', function() { bwSetStep(bwState.step - 1); });
   el('bw-next').addEventListener('click', function() {
-    if (bwState.step < 3) { bwSetStep(bwState.step + 1); return; }
+    if (bwState.step < 4) { bwSetStep(bwState.step + 1); return; }
     bwSubmit();
   });
   el('bw-skip').addEventListener('click', function() {
@@ -5016,12 +5110,15 @@ function closeBuildWeek() {
 }
 
 function bwSubmit() {
-  if (!bwState.style || !bwState.focus) return;
+  if (!bwState.style || !bwState.focus || !bwState.weeklyBudget) return;
+  UP.budget = normalizeBudgetValue(bwState.weeklyBudget);
+  UP.weeklyBudget = normalizeBudgetValue(bwState.weeklyBudget);
   closeBuildWeek();
   // Persist intent so reloads during generation can recover.
   UP.weeklyPlanDraft = {
     style: bwState.style,
     focus: bwState.focus,
+    weeklyBudget: bwState.weeklyBudget,
     cuisines: bwState.cuisines.slice()
   };
   try { saveSessionState(); } catch (e) {}
@@ -5029,6 +5126,7 @@ function bwSubmit() {
   generateWeeklyPlan({
     style: bwState.style,
     focus: bwState.focus,
+    weeklyBudget: bwState.weeklyBudget,
     cuisines: bwState.cuisines.slice(),
     mode: bwState.mode
   });
@@ -5054,7 +5152,8 @@ function buildWeeklyPlanPrompt(intent) {
   var cuis       = intent.cuisines && intent.cuisines.length
     ? intent.cuisines.join(', ')
     : 'varied international';
-  var budgetNote = {'Budget':'$3-7/serving','Moderate':'$5-12/serving','Flexible':'any price range'}[UP.budget] || 'moderate';
+  var weeklyBudget = normalizeBudgetValue((intent && intent.weeklyBudget) || UP.weeklyBudget || UP.budget);
+  var budgetNote = {'Budget':'$3-7/serving','Moderate':'$5-12/serving','Flexible':'any price range'}[weeklyBudget] || 'moderate';
   var skillNote  = {'Beginner':'Use max 5 ingredients, simple techniques (no sautéing, braising, or multi-step processes)','Home cook':'Standard home cooking techniques','Confident chef':'Any technique including advanced methods'}[UP.skill] || 'standard techniques';
 
   var styleMeta  = BW_STYLE_META[intent.style] || BW_STYLE_META.fresh;
@@ -5094,7 +5193,7 @@ function buildWeeklyPlanPrompt(intent) {
   u += 'Name: ' + UP.name + '\n';
   u += 'Body profile: ' + UP.height + ' (' + Math.round(UP.heightCm || 0) + ' cm), ' + UP.weight + ' lbs, ' + UP.activity + ' activity, goal: ' + UP.goal + '.\n';
   u += 'Cooking skill: ' + UP.skill + ' — ' + skillNote + '\n';
-  u += 'Budget: ' + UP.budget + ' (' + budgetNote + ')\n';
+  u += 'Weekly budget: ' + weeklyBudget + ' (' + budgetNote + ')\n';
   u += 'Cuisines requested this week: ' + cuis + '\n';
   u += 'Diet tags (informational): ' + restr + '\n';
   u += buildMandatoryDietPrompt(UP.restrictions, UP.dislikes);
@@ -5206,6 +5305,7 @@ function generateWeeklyPlan(intent) {
       builtAt: Date.now(),
       style: intent.style,
       focus: intent.focus,
+      weeklyBudget: normalizeBudgetValue(intent.weeklyBudget || UP.weeklyBudget || UP.budget),
       cuisines: intent.cuisines.slice(),
       household: parseInt(UP.household, 10) || 1,
       uniqueRecipeIds: recipes.map(function(r) { return r.id; }),
@@ -8250,7 +8350,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Chips
   singleChip('chip-region'); singleChip('chip-goal'); singleChip('chip-activity');
-  singleChip('chip-meals');  singleChip('chip-skill'); singleChip('chip-budget');
+  singleChip('chip-skill');
   multiChip('chip-diet');
 
   // Activity info tooltip
