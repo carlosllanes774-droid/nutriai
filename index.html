@@ -195,6 +195,19 @@ body{
 .intro-title{font-family:Georgia,serif;font-size:clamp(30px,6.4vw,38px);line-height:1.1;letter-spacing:-.035em;color:#fff;margin-bottom:14px;max-width:12.2em;font-weight:600}
 .intro-sub{font-size:15px;line-height:1.62;color:rgba(255,255,255,.56);max-width:24em;margin-bottom:0;font-weight:450}
 .intro-quote{margin-top:16px;font-size:13px;line-height:1.55;color:rgba(255,255,255,.48);max-width:22em;font-style:italic;font-weight:450;padding-left:14px;border-left:2px solid rgba(227,90,54,.45)}
+.intro-quote.intro-quote--below{margin:14px auto 0;max-width:22.5em;padding-top:0}
+.intro-stage--adapt .intro-copy-block{margin-bottom:22px}
+.intro-stage--adapt .intro-title{margin-bottom:18px}
+.intro-stage--adapt .intro-sub{line-height:1.58}
+.intro-visual--adapt{padding-top:6px;margin-top:2px}
+.intro-visual--adapt .intro-adapt-stage{max-width:318px}
+.intro-visual--adapt .intro-phone{padding:10px 11px;border-radius:22px}
+.intro-visual--adapt .intro-phone-screen{padding:10px 11px 8px;border-radius:15px}
+.intro-visual--adapt .intro-adapt-flow{gap:7px}
+.intro-visual--adapt .intro-adapt-row{padding:9px 10px}
+.intro-visual--adapt .intro-adapt-rebalance{padding:10px 11px;margin-top:2px}
+.intro-visual--adapt .intro-adapt-rebalance p{font-size:11px;line-height:1.42;margin:0}
+.intro-stage--adapt .intro-bottom{padding-top:26px}
 .intro-reveal-1,.intro-reveal-2,.intro-reveal-3,.intro-reveal-4,.intro-reveal-5{animation:introPieceIn 780ms var(--intro-ease-out) backwards}
 .intro-reveal-1{animation-delay:45ms}
 .intro-reveal-2{animation-delay:115ms}
@@ -366,7 +379,18 @@ body{
 .ob-goal-head .chip{flex:1;min-height:var(--tap-min)}
 .ob-info-btn{margin-top:0;align-self:center;flex-shrink:0}
 .ob-goal-pace{max-height:0;opacity:0;overflow:hidden;transform:translateY(-4px);transition:max-height 640ms cubic-bezier(0.33,0.83,0.38,1),opacity 480ms cubic-bezier(0.22,1,0.36,1),transform 520ms cubic-bezier(0.33,0.83,0.38,1)}
-.ob-goal-block.is-selected.ob-goal-block--paced .ob-goal-pace{max-height:200px;opacity:1;transform:translateY(0);margin-top:12px}
+.ob-goal-block.is-selected.ob-goal-block--paced .ob-goal-pace{max-height:380px;opacity:1;transform:translateY(0);margin-top:12px}
+.ob-pick-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;width:100%}
+.ob-pick-title-row .ob-pick-main{flex:1;min-width:0}
+.ob-info-btn--card{width:22px;height:22px;margin:0;opacity:.38;border-color:rgba(31,31,31,.14);color:rgba(92,99,112,.75);align-self:flex-start}
+.ob-info-btn--card:hover,.ob-info-btn--card:focus-visible{opacity:1;color:var(--arc-primary-dark);border-color:rgba(227,90,54,.35)}
+.ob-target-wt-wrap{margin-top:14px}
+.ob-target-wt-hint{font-size:11px;font-weight:500;color:var(--arc-subtext);line-height:1.4;margin:8px 0 0;max-width:28em}
+.ob-muscle-em-wrap{margin-top:14px}
+.ob-muscle-em-grid{display:flex;flex-wrap:wrap;gap:8px}
+.ob-muscle-em-chip{padding:9px 12px;border-radius:999px;border:1px solid var(--arc-border);background:var(--arc-surface-2);font-size:11px;font-weight:600;color:var(--arc-subtext);cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
+.ob-muscle-em-chip:hover{background:var(--arc-card);color:var(--arc-primary-dark)}
+.ob-muscle-em-chip.sel{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.28);box-shadow:0 0 0 3px rgba(227,90,54,.12)}
 .ob-pace-title{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em;margin:0 0 10px 2px}
 .ob-pace-grid{display:flex;flex-wrap:wrap;gap:8px}
 .ob-pace-chip{padding:10px 12px;border-radius:999px;border:1px solid var(--arc-border);background:var(--arc-surface-2);font-size:12px;font-weight:600;color:var(--arc-subtext);cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
@@ -391,11 +415,11 @@ body{
 .ob-kpi-unit{font-size:13px;font-weight:600;color:var(--arc-subtext);margin-left:2px}
 .ob-kpi-note{font-size:12px;line-height:1.5;color:var(--arc-subtext);margin:0;font-weight:500}
 .ob-kpi-soft{font-size:11px;line-height:1.45;color:var(--arc-subtext);margin-top:10px;font-style:italic}
-.ob-summary-h{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--arc-text);letter-spacing:-.03em;line-height:1.2;margin:0 0 6px}
-.ob-summary-lead{font-size:14px;color:var(--arc-subtext);line-height:1.5;margin:0 0 18px;font-weight:500;max-width:36em}
-.ob-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ob-summary-h{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--arc-text);letter-spacing:-.03em;line-height:1.2;margin:0 0 10px}
+.ob-summary-lead{font-size:14px;color:var(--arc-subtext);line-height:1.45;margin:0 0 24px;font-weight:500;max-width:32em}
+.ob-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:360px){.ob-summary-grid{grid-template-columns:1fr}}
-.ob-sum-card{border-radius:16px;padding:14px 14px 13px;background:var(--arc-card);border:1px solid rgba(31,23,16,.07);box-shadow:0 6px 18px rgba(25,20,16,.05);min-height:92px;display:flex;flex-direction:column;gap:6px}
+.ob-sum-card{border-radius:16px;padding:16px 15px 14px;background:var(--arc-card);border:1px solid rgba(31,23,16,.07);box-shadow:0 6px 18px rgba(25,20,16,.05);min-height:88px;display:flex;flex-direction:column;gap:8px}
 .ob-sum-eyebrow{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--arc-subtext)}
 .ob-sum-val{font-size:17px;font-weight:700;color:var(--arc-text);letter-spacing:-.02em;line-height:1.2;font-family:Georgia,serif}
 .ob-sum-note{font-size:11px;line-height:1.4;color:var(--arc-subtext);font-weight:500}
@@ -1236,7 +1260,7 @@ button:not(:disabled):active,
         <div class="chips ob-picks ob-picks--stack" id="chip-goal">
           <div class="ob-goal-block ob-goal-block--paced" data-goal="Lose weight">
             <div class="ob-goal-head">
-              <span class="chip" tabindex="0" role="button" data-v="Lose weight"><span class="ob-pick-copy"><span class="ob-pick-main">Lose weight</span><span class="ob-pick-sub">Steady pace, protein-forward plates</span></span></span>
+              <span class="chip" tabindex="0" role="button" data-v="Lose weight"><span class="ob-pick-copy"><span class="ob-pick-main">Lose weight</span><span class="ob-pick-sub">Steady pace, satisfying plates</span></span></span>
             </div>
             <div class="ob-goal-pace" aria-hidden="true">
               <div class="ob-pace-title">Target pace</div>
@@ -1246,11 +1270,16 @@ button:not(:disabled):active,
                 <button type="button" class="ob-pace-chip" data-pace="0.75">0.75 lb / week</button>
                 <button type="button" class="ob-pace-chip" data-pace="1">1 lb / week</button>
               </div>
+              <div class="ob-target-wt-wrap">
+                <label class="ob-pace-title" for="ob-target-wt-lose">Target weight (optional)</label>
+                <input class="fi ob-target-wt" id="ob-target-wt-lose" inputmode="decimal" placeholder="e.g. 165 lbs" autocomplete="off" aria-describedby="ob-target-wt-lose-h"/>
+                <p class="ob-target-wt-hint" id="ob-target-wt-lose-h">A gentle anchor—not required to start.</p>
+              </div>
             </div>
           </div>
           <div class="ob-goal-block ob-goal-block--paced" data-goal="Gain muscle">
             <div class="ob-goal-head">
-              <span class="chip" tabindex="0" role="button" data-v="Gain muscle"><span class="ob-pick-copy"><span class="ob-pick-main">Gain muscle</span><span class="ob-pick-sub">Training-aware portions</span></span></span>
+              <span class="chip" tabindex="0" role="button" data-v="Gain muscle"><span class="ob-pick-copy"><span class="ob-pick-main">Gain muscle</span><span class="ob-pick-sub">Gradual strength, realistic plates</span></span></span>
             </div>
             <div class="ob-goal-pace" aria-hidden="true">
               <div class="ob-pace-title">Target pace</div>
@@ -1259,6 +1288,15 @@ button:not(:disabled):active,
                 <button type="button" class="ob-pace-chip sel" data-pace="0.5">0.5 lb / week</button>
                 <button type="button" class="ob-pace-chip" data-pace="0.75">0.75 lb / week</button>
                 <button type="button" class="ob-pace-chip" data-pace="1">1 lb / week</button>
+              </div>
+              <div class="ob-muscle-em-wrap">
+                <div class="ob-pace-title">Emphasis (optional)</div>
+                <div class="ob-muscle-em-grid" role="group" aria-label="How you want training to feel">
+                  <button type="button" class="ob-muscle-em-chip sel" data-muscle-em="General fitness">General fitness</button>
+                  <button type="button" class="ob-muscle-em-chip" data-muscle-em="Strength">Strength</button>
+                  <button type="button" class="ob-muscle-em-chip" data-muscle-em="Size">Size</button>
+                  <button type="button" class="ob-muscle-em-chip" data-muscle-em="Athletic performance">Athletic performance</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1274,12 +1312,16 @@ button:not(:disabled):active,
                 <button type="button" class="ob-pace-chip" data-pace="0.75">0.75 lb / week</button>
                 <button type="button" class="ob-pace-chip" data-pace="1">1 lb / week</button>
               </div>
+              <div class="ob-target-wt-wrap">
+                <label class="ob-pace-title" for="ob-target-wt-gain">Target weight (optional)</label>
+                <input class="fi ob-target-wt" id="ob-target-wt-gain" inputmode="decimal" placeholder="e.g. 185 lbs" autocomplete="off" aria-describedby="ob-target-wt-gain-h"/>
+                <p class="ob-target-wt-hint" id="ob-target-wt-gain-h">Skip this if a number does not feel helpful yet.</p>
+              </div>
             </div>
           </div>
           <div class="ob-goal-block" data-goal="Body recomp">
             <div class="ob-goal-head">
-              <span class="chip" tabindex="0" role="button" data-v="Body recomp"><span class="ob-pick-copy"><span class="ob-pick-main">Body recomp</span><span class="ob-pick-sub">Build muscle while reducing body fat</span></span></span>
-              <button type="button" class="ib ob-info-btn" data-ob-info="recomp" aria-label="About body recomposition">i</button>
+              <span class="chip" tabindex="0" role="button" data-v="Body recomp"><span class="ob-pick-copy"><span class="ob-pick-title-row"><span class="ob-pick-main">Body recomp</span><button type="button" class="ib ob-info-btn ob-info-btn--card" data-ob-info="recomp" aria-label="About body recomposition">i</button></span><span class="ob-pick-sub">Shape shifts slowly—no crash timeline</span></span></span>
             </div>
           </div>
           <div class="ob-goal-block" data-goal="Maintain weight">
@@ -1289,14 +1331,12 @@ button:not(:disabled):active,
           </div>
           <div class="ob-goal-block" data-goal="Improve energy">
             <div class="ob-goal-head">
-              <span class="chip" tabindex="0" role="button" data-v="Improve energy"><span class="ob-pick-copy"><span class="ob-pick-main">Improve energy</span><span class="ob-pick-sub">Balanced fuel across the day</span></span></span>
-              <button type="button" class="ib ob-info-btn" data-ob-info="energy" aria-label="How Arc supports energy">i</button>
+              <span class="chip" tabindex="0" role="button" data-v="Improve energy"><span class="ob-pick-copy"><span class="ob-pick-title-row"><span class="ob-pick-main">Improve energy</span><button type="button" class="ib ob-info-btn ob-info-btn--card" data-ob-info="energy" aria-label="How Arc supports energy">i</button></span><span class="ob-pick-sub">Balanced fuel across the day</span></span></span>
             </div>
           </div>
           <div class="ob-goal-block" data-goal="Eat healthier">
             <div class="ob-goal-head">
-              <span class="chip" tabindex="0" role="button" data-v="Eat healthier"><span class="ob-pick-copy"><span class="ob-pick-main">Eat healthier</span><span class="ob-pick-sub">More plants, less noise</span></span></span>
-              <button type="button" class="ib ob-info-btn" data-ob-info="healthier" aria-label="What changes with Eat healthier">i</button>
+              <span class="chip" tabindex="0" role="button" data-v="Eat healthier"><span class="ob-pick-copy"><span class="ob-pick-title-row"><span class="ob-pick-main">Eat healthier</span><button type="button" class="ib ob-info-btn ob-info-btn--card" data-ob-info="healthier" aria-label="What changes with Eat healthier">i</button></span><span class="ob-pick-sub">More plants, less noise</span></span></span>
             </div>
           </div>
         </div>
@@ -2065,6 +2105,7 @@ var ARC_COPY = {
         sub: 'Miss a meal?\nBusy day?\nEat out?\nYour week adapts without starting over.',
         visual: 'adapt',
         quote: 'Consistency matters more than perfection.',
+        quoteAfterVisual: true,
         cta: 'This feels better'
       },
       {
@@ -2084,12 +2125,12 @@ var ARC_COPY = {
       { h: 'What matters most?', s: 'Pick what fits this season—Arc adapts as you do.' },
       { h: 'How active are you usually?', s: 'This helps Arc build more accurate calorie and meal recommendations.' },
       { h: 'Your body metrics', s: 'Height, weight, age, and gender keep estimates grounded—and easy to adjust later.' },
-      { h: 'Your Arc system is ready.', s: 'Personalized structure—your numbers stay gentle.' }
+      { h: 'Your Arc system is ready.', s: 'Structure that flexes with real life.' }
     ],
     picks: {
       goal: {
-        'Lose weight': { sub: 'Steady pace, protein-forward plates' },
-        'Gain muscle': { sub: 'Training-aware portions' },
+        'Lose weight': { sub: 'Steady pace, satisfying plates' },
+        'Gain muscle': { sub: 'Gradual strength, realistic plates' },
         'Gain weight': { sub: 'Gradual surplus, nutrient-dense plates' },
         'Body recomp': { sub: 'Build muscle while reducing body fat' },
         'Maintain weight': { sub: 'Hold the line without rigidity' },
@@ -2435,6 +2476,8 @@ var useCustom   = false;
 var obStep      = 1;
 var OB_STEPS    = 5;
 var obGoalPaces = { 'Lose weight': 0.5, 'Gain muscle': 0.5, 'Gain weight': 0.5 };
+/** During onboarding, optional Gain muscle emphasis (mirrors UP.muscleGainEmphasis). */
+var obMuscleEmphasis = 'General fitness';
 var htDigits    = '';
 var recipeGenId = 0;
 var currentTab  = 'today';
@@ -2698,7 +2741,9 @@ function computeMaintenanceCalories(profile) {
   return computePhysiologyMetrics(profile).maintenance;
 }
 
-function computeRecommendedCalories(maintenance, goalRaw, paceLbWeek) {
+function computeRecommendedCalories(maintenance, goalRaw, paceLbWeek, opts) {
+  opts = opts || {};
+  var muscleEmphasis = opts.muscleEmphasis;
   var g = normalizeArcGoal(goalRaw);
   var m = Math.round(maintenance);
   if (!isFinite(m) || m <= 0) m = 2000;
@@ -2709,7 +2754,12 @@ function computeRecommendedCalories(maintenance, goalRaw, paceLbWeek) {
   } else if (g === 'Gain weight') {
     target = m + delta;
   } else if (g === 'Gain muscle') {
-    target = m + Math.max(delta, 125);
+    var floorSurplus = 95;
+    if (muscleEmphasis === 'Strength') floorSurplus = 115;
+    else if (muscleEmphasis === 'Size') floorSurplus = 155;
+    else if (muscleEmphasis === 'Athletic performance') floorSurplus = 135;
+    else if (muscleEmphasis === 'General fitness') floorSurplus = 95;
+    target = m + Math.max(delta, floorSurplus);
   } else if (g === 'Body recomp') {
     var trim = Math.min(240, Math.max(90, Math.round(delta * 0.5)));
     target = m - trim;
@@ -2724,31 +2774,120 @@ function computeRecommendedCalories(maintenance, goalRaw, paceLbWeek) {
 /** Stored daily calorie guide (goal- and pace-aware). */
 function calcTDEE() {
   var maint = computeMaintenanceCalories(UP);
-  return computeRecommendedCalories(maint, UP.goal, UP.weightGoalPaceLbWeek);
+  return computeRecommendedCalories(maint, UP.goal, UP.weightGoalPaceLbWeek, { muscleEmphasis: UP.muscleGainEmphasis });
 }
 
-// Returns recommended macros in grams based on goal and calorie target
+function arcProteinTFromProfile(goal, activity, muscleEmphasis) {
+  var g = normalizeArcGoal(goal);
+  var act = activity != null ? String(activity).trim() : '';
+  var intense = (act === 'Athlete' || act === 'Very active');
+  var t = 0.28;
+  if (intense) t += 0.14;
+  var pace = Number(UP.weightGoalPaceLbWeek);
+  if (g === 'Lose weight' && isFinite(pace) && pace >= 0.75) t += 0.05;
+  if (g === 'Gain muscle') {
+    if (muscleEmphasis === 'Strength') t += 0.07;
+    else if (muscleEmphasis === 'Size') t += 0.11;
+    else if (muscleEmphasis === 'Athletic performance') t += 0.08;
+  }
+  return Math.min(1, Math.max(0, t));
+}
+
+function arcProteinGramsPerLb(goal, activity, muscleEmphasis) {
+  var g = normalizeArcGoal(goal);
+  var minR = 0.65;
+  var maxR = 0.82;
+  if (g === 'Lose weight') { minR = 0.6; maxR = 0.9; }
+  else if (g === 'Body recomp' || g === 'Gain muscle') { minR = 0.8; maxR = 1.0; }
+  else if (g === 'Maintain weight' || g === 'Improve energy') { minR = 0.6; maxR = 0.8; }
+  else if (g === 'Gain weight') { minR = 0.65; maxR = 0.85; }
+  var t = arcProteinTFromProfile(g, activity, muscleEmphasis);
+  return minR + (maxR - minR) * t;
+}
+
+function arcProteinDailyCapGrams(weightLb, activity, goal, muscleEmphasis) {
+  var g = normalizeArcGoal(goal);
+  var act = activity != null ? String(activity).trim() : '';
+  var athlete = act === 'Athlete';
+  var very = act === 'Very active';
+  if (athlete && (g === 'Gain muscle' || g === 'Body recomp')) {
+    return Math.min(260, Math.max(175, Math.round(weightLb * 0.98)));
+  }
+  if (athlete) return Math.min(240, Math.max(165, Math.round(weightLb * 0.9)));
+  if (very) return Math.min(220, Math.max(155, Math.round(weightLb * 0.86)));
+  if (weightLb >= 260) return Math.min(215, Math.round(weightLb * 0.8));
+  if (weightLb >= 220) return Math.min(200, Math.round(weightLb * 0.82));
+  if (g === 'Gain muscle' && muscleEmphasis === 'Size') return Math.min(195, Math.round(weightLb * 0.92));
+  return Math.min(185, Math.round(weightLb * 0.82 + 28));
+}
+
+function arcRoundProteinClean(g) {
+  if (!isFinite(g) || g <= 0) return 0;
+  var step = 5;
+  var r = Math.round(g / step) * step;
+  if (r < 55) r = 55;
+  return r;
+}
+
+function arcMacroCarbShare(goal, muscleEmphasis) {
+  var g = normalizeArcGoal(goal);
+  if (g === 'Lose weight') return 0.48;
+  if (g === 'Gain muscle') {
+    if (muscleEmphasis === 'Athletic performance') return 0.56;
+    if (muscleEmphasis === 'Strength') return 0.46;
+    if (muscleEmphasis === 'Size') return 0.54;
+    return 0.52;
+  }
+  if (g === 'Gain weight') return 0.52;
+  if (g === 'Body recomp') return 0.5;
+  if (g === 'Improve energy') return 0.54;
+  return 0.5;
+}
+
+// Returns recommended macros in grams based on goal, bodyweight-aware protein, and calorie target
 function getMacroTargets(cals) {
   cals = Number(cals);
   if (!isFinite(cals) || cals <= 0) cals = getCalTarget();
   var g = normalizeArcGoal(UP.goal);
-  var goalRatios = {
-    'Lose weight':     { p: 0.35, c: 0.35, f: 0.30 },
-    'Gain muscle':     { p: 0.34, c: 0.42, f: 0.24 },
-    'Gain weight':     { p: 0.26, c: 0.48, f: 0.26 },
-    'Body recomp':     { p: 0.38, c: 0.36, f: 0.26 },
-    'Maintain weight': { p: 0.25, c: 0.50, f: 0.25 },
-    'Improve energy':  { p: 0.24, c: 0.51, f: 0.25 },
-    'Eat healthier':   { p: 0.27, c: 0.48, f: 0.25 }
-  };
-  var ratio = goalRatios[g] || goalRatios['Eat healthier'];
-  var pr = Math.round((cals * ratio.p) / 4);
-  var cr = Math.round((cals * ratio.c) / 4);
-  var fr = Math.round((cals * ratio.f) / 9);
+  var weightLb = parseFloat(UP.weight);
+  if (!isFinite(weightLb) || weightLb <= 0) weightLb = 170;
+  var activity = UP.activity || 'Moderate';
+  var muscleEm = UP.muscleGainEmphasis;
+
+  var perLb = arcProteinGramsPerLb(g, activity, muscleEm);
+  var rawP = weightLb * perLb;
+  var capG = arcProteinDailyCapGrams(weightLb, activity, g, muscleEm);
+  if (rawP > capG) rawP = capG;
+  var pr = arcRoundProteinClean(rawP);
+
+  var maxProtByCal = Math.floor((cals * 0.4) / 4);
+  if (pr > maxProtByCal) pr = arcRoundProteinClean(maxProtByCal);
+
+  var rem = cals - pr * 4;
+  if (rem < 260) {
+    pr = arcRoundProteinClean(Math.max(55, (cals - 280) / 4));
+    rem = cals - pr * 4;
+  }
+
+  var carbShare = arcMacroCarbShare(g, muscleEm);
+  var cCals = rem * carbShare;
+  var fCals = rem * (1 - carbShare);
+  var cr = Math.max(45, Math.round(cCals / 4));
+  var fr = Math.max(38, Math.round(fCals / 9));
+
+  var cur = pr * 4 + cr * 4 + fr * 9;
+  var diff = cals - cur;
+  if (Math.abs(diff) >= 10) {
+    cr = Math.max(45, cr + Math.round(diff / 8));
+    cur = pr * 4 + cr * 4 + fr * 9;
+    diff = cals - cur;
+    fr = Math.max(38, fr + Math.round(diff / 9));
+  }
+
   return {
-    protein: isFinite(pr) ? Math.max(0, pr) : 0,
-    carbs:   isFinite(cr) ? Math.max(0, cr) : 0,
-    fat:     isFinite(fr) ? Math.max(0, fr) : 0
+    protein: isFinite(pr) ? pr : 0,
+    carbs: isFinite(cr) ? cr : 0,
+    fat: isFinite(fr) ? fr : 0
   };
 }
 
@@ -4516,7 +4655,11 @@ function buildArcGoalNutritionDirective() {
   var pace = UP.weightGoalPaceLbWeek;
   var lines = [];
   if (pace != null && isFinite(Number(pace)) && (g === 'Lose weight' || g === 'Gain muscle' || g === 'Gain weight')) {
-    lines.push('Weight-change pacing preference: ~' + pace + ' lb/week (already reflected in calorie targets as an estimate—not a promise).');
+    lines.push('Weight-change pacing preference: ~' + pace + ' lb/week (already reflected in calorie targets as a rough estimate—not a promise).');
+  }
+  var gtw = Number(UP.goalTargetWeightLb);
+  if ((g === 'Lose weight' || g === 'Gain weight') && isFinite(gtw) && gtw > 0) {
+    lines.push('Optional anchor weight for gentle horizon planning: ~' + gtw + ' lbs (context only—individual variation is normal).');
   }
   if (g === 'Eat healthier') {
     lines.push('Ingredient emphasis: prioritize minimally processed foods, colorful produce, fiber, and nutrient density while keeping flavors satisfying.');
@@ -4525,10 +4668,13 @@ function buildArcGoalNutritionDirective() {
     lines.push('Energy cadence: favor steady portions, gentle carbohydrate distribution, and satisfying meals without extreme restriction unless dietary compliance requires it.');
   }
   if (g === 'Body recomp') {
-    lines.push('Recomposition framing: high-protein satisfying plates; calories sit near maintenance with a slight deficit feel; recovery-friendly structure.');
+    lines.push('Recomposition framing: satisfying protein-aware plates; calories sit near maintenance with a slight deficit feel; recovery-friendly structure.');
   }
   if (g === 'Gain muscle') {
-    lines.push('Muscle-building week: modest calorie surplus with protein-forward mains and practical grocery repeats.');
+    lines.push('Muscle-building week: modest calorie surplus with satisfying mains and practical grocery repeats.');
+    if (UP.muscleGainEmphasis) {
+      lines.push('Training emphasis (optional): ' + UP.muscleGainEmphasis + ' — used as a soft bias toward portions and balance, not a performance promise.');
+    }
   }
   if (g === 'Gain weight') {
     lines.push('Gradual gain: emphasize nutrient-dense add-ons (whole grains, healthy fats, lean proteins) rather than ultra-processed fillers.');
@@ -6562,6 +6708,25 @@ function groceryEmphasisLine(goal, budget) {
   return base;
 }
 
+function parseOptionalGoalWeightLbs(raw) {
+  if (raw == null) return null;
+  var s = String(raw).replace(/,/g, '').replace(/lbs?/gi, '').trim();
+  if (!s) return null;
+  var n = parseFloat(s);
+  if (!isFinite(n) || n < 50 || n > 600) return null;
+  return Math.round(n * 10) / 10;
+}
+
+function syncMuscleEmForBlock(block, emVal) {
+  if (!block) return;
+  var chips = block.querySelectorAll('.ob-muscle-em-chip');
+  if (!chips.length) return;
+  var v = emVal || 'General fitness';
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].classList.toggle('sel', String(chips[i].getAttribute('data-muscle-em')) === v);
+  }
+}
+
 function collectDraftProfileFromOb() {
   var name = (el('ob-first-name') && el('ob-first-name').value || '').trim();
   var goal = gChip('chip-goal') || 'Eat healthier';
@@ -6578,6 +6743,22 @@ function collectDraftProfileFromOb() {
     pace = obGoalPaces[goal];
     if (pace == null || !isFinite(Number(pace))) pace = 0.5;
   }
+  var gn = normalizeArcGoal(goal);
+  var goalTargetWeightLb = null;
+  if (gn === 'Lose weight') {
+    var inpL = el('ob-target-wt-lose');
+    goalTargetWeightLb = parseOptionalGoalWeightLbs(inpL && inpL.value);
+  } else if (gn === 'Gain weight') {
+    var inpG = el('ob-target-wt-gain');
+    goalTargetWeightLb = parseOptionalGoalWeightLbs(inpG && inpG.value);
+  }
+  var muscleGainEmphasis = null;
+  if (gn === 'Gain muscle') {
+    var mb = document.querySelector('#chip-goal .ob-goal-block[data-goal="Gain muscle"]');
+    var sm = mb && mb.querySelector('.ob-muscle-em-chip.sel');
+    muscleGainEmphasis = sm ? String(sm.getAttribute('data-muscle-em') || '') : obMuscleEmphasis;
+    if (!muscleGainEmphasis) muscleGainEmphasis = 'General fitness';
+  }
   return {
     name: name,
     goal: goal,
@@ -6587,7 +6768,9 @@ function collectDraftProfileFromOb() {
     sex: sex,
     heightRaw: htRaw,
     heightParse: hp,
-    weightGoalPaceLbWeek: pace
+    weightGoalPaceLbWeek: pace,
+    goalTargetWeightLb: goalTargetWeightLb,
+    muscleGainEmphasis: muscleGainEmphasis
   };
 }
 
@@ -6599,18 +6782,28 @@ function nutritionPreviewFromDraft(draft) {
     activity: draft.activity,
     goal: normalizeArcGoal(draft.goal),
     weightGoalPaceLbWeek: draft.weightGoalPaceLbWeek,
+    muscleGainEmphasis: draft.muscleGainEmphasis,
     heightInches: draft.heightParse && draft.heightParse.ok ? draft.heightParse.inches : NaN,
     height: draft.heightParse && draft.heightParse.ok ? draft.heightParse.display : ''
   };
   var maint = computeMaintenanceCalories(profile);
-  var target = computeRecommendedCalories(maint, profile.goal, profile.weightGoalPaceLbWeek);
   var savedG = UP.goal;
   var savedP = UP.weightGoalPaceLbWeek;
+  var savedW = UP.weight;
+  var savedAct = UP.activity;
+  var savedMuscle = UP.muscleGainEmphasis;
   UP.goal = profile.goal;
   UP.weightGoalPaceLbWeek = profile.weightGoalPaceLbWeek;
+  UP.weight = String(profile.weight);
+  UP.activity = profile.activity;
+  UP.muscleGainEmphasis = profile.muscleGainEmphasis;
+  var target = computeRecommendedCalories(maint, profile.goal, profile.weightGoalPaceLbWeek, { muscleEmphasis: profile.muscleGainEmphasis });
   var macros = getMacroTargets(target);
   UP.goal = savedG;
   UP.weightGoalPaceLbWeek = savedP;
+  UP.weight = savedW;
+  UP.activity = savedAct;
+  UP.muscleGainEmphasis = savedMuscle;
   return { maintenance: maint, target: target, macros: macros };
 }
 
@@ -6647,12 +6840,11 @@ function refreshObSummaryPanel() {
   var oh = el('ob-h');
   if (oh) oh.textContent = hText;
   if (lead) {
-    lead.textContent = draft.name
-      ? ('A calm foundation for ' + draft.name + '—shape details anytime in Preferences.')
-      : 'A calm foundation—shape details anytime in Preferences.';
+    var leads = ['Adaptive, not rigid.', 'Built to flex with real life.', 'Sustainable structure.'];
+    lead.textContent = leads[Math.floor(Math.random() * leads.length)];
   }
 
-  var mealsN = inferMealsDefault(draft.goal, draft.activity);
+  var mealsN = inferMealsDefault(draft.goal, draft.activity, draft.muscleGainEmphasis);
   var nv = null;
   if (draft.heightParse && draft.heightParse.ok && isFinite(draft.weight) && draft.weight > 0 && isFinite(draft.age)) {
     nv = nutritionPreviewFromDraft(draft);
@@ -6664,31 +6856,35 @@ function refreshObSummaryPanel() {
   var goalLabel = normalizeArcGoal(draft.goal);
   var paceNote = '';
   if (obGoalsNeedPace(goalLabel) && draft.weightGoalPaceLbWeek != null) {
-    paceNote = ' · ~' + draft.weightGoalPaceLbWeek + ' lb/week pace (estimate)';
+    paceNote = ' · ~' + draft.weightGoalPaceLbWeek + ' lb/wk';
+  }
+  var muscleNote = '';
+  if (goalLabel === 'Gain muscle' && draft.muscleGainEmphasis) {
+    muscleNote = ' · ' + draft.muscleGainEmphasis.toLowerCase();
   }
 
   var html = '';
-  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Calorie target</span><span class="ob-sum-val">' + (nv ? Math.round(nv.target).toLocaleString(undefined) + ' kcal/day' : '—') + '</span><span class="ob-sum-note">A gentle guide—not something to chase perfectly every day.</span></div>';
-  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Protein target</span><span class="ob-sum-val">' + (nv ? Math.round(nv.macros.protein) + ' g/day' : '—') + '</span><span class="ob-sum-note">Keeps plates anchored and satisfying.</span></div>';
-  html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Goals</span><span class="ob-sum-val" style="font-size:15px">' + goalLabel + paceNote + '</span></div>';
-  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Activity</span><span class="ob-sum-val" style="font-size:15px">' + activityDisplayLabel(draft.activity) + '</span><span class="ob-sum-note">Informs maintenance and portions.</span></div>';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Calorie target</span><span class="ob-sum-val">' + (nv ? Math.round(nv.target).toLocaleString(undefined) + ' kcal/day' : '—') + '</span><span class="ob-sum-note">A gentle estimate—not a daily score.</span></div>';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Protein target</span><span class="ob-sum-val">' + (nv ? Math.round(nv.macros.protein) + ' g/day' : '—') + '</span><span class="ob-sum-note">Enough to support satisfying plates.</span></div>';
+  html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Goals</span><span class="ob-sum-val" style="font-size:15px">' + goalLabel + paceNote + muscleNote + '</span></div>';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Activity</span><span class="ob-sum-val" style="font-size:15px">' + activityDisplayLabel(draft.activity) + '</span><span class="ob-sum-note">Anchors your maintenance estimate.</span></div>';
   html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Meal structure</span><span class="ob-sum-val" style="font-size:15px">' + mealStructureSummary(mealsN, draft.goal) + '</span></div>';
-  html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Grocery emphasis</span><span class="ob-sum-val" style="font-size:15px">' + groceryEmphasisLine(draft.goal, 'Moderate') + '</span></div>';
+  html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Groceries</span><span class="ob-sum-val" style="font-size:15px">' + groceryEmphasisLine(draft.goal, 'Moderate') + '</span></div>';
 
-  if (goalLabel === 'Lose weight' || goalLabel === 'Gain weight') {
-    var pace = draft.weightGoalPaceLbWeek || 0.5;
-    var refLb = 15;
-    var mid = refLb / pace;
-    var low = Math.max(6, Math.round(mid * 0.82));
-    var high = Math.round(mid * 1.28);
-    var verb = goalLabel === 'Lose weight' ? 'losing' : 'gaining';
-    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Estimated pacing</span><p class="ob-sum-prose">At roughly <strong>' + pace + ' lb/week</strong>, <strong>' + verb + ' ~' + refLb + ' lbs</strong> may take on the order of <strong>' + low + '–' + high + ' weeks</strong> for many people—real life varies week to week.</p></div>';
+  if ((goalLabel === 'Lose weight' || goalLabel === 'Gain weight') && draft.goalTargetWeightLb != null && isFinite(draft.weight) && draft.weight > 0) {
+    var deltaLb = Math.abs(draft.weight - draft.goalTargetWeightLb);
+    if (deltaLb >= 3) {
+      var paceW = draft.weightGoalPaceLbWeek || 0.5;
+      var estWk = Math.max(4, Math.round(deltaLb / paceW));
+      var verb = goalLabel === 'Lose weight' ? 'losing' : 'gaining';
+      html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Typical timeline</span><p class="ob-sum-prose">At your selected pace, <strong>' + verb + ' ~' + Math.round(deltaLb) + ' lbs</strong> may take <strong>around ' + estWk + ' weeks</strong> for many people—real life varies, and this is not a promise.</p></div>';
+    }
   } else if (goalLabel === 'Body recomp') {
-    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Sustainable focus</span><p class="ob-sum-prose">Arc will prioritize high protein intake, recovery-friendly structure, and consistency—without aggressive timelines.</p></div>';
+    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Approach</span><span class="ob-sum-val" style="font-size:15px">Patient structure, satisfying plates</span><span class="ob-sum-note">No crash timelines—just steady weeks.</span></div>';
   }
 
   if (draft.activity === 'Sedentary' || draft.activity === 'Light') {
-    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Supportive movement</span><p class="ob-sum-prose">Short walks, simple resistance training a few times weekly, or playful movement snacks can quietly support how you feel—optional, never a lecture.</p></div>';
+    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Movement</span><p class="ob-sum-prose">Short walks or light strength a few days a week can quietly support how you feel—always optional.</p></div>';
   }
 
   grid.innerHTML = html;
@@ -6709,13 +6905,38 @@ function syncObGoalUiFromDom() {
     obGoalPaces[gvx] = pc;
     syncPaceSelectionForBlock(blk, pc);
   }
+  if (normalizeArcGoal(gvx) === 'Gain muscle' && blk && blk.getAttribute('data-goal') === 'Gain muscle') {
+    var gb = cg.querySelector('.ob-goal-block[data-goal="Gain muscle"]');
+    var selEm = gb && gb.querySelector('.ob-muscle-em-chip.sel');
+    if (selEm) obMuscleEmphasis = String(selEm.getAttribute('data-muscle-em') || 'General fitness');
+    syncMuscleEmForBlock(blk, obMuscleEmphasis);
+  }
 }
 
 function setupOnboardingFlow() {
   var cg = el('chip-goal');
   if (cg) {
+    cg.addEventListener('input', function(ev) {
+      if (!ev.target.classList || !ev.target.classList.contains('ob-target-wt')) return;
+      if (obStep === 4) refreshObNutritionPreview();
+      if (obStep === 5) refreshObSummaryPanel();
+    });
     cg.addEventListener('click', function(ev) {
       if (ev.target.closest('.ob-info-btn')) return;
+      var musChip = ev.target.closest('.ob-muscle-em-chip');
+      if (musChip && cg.contains(musChip)) {
+        var blkM = musChip.closest('.ob-goal-block');
+        if (blkM && blkM.getAttribute('data-goal') === 'Gain muscle') {
+          var sibs = blkM.querySelectorAll('.ob-muscle-em-chip');
+          for (var mi = 0; mi < sibs.length; mi++) sibs[mi].classList.remove('sel');
+          musChip.classList.add('sel');
+          obMuscleEmphasis = String(musChip.getAttribute('data-muscle-em') || 'General fitness');
+          if (obStep === 4) refreshObNutritionPreview();
+          if (obStep === 5) refreshObSummaryPanel();
+          ev.stopPropagation();
+          return;
+        }
+      }
       var paceChip = ev.target.closest('.ob-pace-chip');
       if (paceChip) {
         var blockPc = paceChip.closest('.ob-goal-block');
@@ -6731,6 +6952,7 @@ function setupOnboardingFlow() {
       }
       var chip = ev.target.closest('.chip[data-v]');
       if (!chip || !cg.contains(chip)) return;
+      if (ev.target.closest('.ob-info-btn')) return;
       var blocks = cg.querySelectorAll('.ob-goal-block');
       for (var i = 0; i < blocks.length; i++) blocks[i].classList.remove('is-selected');
       var block = chip.closest('.ob-goal-block');
@@ -6746,6 +6968,9 @@ function setupOnboardingFlow() {
           obGoalPaces[gv] = pace;
         }
         if (block) syncPaceSelectionForBlock(block, pace);
+      }
+      if (normalizeArcGoal(gv) === 'Gain muscle' && block) {
+        syncMuscleEmForBlock(block, obMuscleEmphasis);
       }
       if (obStep === 4) refreshObNutritionPreview();
       if (obStep === 5) refreshObSummaryPanel();
@@ -6812,12 +7037,12 @@ function openObInfoSheet(kind) {
     title = 'How Arc approaches body recomposition';
     bodyHtml =
       '<p>Arc supports body recomposition through:</p><ul>' +
-      '<li>high-protein nutrition</li>' +
+      '<li>steady, satisfying protein</li>' +
       '<li>sustainable calorie targets</li>' +
       '<li>recovery-aware meal structure</li>' +
       '<li>consistency-focused planning</li>' +
       '</ul>' +
-      '<p>Typical body recomposition works best alongside progressive resistance training, roughly 0.8–1.2g protein per lb of body weight, maintenance or slight calorie deficit, and long-term consistency.</p>';
+      '<p>Most people get the best long-term results alongside steady training, roughly <strong>0.8–1.0g protein per lb</strong> of body weight, a sustainable calorie rhythm, and patience—not weekly perfection.</p>';
   } else if (kind === 'energy') {
     title = 'How Arc supports energy';
     bodyHtml =
@@ -6962,8 +7187,9 @@ function finishOB() {
   UP.goal = normalizeArcGoal(draft.goal || 'Eat healthier');
   UP.weightGoalPaceLbWeek = obGoalsNeedPace(UP.goal) ? (draft.weightGoalPaceLbWeek != null ? draft.weightGoalPaceLbWeek : 0.5) : null;
 
+  UP.muscleGainEmphasis = UP.goal === 'Gain muscle' ? (draft.muscleGainEmphasis || 'General fitness') : null;
+
   UP.activity = draft.activity || 'Moderate';
-  UP.meals = inferMealsDefault(UP.goal, UP.activity);
 
   UP.restrictions = ['None'];
   UP.budget = 'Moderate';
@@ -6982,6 +7208,7 @@ function finishOB() {
   UP.age = String(draft.age);
   UP.sex = draft.sex || 'Prefer not to say';
   UP.weight = String(draft.weight);
+  UP.goalTargetWeightLb = (UP.goal === 'Lose weight' || UP.goal === 'Gain weight') ? draft.goalTargetWeightLb : null;
 
   var hpFinal = draft.heightParse;
   if (hpFinal && hpFinal.ok) {
@@ -6993,6 +7220,7 @@ function finishOB() {
   if (!Array.isArray(UP.cuisines)) UP.cuisines = [];
 
   applySafeProfileDefaults(UP);
+  UP.meals = inferMealsDefault(UP.goal, UP.activity, UP.muscleGainEmphasis);
   UP.tdee = calcTDEE();
   UP.macros = getMacroTargets(getCalTarget());
 
@@ -7222,12 +7450,14 @@ function normalizeBudgetValue(v) {
   return VALID_BUDGETS[key] ? key : 'Moderate';
 }
 
-function inferMealsDefault(goal, activity) {
+function inferMealsDefault(goal, activity, muscleEmphasis) {
   var g = normalizeArcGoal(goal);
   var a = activity != null ? String(activity).trim() : '';
   var hi = (a === 'Moderate' || a === 'Very active' || a === 'Athlete');
+  var me = muscleEmphasis != null ? muscleEmphasis : UP.muscleGainEmphasis;
   if (g === 'Improve energy') return '4';
   if ((g === 'Gain muscle' || g === 'Body recomp' || g === 'Gain weight') && hi) return '4';
+  if (g === 'Gain muscle' && (me === 'Size' || me === 'Athletic performance')) return '4';
   return '3';
 }
 
@@ -7253,10 +7483,13 @@ function applySafeProfileDefaults(p) {
     else p.weightGoalPaceLbWeek = Math.min(1, Math.max(0.25, wp));
   }
 
+  if (ngGoal !== 'Gain muscle') p.muscleGainEmphasis = null;
+  else if (p.muscleGainEmphasis == null || String(p.muscleGainEmphasis).trim() === '') p.muscleGainEmphasis = 'General fitness';
+
   if (p.activity == null || String(p.activity).trim() === '' || !VALID_ACTIVITIES[p.activity]) p.activity = 'Moderate';
 
   var mKey = p.meals != null ? String(p.meals).trim() : '';
-  if (!mKey || !SLOT_SETS[mKey]) p.meals = inferMealsDefault(p.goal, p.activity);
+  if (!mKey || !SLOT_SETS[mKey]) p.meals = inferMealsDefault(p.goal, p.activity, p.muscleGainEmphasis);
 
   if (p.skill == null || String(p.skill).trim() === '') p.skill = 'Home cook';
   p.budget = normalizeBudgetValue(p.budget);
@@ -7273,6 +7506,17 @@ function applySafeProfileDefaults(p) {
 
   var w0 = parseFloat(p.weight);
   if (!isFinite(w0) || !(w0 > 0)) p.weight = 170;
+
+  if (ngGoal !== 'Lose weight' && ngGoal !== 'Gain weight') p.goalTargetWeightLb = null;
+  else {
+    var gtw = Number(p.goalTargetWeightLb);
+    if (!isFinite(gtw) || gtw < 50 || gtw > 600) p.goalTargetWeightLb = null;
+    else {
+      var cw0 = parseFloat(p.weight);
+      if (ngGoal === 'Lose weight' && isFinite(cw0) && gtw >= cw0 - 0.5) p.goalTargetWeightLb = null;
+      if (ngGoal === 'Gain weight' && isFinite(cw0) && gtw <= cw0 + 0.5) p.goalTargetWeightLb = null;
+    }
+  }
 
   var age0 = parseInt(p.age, 10);
   if (!isFinite(age0) || age0 < 10 || age0 > 100) p.age = '30';
@@ -11132,17 +11376,27 @@ function renderIntroSlide() {
   var stage = el('intro-stage');
   if (!stage) return;
   var slide = INTRO_SLIDES[introState.idx] || INTRO_SLIDES[0];
-  var quoteHtml = slide.quote
-    ? '<p class="intro-quote intro-reveal-3">' + shopEsc(slide.quote) + '</p>'
-    : '';
-  var visClass = slide.quote ? 'intro-reveal-4' : 'intro-reveal-3';
+  var quoteAfter = !!slide.quoteAfterVisual;
+  var quoteHtmlBefore = '';
+  var quoteHtmlAfter = '';
+  if (slide.quote) {
+    var qEsc = shopEsc(slide.quote);
+    if (quoteAfter) {
+      quoteHtmlAfter = '<p class="intro-quote intro-quote--below intro-reveal-5">' + qEsc + '</p>';
+    } else {
+      quoteHtmlBefore = '<p class="intro-quote intro-reveal-3">' + qEsc + '</p>';
+    }
+  }
+  var visClass = (!slide.quote || quoteAfter) ? 'intro-reveal-3' : 'intro-reveal-4';
+  var adaptExtra = slide.visual === 'adapt' ? ' intro-visual--adapt' : '';
   stage.innerHTML =
     '<div class="intro-copy-block">' +
     '<h1 class="intro-title intro-reveal-1">' + shopEsc(slide.title).replace(/\n/g, '<br>') + '</h1>' +
     '<p class="intro-sub intro-reveal-2">' + shopEsc(slide.sub).replace(/\n/g, '<br>') + '</p>' +
-    quoteHtml +
+    quoteHtmlBefore +
     '</div>' +
-    '<div class="intro-visual-canvas ' + visClass + '">' + buildIntroVisual(slide.visual) + '</div>';
+    '<div class="intro-visual-canvas ' + visClass + adaptExtra + '">' + buildIntroVisual(slide.visual) + quoteHtmlAfter + '</div>';
+  stage.className = 'intro-stage' + (slide.visual === 'adapt' ? ' intro-stage--adapt' : '');
   var chip = el('intro-chip');
   if (chip) chip.textContent = slide.kicker;
   var foot = el('intro-foot');
