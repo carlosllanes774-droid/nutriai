@@ -359,6 +359,63 @@ body{
 .ob-picks .chip .ob-pick-sub{display:block;font-size:13px;font-weight:500;color:var(--arc-subtext);margin-top:4px;line-height:1.35}
 .ob-picks .chip.sel .ob-pick-sub{color:var(--arc-primary-dark)}
 .ob-pick-main{font-weight:600;color:var(--arc-text)}
+.ob-card--pad{padding:20px 20px 22px}
+.ob-picks.ob-picks--stack{gap:14px}
+.ob-goal-block{border-radius:var(--r-md)}
+.ob-goal-head{display:flex;align-items:stretch;gap:10px}
+.ob-goal-head .chip{flex:1;min-height:var(--tap-min)}
+.ob-info-btn{margin-top:0;align-self:center;flex-shrink:0}
+.ob-goal-pace{max-height:0;opacity:0;overflow:hidden;transform:translateY(-4px);transition:max-height 640ms cubic-bezier(0.33,0.83,0.38,1),opacity 480ms cubic-bezier(0.22,1,0.36,1),transform 520ms cubic-bezier(0.33,0.83,0.38,1)}
+.ob-goal-block.is-selected.ob-goal-block--paced .ob-goal-pace{max-height:200px;opacity:1;transform:translateY(0);margin-top:12px}
+.ob-pace-title{font-size:10px;font-weight:700;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.1em;margin:0 0 10px 2px}
+.ob-pace-grid{display:flex;flex-wrap:wrap;gap:8px}
+.ob-pace-chip{padding:10px 12px;border-radius:999px;border:1px solid var(--arc-border);background:var(--arc-surface-2);font-size:12px;font-weight:600;color:var(--arc-subtext);cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
+.ob-pace-chip:hover{background:var(--arc-card);color:var(--arc-primary-dark)}
+.ob-pace-chip.sel{background:var(--arc-soft-primary);color:var(--arc-primary-dark);border-color:rgba(227,90,54,.28);box-shadow:0 0 0 3px rgba(227,90,54,.12)}
+.ob-micro{font-size:12px;color:var(--arc-subtext);margin-top:12px;line-height:1.45;font-weight:500}
+.ob-act-picks{display:flex;flex-direction:column;gap:12px;margin:0;padding:0}
+.ob-act-card{width:100%;position:relative;text-align:left;border-radius:var(--r-md);padding:16px 44px 16px 18px;font-size:var(--fs-body);font-weight:600;line-height:1.22;border:1px solid var(--arc-border);background:var(--arc-card);min-height:var(--tap-min);cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:6px;transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard);-webkit-tap-highlight-color:transparent}
+.ob-act-card::before{content:'';position:absolute;right:18px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;border:2px solid rgba(31,31,31,.12);transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.ob-act-card.sel::before{border-color:var(--arc-primary);background:var(--arc-primary);box-shadow:0 0 0 3px rgba(227,90,54,.2)}
+.ob-act-main{font-weight:600;color:var(--arc-text);font-size:15px;letter-spacing:-.02em}
+.ob-act-sub{font-size:13px;font-weight:500;color:var(--arc-subtext);line-height:1.38;max-width:36em}
+.ob-act-card.sel{background:linear-gradient(165deg,#fffdfb,#faf6f1);border-color:rgba(227,90,54,.22);box-shadow:0 10px 26px rgba(25,20,16,.07)}
+.ob-act-card.sel .ob-act-sub{color:var(--arc-primary-dark)}
+.ob-kpi-wrap{margin-top:18px;padding:18px 16px;border-radius:var(--r-md);background:linear-gradient(165deg,#fffdfb,#faf6f1);border:1px solid rgba(227,90,54,.14);box-shadow:0 10px 28px rgba(25,20,16,.06)}
+.ob-kpi-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--arc-primary-dark);margin-bottom:12px}
+.ob-kpi-row{display:flex;flex-wrap:wrap;gap:18px 24px;margin-bottom:12px}
+.ob-kpi-block{min-width:0;flex:1}
+.ob-kpi-lbl{font-size:11px;font-weight:600;color:var(--arc-subtext);margin-bottom:4px}
+.ob-kpi-val{font-size:28px;font-weight:700;color:var(--arc-text);letter-spacing:-.04em;font-variant-numeric:tabular-nums;transition:opacity 320ms cubic-bezier(0.22,1,0.36,1),transform 420ms cubic-bezier(0.33,0.83,0.38,1)}
+.ob-kpi-val.is-ticking{opacity:.45;transform:translateY(3px)}
+.ob-kpi-unit{font-size:13px;font-weight:600;color:var(--arc-subtext);margin-left:2px}
+.ob-kpi-note{font-size:12px;line-height:1.5;color:var(--arc-subtext);margin:0;font-weight:500}
+.ob-kpi-soft{font-size:11px;line-height:1.45;color:var(--arc-subtext);margin-top:10px;font-style:italic}
+.ob-summary-h{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--arc-text);letter-spacing:-.03em;line-height:1.2;margin:0 0 6px}
+.ob-summary-lead{font-size:14px;color:var(--arc-subtext);line-height:1.5;margin:0 0 18px;font-weight:500;max-width:36em}
+.ob-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:360px){.ob-summary-grid{grid-template-columns:1fr}}
+.ob-sum-card{border-radius:16px;padding:14px 14px 13px;background:var(--arc-card);border:1px solid rgba(31,23,16,.07);box-shadow:0 6px 18px rgba(25,20,16,.05);min-height:92px;display:flex;flex-direction:column;gap:6px}
+.ob-sum-eyebrow{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--arc-subtext)}
+.ob-sum-val{font-size:17px;font-weight:700;color:var(--arc-text);letter-spacing:-.02em;line-height:1.2;font-family:Georgia,serif}
+.ob-sum-note{font-size:11px;line-height:1.4;color:var(--arc-subtext);font-weight:500}
+.ob-sum-span{grid-column:1 / -1}
+.ob-sum-prose{font-size:13px;line-height:1.5;color:var(--arc-text);font-weight:500}
+.ob-info-body ul{margin:8px 0 0;padding-left:18px;line-height:1.55;color:var(--arc-text);font-size:13px;font-weight:500}
+.ob-info-body p{margin:0 0 10px;line-height:1.55;font-size:13px;color:var(--arc-text);font-weight:500}
+.ob-info-title{font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--arc-text);margin:0 0 10px;letter-spacing:-.02em}
+@media (prefers-reduced-motion:no-preference){
+  .ob-step.active.ob-step--enter .ob-card--pad{animation:obCardRise 720ms cubic-bezier(0.22,1,0.36,1) both}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card{animation:obPieceIn 560ms cubic-bezier(0.33,0.83,0.38,1) backwards}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card:nth-child(1){animation-delay:45ms}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card:nth-child(2){animation-delay:95ms}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card:nth-child(3){animation-delay:140ms}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card:nth-child(4){animation-delay:180ms}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card:nth-child(5){animation-delay:220ms}
+  .ob-step.active.ob-step--enter .ob-summary-grid .ob-sum-card:nth-child(6){animation-delay:255ms}
+}
+@keyframes obCardRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes obPieceIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* FORMS */
 .fl{margin-bottom:22px}
@@ -1155,58 +1212,145 @@ button:not(:disabled):active,
   </div>
 </div>
 
-<!-- ONBOARDING — four taps, defaults fill the rest -->
+<!-- ONBOARDING — adaptive Arc setup -->
 <div class="screen" id="ob">
   <div class="ob-top">
     <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
-    <div class="ob-dots"><div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div><div class="ob-dot" id="od4"></div></div>
-    <div class="ob-step-n" id="ob-step-n">Step 1 of 4</div>
-    <div class="ob-heading" id="ob-h">What matters most?</div>
-    <div class="ob-sub" id="ob-s">Pick the goal that best matches this season of your life.</div>
+    <div class="ob-dots"><div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div><div class="ob-dot" id="od4"></div><div class="ob-dot" id="od5"></div></div>
+    <div class="ob-step-n" id="ob-step-n">Step 1 of 5</div>
+    <div class="ob-heading" id="ob-h">What should I call you?</div>
+    <div class="ob-sub" id="ob-s">Arc will personalize your weekly system around you.</div>
   </div>
   <div class="ob-body">
     <div class="ob-step active" id="st1">
-      <div class="ob-card">
-        <div class="chips ob-picks" id="chip-goal">
-          <span class="chip" data-v="Lose weight"><span class="ob-pick-copy"><span class="ob-pick-main">Lose weight</span><span class="ob-pick-sub">Steady pace, protein-forward plates</span></span></span>
-          <span class="chip" data-v="Build muscle"><span class="ob-pick-copy"><span class="ob-pick-main">Build muscle</span><span class="ob-pick-sub">Training-aware portions</span></span></span>
-          <span class="chip" data-v="Maintain weight"><span class="ob-pick-copy"><span class="ob-pick-main">Maintain weight</span><span class="ob-pick-sub">Hold the line without rigidity</span></span></span>
-          <span class="chip" data-v="Improve energy"><span class="ob-pick-copy"><span class="ob-pick-main">Improve energy</span><span class="ob-pick-sub">Balanced fuel across the day</span></span></span>
-          <span class="chip" data-v="Eat healthier"><span class="ob-pick-copy"><span class="ob-pick-main">Eat healthier</span><span class="ob-pick-sub">More plants, less noise</span></span></span>
+      <div class="ob-card ob-card--pad">
+        <div class="fl" style="margin-bottom:0">
+          <label class="s-lbl" for="ob-first-name">First name</label>
+          <input class="fi" id="ob-first-name" type="text" autocomplete="given-name" placeholder="Alex"/>
+          <p class="ob-micro">You can change this later.</p>
         </div>
       </div>
     </div>
     <div class="ob-step" id="st2">
-      <div class="ob-card">
-        <div class="chips ob-picks" id="chip-diet">
-          <span class="chip sel" data-v="None"><span class="ob-pick-copy"><span class="ob-pick-main">No restriction</span><span class="ob-pick-sub">Everything on the table</span></span></span>
-          <span class="chip" data-v="Vegetarian"><span class="ob-pick-copy"><span class="ob-pick-main">Vegetarian</span><span class="ob-pick-sub">No meat or fish</span></span></span>
-          <span class="chip" data-v="Vegan"><span class="ob-pick-copy"><span class="ob-pick-main">Vegan</span><span class="ob-pick-sub">Plant-only</span></span></span>
-          <span class="chip" data-v="Gluten-free"><span class="ob-pick-copy"><span class="ob-pick-main">Gluten-free</span><span class="ob-pick-sub">Wheat-free recipes</span></span></span>
-          <span class="chip" data-v="Dairy-free"><span class="ob-pick-copy"><span class="ob-pick-main">Dairy-free</span><span class="ob-pick-sub">No milk or cheese</span></span></span>
-          <span class="chip" data-v="Nut allergy"><span class="ob-pick-copy"><span class="ob-pick-main">Nut-free</span><span class="ob-pick-sub">Peanuts and tree nuts out</span></span></span>
-          <span class="chip" data-v="Halal"><span class="ob-pick-copy"><span class="ob-pick-main">Halal</span><span class="ob-pick-sub">Pork- and alcohol-free</span></span></span>
-          <span class="chip" data-v="Keto"><span class="ob-pick-copy"><span class="ob-pick-main">Keto</span><span class="ob-pick-sub">Very low carb</span></span></span>
-          <span class="chip" data-v="Paleo"><span class="ob-pick-copy"><span class="ob-pick-main">Paleo</span><span class="ob-pick-sub">Whole-food focused</span></span></span>
+      <div class="ob-card ob-card--pad" style="padding-top:16px;padding-bottom:18px">
+        <div class="chips ob-picks ob-picks--stack" id="chip-goal">
+          <div class="ob-goal-block ob-goal-block--paced" data-goal="Lose weight">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Lose weight"><span class="ob-pick-copy"><span class="ob-pick-main">Lose weight</span><span class="ob-pick-sub">Steady pace, protein-forward plates</span></span></span>
+            </div>
+            <div class="ob-goal-pace" aria-hidden="true">
+              <div class="ob-pace-title">Target pace</div>
+              <div class="ob-pace-grid" role="group" aria-label="Target pace for losing weight">
+                <button type="button" class="ob-pace-chip" data-pace="0.25">0.25 lb / week</button>
+                <button type="button" class="ob-pace-chip sel" data-pace="0.5">0.5 lb / week</button>
+                <button type="button" class="ob-pace-chip" data-pace="0.75">0.75 lb / week</button>
+                <button type="button" class="ob-pace-chip" data-pace="1">1 lb / week</button>
+              </div>
+            </div>
+          </div>
+          <div class="ob-goal-block ob-goal-block--paced" data-goal="Gain muscle">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Gain muscle"><span class="ob-pick-copy"><span class="ob-pick-main">Gain muscle</span><span class="ob-pick-sub">Training-aware portions</span></span></span>
+            </div>
+            <div class="ob-goal-pace" aria-hidden="true">
+              <div class="ob-pace-title">Target pace</div>
+              <div class="ob-pace-grid" role="group" aria-label="Target pace for gaining muscle">
+                <button type="button" class="ob-pace-chip" data-pace="0.25">0.25 lb / week</button>
+                <button type="button" class="ob-pace-chip sel" data-pace="0.5">0.5 lb / week</button>
+                <button type="button" class="ob-pace-chip" data-pace="0.75">0.75 lb / week</button>
+                <button type="button" class="ob-pace-chip" data-pace="1">1 lb / week</button>
+              </div>
+            </div>
+          </div>
+          <div class="ob-goal-block ob-goal-block--paced" data-goal="Gain weight">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Gain weight"><span class="ob-pick-copy"><span class="ob-pick-main">Gain weight</span><span class="ob-pick-sub">Gradual surplus, nutrient-dense plates</span></span></span>
+            </div>
+            <div class="ob-goal-pace" aria-hidden="true">
+              <div class="ob-pace-title">Target pace</div>
+              <div class="ob-pace-grid" role="group" aria-label="Target pace for gaining weight">
+                <button type="button" class="ob-pace-chip" data-pace="0.25">0.25 lb / week</button>
+                <button type="button" class="ob-pace-chip sel" data-pace="0.5">0.5 lb / week</button>
+                <button type="button" class="ob-pace-chip" data-pace="0.75">0.75 lb / week</button>
+                <button type="button" class="ob-pace-chip" data-pace="1">1 lb / week</button>
+              </div>
+            </div>
+          </div>
+          <div class="ob-goal-block" data-goal="Body recomp">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Body recomp"><span class="ob-pick-copy"><span class="ob-pick-main">Body recomp</span><span class="ob-pick-sub">Build muscle while reducing body fat</span></span></span>
+              <button type="button" class="ib ob-info-btn" data-ob-info="recomp" aria-label="About body recomposition">i</button>
+            </div>
+          </div>
+          <div class="ob-goal-block" data-goal="Maintain weight">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Maintain weight"><span class="ob-pick-copy"><span class="ob-pick-main">Maintain weight</span><span class="ob-pick-sub">Hold the line without rigidity</span></span></span>
+            </div>
+          </div>
+          <div class="ob-goal-block" data-goal="Improve energy">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Improve energy"><span class="ob-pick-copy"><span class="ob-pick-main">Improve energy</span><span class="ob-pick-sub">Balanced fuel across the day</span></span></span>
+              <button type="button" class="ib ob-info-btn" data-ob-info="energy" aria-label="How Arc supports energy">i</button>
+            </div>
+          </div>
+          <div class="ob-goal-block" data-goal="Eat healthier">
+            <div class="ob-goal-head">
+              <span class="chip" tabindex="0" role="button" data-v="Eat healthier"><span class="ob-pick-copy"><span class="ob-pick-main">Eat healthier</span><span class="ob-pick-sub">More plants, less noise</span></span></span>
+              <button type="button" class="ib ob-info-btn" data-ob-info="healthier" aria-label="What changes with Eat healthier">i</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="ob-step" id="st3">
-      <div class="ob-card">
-        <div class="chips ob-picks" id="chip-budget">
-          <span class="chip" data-v="Budget"><span class="ob-pick-copy"><span class="ob-pick-main">Lean week</span><span class="ob-pick-sub">Staples, repeats, lower-cost proteins</span></span></span>
-          <span class="chip sel" data-v="Moderate"><span class="ob-pick-copy"><span class="ob-pick-main">Balanced</span><span class="ob-pick-sub">A realistic mix for most kitchens</span></span></span>
-          <span class="chip" data-v="Flexible"><span class="ob-pick-copy"><span class="ob-pick-main">Flexible</span><span class="ob-pick-sub">More variety and premium picks</span></span></span>
+      <div class="ob-card ob-card--pad" style="padding-top:16px;padding-bottom:18px">
+        <div class="chips ob-act-picks" id="chip-ob-activity">
+          <button type="button" class="ob-act-card" data-v="Sedentary"><span class="ob-act-main">Sedentary</span><span class="ob-act-sub">Mostly sitting throughout the day</span></button>
+          <button type="button" class="ob-act-card" data-v="Light"><span class="ob-act-main">Lightly active</span><span class="ob-act-sub">Light movement most days — walks, errands, some stairs</span></button>
+          <button type="button" class="ob-act-card sel" data-v="Moderate"><span class="ob-act-main">Moderately active</span><span class="ob-act-sub">Exercise around 3–5 days per week</span></button>
+          <button type="button" class="ob-act-card" data-v="Very active"><span class="ob-act-main">Very active</span><span class="ob-act-sub">Hard training most days or very physical work</span></button>
+          <button type="button" class="ob-act-card" data-v="Athlete"><span class="ob-act-main">Athlete / intense training</span><span class="ob-act-sub">High-volume training or demanding sport blocks</span></button>
         </div>
       </div>
     </div>
     <div class="ob-step" id="st4">
-      <div class="ob-card">
-        <div class="chips ob-picks" id="chip-skill">
-          <span class="chip" data-v="Beginner"><span class="ob-pick-copy"><span class="ob-pick-main">Learning</span><span class="ob-pick-sub">Simple steps, forgiving recipes</span></span></span>
-          <span class="chip sel" data-v="Home cook"><span class="ob-pick-copy"><span class="ob-pick-main">Comfortable</span><span class="ob-pick-sub">Weeknight rhythm, few surprises</span></span></span>
-          <span class="chip" data-v="Confident chef"><span class="ob-pick-copy"><span class="ob-pick-main">Confident</span><span class="ob-pick-sub">Technique-forward is fine</span></span></span>
+      <div class="ob-card ob-card--pad">
+        <div class="fg2 fl">
+          <div><label class="s-lbl" for="ob-in-ht">Height</label><input class="fi" id="ob-in-ht" inputmode="numeric" placeholder="e.g. 5'8&quot;"/></div>
+          <div><label class="s-lbl" for="ob-in-wt">Weight (lbs)</label><input class="fi" id="ob-in-wt" type="number" min="50" max="700" placeholder="170"/></div>
         </div>
+        <div class="fg2 fl">
+          <div><label class="s-lbl" for="ob-in-age">Age</label><input class="fi" id="ob-in-age" type="number" min="16" max="90" placeholder="30"/></div>
+          <div><label class="s-lbl" for="ob-in-sex">Gender</label>
+            <select class="fi" id="ob-in-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
+          </div>
+        </div>
+        <div class="ob-kpi-wrap">
+          <div class="ob-kpi-eyebrow">Arc’s starting recommendation</div>
+          <div class="ob-kpi-row">
+            <div class="ob-kpi-block">
+              <div class="ob-kpi-lbl">Estimated maintenance</div>
+              <div><span class="ob-kpi-val" id="ob-kpi-maint">—</span><span class="ob-kpi-unit">cal/day</span></div>
+            </div>
+            <div class="ob-kpi-block">
+              <div class="ob-kpi-lbl">Recommended target</div>
+              <div><span class="ob-kpi-val" id="ob-kpi-target">—</span><span class="ob-kpi-unit">cal/day</span></div>
+            </div>
+          </div>
+          <div class="ob-kpi-block" style="margin-bottom:12px">
+            <div class="ob-kpi-lbl">Protein guidance</div>
+            <div><span class="ob-kpi-val" id="ob-kpi-pro" style="font-size:22px">—</span><span class="ob-kpi-unit">g/day</span></div>
+          </div>
+          <p class="ob-kpi-note">Based on your activity level, body metrics, and goals.</p>
+          <p class="ob-kpi-soft">These numbers are estimates—not medical certainty. Preferences can refine everything later.</p>
+        </div>
+      </div>
+    </div>
+    <div class="ob-step" id="st5">
+      <div class="ob-card ob-card--pad">
+        <h3 class="ob-summary-h" id="ob-sum-head">Your Arc system is ready.</h3>
+        <p class="ob-summary-lead" id="ob-sum-lead">Here’s the structure Arc will build around you.</p>
+        <div class="ob-summary-grid" id="ob-sum-grid"></div>
       </div>
     </div>
   </div>
@@ -1215,6 +1359,15 @@ button:not(:disabled):active,
     <button class="btn btn-dark" id="ob-next">Continue</button>
   </div>
   <div class="ob-err" id="ob-err"></div>
+</div>
+
+<div class="modal-bg" id="ob-info-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="ob-info-title">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="ob-info-title" id="ob-info-title"></div>
+    <div class="ob-info-body" id="ob-info-body"></div>
+    <button type="button" class="modal-cancel" id="ob-info-close">Close</button>
+  </div>
 </div>
 
 <!-- GENERATING -->
@@ -1695,7 +1848,9 @@ button:not(:disabled):active,
         <label class="s-lbl">Goal</label>
         <div class="s-chips" id="sg-goal">
           <span class="sc" data-v="Lose weight">Lose weight</span>
-          <span class="sc" data-v="Build muscle">Build muscle</span>
+          <span class="sc" data-v="Gain muscle">Gain muscle</span>
+          <span class="sc" data-v="Gain weight">Gain weight</span>
+          <span class="sc" data-v="Body recomp">Body recomp</span>
           <span class="sc" data-v="Maintain weight">Maintain weight</span>
           <span class="sc" data-v="Improve energy">Improve energy</span>
           <span class="sc" data-v="Eat healthier">Eat healthier</span>
@@ -1888,7 +2043,7 @@ var ARC_COPY = {
   tagline: 'Adaptive nutrition for real life.',
   intro: {
     chip: 'Arc · first look',
-    foot: 'Four quick choices, then your week.',
+    foot: 'A calm setup—then your week takes shape.',
     slides: [
       {
         kicker: 'DAILY FOOD NOISE',
@@ -1923,20 +2078,23 @@ var ARC_COPY = {
     ]
   },
   onboarding: {
-    foot: 'Four quick choices, then your week.',
+    foot: 'A calm setup—then your week takes shape.',
     steps: [
-      { h: 'What matters most right now?', s: 'Pick what fits this season of your life—Arc adapts as you do.' },
-      { h: 'Any lines around food?', s: 'One choice for now. You can refine everything in Preferences later.' },
-      { h: 'How should the week feel at the store?', s: 'A rough band is enough. You will shape the week before you shop.' },
-      { h: 'How much kitchen energy do you have?', s: 'We will match recipe pace to this. Change it anytime.' }
+      { h: 'What should I call you?', s: 'Arc will personalize your weekly system around you.' },
+      { h: 'What matters most?', s: 'Pick what fits this season—Arc adapts as you do.' },
+      { h: 'How active are you usually?', s: 'This helps Arc build more accurate calorie and meal recommendations.' },
+      { h: 'Your body metrics', s: 'Height, weight, age, and gender keep estimates grounded—and easy to adjust later.' },
+      { h: 'Your Arc system is ready.', s: 'Personalized structure—your numbers stay gentle.' }
     ],
     picks: {
       goal: {
-        'Lose weight': { sub: 'Gentle pace, satisfying plates' },
-        'Build muscle': { sub: 'Training-aware, steady portions' },
-        'Maintain weight': { sub: 'Steady rhythm without rigidity' },
-        'Improve energy': { sub: 'Even fuel across the day' },
-        'Eat healthier': { sub: 'More whole foods, less noise' }
+        'Lose weight': { sub: 'Steady pace, protein-forward plates' },
+        'Gain muscle': { sub: 'Training-aware portions' },
+        'Gain weight': { sub: 'Gradual surplus, nutrient-dense plates' },
+        'Body recomp': { sub: 'Build muscle while reducing body fat' },
+        'Maintain weight': { sub: 'Hold the line without rigidity' },
+        'Improve energy': { sub: 'Balanced fuel across the day' },
+        'Eat healthier': { sub: 'More plants, less noise' }
       },
       diet: {
         'None': { main: 'No restriction', sub: 'Everything on the table' },
@@ -2275,7 +2433,8 @@ var mealJournal = {};
 var locDetected = false;
 var useCustom   = false;
 var obStep      = 1;
-var OB_STEPS    = 4;
+var OB_STEPS    = 5;
+var obGoalPaces = { 'Lose weight': 0.5, 'Gain muscle': 0.5, 'Gain weight': 0.5 };
 var htDigits    = '';
 var recipeGenId = 0;
 var currentTab  = 'today';
@@ -2487,63 +2646,102 @@ function fmtPrice(base) {
   return r.sym + v.toFixed(2);
 }
 
-// ── BMR + TDEE Calculation (Mifflin-St Jeor) ─────────────────
-function calcTDEE() {
-  var wt = parseFloat(UP.weight);
-  if (!(wt > 0)) wt = 154; // lbs fallback
-  var hIn = parseFloat(UP.heightInches);
+// ── BMR + maintenance + Arc calorie target (Mifflin-St Jeor) ─────────────────
+var ACTIVITY_FACTORS_TDEE = {
+  'Sedentary':   1.2,
+  'Light':       1.375,
+  'Moderate':    1.55,
+  'Very active': 1.725,
+  'Athlete':     1.9
+};
+
+function normalizeArcGoal(goal) {
+  var g = goal != null ? String(goal).trim() : '';
+  if (g === 'Build muscle') return 'Gain muscle';
+  return g;
+}
+
+function arcDailyDeltaFromPaceLbWeek(paceLbWeek) {
+  var p = Number(paceLbWeek);
+  if (!isFinite(p) || p <= 0) p = 0.5;
+  if (p < 0.25) p = 0.25;
+  if (p > 1) p = 1;
+  return Math.round((p * 3500) / 7);
+}
+
+function computePhysiologyMetrics(profile) {
+  profile = profile || UP;
+  var wt = parseFloat(profile.weight);
+  if (!(wt > 0)) wt = 154;
+  var hIn = parseFloat(profile.heightInches);
   if (!(hIn > 0)) {
-    var hp = parseHeightInput(UP.height);
+    var hp = parseHeightInput(profile.height);
     if (hp.ok) hIn = hp.inches;
   }
   var heightCm = (hIn > 0) ? (hIn * 2.54) : 170;
   var weightKg = wt * 0.453592;
-  var age      = parseInt(UP.age, 10) || 30;
-  var sex      = (UP.sex || 'Male').toLowerCase();
-
+  var age = parseInt(profile.age, 10) || 30;
+  var sex = (profile.sex || 'Male').toLowerCase();
   var bmr;
   if (sex === 'female') {
-    // Female: (10 × weight_kg) + (6.25 × height_cm) - (5 × age) - 161
     bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
   } else {
-    // Male: (10 × weight_kg) + (6.25 × height_cm) - (5 × age) + 5
     bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
   }
+  var actKey = profile.activity || 'Moderate';
+  var factor = ACTIVITY_FACTORS_TDEE[actKey] || 1.55;
+  var maintenance = Math.round(bmr * factor);
+  return { bmr: bmr, maintenance: maintenance, weightKg: weightKg, heightCm: heightCm, age: age, sex: sex, activityFactor: factor };
+}
 
-  var actFactors = {
-    'Sedentary':   1.2,
-    'Light':       1.375,
-    'Moderate':    1.55,
-    'Very active': 1.725,
-    'Athlete':     1.9
-  };
-  var factor = actFactors[UP.activity] || 1.55;
-  var tdee   = Math.round(bmr * factor);
+function computeMaintenanceCalories(profile) {
+  return computePhysiologyMetrics(profile).maintenance;
+}
 
-  // Goal adjustment
-  var goalAdj = {
-    'Lose weight':    -500,
-    'Build muscle':   300,
-    'Maintain weight': 0,
-    'Improve energy':  0,
-    'Eat healthier':   0
-  };
-  var adj = goalAdj[UP.goal] || 0;
-  return Math.max(1200, Math.min(5500, tdee + adj));
+function computeRecommendedCalories(maintenance, goalRaw, paceLbWeek) {
+  var g = normalizeArcGoal(goalRaw);
+  var m = Math.round(maintenance);
+  if (!isFinite(m) || m <= 0) m = 2000;
+  var delta = arcDailyDeltaFromPaceLbWeek(paceLbWeek);
+  var target;
+  if (g === 'Lose weight') {
+    target = m - delta;
+  } else if (g === 'Gain weight') {
+    target = m + delta;
+  } else if (g === 'Gain muscle') {
+    target = m + Math.max(delta, 125);
+  } else if (g === 'Body recomp') {
+    var trim = Math.min(240, Math.max(90, Math.round(delta * 0.5)));
+    target = m - trim;
+  } else if (g === 'Maintain weight' || g === 'Improve energy' || g === 'Eat healthier') {
+    target = m;
+  } else {
+    target = m;
+  }
+  return Math.max(1200, Math.min(5500, Math.round(target)));
+}
+
+/** Stored daily calorie guide (goal- and pace-aware). */
+function calcTDEE() {
+  var maint = computeMaintenanceCalories(UP);
+  return computeRecommendedCalories(maint, UP.goal, UP.weightGoalPaceLbWeek);
 }
 
 // Returns recommended macros in grams based on goal and calorie target
 function getMacroTargets(cals) {
   cals = Number(cals);
   if (!isFinite(cals) || cals <= 0) cals = getCalTarget();
+  var g = normalizeArcGoal(UP.goal);
   var goalRatios = {
-    'Lose weight':    {p:0.35, c:0.35, f:0.30},
-    'Build muscle':   {p:0.30, c:0.45, f:0.25},
-    'Maintain weight':{p:0.25, c:0.50, f:0.25},
-    'Improve energy': {p:0.20, c:0.55, f:0.25},
-    'Eat healthier':  {p:0.25, c:0.50, f:0.25}
+    'Lose weight':     { p: 0.35, c: 0.35, f: 0.30 },
+    'Gain muscle':     { p: 0.34, c: 0.42, f: 0.24 },
+    'Gain weight':     { p: 0.26, c: 0.48, f: 0.26 },
+    'Body recomp':     { p: 0.38, c: 0.36, f: 0.26 },
+    'Maintain weight': { p: 0.25, c: 0.50, f: 0.25 },
+    'Improve energy':  { p: 0.24, c: 0.51, f: 0.25 },
+    'Eat healthier':   { p: 0.27, c: 0.48, f: 0.25 }
   };
-  var ratio = goalRatios[UP.goal] || goalRatios['Eat healthier'];
+  var ratio = goalRatios[g] || goalRatios['Eat healthier'];
   var pr = Math.round((cals * ratio.p) / 4);
   var cr = Math.round((cals * ratio.c) / 4);
   var fr = Math.round((cals * ratio.f) / 9);
@@ -4311,6 +4509,32 @@ function formatNutritionPromptBlock(mt, calT, macros) {
   lines.push('If the user\'s meal pattern does not include a slot for a category (e.g. no snack slots), use the fallback targets shown for that category so portion sizes stay realistic.');
   lines.push('SANITY CHECK: 7 Breakfast + 7 Lunch + 7 Dinner + 7 Snack are a WEEK of options — each single recipe still MUST hit its category target so any day built from these recipes can hit daily totals.');
   return lines.join('\n') + '\n';
+}
+
+function buildArcGoalNutritionDirective() {
+  var g = normalizeArcGoal(UP.goal);
+  var pace = UP.weightGoalPaceLbWeek;
+  var lines = [];
+  if (pace != null && isFinite(Number(pace)) && (g === 'Lose weight' || g === 'Gain muscle' || g === 'Gain weight')) {
+    lines.push('Weight-change pacing preference: ~' + pace + ' lb/week (already reflected in calorie targets as an estimate—not a promise).');
+  }
+  if (g === 'Eat healthier') {
+    lines.push('Ingredient emphasis: prioritize minimally processed foods, colorful produce, fiber, and nutrient density while keeping flavors satisfying.');
+  }
+  if (g === 'Improve energy') {
+    lines.push('Energy cadence: favor steady portions, gentle carbohydrate distribution, and satisfying meals without extreme restriction unless dietary compliance requires it.');
+  }
+  if (g === 'Body recomp') {
+    lines.push('Recomposition framing: high-protein satisfying plates; calories sit near maintenance with a slight deficit feel; recovery-friendly structure.');
+  }
+  if (g === 'Gain muscle') {
+    lines.push('Muscle-building week: modest calorie surplus with protein-forward mains and practical grocery repeats.');
+  }
+  if (g === 'Gain weight') {
+    lines.push('Gradual gain: emphasize nutrient-dense add-ons (whole grains, healthy fats, lean proteins) rather than ultra-processed fillers.');
+  }
+  if (!lines.length) return '';
+  return '\nARC GOAL NOTES:\n- ' + lines.join('\n- ') + '\n';
 }
 
 function showScreen(id, dir) {
@@ -6135,7 +6359,8 @@ function parseHeightInput(rawHeight) {
 }
 
 function setupHeightInput() {
-  var htI = el('in-ht');
+  var htI = el('ob-in-ht');
+  if (!htI) htI = el('in-ht');
   if (!htI) return;
 
   htI.addEventListener('input', function() {
@@ -6293,21 +6518,408 @@ function pulse(gid) {
   setTimeout(function() { e.style.cssText = ''; }, 2200);
 }
 
+function obGoalsNeedPace(goal) {
+  var g = normalizeArcGoal(goal);
+  return g === 'Lose weight' || g === 'Gain muscle' || g === 'Gain weight';
+}
+
+function syncPaceSelectionForBlock(block, paceVal) {
+  if (!block) return;
+  var chips = block.querySelectorAll('.ob-pace-chip');
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].classList.toggle('sel', String(chips[i].getAttribute('data-pace')) === String(paceVal));
+  }
+}
+
+function readActivityFromOb() {
+  var s = document.querySelector('#chip-ob-activity .ob-act-card.sel');
+  return s ? String(s.getAttribute('data-v') || '').trim() : '';
+}
+
+function activityDisplayLabel(act) {
+  var map = {
+    'Sedentary': 'Sedentary',
+    'Light': 'Lightly active',
+    'Moderate': 'Moderately active',
+    'Very active': 'Very active',
+    'Athlete': 'Athlete / intense training'
+  };
+  return map[act] || act || '—';
+}
+
+function mealStructureSummary(mealsStr, goal) {
+  var n = parseInt(mealsStr, 10) || 3;
+  var g = normalizeArcGoal(goal);
+  var tail = (g === 'Improve energy') ? 'Evenly spaced touches through the day.' : 'Balanced rhythm across the week.';
+  if (n >= 4) return n + ' eating occasions · ' + tail;
+  return n + ' meal rhythm · ' + tail;
+}
+
+function groceryEmphasisLine(goal, budget) {
+  var b = normalizeBudgetValue(budget);
+  var base = b === 'Budget' ? 'Lean staples & repeats' : b === 'Flexible' ? 'Room for variety & premium picks' : 'Balanced cart with practical repeats';
+  if (normalizeArcGoal(goal) === 'Eat healthier') return base + ' · whole-food leaning';
+  return base;
+}
+
+function collectDraftProfileFromOb() {
+  var name = (el('ob-first-name') && el('ob-first-name').value || '').trim();
+  var goal = gChip('chip-goal') || 'Eat healthier';
+  var activity = readActivityFromOb() || 'Moderate';
+  var wtStr = el('ob-in-wt') ? String(el('ob-in-wt').value || '').trim() : '';
+  var ageStr = el('ob-in-age') ? String(el('ob-in-age').value || '').trim() : '';
+  var sex = el('ob-in-sex') ? String(el('ob-in-sex').value || 'Prefer not to say') : 'Prefer not to say';
+  var htRaw = el('ob-in-ht') ? String(el('ob-in-ht').value || '').trim() : '';
+  var hp = parseHeightInput(htRaw);
+  var weight = parseFloat(wtStr);
+  var age = parseInt(ageStr, 10);
+  var pace = null;
+  if (obGoalsNeedPace(goal)) {
+    pace = obGoalPaces[goal];
+    if (pace == null || !isFinite(Number(pace))) pace = 0.5;
+  }
+  return {
+    name: name,
+    goal: goal,
+    activity: activity,
+    weight: weight,
+    age: age,
+    sex: sex,
+    heightRaw: htRaw,
+    heightParse: hp,
+    weightGoalPaceLbWeek: pace
+  };
+}
+
+function nutritionPreviewFromDraft(draft) {
+  var profile = {
+    weight: draft.weight,
+    age: String(draft.age),
+    sex: draft.sex,
+    activity: draft.activity,
+    goal: normalizeArcGoal(draft.goal),
+    weightGoalPaceLbWeek: draft.weightGoalPaceLbWeek,
+    heightInches: draft.heightParse && draft.heightParse.ok ? draft.heightParse.inches : NaN,
+    height: draft.heightParse && draft.heightParse.ok ? draft.heightParse.display : ''
+  };
+  var maint = computeMaintenanceCalories(profile);
+  var target = computeRecommendedCalories(maint, profile.goal, profile.weightGoalPaceLbWeek);
+  var savedG = UP.goal;
+  var savedP = UP.weightGoalPaceLbWeek;
+  UP.goal = profile.goal;
+  UP.weightGoalPaceLbWeek = profile.weightGoalPaceLbWeek;
+  var macros = getMacroTargets(target);
+  UP.goal = savedG;
+  UP.weightGoalPaceLbWeek = savedP;
+  return { maintenance: maint, target: target, macros: macros };
+}
+
+function setObAnimatedNumber(id, num) {
+  withEl(id, function(node) {
+    var v = Number(num);
+    node.classList.add('is-ticking');
+    node.textContent = (isFinite(v) && v > 0) ? Math.round(v).toLocaleString(undefined) : '—';
+    setTimeout(function() { node.classList.remove('is-ticking'); }, 420);
+  });
+}
+
+function refreshObNutritionPreview() {
+  var draft = collectDraftProfileFromOb();
+  if (!draft.heightParse || !draft.heightParse.ok || !isFinite(draft.weight) || !(draft.weight > 0) || !isFinite(draft.age)) {
+    setObAnimatedNumber('ob-kpi-maint', NaN);
+    setObAnimatedNumber('ob-kpi-target', NaN);
+    setObAnimatedNumber('ob-kpi-pro', NaN);
+    return;
+  }
+  var nv = nutritionPreviewFromDraft(draft);
+  setObAnimatedNumber('ob-kpi-maint', nv.maintenance);
+  setObAnimatedNumber('ob-kpi-target', nv.target);
+  setObAnimatedNumber('ob-kpi-pro', nv.macros.protein);
+}
+
+function refreshObSummaryPanel() {
+  var draft = collectDraftProfileFromOb();
+  var head = el('ob-sum-head');
+  var lead = el('ob-sum-lead');
+  var pickHead = Math.random() < 0.5;
+  var hText = pickHead ? 'Your Arc system is ready.' : 'Here’s the structure Arc will build around you.';
+  if (head) head.textContent = hText;
+  var oh = el('ob-h');
+  if (oh) oh.textContent = hText;
+  if (lead) {
+    lead.textContent = draft.name
+      ? ('A calm foundation for ' + draft.name + '—shape details anytime in Preferences.')
+      : 'A calm foundation—shape details anytime in Preferences.';
+  }
+
+  var mealsN = inferMealsDefault(draft.goal, draft.activity);
+  var nv = null;
+  if (draft.heightParse && draft.heightParse.ok && isFinite(draft.weight) && draft.weight > 0 && isFinite(draft.age)) {
+    nv = nutritionPreviewFromDraft(draft);
+  }
+
+  var grid = el('ob-sum-grid');
+  if (!grid) return;
+
+  var goalLabel = normalizeArcGoal(draft.goal);
+  var paceNote = '';
+  if (obGoalsNeedPace(goalLabel) && draft.weightGoalPaceLbWeek != null) {
+    paceNote = ' · ~' + draft.weightGoalPaceLbWeek + ' lb/week pace (estimate)';
+  }
+
+  var html = '';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Calorie target</span><span class="ob-sum-val">' + (nv ? Math.round(nv.target).toLocaleString(undefined) + ' kcal/day' : '—') + '</span><span class="ob-sum-note">A gentle guide—not something to chase perfectly every day.</span></div>';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Protein target</span><span class="ob-sum-val">' + (nv ? Math.round(nv.macros.protein) + ' g/day' : '—') + '</span><span class="ob-sum-note">Keeps plates anchored and satisfying.</span></div>';
+  html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Goals</span><span class="ob-sum-val" style="font-size:15px">' + goalLabel + paceNote + '</span></div>';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Activity</span><span class="ob-sum-val" style="font-size:15px">' + activityDisplayLabel(draft.activity) + '</span><span class="ob-sum-note">Informs maintenance and portions.</span></div>';
+  html += '<div class="ob-sum-card"><span class="ob-sum-eyebrow">Meal structure</span><span class="ob-sum-val" style="font-size:15px">' + mealStructureSummary(mealsN, draft.goal) + '</span></div>';
+  html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Grocery emphasis</span><span class="ob-sum-val" style="font-size:15px">' + groceryEmphasisLine(draft.goal, 'Moderate') + '</span></div>';
+
+  if (goalLabel === 'Lose weight' || goalLabel === 'Gain weight') {
+    var pace = draft.weightGoalPaceLbWeek || 0.5;
+    var refLb = 15;
+    var mid = refLb / pace;
+    var low = Math.max(6, Math.round(mid * 0.82));
+    var high = Math.round(mid * 1.28);
+    var verb = goalLabel === 'Lose weight' ? 'losing' : 'gaining';
+    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Estimated pacing</span><p class="ob-sum-prose">At roughly <strong>' + pace + ' lb/week</strong>, <strong>' + verb + ' ~' + refLb + ' lbs</strong> may take on the order of <strong>' + low + '–' + high + ' weeks</strong> for many people—real life varies week to week.</p></div>';
+  } else if (goalLabel === 'Body recomp') {
+    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Sustainable focus</span><p class="ob-sum-prose">Arc will prioritize high protein intake, recovery-friendly structure, and consistency—without aggressive timelines.</p></div>';
+  }
+
+  if (draft.activity === 'Sedentary' || draft.activity === 'Light') {
+    html += '<div class="ob-sum-card ob-sum-span"><span class="ob-sum-eyebrow">Supportive movement</span><p class="ob-sum-prose">Short walks, simple resistance training a few times weekly, or playful movement snacks can quietly support how you feel—optional, never a lecture.</p></div>';
+  }
+
+  grid.innerHTML = html;
+}
+
+function syncObGoalUiFromDom() {
+  var cg = el('chip-goal');
+  if (!cg) return;
+  var sel = cg.querySelector('.chip.sel');
+  var blocks = cg.querySelectorAll('.ob-goal-block');
+  for (var bi = 0; bi < blocks.length; bi++) blocks[bi].classList.remove('is-selected');
+  if (!sel) return;
+  var blk = sel.closest('.ob-goal-block');
+  if (blk) blk.classList.add('is-selected');
+  var gvx = sel.getAttribute('data-v');
+  if (obGoalsNeedPace(gvx) && blk) {
+    var pc = obGoalPaces[gvx] || 0.5;
+    obGoalPaces[gvx] = pc;
+    syncPaceSelectionForBlock(blk, pc);
+  }
+}
+
+function setupOnboardingFlow() {
+  var cg = el('chip-goal');
+  if (cg) {
+    cg.addEventListener('click', function(ev) {
+      if (ev.target.closest('.ob-info-btn')) return;
+      var paceChip = ev.target.closest('.ob-pace-chip');
+      if (paceChip) {
+        var blockPc = paceChip.closest('.ob-goal-block');
+        var gvp = blockPc && blockPc.getAttribute('data-goal');
+        if (gvp) {
+          obGoalPaces[gvp] = parseFloat(paceChip.getAttribute('data-pace'));
+          syncPaceSelectionForBlock(blockPc, obGoalPaces[gvp]);
+        }
+        if (obStep === 4) refreshObNutritionPreview();
+        if (obStep === 5) refreshObSummaryPanel();
+        ev.stopPropagation();
+        return;
+      }
+      var chip = ev.target.closest('.chip[data-v]');
+      if (!chip || !cg.contains(chip)) return;
+      var blocks = cg.querySelectorAll('.ob-goal-block');
+      for (var i = 0; i < blocks.length; i++) blocks[i].classList.remove('is-selected');
+      var block = chip.closest('.ob-goal-block');
+      if (block) block.classList.add('is-selected');
+      var allChips = cg.querySelectorAll('.chip[data-v]');
+      for (var j = 0; j < allChips.length; j++) allChips[j].classList.remove('sel');
+      chip.classList.add('sel');
+      var gv = chip.getAttribute('data-v');
+      if (obGoalsNeedPace(gv)) {
+        var pace = obGoalPaces[gv];
+        if (pace == null || !isFinite(Number(pace))) {
+          pace = 0.5;
+          obGoalPaces[gv] = pace;
+        }
+        if (block) syncPaceSelectionForBlock(block, pace);
+      }
+      if (obStep === 4) refreshObNutritionPreview();
+      if (obStep === 5) refreshObSummaryPanel();
+    });
+
+    cg.addEventListener('click', function(ev) {
+      var ib = ev.target.closest('.ob-info-btn');
+      if (!ib || !cg.contains(ib)) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      openObInfoSheet(ib.getAttribute('data-ob-info'));
+    });
+  }
+
+  var actRoot = el('chip-ob-activity');
+  if (actRoot) {
+    actRoot.addEventListener('click', function(ev) {
+      var card = ev.target.closest('.ob-act-card');
+      if (!card || !actRoot.contains(card)) return;
+      var cards = actRoot.querySelectorAll('.ob-act-card');
+      for (var i = 0; i < cards.length; i++) cards[i].classList.remove('sel');
+      card.classList.add('sel');
+      if (obStep === 4) refreshObNutritionPreview();
+      if (obStep === 5) refreshObSummaryPanel();
+    });
+  }
+
+  ['ob-in-wt', 'ob-in-age', 'ob-in-sex'].forEach(function(fid) {
+    var node = el(fid);
+    if (!node) return;
+    node.addEventListener('input', function() {
+      if (obStep === 4) refreshObNutritionPreview();
+      if (obStep === 5) refreshObSummaryPanel();
+    });
+    node.addEventListener('change', function() {
+      if (obStep === 4) refreshObNutritionPreview();
+      if (obStep === 5) refreshObSummaryPanel();
+    });
+  });
+
+  var htEl = el('ob-in-ht');
+  if (htEl) {
+    htEl.addEventListener('input', function() {
+      if (obStep === 4) refreshObNutritionPreview();
+      if (obStep === 5) refreshObSummaryPanel();
+    });
+  }
+
+  var ic = el('ob-info-close');
+  if (ic) ic.addEventListener('click', function() { closeMotion('ob-info-modal'); });
+
+  var ibg = el('ob-info-modal');
+  if (ibg) {
+    ibg.addEventListener('click', function(ev) {
+      if (ev.target === ibg) closeMotion('ob-info-modal');
+    });
+  }
+}
+
+function openObInfoSheet(kind) {
+  var title = '';
+  var bodyHtml = '';
+  if (kind === 'recomp') {
+    title = 'How Arc approaches body recomposition';
+    bodyHtml =
+      '<p>Arc supports body recomposition through:</p><ul>' +
+      '<li>high-protein nutrition</li>' +
+      '<li>sustainable calorie targets</li>' +
+      '<li>recovery-aware meal structure</li>' +
+      '<li>consistency-focused planning</li>' +
+      '</ul>' +
+      '<p>Typical body recomposition works best alongside progressive resistance training, roughly 0.8–1.2g protein per lb of body weight, maintenance or slight calorie deficit, and long-term consistency.</p>';
+  } else if (kind === 'energy') {
+    title = 'How Arc supports energy';
+    bodyHtml =
+      '<p>Arc prioritizes:</p><ul>' +
+      '<li>stable meal timing</li>' +
+      '<li>balanced macronutrients</li>' +
+      '<li>sustainable calorie intake</li>' +
+      '<li>reduced food decision fatigue</li>' +
+      '</ul>' +
+      '<p>The goal is to help users feel more stable, less drained, and more consistent throughout the week.</p>';
+  } else if (kind === 'healthier') {
+    title = 'What changes with Eat healthier';
+    bodyHtml =
+      '<p>This option prioritizes:</p><ul>' +
+      '<li>less processed foods</li>' +
+      '<li>higher quality ingredients</li>' +
+      '<li>nutrient-dense meals</li>' +
+      '<li>more whole-food choices</li>' +
+      '</ul>' +
+      '<p>Depending on your preferences and grocery selections, this may slightly increase weekly food cost.</p>';
+  } else {
+    return;
+  }
+  var tEl = el('ob-info-title');
+  var bEl = el('ob-info-body');
+  if (tEl) tEl.textContent = title;
+  if (bEl) bEl.innerHTML = bodyHtml;
+  openMotion('ob-info-modal', 'flex');
+}
+
+function validateFullOnboardingDom() {
+  if (!valStep(1)) return 1;
+  if (!valStep(2)) return 2;
+  if (!valStep(3)) return 3;
+  if (!valStep(4)) return 4;
+  return 0;
+}
+
 function valStep(n) {
   clearErr();
   if (n === 1) {
-    if (!gChip('chip-goal')) { setErr('Choose a goal to continue'); pulse('chip-goal'); return false; }
+    var nm = (el('ob-first-name') && el('ob-first-name').value || '').trim();
+    if (!nm) {
+      setErr('Add your first name to continue');
+      markErr('ob-first-name');
+      return false;
+    }
+    return true;
+  }
+  if (n === 2) {
+    if (!gChip('chip-goal')) {
+      setErr('Choose a goal to continue');
+      pulse('chip-goal');
+      return false;
+    }
+    var gv = gChip('chip-goal');
+    if (obGoalsNeedPace(gv)) {
+      var pv = obGoalPaces[gv];
+      if (pv == null || !isFinite(Number(pv))) obGoalPaces[gv] = 0.5;
+    }
+    return true;
+  }
+  if (n === 3) {
+    if (!readActivityFromOb()) {
+      setErr('Choose your usual activity level');
+      pulse('chip-ob-activity');
+      return false;
+    }
+    return true;
+  }
+  if (n === 4) {
+    var htEl = el('ob-in-ht');
+    var hp = parseHeightInput(htEl ? htEl.value : '');
+    if (!hp.ok) {
+      setErr(hp.error || 'Please enter a valid height');
+      markErr('ob-in-ht');
+      return false;
+    }
+    var wt = parseFloat(el('ob-in-wt') && el('ob-in-wt').value);
+    if (!isFinite(wt) || !(wt > 0)) {
+      setErr('Add your weight to continue');
+      markErr('ob-in-wt');
+      return false;
+    }
+    var ag = parseInt(el('ob-in-age') && el('ob-in-age').value, 10);
+    if (!isFinite(ag) || ag < 16 || ag > 90) {
+      setErr('Age helps Arc estimate thoughtfully—try somewhere between 16 and 90');
+      markErr('ob-in-age');
+      return false;
+    }
+    return true;
   }
   return true;
 }
 
-/** One headline + subline per onboarding screen (order matches `#st1`…`#st4`). */
+/** One headline + subline per onboarding screen (order matches `#st1`…`#st5`). */
 var OB_STEP_META = ARC_COPY.onboarding.steps;
 
 function goStep(n) {
   if (n < 1 || n > OB_STEPS) return;
   var prev = el('st' + obStep);
-  if (prev) prev.classList.remove('active');
+  if (prev) prev.classList.remove('active', 'ob-step--enter');
   obStep = n;
   var next = el('st' + n);
   if (next) next.classList.add('active');
@@ -6323,26 +6935,40 @@ function goStep(n) {
   setText('ob-next', n === OB_STEPS ? 'Finish' : 'Continue');
   var body = document.querySelector('.ob-body');
   if (body) body.scrollTop = 0;
+
+  requestAnimationFrame(function() {
+    if (next) next.classList.add('ob-step--enter');
+    setTimeout(function() {
+      if (next) next.classList.remove('ob-step--enter');
+    }, 780);
+  });
+
+  if (n === 4) refreshObNutritionPreview();
+  if (n === 5) refreshObSummaryPanel();
+  if (n === 2) syncObGoalUiFromDom();
 }
 
 // ── Finish onboarding ─────────────────────────────────────────
 function finishOB() {
-  if (!valStep(1)) { goStep(1); return; }
+  var badStep = validateFullOnboardingDom();
+  if (badStep) {
+    goStep(badStep);
+    return;
+  }
 
-  UP.name = (UP.name && String(UP.name).trim()) ? UP.name : 'Friend';
+  var draft = collectDraftProfileFromOb();
 
-  UP.goal = gChip('chip-goal') || 'Eat healthier';
-  UP.activity = 'Moderate';
+  UP.name = draft.name || 'Friend';
+  UP.goal = normalizeArcGoal(draft.goal || 'Eat healthier');
+  UP.weightGoalPaceLbWeek = obGoalsNeedPace(UP.goal) ? (draft.weightGoalPaceLbWeek != null ? draft.weightGoalPaceLbWeek : 0.5) : null;
+
+  UP.activity = draft.activity || 'Moderate';
   UP.meals = inferMealsDefault(UP.goal, UP.activity);
 
-  var dietPick = gChip('chip-diet') || 'None';
-  UP.restrictions = [dietPick];
-
-  var bud = gChip('chip-budget') || 'Moderate';
-  UP.budget = normalizeBudgetValue(bud);
-  UP.weeklyBudget = UP.budget;
-
-  UP.skill = gChip('chip-skill') || 'Home cook';
+  UP.restrictions = ['None'];
+  UP.budget = 'Moderate';
+  UP.weeklyBudget = 'Moderate';
+  UP.skill = 'Home cook';
 
   UP.dislikes = '';
   UP.useCustom = false;
@@ -6353,30 +6979,22 @@ function finishOB() {
   UP.locDetected = false;
   locDetected = false;
 
-  if (!UP.age || !isFinite(parseInt(UP.age, 10))) UP.age = '30';
-  if (!UP.sex || String(UP.sex).trim() === '') UP.sex = 'Prefer not to say';
-  var w0 = parseFloat(UP.weight);
-  if (!isFinite(w0) || !(w0 > 0)) UP.weight = 170;
-  var hi0 = parseFloat(UP.heightInches);
-  if (!isFinite(hi0) || !(hi0 > 0)) {
-    var hp0 = parseHeightInput(UP.height);
-    if (hp0.ok) {
-      UP.height = hp0.display;
-      UP.heightInches = hp0.inches;
-      UP.heightCm = hp0.cm;
-    } else {
-      UP.heightInches = 68;
-      UP.heightCm = +(68 * 2.54).toFixed(1);
-      UP.height = '5\'8"';
-    }
+  UP.age = String(draft.age);
+  UP.sex = draft.sex || 'Prefer not to say';
+  UP.weight = String(draft.weight);
+
+  var hpFinal = draft.heightParse;
+  if (hpFinal && hpFinal.ok) {
+    UP.height = hpFinal.display;
+    UP.heightInches = hpFinal.inches;
+    UP.heightCm = hpFinal.cm;
   }
 
   if (!Array.isArray(UP.cuisines)) UP.cuisines = [];
 
+  applySafeProfileDefaults(UP);
   UP.tdee = calcTDEE();
   UP.macros = getMacroTargets(getCalTarget());
-
-  applySafeProfileDefaults(UP);
 
   DAYS.forEach(function(d) { mealPlan[d] = {}; });
   mealJournal = {};
@@ -6605,9 +7223,11 @@ function normalizeBudgetValue(v) {
 }
 
 function inferMealsDefault(goal, activity) {
-  var g = goal != null ? String(goal).trim() : '';
+  var g = normalizeArcGoal(goal);
   var a = activity != null ? String(activity).trim() : '';
-  if (g === 'Build muscle' && (a === 'Moderate' || a === 'Very active' || a === 'Athlete')) return '4';
+  var hi = (a === 'Moderate' || a === 'Very active' || a === 'Athlete');
+  if (g === 'Improve energy') return '4';
+  if ((g === 'Gain muscle' || g === 'Body recomp' || g === 'Gain weight') && hi) return '4';
   return '3';
 }
 
@@ -6620,7 +7240,18 @@ function applySafeProfileDefaults(p) {
 
   if (p.name == null || String(p.name).trim() === '') p.name = 'Friend';
 
+  if (p.goal != null && String(p.goal).trim() === 'Build muscle') p.goal = 'Gain muscle';
+
   if (p.goal == null || String(p.goal).trim() === '') p.goal = 'Eat healthier';
+
+  var ngGoal = normalizeArcGoal(p.goal);
+  if (ngGoal !== 'Lose weight' && ngGoal !== 'Gain muscle' && ngGoal !== 'Gain weight') {
+    p.weightGoalPaceLbWeek = null;
+  } else {
+    var wp = Number(p.weightGoalPaceLbWeek);
+    if (!isFinite(wp) || wp <= 0) p.weightGoalPaceLbWeek = 0.5;
+    else p.weightGoalPaceLbWeek = Math.min(1, Math.max(0.25, wp));
+  }
 
   if (p.activity == null || String(p.activity).trim() === '' || !VALID_ACTIVITIES[p.activity]) p.activity = 'Moderate';
 
@@ -7029,6 +7660,7 @@ function buildWeeklyPlanPrompt(intent) {
   u += buildFeedbackPromptBlock();
   u += buildAdaptiveBehaviorPromptBlock();
   u += formatNutritionPromptBlock(mt, calT, macros);
+  u += buildArcGoalNutritionDirective();
 
   var weekAdapt = getBehaviorAdaptations();
   if (weekAdapt && weekAdapt.budgetTier === 'tighter' && weeklyBudget !== 'Budget') {
@@ -7385,6 +8017,7 @@ function generateRecipes() {
   userMsg += buildFeedbackPromptBlock();
   userMsg += buildAdaptiveBehaviorPromptBlock();
   userMsg += formatNutritionPromptBlock(mt, calT, macros);
+  userMsg += buildArcGoalNutritionDirective();
   userMsg += 'Distribution: exactly 7 Breakfast, 7 Lunch, 7 Dinner, 7 Snack\n\n';
   userMsg += 'REQUIRED JSON format — every field is mandatory:\n';
   userMsg += '[{"id":1,"name":"Recipe Name","cal":420,"p":32,"c":38,"f":14,"time":"20 min","difficulty":"Easy","price":7.50,"cat":"Lunch",';
@@ -8287,6 +8920,7 @@ function refreshSingleSlotMeal() {
   userMsg += buildAdaptiveBehaviorPromptBlock();
   userMsg += 'Macro targets for THIS meal (stay within ±10%): ~' + Math.round(t.cal) + ' kcal, protein ~' + Math.round(t.p) + ' g, carbs ~' + Math.round(t.c) + ' g, fat ~' + Math.round(t.f) + ' g.\n';
   userMsg += 'Daily context: ' + calT + ' kcal / day across ' + mt.n + ' eating occasions.\n';
+  userMsg += buildArcGoalNutritionDirective();
   userMsg += 'price is USD per serving for budget ' + budgetNote + '.\n';
   userMsg += 'Return ONE object in a one-element JSON array.\n';
 
@@ -10384,10 +11018,13 @@ var introState = {
 var INTRO_SLIDES = ARC_COPY.intro.slides;
 
 function startOnboardingFromIntro() {
+  clearErr();
+  obStep = 1;
   var welcome = el('s-welcome');
   var onboarding = el('ob');
   if (welcome) welcome.classList.remove('active');
   if (onboarding) onboarding.classList.add('active');
+  goStep(1);
 }
 
 function buildIntroVisual(kind) {
@@ -10667,16 +11304,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Height field (optional; onboarding no longer collects height here)
   setupHeightInput();
+  setupOnboardingFlow();
 
   var locAllow = el('loc-allow');
   if (locAllow) locAllow.addEventListener('click', function() { closeMotion('loc-modal', doGeo); });
   var locDeny = el('loc-deny');
   if (locDeny) locDeny.addEventListener('click', function() { closeMotion('loc-modal'); });
-
-  singleChip('chip-goal');
-  singleChip('chip-diet');
-  singleChip('chip-budget');
-  singleChip('chip-skill');
 
   // Onboarding nav
   el('ob-next').addEventListener('click', function() {
