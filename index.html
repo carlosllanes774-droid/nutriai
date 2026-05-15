@@ -167,26 +167,108 @@ body{
 .feat-title{font-size:16px;font-weight:600;color:var(--arc-text);margin-bottom:4px;letter-spacing:-.01em}
 .feat-sub{font-size:14px;color:var(--arc-subtext);line-height:1.5}
 
-/* FIRST-USE INTRO (recap-inspired) */
-.intro-welcome{position:relative;flex:1;display:flex;flex-direction:column;padding:20px 20px 24px;overflow:hidden;background:#151210;color:rgba(255,255,255,.92)}
+/* FIRST-USE INTRO (cinematic — Arc system colors only) */
+.intro-welcome{
+  --intro-ease-out:cubic-bezier(0.22,1,0.36,1);
+  --intro-ease-smooth:cubic-bezier(0.33,0.83,0.38,1);
+  position:relative;flex:1;display:flex;flex-direction:column;padding:28px 22px 28px;overflow:hidden;background:#151210;color:rgba(255,255,255,.92)}
 .intro-ambience{position:absolute;inset:0;pointer-events:none;background:
   radial-gradient(125% 85% at 50% -5%,rgba(227,90,54,.34) 0%,transparent 56%),
   radial-gradient(68% 52% at 100% 16%,rgba(244,160,130,.18) 0%,transparent 58%),
   radial-gradient(74% 56% at 2% 96%,rgba(255,255,255,.07) 0%,transparent 60%),
-  linear-gradient(165deg,#141210 0%,#1f1b18 52%,#151311 100%)}
+  linear-gradient(165deg,#141210 0%,#1f1b18 52%,#151311 100%);
+  animation:introAmbienceDrift 28s ease-in-out infinite alternate}
+@keyframes introAmbienceDrift{
+  from{opacity:1;filter:saturate(1)}
+  to{opacity:.92;filter:saturate(1.06)}}
 .intro-skip{position:relative;z-index:2;align-self:flex-end;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.72);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:10px 14px;border-radius:999px;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard)}
 .intro-skip:hover{background:rgba(255,255,255,.13);color:#fff}
-.intro-deck{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;min-height:0;padding-top:14px}
-.intro-progress{height:3px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;margin-bottom:16px}
-.intro-progress>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--arc-primary),#f4a082);border-radius:3px;transition:width 500ms var(--ease-standard)}
-.intro-chip{display:inline-flex;align-items:center;align-self:flex-start;padding:7px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.15);font-size:11px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:14px;background:rgba(255,255,255,.03)}
-.intro-stage-wrap{flex:1;display:flex;min-height:0;cursor:pointer}
-.intro-stage{flex:1;display:flex;flex-direction:column;opacity:1;transform:translateY(0);transition:opacity 260ms var(--ease-standard),transform 260ms var(--ease-standard)}
-.intro-stage.is-exiting{opacity:0;transform:translateY(10px)}
-.intro-title{font-family:Georgia,serif;font-size:31px;line-height:1.12;letter-spacing:-.03em;color:#fff;margin-bottom:10px;max-width:10.8em}
-.intro-sub{font-size:14px;line-height:1.55;color:rgba(255,255,255,.63);max-width:22em;margin-bottom:18px}
-.intro-phone{margin-top:auto;border-radius:24px;padding:14px;background:linear-gradient(165deg,rgba(255,255,255,.16),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 46px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.15)}
-.intro-phone-screen{border-radius:18px;padding:14px 14px 12px;background:linear-gradient(155deg,rgba(255,255,255,.95),rgba(246,239,231,.9));color:var(--arc-text);box-shadow:inset 0 0 0 1px rgba(31,23,16,.06)}
+.intro-deck{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;min-height:0;padding-top:8px}
+.intro-progress{height:2px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden;margin-bottom:22px;opacity:.9}
+.intro-progress>span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--arc-primary),#f4a082);border-radius:3px;box-shadow:0 0 16px rgba(227,90,54,.35);transition:width 720ms var(--intro-ease-smooth)}
+.intro-chip{display:inline-flex;align-items:center;align-self:flex-start;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-size:11px;font-weight:650;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-bottom:18px;background:rgba(255,255,255,.035);transition:opacity 360ms var(--intro-ease-out),transform 360ms var(--intro-ease-out)}
+.intro-stage-wrap{flex:1;display:flex;min-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent;perspective:880px}
+.intro-stage{flex:1;display:flex;flex-direction:column;min-height:0;opacity:1;transform:translateY(0) scale(1);filter:blur(0);transition:opacity 420ms var(--intro-ease-smooth),transform 420ms var(--intro-ease-smooth),filter 420ms var(--intro-ease-smooth)}
+.intro-stage.is-exiting{opacity:0;transform:translateY(18px) scale(.988);filter:blur(3px)}
+.intro-copy-block{flex-shrink:0;margin-bottom:8px}
+.intro-visual-canvas{flex:1;display:flex;flex-direction:column;min-height:0;margin-top:auto;padding-top:12px;position:relative}
+.intro-title{font-family:Georgia,serif;font-size:clamp(30px,6.4vw,38px);line-height:1.1;letter-spacing:-.035em;color:#fff;margin-bottom:14px;max-width:12.2em;font-weight:600}
+.intro-sub{font-size:15px;line-height:1.62;color:rgba(255,255,255,.56);max-width:24em;margin-bottom:0;font-weight:450}
+.intro-quote{margin-top:16px;font-size:13px;line-height:1.55;color:rgba(255,255,255,.48);max-width:22em;font-style:italic;font-weight:450;padding-left:14px;border-left:2px solid rgba(227,90,54,.45)}
+.intro-reveal-1,.intro-reveal-2,.intro-reveal-3,.intro-reveal-4,.intro-reveal-5{animation:introPieceIn 780ms var(--intro-ease-out) backwards}
+.intro-reveal-1{animation-delay:45ms}
+.intro-reveal-2{animation-delay:115ms}
+.intro-reveal-3{animation-delay:195ms}
+.intro-reveal-4{animation-delay:255ms}
+.intro-reveal-5{animation-delay:320ms}
+@keyframes introPieceIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.intro-canvas-inner{position:relative;flex:1;min-height:200px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px}
+.intro-glow-orb{position:absolute;left:50%;bottom:12%;width:min(88%,320px);height:120px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse at center,rgba(227,90,54,.22) 0%,transparent 68%);pointer-events:none;animation:introGlowBreathe 9s ease-in-out infinite;filter:blur(2px)}
+@keyframes introGlowBreathe{0%,100%{opacity:.65;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}
+.intro-chaos-back{position:absolute;inset:8% 6% 22%;pointer-events:none}
+.intro-float-card{position:absolute;border-radius:var(--r-md);padding:10px 12px;background:rgba(255,250,246,.92);border:1px solid rgba(200,80,50,.2);box-shadow:0 10px 28px rgba(0,0,0,.22);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.intro-float-card.intro-float--a{left:2%;top:6%;max-width:52%;opacity:.78;animation:introChaosFloatA 7.5s ease-in-out infinite}
+.intro-float-card.intro-float--b{right:0;top:28%;max-width:56%;opacity:.72;animation:introChaosFloatB 7.5s ease-in-out infinite -2.2s}
+.intro-float-card.intro-float--c{left:14%;bottom:18%;max-width:54%;opacity:.68;animation:introChaosFloatC 7.5s ease-in-out infinite -4.4s}
+.intro-chaos-warn{display:block;font-size:12px;font-weight:750;color:#b63a28;letter-spacing:-.02em}
+.intro-chaos-meta{display:block;font-size:10px;margin-top:4px;color:var(--arc-subtext);text-transform:uppercase;letter-spacing:.06em}
+@keyframes introChaosFloatA{0%,100%{transform:translateY(0) rotate(-7deg)}50%{transform:translateY(-8px) rotate(-7deg)}}
+@keyframes introChaosFloatB{0%,100%{transform:translateY(0) rotate(5deg)}50%{transform:translateY(-8px) rotate(5deg)}}
+@keyframes introChaosFloatC{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(-3deg)}}
+.intro-calm-hero{position:relative;z-index:2;width:100%;max-width:340px;margin:0 auto;animation:introHeroRise 850ms var(--intro-ease-out) 120ms backwards}
+@keyframes introHeroRise{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.intro-phone{margin-top:0;border-radius:24px;padding:14px;background:linear-gradient(165deg,rgba(255,255,255,.18),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.14);box-shadow:0 22px 56px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.16),0 0 40px rgba(227,90,54,.08);animation:introPhoneBob 12s ease-in-out infinite}
+@keyframes introPhoneBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.intro-phone--hero{animation:introPhoneBob 11s ease-in-out infinite,introHeroRise 850ms var(--intro-ease-out) 120ms backwards}
+.intro-phone-screen{border-radius:18px;padding:14px 14px 12px;background:linear-gradient(155deg,rgba(255,255,255,.96),rgba(246,239,231,.92));color:var(--arc-text);box-shadow:inset 0 0 0 1px rgba(31,23,16,.06)}
+.intro-today-zen{padding:14px 13px;border-radius:16px;background:linear-gradient(165deg,#fffdfb,#faf6f1);border:1px solid rgba(31,23,16,.06);box-shadow:var(--shadow-sm)}
+.intro-today-zen-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--arc-subtext);margin-bottom:8px}
+.intro-today-zen-next{font-size:15px;font-weight:700;color:var(--arc-text);letter-spacing:-.02em;margin-bottom:6px}
+.intro-today-zen-dish{font-size:13px;color:var(--arc-subtext);line-height:1.45;margin-bottom:12px}
+.intro-today-zen-foot{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:rgba(92,99,112,.85)}
+.intro-today-zen-glow{height:6px;border-radius:99px;background:#f0e8de;overflow:hidden;margin-top:4px}
+.intro-today-zen-glow>span{display:block;height:100%;width:42%;border-radius:99px;background:linear-gradient(90deg,var(--arc-primary),#f4a082);box-shadow:0 0 12px rgba(227,90,54,.35);animation:introGlowSlide 6s ease-in-out infinite alternate}
+@keyframes introGlowSlide{from{width:38%}to{width:52%}}
+.intro-week-canvas{position:relative;width:100%;max-width:348px;margin:0 auto;animation:introHeroRise 780ms var(--intro-ease-out) 100ms backwards}
+.intro-week-strip{display:flex;gap:6px;margin-bottom:12px;overflow:hidden;padding:2px 0}
+.intro-week-day{flex:1;min-width:0;text-align:center;padding:8px 2px;border-radius:11px;background:rgba(255,255,255,.78);border:1px solid rgba(31,23,16,.07);font-size:9px;font-weight:750;letter-spacing:.04em;color:var(--arc-subtext);text-transform:uppercase}
+.intro-week-day.is-peak{background:var(--arc-soft-primary);border-color:rgba(227,90,54,.2);color:var(--arc-primary-dark)}
+.intro-week-flow{display:flex;flex-direction:column;gap:8px}
+.intro-week-meal{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 12px;border-radius:13px;background:#fff;box-shadow:var(--shadow-xs);border:1px solid rgba(31,23,16,.05)}
+.intro-week-meal .intro-week-slot{font-size:10px;font-weight:650;color:var(--arc-subtext);letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
+.intro-week-meal strong{font-size:13px;font-weight:650;color:var(--arc-text);display:block;letter-spacing:-.02em}
+.intro-week-meal span{font-size:11px;color:var(--arc-subtext)}
+.intro-week-float{position:absolute;right:-4px;top:18%;max-width:46%;padding:10px 11px;border-radius:13px;background:linear-gradient(165deg,rgba(255,255,255,.95),rgba(253,248,244,.92));border:1px solid rgba(227,90,54,.16);box-shadow:0 14px 34px rgba(0,0,0,.16);font-size:11px;line-height:1.45;color:var(--arc-text);animation:introCardHover 8s ease-in-out infinite}
+@keyframes introCardHover{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.intro-week-float-k{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--arc-subtext);margin-bottom:4px}
+.intro-adapt-stage{position:relative;width:100%;max-width:340px;margin:0 auto;animation:introHeroRise 800ms var(--intro-ease-out) 90ms backwards}
+.intro-adapt-flow{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.intro-adapt-row{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:13px;background:#fff;border:1px solid rgba(31,23,16,.07);box-shadow:var(--shadow-xs)}
+.intro-adapt-row.is-dim{opacity:.55;filter:grayscale(.15)}
+.intro-adapt-arrow{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--arc-soft-primary);font-size:15px;color:var(--arc-primary-dark);animation:introShiftPulse 2.8s ease-in-out infinite}
+@keyframes introShiftPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(227,90,54,0)}45%{transform:scale(1.05);box-shadow:0 0 0 6px rgba(227,90,54,.12)}}
+.intro-adapt-rebalance{margin-top:4px;padding:12px;border-radius:14px;background:linear-gradient(165deg,#faf7f3,#fff);border:1px solid rgba(227,90,54,.12);box-shadow:var(--shadow-sm)}
+.intro-adapt-rebalance-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.intro-adapt-rebalance-top strong{font-size:13px;color:var(--arc-text)}
+.intro-adapt-pill{font-size:10px;font-weight:650;padding:4px 8px;border-radius:999px;background:rgba(46,120,75,.1);color:#2d6a4f}
+.intro-adapt-rebalance p{font-size:12px;line-height:1.5;color:var(--arc-subtext)}
+.intro-outcome-stage{position:relative;width:100%;max-width:336px;margin:0 auto;animation:introHeroRise 820ms var(--intro-ease-out) 110ms backwards}
+.intro-outcome-glass{border-radius:20px;padding:16px 16px 14px;background:linear-gradient(165deg,rgba(36,32,28,.94),rgba(22,20,18,.97));border:1px solid rgba(255,255,255,.1);box-shadow:0 24px 48px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08)}
+.intro-outcome-k{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.42);margin-bottom:10px}
+.intro-outcome-h{font-family:Georgia,serif;font-size:22px;font-weight:600;color:rgba(255,255,255,.95);letter-spacing:-.03em;line-height:1.15;margin-bottom:12px}
+.intro-outcome-spark{display:flex;align-items:flex-end;gap:6px;height:52px;margin-bottom:14px;padding:0 4px}
+.intro-outcome-bar{flex:1;height:100%;border-radius:6px 6px 4px 4px;background:linear-gradient(180deg,rgba(227,90,54,.55),rgba(227,90,54,.14));opacity:.9;transform-origin:bottom center;transform:scaleY(.4);animation:introBarMorph 5.2s var(--intro-ease-smooth) infinite alternate}
+.intro-outcome-bar:nth-child(1){animation-delay:0s}
+.intro-outcome-bar:nth-child(2){animation-delay:.25s}
+.intro-outcome-bar:nth-child(3){animation-delay:.45s}
+.intro-outcome-bar:nth-child(4){animation-delay:.65s}
+.intro-outcome-bar:nth-child(5){animation-delay:.85s}
+.intro-outcome-bar:nth-child(6){animation-delay:1.05s}
+.intro-outcome-bar:nth-child(7){animation-delay:1.25s}
+@keyframes introBarMorph{0%{transform:scaleY(.32)}100%{transform:scaleY(1)}}
+.intro-outcome-copy{font-size:12px;line-height:1.55;color:rgba(255,255,255,.58);margin-bottom:12px}
+.intro-outcome-tags{display:flex;flex-wrap:wrap;gap:6px}
+.intro-outcome-tag{font-size:10px;font-weight:600;padding:5px 9px;border-radius:999px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.1)}
 .intro-mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .intro-mock-title{font-size:12px;font-weight:700;color:var(--arc-subtext);letter-spacing:.06em;text-transform:uppercase}
 .intro-mock-badge{font-size:11px;font-weight:600;color:var(--arc-primary-dark);background:var(--arc-soft-primary);border-radius:999px;padding:5px 9px}
@@ -211,10 +293,10 @@ body{
 .intro-recap-k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-bottom:8px}
 .intro-recap-num{font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1;color:#fff}
 .intro-recap-copy{font-size:12px;line-height:1.5;color:rgba(255,255,255,.66);margin-top:8px}
-.intro-bottom{padding-top:14px}
+.intro-bottom{padding-top:20px}
 .intro-dots{display:flex;justify-content:center;gap:7px;margin-bottom:12px}
-.intro-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.24);transition:transform 220ms var(--ease-standard),background 220ms var(--ease-standard)}
-.intro-dot.on{background:rgba(255,255,255,.86);transform:scale(1.1)}
+.intro-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.22);transition:width 360ms var(--intro-ease-smooth),transform 360ms var(--intro-ease-smooth),background 360ms var(--intro-ease-smooth)}
+.intro-dot.on{width:18px;border-radius:99px;background:rgba(255,255,255,.88)}
 .intro-controls{display:flex;align-items:center;gap:10px}
 .intro-back{width:88px;padding:13px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);color:rgba(255,255,255,.78);font-size:14px;font-weight:600;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard),opacity var(--motion-fast) var(--ease-standard)}
 .intro-back[disabled]{opacity:.4;cursor:default}
@@ -223,6 +305,9 @@ body{
 .intro-foot{font-size:11px;text-align:center;color:rgba(255,255,255,.38);margin-top:10px;line-height:1.45}
 @media (prefers-reduced-motion:reduce){
   .intro-progress>span,.intro-stage,.intro-dot,.intro-back,.intro-next{transition:none}
+  .intro-ambience{animation:none}
+  .intro-glow-orb,.intro-float-card,.intro-phone,.intro-phone--hero,.intro-today-zen-glow>span,.intro-week-canvas,.intro-week-float,.intro-adapt-stage,.intro-adapt-arrow,.intro-outcome-stage,.intro-outcome-bar{animation:none!important}
+  .intro-reveal-1,.intro-reveal-2,.intro-reveal-3,.intro-reveal-4,.intro-reveal-5{animation:none!important}
 }
 
 /* GENERATING — calm, spacious progress (no %, no frantic spinner) */
@@ -1806,16 +1891,34 @@ var ARC_COPY = {
     foot: 'Four quick choices, then your week.',
     slides: [
       {
-        kicker: 'Your week, mapped',
-        title: 'Adaptive nutrition\nfor real life',
-        sub: 'A calm week view and one gentle next step each day—no spreadsheet energy.',
-        visual: 'week'
+        kicker: 'DAILY FOOD NOISE',
+        title: 'Most nutrition apps ask too much.',
+        sub: 'Tracking. Logging. Planning. Restarting.\nArc removes the mental load around eating well.',
+        visual: 'chaos',
+        cta: 'See how Arc works'
       },
       {
-        kicker: 'When life shifts',
-        title: 'Adjust without\nstarting over',
-        sub: 'Swap a meal or soften the plan. Your day and grocery list stay in sync.',
-        visual: 'adapt'
+        kicker: 'CLARITY, AUTOMATICALLY',
+        title: 'Arc builds your week around real life.',
+        sub: 'Meals, groceries, timing, and flexibility — organized automatically.',
+        visual: 'week',
+        cta: 'Build my system'
+      },
+      {
+        kicker: 'FORGIVENESS BUILT IN',
+        title: 'Life changes. Arc adjusts.',
+        sub: 'Miss a meal?\nBusy day?\nEat out?\nYour week adapts without starting over.',
+        visual: 'adapt',
+        quote: 'Consistency matters more than perfection.',
+        cta: 'This feels better'
+      },
+      {
+        kicker: 'MOMENTUM, QUIETLY',
+        title: 'Feel organized around food again.',
+        sub: 'Build sustainable momentum.\nEat well with less effort.\nCreate a rhythm that lasts.',
+        visual: 'outcome',
+        cta: 'Start building my week',
+        foot: 'Takes about 2 minutes.'
       }
     ]
   },
@@ -10288,43 +10391,94 @@ function startOnboardingFromIntro() {
 }
 
 function buildIntroVisual(kind) {
-  if (kind === 'week') {
-    return '<div class="intro-phone"><div class="intro-phone-screen">' +
-      '<div class="intro-mock-head"><div class="intro-mock-title">Weekly plan</div><div class="intro-mock-badge">Balanced</div></div>' +
-      '<div class="intro-list">' +
-      '<div class="intro-list-row"><div><strong>Mon - Salmon bowl</strong><span>Lunch</span></div><div class="intro-list-dot"></div></div>' +
-      '<div class="intro-list-row"><div><strong>Tue - Greek chicken wraps</strong><span>Dinner</span></div><div class="intro-list-dot"></div></div>' +
-      '<div class="intro-list-row"><div><strong>Wed - Yogurt parfait</strong><span>Breakfast</span></div><div class="intro-list-dot"></div></div>' +
-      '<div class="intro-list-row"><div><strong>Thu - Tofu stir fry</strong><span>Dinner</span></div><div class="intro-list-dot"></div></div>' +
-      '</div></div></div>';
-  }
-  if (kind === 'today') {
-    return '<div class="intro-phone"><div class="intro-phone-screen">' +
-      '<div class="intro-mock-head"><div class="intro-mock-title">Today</div><div class="intro-mock-badge">3/4 done</div></div>' +
-      '<div class="intro-today-stat">' +
-      '<div class="intro-pill"><div class="intro-pill-lbl">Protein</div><div class="intro-pill-val">86g of 120g</div></div>' +
-      '<div class="intro-pill"><div class="intro-pill-lbl">Hydration</div><div class="intro-pill-val">5 cups</div></div>' +
+  if (kind === 'chaos') {
+    return '<div class="intro-canvas-inner">' +
+      '<div class="intro-glow-orb" aria-hidden="true"></div>' +
+      '<div class="intro-chaos-back" aria-hidden="true">' +
+        '<div class="intro-float-card intro-float--a"><span class="intro-chaos-warn">Macro ring red</span><span class="intro-chaos-meta">Fix today</span></div>' +
+        '<div class="intro-float-card intro-float--b"><span class="intro-chaos-warn">Log every meal</span><span class="intro-chaos-meta">Streak at risk</span></div>' +
+        '<div class="intro-float-card intro-float--c"><span class="intro-chaos-warn">3 entries behind</span><span class="intro-chaos-meta">Catch up</span></div>' +
       '</div>' +
-      '<div class="intro-primary-card"><div class="intro-primary-head"><strong>Next meal: 7:00 PM</strong><span class="intro-swap-chip">Ready</span></div>' +
-      '<div style="font-size:13px;color:var(--arc-subtext)">Turkey chili + avocado toast</div><div class="intro-progress-line"><span></span></div></div>' +
-      '</div></div>';
+      '<div class="intro-calm-hero">' +
+        '<div class="intro-phone intro-phone--hero"><div class="intro-phone-screen">' +
+          '<div class="intro-mock-head"><div class="intro-mock-title">Today</div><div class="intro-mock-badge">Gentle pace</div></div>' +
+          '<div class="intro-today-zen">' +
+            '<div class="intro-today-zen-label">One next step</div>' +
+            '<div class="intro-today-zen-next">Evening plate, already placed</div>' +
+            '<div class="intro-today-zen-dish">Miso salmon · greens · rice — timing flexes if you need it.</div>' +
+            '<div class="intro-today-zen-foot"><span>Carry-over from lunch</span><span style="font-size:10px;font-weight:650;color:var(--arc-primary-dark)">In rhythm</span></div>' +
+            '<div class="intro-today-zen-glow" aria-hidden="true"><span></span></div>' +
+          '</div>' +
+        '</div></div>' +
+      '</div>' +
+    '</div>';
+  }
+  if (kind === 'week') {
+    return '<div class="intro-week-canvas">' +
+        '<div class="intro-phone" style="margin-top:0;animation:introPhoneBob 13s ease-in-out infinite">' +
+          '<div class="intro-phone-screen">' +
+            '<div class="intro-mock-head"><div class="intro-mock-title">This week</div><div class="intro-mock-badge">Adaptive</div></div>' +
+            '<div class="intro-week-strip">' +
+              '<div class="intro-week-day">M</div><div class="intro-week-day">T</div><div class="intro-week-day">W</div>' +
+              '<div class="intro-week-day is-peak">T</div><div class="intro-week-day">F</div><div class="intro-week-day">S</div><div class="intro-week-day">S</div>' +
+            '</div>' +
+            '<div class="intro-week-flow">' +
+              '<div class="intro-week-meal"><div><strong>Midweek stir-fry</strong><span>Prep-friendly · 25 min</span></div><span class="intro-week-slot">Wed PM</span></div>' +
+              '<div class="intro-week-meal"><div><strong>Grain bowl + greens</strong><span>Swaps stay on budget</span></div><span class="intro-week-slot">Thu lunch</span></div>' +
+              '<div class="intro-week-meal"><div><strong>Lemon-garlic skillet chicken</strong><span>Protein carries forward</span></div><span class="intro-week-slot">Fri</span></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="intro-week-float"><div class="intro-week-float-k">Groceries</div>Produce bundled by day · pantry overlap trimmed · one flexible slot held for takeout.</div>' +
+      '</div>';
   }
   if (kind === 'adapt') {
-    return '<div class="intro-phone"><div class="intro-phone-screen">' +
-      '<div class="intro-mock-head"><div class="intro-mock-title">Flexible swap</div><div class="intro-mock-badge">2 min</div></div>' +
-      '<div class="intro-swap-row"><strong>Chicken grain bowl</strong><span class="intro-swap-arrow">→</span><strong>Egg tacos</strong></div>' +
-      '<div class="intro-swap-row"><span style="font-size:12px;color:var(--arc-subtext)">Schedule changed to 8:30 PM</span><span class="intro-swap-chip">Adjusted</span></div>' +
-      '<div class="intro-primary-card" style="margin-top:10px"><div class="intro-primary-head"><strong>Arc updated your day</strong><span style="font-size:11px;color:var(--arc-subtext)">No rebuild needed</span></div>' +
-      '<div style="font-size:13px;color:var(--arc-subtext)">Your day and grocery list stay in sync—no rebuild needed.</div></div>' +
-      '</div></div>';
+    return '<div class="intro-adapt-stage">' +
+        '<div class="intro-phone" style="margin-top:0;animation:introPhoneBob 12s ease-in-out infinite 1s">' +
+          '<div class="intro-phone-screen">' +
+            '<div class="intro-mock-head"><div class="intro-mock-title">Tonight</div><div class="intro-mock-badge">Live</div></div>' +
+            '<div class="intro-adapt-flow">' +
+              '<div class="intro-adapt-row is-dim" style="flex-direction:column;align-items:stretch;gap:4px">' +
+                '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%">' +
+                '<strong style="font-size:13px">Planned · herb pasta</strong><span class="intro-swap-chip" style="opacity:.75">Skipped</span></div>' +
+                '<span style="font-size:11px;color:var(--arc-subtext)">Life happened—no guilt, no reset.</span>' +
+              '</div>' +
+              '<div class="intro-adapt-row">' +
+                '<div class="intro-adapt-arrow" aria-hidden="true">→</div>' +
+                '<div style="flex:1;min-width:0">' +
+                  '<strong style="font-size:13px;display:block">Arc suggests roasted salmon bowl</strong>' +
+                  '<span style="font-size:11px;color:var(--arc-subtext)">Closer to your evening window · same grocery run</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="intro-adapt-rebalance">' +
+              '<div class="intro-adapt-rebalance-top"><strong>Day rebalanced</strong><span class="intro-adapt-pill">Protein held</span></div>' +
+              '<p>Calories eased without a full replan. Your list and week stay coherent.</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
   }
-  return '<div class="intro-phone"><div class="intro-phone-screen">' +
-    '<div class="intro-mock-head"><div class="intro-mock-title">Guidance moment</div><div class="intro-mock-badge">Weekly recap</div></div>' +
-    '<div class="intro-recap-card"><div class="intro-recap-k">This week</div><div class="intro-recap-num">14 meals</div>' +
-    '<div class="intro-recap-copy">You stayed consistent on busy days. Arc carries that rhythm into next week.</div></div>' +
-    '<div class="intro-primary-card" style="margin-top:10px"><div class="intro-primary-head"><strong>Suggested focus</strong><span class="intro-swap-chip">Keep momentum</span></div>' +
-    '<div style="font-size:13px;color:var(--arc-subtext)">Prep one protein tonight to make tomorrow easier.</div></div>' +
-    '</div></div>';
+  if (kind === 'outcome') {
+    return '<div class="intro-outcome-stage">' +
+        '<div tabindex="-1" class="intro-outcome-glass">' +
+          '<div class="intro-outcome-k">Weekly reflection</div>' +
+          '<div class="intro-outcome-h">A steadier thread through the noise.</div>' +
+          '<div class="intro-outcome-spark" aria-hidden="true">' +
+            '<div class="intro-outcome-bar"></div><div class="intro-outcome-bar"></div>' +
+            '<div class="intro-outcome-bar"></div><div class="intro-outcome-bar"></div>' +
+            '<div class="intro-outcome-bar"></div><div class="intro-outcome-bar"></div><div class="intro-outcome-bar"></div>' +
+          '</div>' +
+          '<p class="intro-outcome-copy">Meals landed with less second-guessing. Busy nights recovered without shame. Energy felt a little more even—not a score, just a softer week.</p>' +
+          '<div class="intro-outcome-tags">' +
+            '<span class="intro-outcome-tag">Rhythm, not streaks</span>' +
+            '<span class="intro-outcome-tag">Groceries aligned</span>' +
+            '<span class="intro-outcome-tag">Chaos days absorbed</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  }
+  return buildIntroVisual('chaos');
 }
 
 function renderIntroDots() {
@@ -10341,16 +10495,28 @@ function renderIntroSlide() {
   var stage = el('intro-stage');
   if (!stage) return;
   var slide = INTRO_SLIDES[introState.idx] || INTRO_SLIDES[0];
+  var quoteHtml = slide.quote
+    ? '<p class="intro-quote intro-reveal-3">' + shopEsc(slide.quote) + '</p>'
+    : '';
+  var visClass = slide.quote ? 'intro-reveal-4' : 'intro-reveal-3';
   stage.innerHTML =
-    '<h1 class="intro-title">' + shopEsc(slide.title).replace(/\n/g, '<br>') + '</h1>' +
-    '<p class="intro-sub">' + shopEsc(slide.sub) + '</p>' +
-    buildIntroVisual(slide.visual);
+    '<div class="intro-copy-block">' +
+    '<h1 class="intro-title intro-reveal-1">' + shopEsc(slide.title).replace(/\n/g, '<br>') + '</h1>' +
+    '<p class="intro-sub intro-reveal-2">' + shopEsc(slide.sub).replace(/\n/g, '<br>') + '</p>' +
+    quoteHtml +
+    '</div>' +
+    '<div class="intro-visual-canvas ' + visClass + '">' + buildIntroVisual(slide.visual) + '</div>';
   var chip = el('intro-chip');
   if (chip) chip.textContent = slide.kicker;
+  var foot = el('intro-foot');
+  if (foot) foot.textContent = slide.foot !== undefined ? slide.foot : ARC_COPY.intro.foot;
   var fill = el('intro-progress-fill');
   if (fill) fill.style.width = (((introState.idx + 1) / INTRO_SLIDES.length) * 100) + '%';
   var next = el('intro-next-btn');
-  if (next) next.textContent = introState.idx >= INTRO_SLIDES.length - 1 ? 'Get started' : 'Continue';
+  if (next) {
+    next.textContent = slide.cta ||
+      (introState.idx >= INTRO_SLIDES.length - 1 ? 'Get started' : 'Continue');
+  }
   var back = el('intro-back-btn');
   if (back) back.disabled = introState.idx === 0;
   renderIntroDots();
@@ -10373,7 +10539,7 @@ function introChange(delta) {
     stage.classList.remove('is-exiting');
     renderIntroSlide();
     introState.leaving = false;
-  }, 220);
+  }, 430);
 }
 
 function initFirstUseIntro() {
