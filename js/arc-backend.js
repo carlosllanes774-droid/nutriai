@@ -122,6 +122,38 @@
     return c.auth.resend({ type: 'signup', email: em });
   }
 
+  function resetPasswordForEmail(email) {
+    var c = getClient();
+    if (!c) return Promise.reject(new Error('Supabase not configured'));
+    var em = (email || '').trim().toLowerCase();
+    if (!em) return Promise.reject(new Error('missing email'));
+    var redirectTo = '';
+    try {
+      var origin = global.location && global.location.origin ? String(global.location.origin) : '';
+      var path = global.location && global.location.pathname ? String(global.location.pathname) : '/';
+      var search = global.location && global.location.search ? String(global.location.search) : '';
+      redirectTo = origin + path + search;
+    } catch (e0) {
+      redirectTo = '';
+    }
+    return c.auth.resetPasswordForEmail(em, redirectTo ? { redirectTo: redirectTo } : undefined);
+  }
+
+  function isDuplicateSignupError(err) {
+    var msg = (err && (err.message || err.error_description)) ? String(err.message || err.error_description) : '';
+    var lower = msg.toLowerCase();
+    return lower.indexOf('user already registered') !== -1 ||
+      lower.indexOf('already been registered') !== -1 ||
+      lower.indexOf('already registered') !== -1;
+  }
+
+  /** Supabase may return a user with no identities when the email already exists (anti-enumeration). */
+  function isDuplicateSignupUser(user) {
+    if (!user || typeof user !== 'object') return false;
+    if (Array.isArray(user.identities) && user.identities.length === 0) return true;
+    return false;
+  }
+
   function signOut() {
     var c = getClient();
     if (!c) return Promise.resolve();
@@ -176,6 +208,9 @@
     signUpWithPassword: signUpWithPassword,
     signInWithGoogle: signInWithGoogle,
     resendSignupEmail: resendSignupEmail,
+    resetPasswordForEmail: resetPasswordForEmail,
+    isDuplicateSignupError: isDuplicateSignupError,
+    isDuplicateSignupUser: isDuplicateSignupUser,
     signOut: signOut,
     onAuthStateChange: onAuthStateChange,
     fetchProfileRow: fetchProfileRow,
