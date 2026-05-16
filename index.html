@@ -351,6 +351,43 @@ body{
 .arc-auth-card{position:relative;z-index:2;margin-top:auto;margin-bottom:auto;width:100%;max-width:360px;margin-left:auto;margin-right:auto;border-radius:22px;padding:26px 22px 22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:cardFadeIn 720ms cubic-bezier(0.22,1,0.36,1) both}
 .arc-auth-h{font-family:Georgia,serif;font-size:clamp(26px,6vw,32px);font-weight:600;letter-spacing:-.04em;line-height:1.12;color:#fff;margin-bottom:12px}
 .arc-auth-sub{font-size:15px;line-height:1.55;color:rgba(255,255,255,.52);margin-bottom:22px;font-weight:450}
+.arc-auth-google{margin-bottom:18px}
+.arc-auth-google-btn{
+  position:relative;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  min-height:var(--tap-min);
+  padding:14px 18px;
+  border-radius:var(--r-md);
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(165deg,rgba(255,255,255,.09) 0%,rgba(0,0,0,.18) 100%);
+  color:rgba(255,255,255,.94);
+  font-size:var(--fs-body);
+  font-weight:650;
+  letter-spacing:-.015em;
+  cursor:pointer;
+  font-family:inherit;
+  box-shadow:0 10px 28px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.1);
+  transition:transform var(--motion-instant) var(--ease-out),border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard),opacity var(--motion-fast) var(--ease-standard);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.arc-auth-google-btn:hover:not(:disabled){
+  border-color:rgba(255,255,255,.22);
+  background:linear-gradient(165deg,rgba(255,255,255,.12) 0%,rgba(0,0,0,.14) 100%);
+  box-shadow:0 14px 34px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.12);
+}
+.arc-auth-google-btn:active:not(:disabled){transform:scale(.985)}
+.arc-auth-google-btn:disabled{opacity:.52;cursor:default}
+.arc-auth-google-btn:focus-visible{outline:2px solid rgba(227,90,54,.55);outline-offset:3px}
+.arc-auth-google-ic{width:20px;height:20px;flex-shrink:0;opacity:.88}
+.arc-auth-google-ic path{transition:opacity var(--motion-fast) var(--ease-standard)}
+.arc-auth-divider{display:flex;align-items:center;gap:12px;margin:0 0 18px}
+.arc-auth-divider::before,.arc-auth-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.arc-auth-divider span{font-size:12px;font-weight:500;letter-spacing:.02em;color:rgba(255,255,255,.38);white-space:nowrap}
 .arc-auth-field{margin-bottom:14px}
 .arc-auth-field label{display:block;font-size:11px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:8px}
 .arc-auth-field .fi{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.22);color:#fff;font-size:15px;padding:14px 16px;outline:none;transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),box-shadow var(--motion-fast) var(--ease-standard)}
@@ -411,6 +448,8 @@ body{
   .arc-auth-panel,.arc-auth-panel--verify,.arc-auth-field-row.arc-field-shake,.arc-auth-field .fi.arc-field-glow-err,.arc-auth-card-glow,.arc-auth-card.is-verify-pending .arc-auth-card-glow{animation:none!important}
   .arc-auth-field-row.arc-field-shake{transform:none}
   .arc-auth-submit-spin{animation:none!important}
+  .arc-auth-google-btn{transition:opacity 200ms var(--ease-standard)}
+  .arc-auth-google-btn:active:not(:disabled){transform:none}
   .arc-auth-card--exit{filter:none;transform:none!important;transition:opacity 200ms var(--ease-standard)!important}
 }
 
@@ -1537,6 +1576,18 @@ button:not(:disabled):active,
       <div class="arc-auth-panel arc-auth-panel--form" id="arc-auth-form-panel">
         <h1 class="arc-auth-h" id="arc-auth-h1">Your Arc system is ready.</h1>
         <p class="arc-auth-sub" id="arc-auth-lead">Save your profile to build your personalized week.</p>
+        <div class="arc-auth-google">
+          <button type="button" class="arc-auth-google-btn" id="arc-auth-google" aria-label="Continue with Google">
+            <svg class="arc-auth-google-ic" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+              <path fill="#ECEFF1" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#FFC107" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6C43.98 37.08 46.98 31.38 46.98 24.55z"/>
+              <path fill="#4CAF50" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#1976D2" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            <span id="arc-auth-google-label">Continue with Google</span>
+          </button>
+        </div>
+        <div class="arc-auth-divider" aria-hidden="true"><span id="arc-auth-divider-txt">or continue with email</span></div>
         <div class="arc-auth-field arc-auth-field-row" id="arc-auth-field-email">
           <label for="arc-auth-email">Email</label>
           <input class="fi" id="arc-auth-email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com"/>
@@ -1544,7 +1595,7 @@ button:not(:disabled):active,
         </div>
         <div class="arc-auth-field arc-auth-field-row" id="arc-auth-field-password">
           <label for="arc-auth-password">Password</label>
-          <input class="fi" id="arc-auth-password" type="password" autocomplete="current-password" placeholder="8+ characters"/>
+          <input class="fi" id="arc-auth-password" type="password" autocomplete="new-password" placeholder="8+ characters"/>
           <p class="arc-auth-field-hint" id="arc-auth-password-hint" aria-live="polite"></p>
         </div>
         <p class="arc-auth-inline" id="arc-auth-msg" aria-live="polite"></p>
@@ -2398,7 +2449,10 @@ var ARC_COPY = {
     invalidEmail: 'That email needs one more look.',
     emptyFields: 'We need both your email and a password to continue.',
     hintEmailFmt: 'Almost there—check for a typo or keep typing.',
-    hintPasswordLen: 'Eight characters keeps things gentle and secure.'
+    hintPasswordLen: 'Eight characters keeps things gentle and secure.',
+    googleCta: 'Continue with Google',
+    googleBusy: 'Opening Google…',
+    emailDivider: 'or continue with email'
   },
   recap: {
     micro: 'Numbers are gentle guides, not grades. Arc celebrates showing up.',
@@ -2717,6 +2771,7 @@ var arcAuthAwaitingVerify = false;
 var arcAuthVerifyEmail = '';
 var arcAuthResendNotBefore = 0;
 var arcAuthVerifyTransitionLock = false;
+var arcPendingPostOAuthGen = false;
 var arcBootInitialScreen = 'welcome';
 var arcGenUsesPostOnboardingCopy = false;
 var arcCloudSyncTimer = null;
@@ -3035,6 +3090,8 @@ function arcAuthSetSubmitBusy(isBusy) {
     btn.disabled = false;
     if (lbl) lbl.textContent = idle;
   }
+  var gg = el('arc-auth-google');
+  if (gg) gg.disabled = isBusy;
 }
 
 function arcAuthUpdateFieldHints() {
@@ -3275,9 +3332,20 @@ function arcAuthSetMode(mode) {
   if (h) h.textContent = arcAuthMode === 'signin' ? (ac.headlineSignIn || 'Welcome back.') : (ac.headlineSave || 'Your Arc system is ready.');
   if (lead) lead.textContent = arcAuthMode === 'signin' ? (ac.subSignIn || '') : (ac.subSave || '');
   if (toggle) toggle.textContent = arcAuthMode === 'signin' ? (ac.footSignUp || '') : (ac.footSignIn || '');
+  var divTxt = el('arc-auth-divider-txt');
+  var gLbl = el('arc-auth-google-label');
+  if (divTxt) divTxt.textContent = ac.emailDivider || 'or continue with email';
+  if (gLbl) gLbl.textContent = ac.googleCta || 'Continue with Google';
+  var pwMode = el('arc-auth-password');
+  if (pwMode) {
+    try {
+      pwMode.setAttribute('autocomplete', arcAuthMode === 'signin' ? 'current-password' : 'new-password');
+    } catch (eAut) {}
+  }
   arcClearAuthMsg();
   arcAuthUpdateFieldHints();
   arcAuthSetSubmitBusy(false);
+  arcAuthSetGoogleBusy(false);
 }
 
 function hydrateArcAuthContextFromUP() {
@@ -3354,7 +3422,59 @@ function runArcPostOnboardingGenerationFlow() {
   }, 900);
 }
 
+function arcAuthSetGoogleBusy(isBusy) {
+  var btn = el('arc-auth-google');
+  if (!btn) return;
+  var lbl = el('arc-auth-google-label');
+  var ac = ARC_COPY.auth || {};
+  var idle = ac.googleCta || 'Continue with Google';
+  var busy = ac.googleBusy || 'Opening Google…';
+  if (isBusy) {
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    if (lbl) lbl.textContent = busy;
+  } else {
+    btn.disabled = false;
+    btn.setAttribute('aria-busy', 'false');
+    if (lbl) lbl.textContent = idle;
+  }
+  var sub = el('arc-auth-submit');
+  if (sub) {
+    if (isBusy) sub.disabled = true;
+    else if (!sub.classList.contains('is-loading')) sub.disabled = false;
+  }
+}
+
+function arcHandleGoogleAuth() {
+  if (!arcIsCloudAuthEnabled()) return;
+  if (arcAuthAwaitingVerify) return;
+  arcClearAuthMsg();
+  arcAuthSetGoogleBusy(true);
+  try {
+    saveUserProfile();
+  } catch (eSv) {}
+  ArcBackend.signInWithGoogle()
+    .then(function (res) {
+      if (res && res.error) {
+        arcSetAuthMsg(ArcBackend.mapAuthError(res.error));
+        arcAuthSetGoogleBusy(false);
+        return;
+      }
+    })
+    .catch(function (err) {
+      arcSetAuthMsg(ArcBackend.mapAuthError(err));
+      arcAuthSetGoogleBusy(false);
+    });
+}
+
 function arcWireAuthScreen() {
+  var gBtn = el('arc-auth-google');
+  if (gBtn && !gBtn._arcBound) {
+    gBtn._arcBound = true;
+    gBtn.addEventListener('click', function () {
+      arcHandleGoogleAuth();
+    });
+  }
   var sub = el('arc-auth-submit');
   var toggle = el('arc-auth-toggle');
   if (!sub || sub._arcBound) return;
@@ -3569,6 +3689,27 @@ function arcRunBootAuthGate() {
       arcAuthUser = sess.user;
       return ArcBackend.fetchProfileRow(sess.user.id).then(function (rowRes) {
         var row = rowRes && rowRes.data && !rowRes.error ? rowRes.data : null;
+        var pendingObFlow = false;
+        try {
+          pendingObFlow = sessionStorage.getItem('arc_pending_ob') === '1';
+        } catch (eP) {}
+
+        if (pendingObFlow) {
+          restorePersistedState();
+          var vOb = validateUserProfile(UP);
+          if (vOb.ok) {
+            arcPendingPostOAuthGen = true;
+            arcRestoredFromStorage = true;
+            DAYS.forEach(function(d) { if (!mealPlan[d]) mealPlan[d] = {}; });
+            arcBootInitialScreen = 'none';
+            arcWireApplicationDom();
+            return;
+          }
+          try {
+            sessionStorage.removeItem('arc_pending_ob');
+          } catch (eRem) {}
+        }
+
         if (row && row.profile) {
           var bundle = { profile: row.profile, app: row.app_state || {} };
           applyJsonBundleToApp(bundle);
@@ -3587,6 +3728,24 @@ function arcRunBootAuthGate() {
         }
         arcWireApplicationDom();
       }).catch(function () {
+        var pendingCatch = false;
+        try {
+          pendingCatch = sessionStorage.getItem('arc_pending_ob') === '1';
+        } catch (eC) {}
+        if (pendingCatch) {
+          restorePersistedState();
+          if (validateUserProfile(UP).ok) {
+            arcPendingPostOAuthGen = true;
+            arcRestoredFromStorage = true;
+            DAYS.forEach(function(d) { if (!mealPlan[d]) mealPlan[d] = {}; });
+            arcBootInitialScreen = 'none';
+            arcWireApplicationDom();
+            return;
+          }
+          try {
+            sessionStorage.removeItem('arc_pending_ob');
+          } catch (eCr) {}
+        }
         restorePersistedState();
         arcBootInitialScreen = arcRestoredFromStorage && validateUserProfile(UP).ok ? 'none' : 'welcome';
         arcWireApplicationDom();
@@ -12596,6 +12755,27 @@ function initFirstUseIntro() {
 }
 
 // ── Wire everything up on DOMContentLoaded ────────────────────
+function arcCompletePendingOAuthOnboardingFlow() {
+  if (!arcPendingPostOAuthGen) return;
+  arcPendingPostOAuthGen = false;
+  try {
+    sessionStorage.removeItem('arc_pending_ob');
+  } catch (eOb) {}
+  UP.arcOnboardingCompletedAt = UP.arcOnboardingCompletedAt || new Date().toISOString();
+  var uid = arcAuthUser && arcAuthUser.id;
+  var finish = function() {
+    saveUserProfile();
+    runArcPostOnboardingGenerationFlow();
+  };
+  if (uid && arcIsCloudAuthEnabled()) {
+    ArcBackend.upsertProfileBundle(uid, buildArcPersistBundle(), UP.arcOnboardingCompletedAt)
+      .then(function() { finish(); })
+      .catch(function() { finish(); });
+  } else {
+    finish();
+  }
+}
+
 function arcWireApplicationDom() {
   if (arcRestoredFromStorage) {
     applySafeProfileDefaults(UP);
@@ -12607,16 +12787,18 @@ function arcWireApplicationDom() {
       syncBehaviorToArcAdaptive(UP);
       applyProfileToUIBar();
       ensureWeeklyPlanShape();
-      showScreen('s-today');
-      tab('today');
-      syncCatTabsUI();
-      setupLibraryTabs();
-      renderLibrary();
-      renderPlanner();
-      renderNutrition();
-      renderShopping();
-      renderToday();
-      updatePlannerBar();
+      if (!arcPendingPostOAuthGen) {
+        showScreen('s-today');
+        tab('today');
+        syncCatTabsUI();
+        setupLibraryTabs();
+        renderLibrary();
+        renderPlanner();
+        renderNutrition();
+        renderShopping();
+        renderToday();
+        updatePlannerBar();
+      }
     } else if (arcBootInitialScreen === 'auth') {
       applySafeProfileDefaults(UP);
       if (validateUserProfile(UP).ok) {
@@ -12890,6 +13072,10 @@ function arcWireApplicationDom() {
     renderNutrition();
     renderShopping();
     renderToday();
+  }
+
+  if (arcPendingPostOAuthGen) {
+    arcCompletePendingOAuthOnboardingFlow();
   }
 }
 
