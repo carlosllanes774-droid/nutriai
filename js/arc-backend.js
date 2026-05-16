@@ -42,18 +42,26 @@
   }
 
   function mapAuthError(err) {
-    var msg = (err && (err.message || err.error_description)) ? String(err.message || err.error_description) : 'Something did not connect.';
+    var msg = (err && (err.message || err.error_description)) ? String(err.message || err.error_description) : '';
     var lower = msg.toLowerCase();
-    if (lower.indexOf('invalid login') !== -1 || lower.indexOf('invalid email or password') !== -1)
-      return 'That email or password did not match our records.';
-    if (lower.indexOf('user already registered') !== -1 || lower.indexOf('already been registered') !== -1)
-      return 'An account already exists for this email — try signing in.';
-    if (lower.indexOf('password') !== -1 && lower.indexOf('least') !== -1) return 'Use at least 8 characters for your password.';
+    if (lower.indexOf('invalid login') !== -1 || lower.indexOf('invalid email or password') !== -1 || lower.indexOf('wrong password') !== -1)
+      return "We couldn't match that password.";
+    if (lower.indexOf('user already registered') !== -1 || lower.indexOf('already been registered') !== -1 || lower.indexOf('already registered') !== -1)
+      return 'An Arc profile already exists for this email.';
+    if (lower.indexOf('password') !== -1 && lower.indexOf('least') !== -1)
+      return 'Arc asks for at least 8 characters—just a touch longer.';
     if (lower.indexOf('email') !== -1 && (lower.indexOf('invalid') !== -1 || lower.indexOf('format') !== -1))
-      return 'Double-check the email format.';
-    if (lower.indexOf('network') !== -1 || lower.indexOf('fetch') !== -1)
-      return 'Network hiccup — a quiet moment, then try again.';
-    return 'Could not complete that — please try again in a moment.';
+      return 'That email needs one more look.';
+    if (lower.indexOf('network') !== -1 || lower.indexOf('fetch') !== -1 || lower.indexOf('failed to fetch') !== -1)
+      return "Arc couldn't connect right now. Try again in a moment.";
+    if (lower.indexOf('popup') !== -1 && lower.indexOf('block') !== -1)
+      return 'Your browser paused the window—try again, or allow Arc to continue in this tab.';
+    if (lower.indexOf('closed') !== -1 || lower.indexOf('cancel') !== -1 || lower.indexOf('denied') !== -1 || lower.indexOf('user denied') !== -1)
+      return 'No worries—that was cancelled. Continue whenever you like.';
+    if (lower.indexOf('oauth') !== -1 || lower.indexOf('provider') !== -1)
+      return 'Google sign-in paused. Try again in a moment.';
+    if (!msg) return 'Something gentle slipped—try once more when you are ready.';
+    return 'Something gentle slipped—try once more when you are ready.';
   }
 
   function getSession() {
@@ -72,6 +80,46 @@
     var c = getClient();
     if (!c) return Promise.reject(new Error('Supabase not configured'));
     return c.auth.signUp({ email: email, password: password });
+  }
+
+  /** Full-page OAuth redirect (no popup). Caller should persist local state before await. */
+  function signInWithGoogle() {
+    var c = getClient();
+    if (!c) return Promise.reject(new Error('Supabase not configured'));
+    var origin = '';
+    try {
+      origin = global.location && global.location.origin ? String(global.location.origin) : '';
+    } catch (e0) {
+      origin = '';
+    }
+    var path = '';
+    try {
+      path = global.location && global.location.pathname ? String(global.location.pathname) : '/';
+    } catch (e1) {
+      path = '/';
+    }
+    var search = '';
+    try {
+      search = global.location && global.location.search ? String(global.location.search) : '';
+    } catch (e2) {
+      search = '';
+    }
+    var redirectTo = (origin || '') + path + search;
+    if (!redirectTo) redirectTo = undefined;
+    return c.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: redirectTo
+      }
+    });
+  }
+
+  function resendSignupEmail(email) {
+    var c = getClient();
+    if (!c) return Promise.reject(new Error('Supabase not configured'));
+    var em = (email || '').trim();
+    if (!em) return Promise.reject(new Error('missing email'));
+    return c.auth.resend({ type: 'signup', email: em });
   }
 
   function signOut() {
@@ -126,6 +174,8 @@
     getSession: getSession,
     signInWithPassword: signInWithPassword,
     signUpWithPassword: signUpWithPassword,
+    signInWithGoogle: signInWithGoogle,
+    resendSignupEmail: resendSignupEmail,
     signOut: signOut,
     onAuthStateChange: onAuthStateChange,
     fetchProfileRow: fetchProfileRow,
