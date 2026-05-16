@@ -4,6 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Arc</title>
+<link rel="icon" type="image/png" href="assets/branding/arc-logo.png" sizes="32x32"/>
+<link rel="apple-touch-icon" href="assets/branding/arc-logo.png"/>
+<meta name="theme-color" content="#141210"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
   :root {
@@ -66,6 +69,10 @@
   --press-scale: 0.985;
   --sheet-offset: 16px;
   --tap-min: 44px;
+
+  /* branding — single source for logo asset pipeline */
+  --arc-logo-url: url('assets/branding/arc-logo.png');
+  --arc-logo-path: assets/branding/arc-logo.png;
 }
 body{
   background: var(--arc-bg);
@@ -108,46 +115,143 @@ body{
 @keyframes shake{0%,100%{transform:translateX(0)}25%,75%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
 @keyframes contentFadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
-/* 🔥 ARC SPLASH */
-#splash-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
+/* ── Arc logo system (shared asset + motion language) ── */
+.arc-logo{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  user-select:none;
+  -webkit-user-drag:none;
+  image-rendering:-webkit-optimize-contrast;
+}
+.arc-logo--splash{width:76px;height:76px;opacity:0;transform:scale(.94);animation:arcLogoSplashIn 1.35s cubic-bezier(0.22,1,0.36,1) .12s forwards,arcLogoSplashHold 9s ease-in-out 1.5s infinite alternate}
+.arc-logo--intro{width:40px;height:40px;opacity:.88;filter:drop-shadow(0 6px 18px rgba(0,0,0,.28))}
+.arc-logo--auth{width:28px;height:28px;opacity:.94}
+.arc-logo--ob{width:28px;height:28px;opacity:.94}
+.arc-logo--gen{width:52px;height:52px;opacity:.96}
+.arc-logo--hdr{width:22px;height:22px;opacity:.92}
+.arc-logo--account{width:44px;height:44px;opacity:.94}
+.arc-logo--breathe{animation:arcLogoBreathe 5.5s ease-in-out infinite}
+.arc-logo--float{animation:arcLogoFloat 7s ease-in-out infinite}
+@keyframes arcLogoSplashIn{0%{opacity:0;transform:scale(.94)}72%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1)}}
+@keyframes arcLogoSplashHold{0%,100%{transform:scale(1)}50%{transform:scale(1.018)}}
+@keyframes arcLogoBreathe{0%,100%{opacity:.88;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+@keyframes arcLogoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ARC SPLASH — cinematic launch */
+#splash-screen{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  background:#12100e;
+  transition:opacity 680ms cubic-bezier(0.33,0.83,0.38,1);
+}
+#splash-screen.is-exiting{pointer-events:none}
+.splash-ambience{
+  position:absolute;inset:-20%;
+  pointer-events:none;
+  background:
+    radial-gradient(90% 70% at 50% 42%,rgba(227,90,54,.28) 0%,transparent 58%),
+    radial-gradient(55% 45% at 18% 78%,rgba(244,160,130,.12) 0%,transparent 55%),
+    radial-gradient(50% 40% at 88% 22%,rgba(255,255,255,.06) 0%,transparent 52%),
+    linear-gradient(168deg,#100e0c 0%,#1a1714 48%,#12100e 100%);
+  animation:splashAmbienceDrift 22s ease-in-out infinite alternate;
+}
+@keyframes splashAmbienceDrift{
+  from{transform:translate3d(0,0,0) scale(1);opacity:1}
+  to{transform:translate3d(-1.5%,1.2%,0) scale(1.03);opacity:.94}
+}
+.splash-logo-stage{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  width:120px;height:120px;
+}
+.splash-glow{
+  position:absolute;inset:-18%;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(227,90,54,.42) 0%,rgba(227,90,54,.08) 42%,transparent 72%);
+  filter:blur(14px);
+  opacity:0;
+  animation:splashGlowIn 1.4s cubic-bezier(0.22,1,0.36,1) .05s forwards,splashGlowPulse 6s ease-in-out 1.6s infinite alternate;
+  pointer-events:none;
+}
+@keyframes splashGlowIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes splashGlowPulse{0%,100%{opacity:.72;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 
-  background: var(--arc-primary);
+.intro-brand{
+  position:relative;z-index:2;
+  display:flex;justify-content:center;
+  margin:2px 0 14px;
+  opacity:0;
+  animation:introBrandIn 900ms cubic-bezier(0.22,1,0.36,1) 80ms forwards;
+}
+.intro-slide-mark{
+  display:flex;justify-content:flex-start;
+  margin-bottom:14px;
+  opacity:.82;
+}
+.intro-slide-mark .arc-logo--intro{width:32px;height:32px}
+@keyframes introBrandIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.intro-brand .arc-logo--intro{transition:opacity 360ms var(--ease-standard),transform 360ms var(--ease-standard)}
+.intro-brand:hover .arc-logo--intro{opacity:1;transform:scale(1.03)}
 
-  z-index: 9999;
-  transition: opacity var(--motion-emphasis) var(--ease-out);
+.arc-auth-brand .arc-logo--auth{flex-shrink:0}
+.arc-auth-brand span{font-size:17px;font-weight:650;letter-spacing:-.3px;color:#fff}
+.ob-brand .arc-logo--ob{flex-shrink:0}
+
+.gen-logo-wrap{
+  position:relative;
+  width:72px;height:72px;
+  margin:0 auto 26px;
+  flex-shrink:0;
+}
+.gen-logo-glow{
+  position:absolute;inset:-20%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(227,90,54,.18) 38%,transparent 70%);
+  filter:blur(10px);
+  animation:genLogoGlow 5.8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes genLogoGlow{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+.gen-logo-wrap .arc-logo--gen{
+  position:relative;z-index:1;
+  margin:0 auto;
+  animation:arcLogoBreathe 5.5s ease-in-out infinite,arcLogoFloat 7s ease-in-out infinite;
 }
 
-.arc-logo-text {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 64px;
-  font-weight: 700;
-  color: white;
-  letter-spacing: -2px;
-
-  opacity: 0;
-  transform: scale(0.9);
-
-  animation: arcFadeIn 1.2s var(--ease-out) forwards;
-
-  text-shadow: 0 10px 30px rgba(0,0,0,0.25);
-
-  /* 🔥 add this here */
-  filter: drop-shadow(0 10px 25px rgba(0,0,0,0.35));
+.settings-account-brand{
+  display:flex;align-items:center;gap:14px;
+  padding:4px 0 18px;
+  margin-bottom:4px;
+  border-bottom:1px solid var(--arc-divider);
 }
+.settings-account-meta{flex:1;min-width:0}
+.settings-account-name{font-size:16px;font-weight:650;color:var(--arc-text);letter-spacing:-.02em;line-height:1.25;margin-bottom:2px}
+.settings-account-tag{font-size:12px;color:var(--arc-subtext);line-height:1.4}
 
-@keyframes arcFadeIn {
-  0% { opacity: 0; transform: scale(0.94); }
-  70% { opacity: 1; transform: scale(1); }
-  100% { transform: scale(1); }
+.settings-hdr-brand{
+  display:flex;align-items:center;gap:10px;flex:1;min-width:0;
+}
+.settings-hdr-brand h2{margin:0;flex:unset}
+.settings-hdr-brand .arc-logo--hdr{flex-shrink:0;filter:brightness(1.08) drop-shadow(0 2px 8px rgba(0,0,0,.2))}
+
+.a-hdr-mark{
+  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;flex-shrink:0;
+  opacity:.72;
+  transition:opacity var(--motion-fast) var(--ease-standard),transform var(--motion-fast) var(--ease-standard);
+}
+.a-hdr:hover .a-hdr-mark{opacity:.92}
+.a-hdr-mark .arc-logo--hdr{width:20px;height:20px}
+
+@media (prefers-reduced-motion:reduce){
+  .arc-logo--splash,.splash-glow,.splash-ambience,.arc-logo--breathe,.arc-logo--float,.gen-logo-glow,.gen-logo-wrap .arc-logo--gen,.intro-brand{animation:none!important}
+  .arc-logo--splash{opacity:1;transform:none}
+  .splash-glow{opacity:.85}
+  .intro-brand{opacity:1;transform:none}
 }
 
 @keyframes cardFadeIn {
@@ -213,7 +317,8 @@ body{
 .intro-visual--adapt .intro-adapt-rebalance p{font-size:10.5px;line-height:1.38;margin:0}
 .intro-visual--adapt .intro-quote--below{margin-top:4px;margin-bottom:0;padding-top:0;padding-left:12px;font-size:12.5px;line-height:1.5;flex-shrink:0}
 .intro-stage--adapt .intro-bottom{padding-top:18px;flex-shrink:0}
-.intro-reveal-1,.intro-reveal-2,.intro-reveal-3,.intro-reveal-4,.intro-reveal-5{animation:introPieceIn 780ms var(--intro-ease-out) backwards}
+.intro-reveal-0,.intro-reveal-1,.intro-reveal-2,.intro-reveal-3,.intro-reveal-4,.intro-reveal-5{animation:introPieceIn 780ms var(--intro-ease-out) backwards}
+.intro-reveal-0{animation-delay:20ms}
 .intro-reveal-1{animation-delay:45ms}
 .intro-reveal-2{animation-delay:115ms}
 .intro-reveal-3{animation-delay:195ms}
@@ -344,8 +449,6 @@ body{
   radial-gradient(70% 50% at 100% 12%,rgba(244,160,130,.16) 0%,transparent 55%),
   linear-gradient(165deg,#141210 0%,#1f1b18 52%,#151311 100%)}
 .arc-auth-brand{position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin-bottom:22px}
-.arc-auth-mark{width:36px;height:36px;background:rgba(255,255,255,.1);border-radius:12px;display:flex;align-items:center;justify-content:center}
-.arc-auth-brand span{font-size:17px;font-weight:650;letter-spacing:-.3px;color:#fff}
 .arc-auth-context{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;min-height:28px}
 .arc-auth-chip{font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.55);background:rgba(255,255,255,.04)}
 .arc-auth-card{position:relative;z-index:2;margin-top:auto;margin-bottom:auto;width:100%;max-width:360px;margin-left:auto;margin-right:auto;border-radius:22px;padding:26px 22px 22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:cardFadeIn 720ms cubic-bezier(0.22,1,0.36,1) both}
@@ -502,7 +605,7 @@ body{
 
 /* GENERATING — calm, spacious progress (no %, no frantic spinner) */
 .s-gen{background:var(--arc-primary);align-items:center;justify-content:center;text-align:center;padding:48px 28px 40px}
-.gen-ring-wrap{width:118px;height:118px;margin:0 auto 32px;position:relative;flex-shrink:0}
+.gen-ring-wrap{width:96px;height:96px;margin:0 auto 24px;position:relative;flex-shrink:0}
 .gen-ring-wrap::after{content:'';position:absolute;inset:18%;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
 .gen-ring-svg{position:absolute;inset:0;width:100%;height:100%;animation:genRingDrift 78s linear infinite}
 .gen-ring-track{fill:none;stroke:rgba(255,255,255,.22);stroke-width:3.25}
@@ -1395,9 +1498,13 @@ button:not(:disabled):active,
 </head>
 <body>
   
- <!-- 🔥 ARC SPLASH -->
-<div id="splash-screen">
-  <div class="arc-logo-text">arc</div>
+<!-- ARC SPLASH -->
+<div id="splash-screen" role="img" aria-label="Arc">
+  <div class="splash-ambience" aria-hidden="true"></div>
+  <div class="splash-logo-stage">
+    <div class="splash-glow" aria-hidden="true"></div>
+    <img class="arc-logo arc-logo--splash" src="assets/branding/arc-logo.png" alt="" width="76" height="76" decoding="async" fetchpriority="high"/>
+  </div>
 </div>
 
 <div class="app" id="app">
@@ -1428,7 +1535,7 @@ button:not(:disabled):active,
 <!-- ONBOARDING — adaptive Arc setup -->
 <div class="screen" id="ob">
   <div class="ob-top">
-    <div class="ob-brand"><div class="ob-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg></div><span class="ob-brand-name">Arc</span></div>
+    <div class="ob-brand"><img class="arc-logo arc-logo--ob" src="assets/branding/arc-logo.png" alt="" width="28" height="28" decoding="async" aria-hidden="true"/><span class="ob-brand-name">Arc</span></div>
     <div class="ob-dots"><div class="ob-dot active" id="od1"></div><div class="ob-dot" id="od2"></div><div class="ob-dot" id="od3"></div><div class="ob-dot" id="od4"></div><div class="ob-dot" id="od5"></div></div>
     <div class="ob-step-n" id="ob-step-n">Step 1 of 5</div>
     <div class="ob-heading" id="ob-h">What should I call you?</div>
@@ -1612,9 +1719,7 @@ button:not(:disabled):active,
   <div class="arc-auth-screen">
     <div class="arc-auth-ambience" aria-hidden="true"></div>
     <div class="arc-auth-brand">
-      <div class="arc-auth-mark" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--arc-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 4-2.5 7.5-6 9"/><path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3"/><path d="M12 15v4"/><path d="M8 19h8"/></svg>
-      </div>
+      <img class="arc-logo arc-logo--auth" src="assets/branding/arc-logo.png" alt="" width="28" height="28" decoding="async" aria-hidden="true"/>
       <span>Arc</span>
     </div>
     <div class="arc-auth-context" id="arc-auth-context" aria-label="Your setup"></div>
@@ -1705,6 +1810,10 @@ button:not(:disabled):active,
 
 <!-- GENERATING -->
 <div class="screen s-gen" id="s-gen">
+  <div class="gen-logo-wrap" aria-hidden="true">
+    <div class="gen-logo-glow"></div>
+    <img class="arc-logo arc-logo--gen" src="assets/branding/arc-logo.png" alt="" width="52" height="52" decoding="async"/>
+  </div>
   <div class="gen-ring-wrap" aria-hidden="true">
     <svg class="gen-ring-svg" viewBox="0 0 100 100">
       <circle class="gen-ring-track" cx="50" cy="50" r="43"/>
@@ -1721,7 +1830,7 @@ button:not(:disabled):active,
 
 <!-- TODAY -->
 <div class="screen" id="s-today">
-  <div class="a-hdr"><h2 style="flex-shrink:0">Today</h2><span style="flex:1;text-align:right;font-size:13px;color:var(--arc-subtext);padding-right:8px" id="today-date">—</span><button type="button" class="settings-open-btn" id="hdr-profile-btn" title="Profile" aria-label="Profile">👤</button></div>
+  <div class="a-hdr"><span class="a-hdr-mark" aria-hidden="true"><img class="arc-logo arc-logo--hdr" src="assets/branding/arc-logo.png" alt="" width="20" height="20" decoding="async"/></span><h2 style="flex-shrink:0">Today</h2><span style="flex:1;text-align:right;font-size:13px;color:var(--arc-subtext);padding-right:8px" id="today-date">—</span><button type="button" class="settings-open-btn" id="hdr-profile-btn" title="Profile" aria-label="Profile">👤</button></div>
   <div class="content today-flow">
     <div class="prepday-banner" id="prepday-banner" style="display:none" role="region" aria-label="Prep day suggestion">
       <span class="prepday-banner-ic" aria-hidden="true">🍱</span>
@@ -2155,7 +2264,10 @@ button:not(:disabled):active,
 <div class="settings-overlay" id="settings-overlay" style="display:none">
 <div class="settings-sheet">
   <div class="settings-hdr">
-    <h2>⚙️ Settings</h2>
+    <div class="settings-hdr-brand">
+      <img class="arc-logo arc-logo--hdr" src="assets/branding/arc-logo.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"/>
+      <h2>Settings</h2>
+    </div>
     <button class="settings-close" id="settings-close">✕ Close</button>
   </div>
   <div class="settings-body">
@@ -2163,6 +2275,13 @@ button:not(:disabled):active,
     <!-- ACCOUNT -->
     <div class="settings-sec" id="settings-account-sec">
       <div class="settings-sec-title">Account</div>
+      <div class="settings-account-brand">
+        <img class="arc-logo arc-logo--account" src="assets/branding/arc-logo.png" alt="" width="44" height="44" decoding="async" aria-hidden="true"/>
+        <div class="settings-account-meta">
+          <div class="settings-account-name">Arc</div>
+          <p class="settings-account-tag">Your nutrition system</p>
+        </div>
+      </div>
       <div class="settings-account-row">
         <span class="settings-account-lbl">Email</span>
         <span class="settings-account-val" id="s-account-email">—</span>
@@ -2827,6 +2946,25 @@ function arcFmtMenuForecast(kcalAhead) {
   return 'Still on your menu (not logged): ~' + Math.round(kcalAhead).toLocaleString(undefined) + ' kcal';
 }
 
+/** Central branding asset paths — favicon / PWA / native icons can branch from here later. */
+var ARC_BRANDING = {
+  logoSrc: 'assets/branding/arc-logo.png',
+  icon: {
+    favicon: 'assets/branding/arc-logo.png',
+    appleTouch: 'assets/branding/arc-logo.png'
+  }
+};
+
+function arcLogoImgHtml(variant, opts) {
+  opts = opts || {};
+  var w = opts.width != null ? opts.width : 28;
+  var h = opts.height != null ? opts.height : 28;
+  var extra = opts.className ? ' ' + opts.className : '';
+  var anim = opts.animate ? ' arc-logo--' + opts.animate : '';
+  var pri = opts.fetchpriority ? ' fetchpriority="' + opts.fetchpriority + '"' : '';
+  return '<img class="arc-logo arc-logo--' + variant + anim + extra + '" src="' + ARC_BRANDING.logoSrc + '" alt="" width="' + w + '" height="' + h + '" decoding="async"' + pri + '/>';
+}
+
 function arcPlural(n, one, many) {
   return n === 1 ? one : (many || one + 's');
 }
@@ -2858,6 +2996,12 @@ function applyArcBrandingToStaticDom() {
     assignTitle.textContent = ARC_COPY.meal.assignReplaceTitle;
   }
   document.title = 'Arc';
+  var logos = document.querySelectorAll('.arc-logo');
+  for (var li = 0; li < logos.length; li++) logos[li].src = ARC_BRANDING.logoSrc;
+  var fav = document.querySelector('link[rel="icon"]');
+  if (fav) fav.href = ARC_BRANDING.icon.favicon;
+  var apple = document.querySelector('link[rel="apple-touch-icon"]');
+  if (apple) apple.href = ARC_BRANDING.icon.appleTouch;
 }
 
 // ── Application state ─────────────────────────────────────────
@@ -13221,6 +13365,7 @@ function renderIntroSlide() {
   var adaptExtra = slide.visual === 'adapt' ? ' intro-visual--adapt' : '';
   stage.innerHTML =
     '<div class="intro-copy-block">' +
+    '<div class="intro-slide-mark intro-reveal-0" aria-hidden="true">' + arcLogoImgHtml('intro', { width: 32, height: 32 }) + '</div>' +
     '<h1 class="intro-title intro-reveal-1">' + shopEsc(slide.title).replace(/\n/g, '<br>') + '</h1>' +
     '<p class="intro-sub intro-reveal-2">' + shopEsc(slide.sub).replace(/\n/g, '<br>') + '</p>' +
     quoteHtmlBefore +
@@ -13698,7 +13843,8 @@ window.addEventListener("load", function() {
   }
 
   setTimeout(function() {
-    splash.style.opacity = "0";
+    splash.classList.add('is-exiting');
+    splash.style.opacity = '0';
 
     setTimeout(function() {
       splash.remove();
@@ -13712,8 +13858,8 @@ window.addEventListener("load", function() {
       } else if (welcome && arcRestoredFromStorage && arcBootInitialScreen === 'welcome') {
         welcome.classList.add("active");
       }
-    }, 600);
-  }, 1500);
+    }, 680);
+  }, 1650);
 });
 </script>
 </body>
