@@ -451,6 +451,53 @@ body{
   .arc-auth-google-btn{transition:opacity 200ms var(--ease-standard)}
   .arc-auth-google-btn:active:not(:disabled){transform:none}
   .arc-auth-card--exit{filter:none;transform:none!important;transition:opacity 200ms var(--ease-standard)!important}
+.arc-auth-forgot-wrap{margin:-6px 0 12px;text-align:right}
+.arc-auth-forgot-link{background:none;border:none;color:rgba(255,255,255,.44);font-size:12px;font-weight:500;cursor:pointer;padding:6px 4px;transition:color var(--motion-fast) var(--ease-standard)}
+.arc-auth-forgot-link:hover{color:rgba(255,255,255,.76)}
+.arc-auth-forgot-link:focus-visible{outline:2px solid rgba(227,90,54,.55);outline-offset:2px;border-radius:6px}
+.arc-auth-exists{margin:0 0 16px;padding:14px 16px;border-radius:16px;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.1);opacity:0;max-height:0;overflow:hidden;transform:translateY(-4px);pointer-events:none;transition:opacity 480ms cubic-bezier(0.22,1,0.36,1),transform 480ms cubic-bezier(0.22,1,0.36,1),max-height 520ms cubic-bezier(0.22,1,0.36,1),margin 480ms cubic-bezier(0.22,1,0.36,1),padding 480ms cubic-bezier(0.22,1,0.36,1)}
+.arc-auth-exists.is-visible{opacity:1;max-height:220px;transform:translateY(0);pointer-events:auto;margin-bottom:16px;padding:14px 16px}
+.arc-auth-exists-msg{font-size:14px;line-height:1.5;color:rgba(255,255,255,.78);margin:0 0 12px;font-weight:450}
+.arc-auth-exists-actions{display:flex;flex-direction:column;gap:8px}
+.arc-auth-exists-primary{width:100%;border-radius:var(--r-md);border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:rgba(255,255,255,.92);font-size:14px;font-weight:650;cursor:pointer;min-height:44px;padding:12px 16px;transition:background var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
+.arc-auth-exists-primary:hover:not(:disabled){background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.24)}
+.arc-auth-exists-ghost{background:none;border:none;color:rgba(255,255,255,.48);font-size:13px;font-weight:500;cursor:pointer;padding:10px 8px;width:100%;transition:color var(--motion-fast) var(--ease-standard)}
+.arc-auth-exists-ghost:hover:not(:disabled){color:rgba(255,255,255,.78)}
+.arc-auth-panel--reset-sent .arc-auth-google,.arc-auth-panel--reset-sent .arc-auth-divider,.arc-auth-panel--reset-sent #arc-auth-field-password,.arc-auth-panel--reset-sent .arc-auth-forgot-wrap,.arc-auth-panel--reset-sent .arc-auth-foot{display:none}
+.arc-auth-card.is-reset-sent .arc-auth-panel--form{display:none}
+.arc-auth-card.is-reset-sent .arc-auth-panel--reset-sent{display:block}
+.arc-auth-panel--reset-sent{display:none;animation:arcAuthVerifyIn 640ms cubic-bezier(0.22,1,0.36,1) both}
+.arc-auth-reset-sent-mark{width:36px;height:36px;border-radius:12px;background:rgba(86,120,189,.12);border:1px solid rgba(120,160,220,.28);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.arc-auth-reset-sent-mark svg{width:18px;height:18px;stroke:rgba(180,200,240,.95);fill:none;stroke-width:2;stroke-linecap:round}
+.arc-auth-verify-back{align-self:flex-start;background:none;border:none;color:rgba(255,255,255,.42);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;padding:0 0 12px;margin:-4px 0 0;transition:color var(--motion-fast) var(--ease-standard)}
+.arc-auth-verify-back:hover{color:rgba(255,255,255,.72)}
+.arc-auth-verify-back:focus-visible{outline:2px solid rgba(227,90,54,.55);outline-offset:2px;border-radius:6px}
+.settings-account-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--arc-divider)}
+.settings-account-row:last-of-type{border-bottom:none}
+.settings-account-lbl{font-size:13px;color:var(--arc-subtext);line-height:1.4}
+.settings-account-val{font-size:13px;font-weight:600;color:var(--arc-text);text-align:right;line-height:1.4;word-break:break-word}
+.settings-logout-btn{width:100%;margin-top:14px;border-radius:14px;padding:12px;font-size:14px;font-weight:600;color:var(--arc-text)}
+.settings-pers-summary{margin-top:4px}
+.settings-support-link{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--arc-divider);padding:14px 0;font-size:14px;font-weight:500;color:var(--arc-text);cursor:pointer;transition:color var(--motion-fast) var(--ease-standard)}
+.settings-support-link:last-child{border-bottom:none}
+.settings-support-link:hover{color:var(--arc-primary-dark)}
+.settings-support-link:disabled{opacity:.45;cursor:default}
+.arc-reset-modal{position:absolute;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity var(--motion-sheet) var(--ease-standard);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.arc-reset-modal.is-open{opacity:1;pointer-events:auto}
+.arc-reset-modal.is-closing{opacity:0;pointer-events:none}
+.arc-reset-sheet{width:100%;max-width:400px;background:var(--arc-surface);border-radius:var(--r-xl) var(--r-xl) 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform var(--motion-sheet) var(--ease-out)}
+.arc-reset-modal.is-open .arc-reset-sheet{transform:translateY(0)}
+.arc-reset-modal.is-closing .arc-reset-sheet{transform:translateY(100%)}
+.arc-reset-handle{width:36px;height:4px;border-radius:999px;background:var(--arc-divider);margin:0 auto 16px}
+.arc-reset-h{font-family:Georgia,serif;font-size:20px;font-weight:600;color:var(--arc-text);margin-bottom:8px;letter-spacing:-.02em}
+.arc-reset-sub{font-size:14px;line-height:1.5;color:var(--arc-subtext);margin-bottom:20px}
+.arc-reset-actions{display:flex;flex-direction:column;gap:10px}
+.screen.arc-screen-fade-out{opacity:0;transition:opacity 420ms cubic-bezier(0.33,0.83,0.38,1)}
+.screen.arc-screen-fade-in{animation:arcScreenFadeIn 480ms cubic-bezier(0.22,1,0.36,1) both}
+@keyframes arcScreenFadeIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .arc-auth-exists,.arc-reset-modal,.arc-reset-sheet,.screen.arc-screen-fade-out,.screen.arc-screen-fade-in{transition:none!important;animation:none!important}
+}
 }
 
 /* GENERATING — calm, spacious progress (no %, no frantic spinner) */
@@ -1598,6 +1645,16 @@ button:not(:disabled):active,
           <input class="fi" id="arc-auth-password" type="password" autocomplete="new-password" placeholder="8+ characters"/>
           <p class="arc-auth-field-hint" id="arc-auth-password-hint" aria-live="polite"></p>
         </div>
+        <div class="arc-auth-forgot-wrap" id="arc-auth-forgot-wrap" hidden>
+          <button type="button" class="arc-auth-forgot-link" id="arc-auth-forgot">Forgot password?</button>
+        </div>
+        <div class="arc-auth-exists" id="arc-auth-exists" aria-live="polite" hidden>
+          <p class="arc-auth-exists-msg" id="arc-auth-exists-msg">An Arc profile already exists for this email.</p>
+          <div class="arc-auth-exists-actions">
+            <button type="button" class="arc-auth-exists-primary" id="arc-auth-signin-instead">Sign In Instead</button>
+            <button type="button" class="arc-auth-exists-ghost" id="arc-auth-reset-instead">Reset Password</button>
+          </div>
+        </div>
         <p class="arc-auth-inline" id="arc-auth-msg" aria-live="polite"></p>
         <button type="button" class="arc-auth-submit" id="arc-auth-submit" aria-busy="false">
           <span class="arc-auth-submit-inner">
@@ -1609,7 +1666,17 @@ button:not(:disabled):active,
           <button type="button" class="arc-auth-toggle" id="arc-auth-toggle">Already have an account? Sign in</button>
         </div>
       </div>
+      <div class="arc-auth-panel arc-auth-panel--reset-sent" id="arc-auth-reset-sent-panel" aria-hidden="true">
+        <div class="arc-auth-reset-sent-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg>
+        </div>
+        <h1 class="arc-auth-h" id="arc-auth-reset-sent-h">Check your inbox.</h1>
+        <p class="arc-auth-sub" id="arc-auth-reset-sent-lead">We sent recovery instructions to your inbox.</p>
+        <div class="arc-auth-email-chip" title=""><span id="arc-auth-reset-sent-email">you@example.com</span></div>
+        <button type="button" class="arc-auth-secondary-btn" id="arc-auth-reset-back" style="margin-top:20px">Back to sign in</button>
+      </div>
       <div class="arc-auth-panel arc-auth-panel--verify" id="arc-auth-verify-panel" aria-hidden="true">
+        <button type="button" class="arc-auth-verify-back" id="arc-auth-verify-back">← Back</button>
         <div class="arc-auth-verify-top">
           <div class="arc-auth-verify-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
@@ -1625,6 +1692,7 @@ button:not(:disabled):active,
           <p class="arc-auth-verify-line" id="arc-auth-verify-line2">You can close Arc after verification — your system will be waiting.</p>
         </div>
         <div class="arc-auth-verify-actions">
+          <button type="button" class="arc-auth-secondary-btn" id="arc-auth-verify-continue">Already verified? Continue</button>
           <button type="button" class="arc-auth-secondary-btn" id="arc-auth-open-mail">Open email app</button>
           <button type="button" class="arc-auth-ghost-btn" id="arc-auth-resend">Resend email</button>
           <button type="button" class="arc-auth-ghost-btn" id="arc-auth-change-email">Use another email</button>
@@ -2092,22 +2160,26 @@ button:not(:disabled):active,
   </div>
   <div class="settings-body">
 
-    <!-- PROFILE -->
+    <!-- ACCOUNT -->
+    <div class="settings-sec" id="settings-account-sec">
+      <div class="settings-sec-title">Account</div>
+      <div class="settings-account-row">
+        <span class="settings-account-lbl">Email</span>
+        <span class="settings-account-val" id="s-account-email">—</span>
+      </div>
+      <div class="settings-account-row">
+        <span class="settings-account-lbl">Sign in</span>
+        <span class="settings-account-val" id="s-account-provider">—</span>
+      </div>
+      <button type="button" class="btn-outline settings-logout-btn" id="s-logout">Log out</button>
+    </div>
+
+    <!-- PERSONALIZATION -->
     <div class="settings-sec">
-      <div class="settings-sec-title">👤 Profile</div>
+      <div class="settings-sec-title">Personalization</div>
       <div id="s-regen-card" class="regen-card" style="display:none">
         <div class="regen-txt"><strong>Profile changed</strong>Save &amp; regenerate to apply to your meal plan.</div>
         <button class="btn-green" id="s-regen" style="padding:9px 14px;font-size:12px;white-space:nowrap;flex-shrink:0">🔄 Regenerate</button>
-      </div>
-      <div class="fg2 fl" style="margin-bottom:12px">
-        <div><label class="s-lbl">Name</label><input class="fi" id="s-name" placeholder="Your name"/></div>
-        <div><label class="s-lbl">Age</label><input class="fi" id="s-age" type="number" min="10" max="100" placeholder="30"/></div>
-      </div>
-      <div class="fg2 fl" style="margin-bottom:12px">
-        <div><label class="s-lbl">Weight (lbs)</label><input class="fi" id="s-wt" type="number" min="50" max="700" placeholder="160"/></div>
-        <div><label class="s-lbl">Sex</label>
-          <select class="fi" id="s-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
-        </div>
       </div>
       <div class="fl" style="margin-bottom:12px">
         <label class="s-lbl">Goal</label>
@@ -2122,7 +2194,7 @@ button:not(:disabled):active,
         </div>
       </div>
       <div class="fl" style="margin-bottom:12px">
-        <label class="s-lbl">Activity Level</label>
+        <label class="s-lbl">Activity level</label>
         <div class="s-chips" id="sg-activity">
           <span class="sc" data-v="Sedentary">🪑 Sedentary</span>
           <span class="sc" data-v="Light">🚶 Light</span>
@@ -2131,7 +2203,23 @@ button:not(:disabled):active,
           <span class="sc" data-v="Athlete">🏆 Athlete</span>
         </div>
       </div>
-      <div class="fl" style="margin-bottom:0">
+      <div class="settings-pers-summary" id="s-personalization-targets"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="settings-sec">
+      <div class="settings-sec-title">Profile</div>
+      <div class="fg2 fl" style="margin-bottom:12px">
+        <div><label class="s-lbl">Name</label><input class="fi" id="s-name" placeholder="Your name"/></div>
+        <div><label class="s-lbl">Age</label><input class="fi" id="s-age" type="number" min="10" max="100" placeholder="30"/></div>
+      </div>
+      <div class="fg2 fl" style="margin-bottom:12px">
+        <div><label class="s-lbl">Weight (lbs)</label><input class="fi" id="s-wt" type="number" min="50" max="700" placeholder="160"/></div>
+        <div><label class="s-lbl">Sex</label>
+          <select class="fi" id="s-sex"><option>Male</option><option>Female</option><option>Prefer not to say</option></select>
+        </div>
+      </div>
+      <div class="fl" style="margin-bottom:12px">
         <label class="s-lbl">Meals per day</label>
         <div class="s-chips" id="sg-meals">
           <span class="sc" data-v="2">2</span><span class="sc" data-v="3">3</span>
@@ -2210,6 +2298,21 @@ button:not(:disabled):active,
       <div id="s-targets"></div>
     </div>
 
+    <!-- DATA -->
+    <div class="settings-sec">
+      <div class="settings-sec-title">Data</div>
+      <button type="button" class="btn-outline" id="s-reset-arc" style="width:100%;border-radius:14px;padding:12px;font-size:14px;font-weight:600">Reset Arc</button>
+      <p style="font-size:12px;color:var(--arc-subtext);margin:8px 0 0;line-height:1.45">Clears plans and personalization. Your account stays signed in.</p>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="settings-sec">
+      <div class="settings-sec-title">Support</div>
+      <button type="button" class="settings-support-link" id="s-support-privacy" disabled>Privacy Policy</button>
+      <button type="button" class="settings-support-link" id="s-support-terms" disabled>Terms of Service</button>
+      <button type="button" class="settings-support-link" id="s-support-contact" disabled>Contact</button>
+    </div>
+
     <!-- PAST WEEKLY RECAPS -->
     <div class="settings-sec">
       <div class="settings-sec-title">📚 Past recaps</div>
@@ -2219,11 +2322,24 @@ button:not(:disabled):active,
 
   </div><!-- /settings-body -->
   <div class="settings-footer">
-    <button type="button" class="btn-outline" id="s-reset-data" style="width:100%;margin-bottom:10px;border-radius:14px">Clear saved data &amp; restart</button>
+    
     <button class="btn-dark btn" id="s-save" style="width:100%;border-radius:14px">✓ Save Profile</button>
   </div>
 </div><!-- /settings-sheet -->
 </div><!-- /settings-overlay -->
+<!-- Reset Arc confirmation -->
+<div class="arc-reset-modal" id="arc-reset-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="arc-reset-h">
+  <div class="arc-reset-sheet">
+    <div class="arc-reset-handle" aria-hidden="true"></div>
+    <h3 class="arc-reset-h" id="arc-reset-h">Reset your Arc system?</h3>
+    <p class="arc-reset-sub" id="arc-reset-sub">This clears your plans and personalization, but keeps your account.</p>
+    <div class="arc-reset-actions">
+      <button type="button" class="btn-dark btn" id="arc-reset-confirm" style="width:100%;border-radius:14px">Reset Arc</button>
+      <button type="button" class="btn-outline" id="arc-reset-cancel" style="width:100%;border-radius:14px">Cancel</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- WEEKLY RECAP (full-screen inside app) -->
 <div id="recap-overlay" class="recap-overlay" aria-hidden="true">
@@ -2443,8 +2559,22 @@ var ARC_COPY = {
     openMail: 'Open email app',
     resendMail: 'Resend email',
     changeMail: 'Use another email',
-    resendSuccess: 'Another note is on its way.',
+    resendSuccess: 'Another verification link is on its way.',
     resendWait: 'You can send another in {n}s.',
+    existsMsg: 'An Arc profile already exists for this email.',
+    signInInstead: 'Sign In Instead',
+    resetInstead: 'Reset Password',
+    forgotLink: 'Forgot password?',
+    forgotHeadline: 'Reset your password.',
+    forgotSub: 'We will send calm recovery steps to your email.',
+    forgotCta: 'Send recovery link',
+    resetSentHeadline: 'Check your inbox.',
+    resetSentLead: 'We sent recovery instructions to your inbox.',
+    resetBack: 'Back to sign in',
+    verifyContinue: 'Already verified? Continue',
+    verifyBack: 'Back',
+    verifyContinueWait: 'Still waiting on verification — try resend or check spam.',
+    verifyContinueOk: 'Welcome back — restoring your Arc.',
     weakPassword: 'Eight characters keeps things gentle and secure.',
     invalidEmail: 'That email needs one more look.',
     emptyFields: 'We need both your email and a password to continue.',
@@ -2767,6 +2897,8 @@ var arcRestoredFromStorage = false;
 var arcAuthSession = null;
 var arcAuthUser = null;
 var arcAuthMode = 'signup';
+var arcAuthUiMode = 'signup';
+var arcAuthBusy = false;
 var arcAuthAwaitingVerify = false;
 var arcAuthVerifyEmail = '';
 var arcAuthResendNotBefore = 0;
@@ -2837,16 +2969,74 @@ function saveSessionState() {
   persistAppData();
 }
 
-function clearAllPersistedData() {
+function arcClearPersistedStorage() {
   try {
     localStorage.removeItem(LS_PROFILE);
     localStorage.removeItem(LS_SESSION);
   } catch (e) {}
+  try {
+    sessionStorage.removeItem('arc_pending_ob');
+    sessionStorage.removeItem('arc_auth_verify_pending');
+  } catch (e2) {}
+}
+
+function clearAllPersistedData() {
+  arcClearPersistedStorage();
   if (typeof ArcBackend !== 'undefined' && ArcBackend.isConfigured && ArcBackend.isConfigured()) {
     try {
       ArcBackend.signOut();
-    } catch (e2) {}
+    } catch (e3) {}
   }
+}
+
+function arcDefaultProfileShell() {
+  return {
+    region: 'us-midwest',
+    budget: 'Moderate',
+    weeklyBudget: 'Moderate',
+    mealFeedback: {},
+    arcAdaptive: defaultArcAdaptive(),
+    arcBehavior: defaultArcBehaviorProfile(),
+    weeklyReviewHistory: [],
+    chaosRecovery: defaultChaosRecovery()
+  };
+}
+
+function arcResetInMemoryAppState() {
+  recipes = [];
+  selectedRecipes = new Set();
+  checked = {};
+  shopPantry = {};
+  householdInventory = {};
+  mealJournal = {};
+  mealPlan = {};
+  DAYS.forEach(function (d) { mealPlan[d] = {}; });
+  logs = [];
+  logClarifyState = null;
+  activeCat = 'All';
+  useCustom = false;
+  locDetected = false;
+  recipeGenId++;
+  arcRestoredFromStorage = false;
+}
+
+function arcAuthDescribeProvider(user) {
+  if (!user) return 'Email';
+  var ids = user.identities;
+  if (Array.isArray(ids) && ids.length) {
+    var names = [];
+    for (var i = 0; i < ids.length; i++) {
+      var p = (ids[i] && ids[i].provider) ? String(ids[i].provider) : '';
+      if (!p) continue;
+      if (p === 'google') names.push('Google');
+      else if (p === 'email') names.push('Email');
+      else names.push(p.charAt(0).toUpperCase() + p.slice(1));
+    }
+    if (names.length) return names.join(' · ');
+  }
+  var meta = user.app_metadata || {};
+  if (meta.provider === 'google') return 'Google';
+  return 'Email';
 }
 
 function applyProfileToUIBar() {
@@ -3026,6 +3216,259 @@ function arcPrefersReducedMotion() {
   }
 }
 
+function arcAuthIsDuplicateSignupResult(res) {
+  if (!res) return false;
+  if (res.error && ArcBackend.isDuplicateSignupError && ArcBackend.isDuplicateSignupError(res.error)) return true;
+  var user = res.data && res.data.user;
+  if (ArcBackend.isDuplicateSignupUser && ArcBackend.isDuplicateSignupUser(user)) return true;
+  return false;
+}
+
+function arcAuthHideExistingAccountUI() {
+  var box = el('arc-auth-exists');
+  if (!box) return;
+  box.classList.remove('is-visible');
+  box.hidden = true;
+}
+
+function arcAuthShowExistingAccountUI(email) {
+  arcAuthHideVerifyUI();
+  arcAuthHideResetSentUI();
+  var ac = ARC_COPY.auth || {};
+  var box = el('arc-auth-exists');
+  var msg = el('arc-auth-exists-msg');
+  var si = el('arc-auth-signin-instead');
+  var rp = el('arc-auth-reset-instead');
+  if (msg) msg.textContent = ac.existsMsg || 'An Arc profile already exists for this email.';
+  if (si) si.textContent = ac.signInInstead || 'Sign In Instead';
+  if (rp) rp.textContent = ac.resetInstead || 'Reset Password';
+  if (box) {
+    box.hidden = false;
+    requestAnimationFrame(function () {
+      box.classList.add('is-visible');
+    });
+  }
+  var emIn = el('arc-auth-email');
+  if (emIn && email) emIn.value = email;
+  arcSetAuthMsg('', '');
+}
+
+function arcAuthHideResetSentUI() {
+  var card = el('arc-auth-card');
+  if (card) card.classList.remove('is-reset-sent');
+  var panel = el('arc-auth-reset-sent-panel');
+  if (panel) panel.setAttribute('aria-hidden', 'true');
+}
+
+function arcAuthShowResetSentUI(email) {
+  arcAuthHideVerifyUI();
+  arcAuthHideExistingAccountUI();
+  var ac = ARC_COPY.auth || {};
+  var card = el('arc-auth-card');
+  var h = el('arc-auth-reset-sent-h');
+  var lead = el('arc-auth-reset-sent-lead');
+  var chip = el('arc-auth-reset-sent-email');
+  if (h) h.textContent = ac.resetSentHeadline || 'Check your inbox.';
+  if (lead) lead.textContent = ac.resetSentLead || 'We sent recovery instructions to your inbox.';
+  if (chip) chip.textContent = (email || '').trim();
+  if (card) card.classList.add('is-reset-sent');
+  var panel = el('arc-auth-reset-sent-panel');
+  if (panel) panel.setAttribute('aria-hidden', 'false');
+}
+
+function arcAuthSwitchToSignInPreserveEmail() {
+  var emIn = el('arc-auth-email');
+  var email = emIn ? (emIn.value || '').trim() : '';
+  arcAuthHideExistingAccountUI();
+  arcClearAuthMsg();
+  arcAuthSetMode('signin');
+  if (emIn && email) emIn.value = email;
+  var pw = el('arc-auth-password');
+  if (pw) {
+    setTimeout(function () {
+      try { pw.focus(); } catch (eF) {}
+    }, arcPrefersReducedMotion() ? 0 : 120);
+  }
+}
+
+function arcAuthSwitchToForgotPassword(preserveEmail) {
+  arcAuthHideExistingAccountUI();
+  arcAuthHideResetSentUI();
+  arcClearAuthMsg();
+  arcAuthSetMode('forgot');
+  if (preserveEmail !== false) {
+    var emIn = el('arc-auth-email');
+    if (emIn) {
+      setTimeout(function () {
+        try { emIn.focus(); } catch (eF2) {}
+      }, 80);
+    }
+  }
+}
+
+function arcAuthRefreshSessionAndContinue() {
+  if (arcAuthBusy) return;
+  arcAuthBusy = true;
+  var contBtn = el('arc-auth-verify-continue');
+  var ac = ARC_COPY.auth || {};
+  if (contBtn) contBtn.disabled = true;
+  ArcBackend.getSession().then(function (res) {
+    var sess = res.data && res.data.session;
+    if (!sess || !sess.user) {
+      arcAuthSetVerifyFeedback(ac.verifyContinueWait || 'Still waiting on verification.', false, 'wait');
+      if (contBtn) contBtn.disabled = false;
+      arcAuthBusy = false;
+      return;
+    }
+    arcAuthSession = sess;
+    arcAuthUser = sess.user;
+    arcAuthAwaitingVerify = true;
+    arcAuthSetVerifyFeedback(ac.verifyContinueOk || 'Welcome back.', true, 'ok');
+    return arcRestoreSessionIntoApp(sess, true).then(function () {
+      arcAuthHideVerifyUI();
+      arcAuthBusy = false;
+      if (contBtn) contBtn.disabled = false;
+    });
+  }).catch(function (err) {
+    arcAuthSetVerifyFeedback(ArcBackend.mapAuthError(err), false, 'err');
+    if (contBtn) contBtn.disabled = false;
+    arcAuthBusy = false;
+  });
+}
+
+function arcRestoreSessionIntoApp(session, pendingGen) {
+  var user = session && session.user;
+  if (!user) return Promise.reject(new Error('no user'));
+  arcAuthSession = session;
+  arcAuthUser = user;
+  return ArcBackend.fetchProfileRow(user.id).then(function (rowRes) {
+    var row = rowRes && rowRes.data && !rowRes.error ? rowRes.data : null;
+    var bundle = row && row.profile ? { profile: row.profile, app: row.app_state || {} } : null;
+    if (bundle && bundle.profile && typeof bundle.profile === 'object') {
+      applyJsonBundleToApp(bundle);
+      arcRestoredFromStorage = true;
+      try {
+        localStorage.setItem(LS_PROFILE, JSON.stringify(bundle));
+      } catch (eLs) {}
+    } else if (validateUserProfile(UP).ok) {
+      saveUserProfile();
+      return arcPushProfileCloudNow(user.id);
+    }
+  }).then(function () {
+    applySafeProfileDefaults(UP);
+    var chk = validateUserProfile(UP);
+    if (!chk.ok) return Promise.reject(new Error((chk.errors && chk.errors[0]) || 'incomplete'));
+    return arcExitAuthCardAnimated(function () {
+      arcFinishAuthSuccessNavigation(!!pendingGen);
+    });
+  });
+}
+
+function arcFadeNavigateToScreen(targetId) {
+  var from = document.querySelector('.screen.active');
+  var target = el(targetId);
+  if (!target) return;
+  var reduced = arcPrefersReducedMotion();
+  function activate() {
+    if (from && from !== target) from.classList.remove('active');
+    target.classList.add('active');
+    if (!reduced) {
+      target.classList.add('arc-screen-fade-in');
+      setTimeout(function () { target.classList.remove('arc-screen-fade-in'); }, 520);
+    }
+  }
+  if (!from || from === target || reduced) {
+    activate();
+    return;
+  }
+  from.classList.add('arc-screen-fade-out');
+  setTimeout(function () {
+    from.classList.remove('active', 'arc-screen-fade-out');
+    activate();
+  }, reduced ? 0 : 420);
+}
+
+function arcNavigateAfterLogout() {
+  arcAuthHideVerifyUI();
+  arcAuthHideExistingAccountUI();
+  arcAuthHideResetSentUI();
+  arcAuthSetMode('signin');
+  hydrateArcAuthContextFromUP();
+  if (arcRestoredFromStorage && validateUserProfile(UP).ok) {
+    arcFadeNavigateToScreen('s-auth');
+  } else {
+    obStep = 1;
+    arcFadeNavigateToScreen('s-welcome');
+  }
+}
+
+function arcLogout() {
+  if (arcAuthBusy) return Promise.resolve();
+  arcAuthBusy = true;
+  closeSettings();
+  return ArcBackend.signOut().then(function () {
+    arcAuthSession = null;
+    arcAuthUser = null;
+    arcAuthBusy = false;
+    arcNavigateAfterLogout();
+  }).catch(function () {
+    arcAuthSession = null;
+    arcAuthUser = null;
+    arcAuthBusy = false;
+    arcNavigateAfterLogout();
+  });
+}
+
+function arcResetArcSystem() {
+  if (arcAuthBusy) return;
+  arcAuthBusy = true;
+  var preservedEmail = (arcAuthUser && arcAuthUser.email) ? String(arcAuthUser.email) : ((UP && UP.email) ? String(UP.email) : '');
+  var uid = arcAuthUser && arcAuthUser.id;
+  arcClearPersistedStorage();
+  arcResetInMemoryAppState();
+  UP = arcDefaultProfileShell();
+  if (preservedEmail) UP.email = preservedEmail;
+  delete UP.arcOnboardingCompletedAt;
+  obStep = 1;
+  closeSettings();
+  closeMotion('arc-reset-modal');
+  var pushCloud = uid && arcIsCloudAuthEnabled()
+    ? ArcBackend.upsertProfileBundle(uid, buildArcPersistBundle(), null).catch(function () {})
+    : Promise.resolve();
+  pushCloud.finally(function () {
+    arcAuthBusy = false;
+    arcFadeNavigateToScreen('ob');
+    goStep(1);
+    showToast('Arc reset — your account is still here when you are ready.');
+  });
+}
+
+function hydrateSettingsAccountSection() {
+  var emailNode = el('s-account-email');
+  var providerNode = el('s-account-provider');
+  var acctSec = el('settings-account-sec');
+  if (!emailNode && !providerNode) return;
+  var email = (arcAuthUser && arcAuthUser.email) ? arcAuthUser.email : (UP.email || '');
+  if (emailNode) emailNode.textContent = email || '—';
+  if (providerNode) providerNode.textContent = arcAuthDescribeProvider(arcAuthUser);
+  if (acctSec) acctSec.style.display = arcIsCloudAuthEnabled() ? '' : 'none';
+}
+
+function renderPersonalizationTargetsSummary() {
+  var wrap = el('s-personalization-targets');
+  if (!wrap) return;
+  applySafeProfileDefaults(UP);
+  if (!UP.tdee && !UP.customCal) {
+    wrap.innerHTML = '<p style="color:var(--arc-subtext);font-size:13px;line-height:1.45;margin:4px 0 0">Save your profile to see calorie and protein targets.</p>';
+    return;
+  }
+  var calT = getCalTarget();
+  var macros = UP.macros || getMacroTargets(calT);
+  wrap.innerHTML =
+    '<div class="info-row"><span class="info-lbl">Calories</span><span class="info-val">' + calT + ' kcal</span></div>' +
+    '<div class="info-row"><span class="info-lbl">Protein target</span><span class="info-val">' + macros.protein + 'g</span></div>';
+}
+
 function arcClassifyAuthFieldForMsg(msg) {
   var m = (String(msg || '')).toLowerCase();
   if (m.indexOf('profile already exists') !== -1) return 'email';
@@ -3078,7 +3521,9 @@ function arcAuthSetSubmitBusy(isBusy) {
   var ac = ARC_COPY.auth || {};
   var busy = ac.ctaBusy || 'One moment…';
   var idle = ac.ctaContinue || 'Continue';
+  if (arcAuthUiMode === 'forgot') idle = ac.forgotCta || 'Send recovery link';
   if (!btn) return;
+  arcAuthBusy = !!isBusy;
   if (isBusy) {
     btn.disabled = true;
     btn.classList.add('is-loading');
@@ -3136,6 +3581,8 @@ function arcAuthShowVerifyUI(email) {
   var mailBtn = el('arc-auth-open-mail');
   var resBtn = el('arc-auth-resend');
   var chBtn = el('arc-auth-change-email');
+  var backBtn = el('arc-auth-verify-back');
+  var contBtn = el('arc-auth-verify-continue');
   if (vh) vh.textContent = ac.verifyHeadline || 'Check your inbox.';
   if (vl) vl.textContent = ac.verifyLead || '';
   if (l1) l1.textContent = ac.verifyMicro1 || '';
@@ -3146,6 +3593,8 @@ function arcAuthShowVerifyUI(email) {
     resBtn.disabled = false;
   }
   if (chBtn) chBtn.textContent = ac.changeMail || 'Use another email';
+  if (backBtn) backBtn.textContent = ac.verifyBack ? ('← ' + ac.verifyBack) : '← Back';
+  if (contBtn) contBtn.textContent = ac.verifyContinue || 'Already verified? Continue';
   var chip = el('arc-auth-verify-email');
   if (chip) chip.textContent = em || '';
   var chipWrap = chip && chip.closest ? chip.closest('.arc-auth-email-chip') : null;
@@ -3291,51 +3740,76 @@ function arcHandleAuthVerifiedSession(session) {
   if (!arcAuthAwaitingVerify || !session || !session.user || arcAuthVerifyTransitionLock) return;
   if (!el('s-auth') || !el('s-auth').classList.contains('active')) return;
   arcAuthVerifyTransitionLock = true;
-  var user = session.user;
   var pendingGen = false;
   try {
     pendingGen = sessionStorage.getItem('arc_pending_ob') === '1';
   } catch (e6) {}
 
   arcAuthSetSubmitBusy(false);
-  arcExitAuthCardAnimated(function () {
-    return arcPushProfileCloudNow(user.id).then(
-      function () {
-        arcAuthHideVerifyUI();
-        arcAuthSession = session;
-        arcAuthUser = user;
-        UP.arcOnboardingCompletedAt = UP.arcOnboardingCompletedAt || new Date().toISOString();
-        saveUserProfile();
-        arcAuthSetSubmitBusy(false);
-        arcFinishAuthSuccessNavigation(pendingGen);
-        arcAuthVerifyTransitionLock = false;
-      },
-      function (e7) {
-        arcAuthVerifyTransitionLock = false;
-        arcAuthHideVerifyUI();
-        arcSetAuthMsg(ArcBackend.mapAuthError(e7));
-        arcAuthSetSubmitBusy(false);
-      }
-    );
-  }).catch(function () {
+  var pushFirst = pendingGen ? arcPushProfileCloudNow(session.user.id) : Promise.resolve();
+  pushFirst.then(function () {
+    UP.arcOnboardingCompletedAt = UP.arcOnboardingCompletedAt || new Date().toISOString();
+    saveUserProfile();
+    return arcRestoreSessionIntoApp(session, pendingGen);
+  }).then(function () {
+    arcAuthHideVerifyUI();
     arcAuthVerifyTransitionLock = false;
+    arcAuthSetSubmitBusy(false);
+  }).catch(function (e7) {
+    arcAuthVerifyTransitionLock = false;
+    arcAuthHideVerifyUI();
+    arcSetAuthMsg(ArcBackend.mapAuthError(e7));
+    arcAuthSetSubmitBusy(false);
   });
 }
 
 function arcAuthSetMode(mode) {
-  arcAuthMode = mode === 'signin' ? 'signin' : 'signup';
+  arcAuthUiMode = mode || 'signup';
+  if (arcAuthUiMode === 'signin' || arcAuthUiMode === 'signup') arcAuthMode = arcAuthUiMode;
   arcAuthHideVerifyUI();
+  arcAuthHideResetSentUI();
+  if (arcAuthUiMode !== 'signup') arcAuthHideExistingAccountUI();
+  var card = el('arc-auth-card');
+  if (card) card.classList.remove('is-reset-sent');
   var h = el('arc-auth-h1');
   var lead = el('arc-auth-lead');
   var toggle = el('arc-auth-toggle');
   var ac = ARC_COPY.auth || {};
-  if (h) h.textContent = arcAuthMode === 'signin' ? (ac.headlineSignIn || 'Welcome back.') : (ac.headlineSave || 'Your Arc system is ready.');
-  if (lead) lead.textContent = arcAuthMode === 'signin' ? (ac.subSignIn || '') : (ac.subSave || '');
-  if (toggle) toggle.textContent = arcAuthMode === 'signin' ? (ac.footSignUp || '') : (ac.footSignIn || '');
+  var forgotWrap = el('arc-auth-forgot-wrap');
+  var pwField = el('arc-auth-field-password');
+  var googleWrap = document.querySelector('.arc-auth-google');
+  var divider = document.querySelector('.arc-auth-divider');
+  var foot = document.querySelector('.arc-auth-foot');
+  if (arcAuthUiMode === 'forgot') {
+    if (h) h.textContent = ac.forgotHeadline || 'Reset your password.';
+    if (lead) lead.textContent = ac.forgotSub || '';
+    if (toggle) toggle.style.display = 'none';
+    if (forgotWrap) forgotWrap.hidden = true;
+    if (pwField) pwField.style.display = 'none';
+    if (googleWrap) googleWrap.style.display = 'none';
+    if (divider) divider.style.display = 'none';
+    if (foot) foot.style.display = 'none';
+    var lblForgot = el('arc-auth-submit-label');
+    if (lblForgot) lblForgot.textContent = ac.forgotCta || 'Send recovery link';
+  } else {
+    if (toggle) toggle.style.display = '';
+    if (forgotWrap) forgotWrap.hidden = arcAuthMode !== 'signin';
+    if (pwField) pwField.style.display = '';
+    if (googleWrap) googleWrap.style.display = '';
+    if (divider) divider.style.display = '';
+    if (foot) foot.style.display = '';
+    if (h) h.textContent = arcAuthMode === 'signin' ? (ac.headlineSignIn || 'Welcome back.') : (ac.headlineSave || 'Your Arc system is ready.');
+    if (lead) lead.textContent = arcAuthMode === 'signin' ? (ac.subSignIn || '') : (ac.subSave || '');
+    if (toggle) toggle.textContent = arcAuthMode === 'signin' ? (ac.footSignUp || '') : (ac.footSignIn || '');
+    var lblNorm = el('arc-auth-submit-label');
+    if (lblNorm) lblNorm.textContent = ac.ctaContinue || 'Continue';
+  }
   var divTxt = el('arc-auth-divider-txt');
   var gLbl = el('arc-auth-google-label');
+  var forgotBtn = el('arc-auth-forgot');
   if (divTxt) divTxt.textContent = ac.emailDivider || 'or continue with email';
   if (gLbl) gLbl.textContent = ac.googleCta || 'Continue with Google';
+  if (forgotBtn) forgotBtn.textContent = ac.forgotLink || 'Forgot password?';
   var pwMode = el('arc-auth-password');
   if (pwMode) {
     try {
@@ -3446,7 +3920,7 @@ function arcAuthSetGoogleBusy(isBusy) {
 }
 
 function arcHandleGoogleAuth() {
-  if (!arcIsCloudAuthEnabled()) return;
+  if (!arcIsCloudAuthEnabled() || arcAuthBusy) return;
   if (arcAuthAwaitingVerify) return;
   arcClearAuthMsg();
   arcAuthSetGoogleBusy(true);
@@ -3476,21 +3950,74 @@ function arcWireAuthScreen() {
     });
   }
   var sub = el('arc-auth-submit');
+  if (sub && !sub._arcBound) {
+    sub._arcBound = true;
+    sub.addEventListener('click', function () {
+      arcHandleAuthSubmit();
+    });
+  }
   var toggle = el('arc-auth-toggle');
-  if (!sub || sub._arcBound) return;
-  sub._arcBound = true;
-  sub.addEventListener('click', function () {
-    arcHandleAuthSubmit();
-  });
-  if (toggle) {
+  if (toggle && !toggle._arcBound) {
+    toggle._arcBound = true;
     toggle.addEventListener('click', function () {
+      if (arcAuthUiMode === 'forgot') {
+        arcAuthSetMode('signin');
+        return;
+      }
       arcAuthSetMode(arcAuthMode === 'signin' ? 'signup' : 'signin');
+    });
+  }
+  var forgot = el('arc-auth-forgot');
+  if (forgot && !forgot._arcBound) {
+    forgot._arcBound = true;
+    forgot.addEventListener('click', function () {
+      arcAuthSwitchToForgotPassword(true);
+    });
+  }
+  var signInInstead = el('arc-auth-signin-instead');
+  if (signInInstead && !signInInstead._arcBound) {
+    signInInstead._arcBound = true;
+    signInInstead.addEventListener('click', function () {
+      arcAuthSwitchToSignInPreserveEmail();
+    });
+  }
+  var resetInstead = el('arc-auth-reset-instead');
+  if (resetInstead && !resetInstead._arcBound) {
+    resetInstead._arcBound = true;
+    resetInstead.addEventListener('click', function () {
+      arcAuthSwitchToForgotPassword(true);
+    });
+  }
+  var resetBack = el('arc-auth-reset-back');
+  if (resetBack && !resetBack._arcBound) {
+    resetBack._arcBound = true;
+    resetBack.addEventListener('click', function () {
+      arcAuthHideResetSentUI();
+      arcAuthSetMode('signin');
+    });
+  }
+  var verifyBack = el('arc-auth-verify-back');
+  if (verifyBack && !verifyBack._arcBound) {
+    verifyBack._arcBound = true;
+    verifyBack.addEventListener('click', function () {
+      arcAuthHideVerifyUI();
+      arcClearAuthMsg();
+      arcAuthSetSubmitBusy(false);
+    });
+  }
+  var verifyContinue = el('arc-auth-verify-continue');
+  if (verifyContinue && !verifyContinue._arcBound) {
+    verifyContinue._arcBound = true;
+    verifyContinue.addEventListener('click', function () {
+      arcAuthRefreshSessionAndContinue();
     });
   }
   var em = el('arc-auth-email');
   var pw = el('arc-auth-password');
-  if (em) {
+  if (em && !em._arcBound) {
+    em._arcBound = true;
     em.addEventListener('input', function () {
+      arcAuthHideExistingAccountUI();
       arcClearAuthMsg();
       em.classList.remove('err', 'arc-field-glow-err');
       arcAuthUpdateFieldHints();
@@ -3499,7 +4026,8 @@ function arcWireAuthScreen() {
       arcAuthUpdateFieldHints();
     });
   }
-  if (pw) {
+  if (pw && !pw._arcBound) {
+    pw._arcBound = true;
     pw.addEventListener('input', function () {
       arcClearAuthMsg();
       pw.classList.remove('err', 'arc-field-glow-err');
@@ -3560,10 +4088,30 @@ function arcValidateAuthInputs(email, password) {
 }
 
 function arcHandleAuthSubmit() {
-  if (!arcIsCloudAuthEnabled()) return;
+  if (!arcIsCloudAuthEnabled() || arcAuthBusy) return;
   var email = (el('arc-auth-email') && el('arc-auth-email').value || '').trim().toLowerCase();
   var password = el('arc-auth-password') && el('arc-auth-password').value || '';
   arcClearAuthMsg();
+  if (arcAuthUiMode === 'forgot') {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      arcSetAuthMsg((ARC_COPY.auth && ARC_COPY.auth.invalidEmail) || 'That email needs one more look.', 'email');
+      return;
+    }
+    arcAuthSetSubmitBusy(true);
+    ArcBackend.resetPasswordForEmail(email).then(function (res) {
+      if (res && res.error) {
+        arcSetAuthMsg(ArcBackend.mapAuthError(res.error), 'email');
+        arcAuthSetSubmitBusy(false);
+        return;
+      }
+      arcAuthShowResetSentUI(email);
+      arcAuthSetSubmitBusy(false);
+    }).catch(function (err) {
+      arcSetAuthMsg(ArcBackend.mapAuthError(err), 'email');
+      arcAuthSetSubmitBusy(false);
+    });
+    return;
+  }
   if (!arcValidateAuthInputs(email, password)) return;
   arcAuthSetSubmitBusy(true);
   var pendingGen = false;
@@ -3591,31 +4139,8 @@ function arcHandleAuthSubmit() {
       }
       arcAuthSession = sess;
       arcAuthUser = user;
-      return ArcBackend.fetchProfileRow(user.id).then(function (rowRes) {
-        var row = rowRes && rowRes.data && !rowRes.error ? rowRes.data : null;
-        var bundle = row && row.profile ? { profile: row.profile, app: row.app_state || {} } : null;
-        if (bundle && bundle.profile && typeof bundle.profile === 'object') {
-          applyJsonBundleToApp(bundle);
-          arcRestoredFromStorage = true;
-          try {
-            localStorage.setItem(LS_PROFILE, JSON.stringify(bundle));
-          } catch (e2) {}
-        } else {
-          saveUserProfile();
-          return arcPushProfileCloudNow(user.id);
-        }
-      }).then(function () {
-        applySafeProfileDefaults(UP);
-        var chk = validateUserProfile(UP);
-        if (!chk.ok) {
-          arcSetAuthMsg((chk.errors && chk.errors[0]) ? chk.errors[0] : 'Profile still feels incomplete.');
-          done();
-          return;
-        }
-        return arcExitAuthCardAnimated(function () {
-          arcAuthSetSubmitBusy(false);
-          arcFinishAuthSuccessNavigation(pendingGen);
-        });
+      return arcRestoreSessionIntoApp(sess, pendingGen).then(function () {
+        arcAuthSetSubmitBusy(false);
       }).catch(function (eIn) {
         arcSetAuthMsg(ArcBackend.mapAuthError(eIn), arcClassifyAuthFieldForMsg(ArcBackend.mapAuthError(eIn)));
         done();
@@ -3628,15 +4153,29 @@ function arcHandleAuthSubmit() {
   }
 
   ArcBackend.signUpWithPassword(email, password).then(function (res) {
+    if (arcAuthIsDuplicateSignupResult(res)) {
+      arcAuthShowExistingAccountUI(email);
+      done();
+      return;
+    }
     if (res.error) {
       var mapped = ArcBackend.mapAuthError(res.error);
-      arcSetAuthMsg(mapped, arcClassifyAuthFieldForMsg(mapped));
+      if (mapped.indexOf('already exists') !== -1) {
+        arcAuthShowExistingAccountUI(email);
+      } else {
+        arcSetAuthMsg(mapped, arcClassifyAuthFieldForMsg(mapped));
+      }
       done();
       return;
     }
     var sess = res.data && res.data.session;
     var user = res.data && res.data.user;
     if (!sess || !user) {
+      if (ArcBackend.isDuplicateSignupUser && ArcBackend.isDuplicateSignupUser(user)) {
+        arcAuthShowExistingAccountUI(email);
+        done();
+        return;
+      }
       arcAuthShowVerifyUI(email);
       done();
       return;
@@ -8880,7 +9419,11 @@ function validateUserProfile(p) {
 
 function resetAppAfterInvalidStoredProfile(errors) {
   nutriDebug('Clearing invalid stored profile', errors || []);
-  clearAllPersistedData();
+  if (arcAuthSession && arcAuthUser) {
+    arcClearPersistedStorage();
+  } else {
+    clearAllPersistedData();
+  }
   recipes = [];
   selectedRecipes = new Set();
   checked = {};
@@ -12409,6 +12952,8 @@ function openSettings() {
 
   // Refresh targets panel
   renderSettingsTargets();
+  renderPersonalizationTargetsSummary();
+  hydrateSettingsAccountSection();
   refreshArcInsightsUI();
   renderPastRecapsList();
 
@@ -12529,6 +13074,7 @@ function applySettingsProfile() {
 
   renderNutrition();
   renderSettingsTargets();
+  renderPersonalizationTargetsSummary();
   settingsDirty = false;
   el('s-regen-card').style.display = 'none';
   saveUserProfile();
@@ -12806,6 +13352,10 @@ function arcWireApplicationDom() {
         hydrateArcAuthContextFromUP();
         arcAuthSetMode('signin');
       }
+      try {
+        var pendingVerifyEm = sessionStorage.getItem('arc_auth_verify_pending');
+        if (pendingVerifyEm) arcAuthShowVerifyUI(pendingVerifyEm);
+      } catch (eVer) {}
     }
   }
 
@@ -12858,11 +13408,43 @@ function arcWireApplicationDom() {
     generateRecipes();
   });
 
-  el('s-reset-data').addEventListener('click', function() {
-    if (!confirm('Clear all saved data and restart the app?')) return;
-    clearAllPersistedData();
-    location.reload();
-  });
+  var resetArcBtn = el('s-reset-arc');
+  if (resetArcBtn) {
+    resetArcBtn.addEventListener('click', function () {
+      openMotion('arc-reset-modal');
+    });
+  }
+  var resetCancel = el('arc-reset-cancel');
+  if (resetCancel) {
+    resetCancel.addEventListener('click', function () {
+      closeMotion('arc-reset-modal');
+    });
+  }
+  var resetConfirm = el('arc-reset-confirm');
+  if (resetConfirm) {
+    resetConfirm.addEventListener('click', function () {
+      if (resetConfirm.disabled) return;
+      resetConfirm.disabled = true;
+      arcResetArcSystem();
+      setTimeout(function () { resetConfirm.disabled = false; }, 1200);
+    });
+  }
+  var resetModal = el('arc-reset-modal');
+  if (resetModal) {
+    resetModal.addEventListener('click', function (e) {
+      if (e.target === resetModal) closeMotion('arc-reset-modal');
+    });
+  }
+  var logoutBtn = el('s-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function () {
+      if (logoutBtn.disabled) return;
+      logoutBtn.disabled = true;
+      arcLogout().finally(function () {
+        logoutBtn.disabled = false;
+      });
+    });
+  }
 
   // Welcome intro (first-use) → Onboarding
   initFirstUseIntro();
